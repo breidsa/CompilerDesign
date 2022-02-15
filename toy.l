@@ -39,6 +39,9 @@ Others = [0 - 9 & .]
 WhiteSp = [\040\ n]
 
 Identifier = [:jletter:] [:jletterdigit:]*
+Comment = {SlashComment} | {HashComment}
+SlashComment = "//" {InputCharacter}* {LineTerminator}
+HashComment = "##" {InputCharacter}* {LineTerminator}
 
 
 %state STRING
@@ -63,6 +66,8 @@ Identifier = [:jletter:] [:jletterdigit:]*
 <YYINITIAL> {
 /* identifiers */
 {Identifier}                   { return new Yytoken("IDENTIFIER"); }
+/* comments */
+{Comment}                   { return new Yytoken("COMMENT"); }
 
 /* literals */
 \"                             { stringBuffer.setLength(0); yybegin(STRING); }
@@ -83,7 +88,6 @@ Identifier = [:jletter:] [:jletterdigit:]*
 "+"                            { return new Yytoken("PLUS"); }
 "-"                            { return new Yytoken("MINUS"); }
 "*"                            { return new Yytoken("MULT"); }
-"/"                            { return new Yytoken("DIVIDE"); }
 "="                            { return new Yytoken("EQ"); }
 /* whitespace */
 {WhiteSpace}                   { /* ignore */ }
