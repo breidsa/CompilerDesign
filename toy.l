@@ -33,6 +33,10 @@ public static void main(String[] args) throws FileNotFoundException, IOException
 LineTerminator = \r|\n|\r\n
 InputCharacter = [^\r\n]
 WhiteSpace     = {LineTerminator} | [ \t\f]
+Digit = [0 - 9]
+AnyLet = [A - Za - z]
+Others = [0 - 9 & .]
+WhiteSp = [\040\ n]
 
 Identifier = [:jletter:] [:jletterdigit:]*
 
@@ -63,9 +67,24 @@ Identifier = [:jletter:] [:jletterdigit:]*
 /* literals */
 \"                             { stringBuffer.setLength(0); yybegin(STRING); }
 
-/* operators */
+/* symbols */
+"{"                            { return new Yytoken("RBRACKET"); }
+"}"                            { return new Yytoken("LBRACKET"); }
+";"                            { return new Yytoken("SEMICOLON"); }
+"<"                            { return new Yytoken("LESSTHAN"); }
+">"                            { return new Yytoken("GREATERTHAN"); }
+"=="                            { return new Yytoken("DOUBLEEQ"); }
+"<="                            { return new Yytoken("LESSTHANOREQ"); }
+">="                            { return new Yytoken("GREATERTHANOREQ"); }
+"!="                            { return new Yytoken("NOTEQ"); }
+"!"                            { return new Yytoken("NOT"); }
+"("                            { return new Yytoken("LEFTPAREN"); }
+")"                            { return new Yytoken("RIGHTPAREN"); }
+"+"                            { return new Yytoken("PLUS"); }
+"-"                            { return new Yytoken("MINUS"); }
+"*"                            { return new Yytoken("MULT"); }
+"/"                            { return new Yytoken("DIVIDE"); }
 "="                            { return new Yytoken("EQ"); }
-
 /* whitespace */
 {WhiteSpace}                   { /* ignore */ }
 }
