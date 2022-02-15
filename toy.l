@@ -1,3 +1,4 @@
+
 import java.io.FileReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -43,6 +44,8 @@ Comment = {SlashComment} | {HashComment}
 SlashComment = "//" {InputCharacter}* {LineTerminator}
 HashComment = "##" {InputCharacter}* {LineTerminator}
 
+Text = '""' {Identifier} '""'
+
 
 %state STRING
 
@@ -67,7 +70,10 @@ HashComment = "##" {InputCharacter}* {LineTerminator}
 /* identifiers */
 {Identifier}                   { return new Yytoken("IDENTIFIER"); }
 /* comments */
-{Comment}                   { return new Yytoken("COMMENT"); }
+{Comment}                      { return new Yytoken("COMMENT"); }
+
+{Text}                         { return new Yytoken("STRING"); }
+
 
 /* literals */
 \"                             { stringBuffer.setLength(0); yybegin(STRING); }
@@ -78,10 +84,10 @@ HashComment = "##" {InputCharacter}* {LineTerminator}
 ";"                            { return new Yytoken("SEMICOLON"); }
 "<"                            { return new Yytoken("LESSTHAN"); }
 ">"                            { return new Yytoken("GREATERTHAN"); }
-"=="                            { return new Yytoken("DOUBLEEQ"); }
-"<="                            { return new Yytoken("LESSTHANOREQ"); }
-">="                            { return new Yytoken("GREATERTHANOREQ"); }
-"!="                            { return new Yytoken("NOTEQ"); }
+"=="                           { return new Yytoken("DOUBLEEQ"); }
+"<="                           { return new Yytoken("LESSTHANOREQ"); }
+">="                           { return new Yytoken("GREATERTHANOREQ"); }
+"!="                           { return new Yytoken("NOTEQ"); }
 "!"                            { return new Yytoken("NOT"); }
 "("                            { return new Yytoken("LEFTPAREN"); }
 ")"                            { return new Yytoken("RIGHTPAREN"); }
@@ -107,5 +113,5 @@ HashComment = "##" {InputCharacter}* {LineTerminator}
 }
 
 /* error fallback */
-[^]                              { throw new Error("Illegal character <"+
+[^]                              { throw new Error("ERROR <"+
                                                 yytext()+">"); }
