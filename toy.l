@@ -1,4 +1,3 @@
-
 import java.io.FileReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -38,19 +37,23 @@ Digit = [0 - 9]
 AnyLet = [A - Za - z]
 Others = [0 - 9 & .]
 WhiteSp = [\040\ n]
+Integer = {Digit}*
+String = "\""{AnyLet}"\""
 
+Type = "int" | "bool" | "string"
+Symbol = "{" | "}" | ";" | "<=" | ">=" | "<" | ">" | "==" | "!=" |"!" | "(" | ")" | "+" | "-" | "." | "="
+Keyword = "bool" | "int" | "true" | "false" | "void" | "printf" | "string" | "struct" | "if" | "then" | "else" | "for" | "return"
+Declaration = {Type}{WhiteSpace}*"="{WhiteSpace}*({String}|{Integer})
 Identifier = [:jletter:] [:jletterdigit:]*
 Comment = {SlashComment} | {HashComment}
 SlashComment = "//" {InputCharacter}* {LineTerminator}
 HashComment = "##" {InputCharacter}* {LineTerminator}
 
-Text = '""' {Identifier} '""'
-
 
 %state STRING
 
 %%
-/* keywords */
+/* keywords
 <YYINITIAL>
 "bool" { return new Yytoken("BOOL"); }
 "int" { return new Yytoken("INT"); }
@@ -65,20 +68,30 @@ Text = '""' {Identifier} '""'
 "else" { return new Yytoken("ELSE"); }
 "for" { return new Yytoken("FOR"); }
 "return" { return new Yytoken("RETURN"); }
-
+ */
 <YYINITIAL> {
+/*Type*/
+{Type}                   { return new Yytoken("TYPE"); }
 /* identifiers */
 {Identifier}                   { return new Yytoken("IDENTIFIER"); }
 /* comments */
 {Comment}                      { return new Yytoken("COMMENT"); }
+/* integer */
+{Integer}                   { return new Yytoken("INTEGER"); }
+/*string*/
+{String}                         { return new Yytoken("STRING"); }
+/* comments */
+{Symbol}                   { return new Yytoken("SYMBOL"); }
 
-{Text}                         { return new Yytoken("STRING"); }
+/* whitespace */
+{WhiteSp}                   { /* ignore */ }
+
 
 
 /* literals */
 \"                             { stringBuffer.setLength(0); yybegin(STRING); }
 
-/* symbols */
+/* symbols
 "{"                            { return new Yytoken("RBRACKET"); }
 "}"                            { return new Yytoken("LBRACKET"); }
 ";"                            { return new Yytoken("SEMICOLON"); }
@@ -94,7 +107,7 @@ Text = '""' {Identifier} '""'
 "+"                            { return new Yytoken("PLUS"); }
 "-"                            { return new Yytoken("MINUS"); }
 "*"                            { return new Yytoken("MULT"); }
-"="                            { return new Yytoken("EQ"); }
+"="                            { return new Yytoken("EQ"); }*/
 /* whitespace */
 {WhiteSpace}                   { /* ignore */ }
 }
@@ -114,4 +127,6 @@ Text = '""' {Identifier} '""'
 
 /* error fallback */
 [^]                              { throw new Error("ERROR <"+
-                                                yytext()+">"); }
+                                                   yytext()+">"); }
+
+
