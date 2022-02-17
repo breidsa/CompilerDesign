@@ -27,15 +27,21 @@ public static void main(String[] args) throws FileNotFoundException, IOException
             Yytoken t;
             while ((t = yy.yylex()) != null)
                 System.out.println(t.type);
+            System.out.println("VALID");
 }
 %}
 
 LineTerminator = \r|\n|\r\n
+Digit = [0-9]
 InputCharacter = [^\r\n]
 WhiteSpace     = {LineTerminator} | [ \t\f]
 Identifier = [:jletter:] [:jletterdigit:]*
-IntegerLiteral = 
+Integer = [-|+]?[0-9]*
+Comment = {SlashComment} | {HashComment}
+SlashComment = "//" {InputCharacter}* {LineTerminator}
+HashComment = "##" {InputCharacter}* {LineTerminator}
 %state STRING
+%state INTEGER
 
 %%
 /*keywords*/
@@ -82,8 +88,10 @@ IntegerLiteral =
 
 /* whitespace */
 {WhiteSpace}                   { /* ignore */ }
-/*Integer Literals*/
-{IntegerLiteral}               { return new Yytoken("INTEGER LITERAL"); }
+/* comment */
+{Comment}                   { return new Yytoken("COMMENT"); }
+/*Integer*/
+{Integer}                      { return new Yytoken("INTEGER"); }
 }
 
 <STRING> {
@@ -99,7 +107,13 @@ IntegerLiteral =
 \\                             { stringBuffer.append('\\'); }
 }
 
+<INTEGER> {
+{Digit}                          { yybegin(YYINITIAL);
+                               return new Yytoken("Integer_LITERAL",
+                               stringBuffer.toString()); }
+{Digit}                       { stringBuffer.append( yytext() ); }
+}
+
 /* error fallback */
 [^]                              { throw new Error("Illegal character <"+
                                                 yytext()+">"); }
-
