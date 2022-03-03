@@ -21,6 +21,7 @@ class Yytoken {
 
 %{
 StringBuffer stringBuffer = new StringBuffer();
+StringBuffer intBuffer = new StringBuffer();
 
 public static void main(String[] args) throws FileNotFoundException, IOException{
             FileReader yyin = new FileReader(args[0]);
@@ -34,6 +35,7 @@ public static void main(String[] args) throws FileNotFoundException, IOException
 
 LineTerminator = \r|\n|\r\n
 Digit = [0-9]
+NonDigit = [^0-9]+
 Letter = [A-Za-z]
 InputCharacter = [^\r\n]
 WhiteSpace     = {LineTerminator} | [ \t\f]
@@ -64,18 +66,14 @@ HashComment = "##" {InputCharacter}* {LineTerminator}
 
 
 <YYINITIAL> {
+{Digit} {
+        intBuffer.setLength(0);
+        yybegin(INT);
+        intBuffer.toString();
+        intBuffer.append( yytext() );
+}
 /* identifiers */
 {Identifier}                   { return new Yytoken("IDENTIFIER"); }
-
-/*Integer*/
-{Digit}+                    { try  {Integer.valueOf(Integer.parseInt(yytext()));
-                            } catch (NumberFormatException nfe) {
-                            // shouldn't happen
-                            throw new Error("Integer Not Formatted Correct");
-                            }
-                            return new Yytoken("Integer");}
-}
-
 
 /* symbols */
 "{"                            { return new Yytoken("RBRACKET"); }
@@ -100,6 +98,24 @@ HashComment = "##" {InputCharacter}* {LineTerminator}
 {WhiteSpace}                   { /* ignore */ }
 /* comment */
 {Comment}                   { return new Yytoken("COMMENT"); }
+
+/*Integer*/
+<INT>{Digit} {
+        intBuffer.append( yytext() );
+    }
+<INT>{Letter} {
+    throw new Error("Integer Not Formatted Correct");
+    }
+<INT>{WhiteSpace} {
+    try  {Integer.valueOf(Integer.parseInt(intBuffer.toString()));
+    } catch (NumberFormatException nfe) {
+        
+    }
+    return new Yytoken("Integer");
+}
+
+
+
 
 /*String Literals*/
 \" {
@@ -135,7 +151,7 @@ HashComment = "##" {InputCharacter}* {LineTerminator}
 <STRING>\0 {
     throw new Error("String Error Null Character");
 }
+}
 /* error fallback */
 [^]                              { throw new Error("Illegal character <"+
                                                 yytext()+">"); }
-
