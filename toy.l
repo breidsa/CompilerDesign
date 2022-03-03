@@ -101,21 +101,28 @@ HashComment = "##" {InputCharacter}* {LineTerminator}
 
 /*String Literals*/
 \" {
+    stringBuffer.setLength(0);
     yybegin(STRING);
     stringBuffer.toString();
+    stringBuffer.append( yytext() );
 }
 <STRING>{Letter} {
+    stringBuffer.append( yytext() );
+}
+<STRING>{Digit} {
     stringBuffer.append( yytext() );
 }
 <STRING>\" {
     yybegin(YYINITIAL);
     stringBuffer.append( yytext() );
-    return new Yytoken("String");
+    return new Yytoken(stringBuffer.toString());
 }
 <STRING><<EOF>> {
     throw new Error("String Error EOF");
 }
 <STRING>\\\n { stringBuffer.append('\n');}
+<STRING>\\\t { stringBuffer.append('\t');}
+<STRING>\\\r { stringBuffer.append('\r');}
 <STRING>\n {
     yybegin(YYINITIAL);
     throw new Error("String Error NewLine");
@@ -126,4 +133,3 @@ HashComment = "##" {InputCharacter}* {LineTerminator}
 /* error fallback */
 [^]                              { throw new Error("Illegal character <"+
                                                 yytext()+">"); }
-
