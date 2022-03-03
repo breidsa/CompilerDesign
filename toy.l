@@ -42,6 +42,7 @@ Comment = {SlashComment} | {HashComment}
 SlashComment = "//" {InputCharacter}* {LineTerminator}
 HashComment = "##" {InputCharacter}* {LineTerminator}
 %x STRING
+%x INT
 
 
 %%
@@ -65,6 +66,16 @@ HashComment = "##" {InputCharacter}* {LineTerminator}
 <YYINITIAL> {
 /* identifiers */
 {Identifier}                   { return new Yytoken("IDENTIFIER"); }
+
+/*Integer*/
+{Digit}+                    { try  {Integer.valueOf(Integer.parseInt(yytext()));
+                            } catch (NumberFormatException nfe) {
+                            // shouldn't happen
+                            throw new Error("Integer Not Formatted Correct");
+                            }
+                            return new Yytoken("Integer");}
+}
+
 
 /* symbols */
 "{"                            { return new Yytoken("RBRACKET"); }
@@ -90,15 +101,6 @@ HashComment = "##" {InputCharacter}* {LineTerminator}
 /* comment */
 {Comment}                   { return new Yytoken("COMMENT"); }
 
-/*Integer*/
-{Digit}+                    { try  {Integer.valueOf(Integer.parseInt(yytext()));
-                            } catch (NumberFormatException nfe) {
-                            // shouldn't happen
-                            throw new Error("Integer Not Formatted Correct");
-                            }
-                            return new Yytoken("Integer");}
-}
-
 /*String Literals*/
 \" {
     stringBuffer.setLength(0);
@@ -120,6 +122,9 @@ HashComment = "##" {InputCharacter}* {LineTerminator}
 <STRING><<EOF>> {
     throw new Error("String Error EOF");
 }
+<STRING>\\\" {
+    throw new Error("tring Error No Escape Characters");
+}
 <STRING>\\\n { stringBuffer.append('\n');}
 <STRING>\\\t { stringBuffer.append('\t');}
 <STRING>\\\r { stringBuffer.append('\r');}
@@ -133,3 +138,4 @@ HashComment = "##" {InputCharacter}* {LineTerminator}
 /* error fallback */
 [^]                              { throw new Error("Illegal character <"+
                                                 yytext()+">"); }
+
