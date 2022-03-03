@@ -18,6 +18,7 @@ class Yytoken {
 
 %unicode
 
+
 %{
 StringBuffer stringBuffer = new StringBuffer();
 
@@ -33,15 +34,15 @@ public static void main(String[] args) throws FileNotFoundException, IOException
 
 LineTerminator = \r|\n|\r\n
 Digit = [0-9]
+Letter = [A-Za-z]
 InputCharacter = [^\r\n]
 WhiteSpace     = {LineTerminator} | [ \t\f]
 Identifier = [:jletter:] [:jletterdigit:]*
-Integer = [-|+]?[0-9]*
 Comment = {SlashComment} | {HashComment}
 SlashComment = "//" {InputCharacter}* {LineTerminator}
 HashComment = "##" {InputCharacter}* {LineTerminator}
-%state STRING
-%state INTEGER
+%x STRING
+
 
 %%
 /*keywords*/
@@ -65,9 +66,6 @@ HashComment = "##" {InputCharacter}* {LineTerminator}
 /* identifiers */
 {Identifier}                   { return new Yytoken("IDENTIFIER"); }
 
-/* literals */
-\"                             { stringBuffer.setLength(0); yybegin(STRING); }
-
 /* symbols */
 "{"                            { return new Yytoken("RBRACKET"); }
 "}"                            { return new Yytoken("LBRACKET"); }
@@ -84,36 +82,48 @@ HashComment = "##" {InputCharacter}* {LineTerminator}
 "+"                            { return new Yytoken("PLUS"); }
 "-"                            { return new Yytoken("MINUS"); }
 "*"                            { return new Yytoken("MULT"); }
+"/"                            { return new Yytoken("DIVIDE"); }
 "="                            { return new Yytoken("EQ"); }
 
 /* whitespace */
 {WhiteSpace}                   { /* ignore */ }
 /* comment */
 {Comment}                   { return new Yytoken("COMMENT"); }
+
 /*Integer*/
-{Integer}                      { return new Yytoken("INTEGER"); }
+{Digit}+                    { try  {Integer.valueOf(Integer.parseInt(yytext()));
+                            } catch (NumberFormatException nfe) {
+                            // shouldn't happen
+                            throw new Error("Integer Not Formatted Correct");
+                            }
+                            return new Yytoken("Integer");}
 }
 
-<STRING> {
-\"                             { yybegin(YYINITIAL);
-                               return new Yytoken("STRING_LITERAL",
-                               stringBuffer.toString()); }
-[^\n\r\"\\]+                   { stringBuffer.append( yytext() ); }
-\\t                            { stringBuffer.append('\t'); }
-\\n                            { stringBuffer.append('\n'); }
-
-\\r                            { stringBuffer.append('\r'); }
-\\\"                           { stringBuffer.append('\"'); }
-\\                             { stringBuffer.append('\\'); }
+/*String Literals*/
+\" {
+    yybegin(STRING);
+    stringBuffer.toString();
 }
-
-<INTEGER> {
-{Digit}                          { yybegin(YYINITIAL);
-                               return new Yytoken("Integer_LITERAL",
-                               stringBuffer.toString()); }
-{Digit}                       { stringBuffer.append( yytext() ); }
+<STRING>{Letter} {
+    stringBuffer.append( yytext() );
 }
-
+<STRING>\" {
+    yybegin(YYINITIAL);
+    stringBuffer.append( yytext() );
+    return new Yytoken("String");
+}
+<STRING><<EOF>> {
+    throw new Error("String Error EOF");
+}
+<STRING>\\\n { stringBuffer.append('\n');}
+<STRING>\n {
+    yybegin(YYINITIAL);
+    throw new Error("String Error NewLine");
+}
+<STRING>\0 {
+    throw new Error("String Error Null Character");
+}
 /* error fallback */
 [^]                              { throw new Error("Illegal character <"+
                                                 yytext()+">"); }
+
