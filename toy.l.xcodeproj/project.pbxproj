@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXFileReference section */
+		9A0EC2F127BE4E4400738199 /* ToY2.l */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.lex; path = ToY2.l; sourceTree = "<group>"; };
 		9A78851727B5151A00F48852 /* toy.l */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.lex; path = toy.l; sourceTree = "<group>"; };
 		9A78851827B5166C00F48852 /* Lexer.java */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.java; path = Lexer.java; sourceTree = "<group>"; };
 		9A78851B27B5249600F48852 /* Test.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = Test.txt; sourceTree = "<group>"; };
@@ -16,6 +17,7 @@
 		9A78851027B514B900F48852 = {
 			isa = PBXGroup;
 			children = (
+				9A0EC2F127BE4E4400738199 /* ToY2.l */,
 				9A78851727B5151A00F48852 /* toy.l */,
 				9A78851B27B5249600F48852 /* Test.txt */,
 				9A78851827B5166C00F48852 /* Lexer.java */,
