@@ -35,7 +35,7 @@ public static void main(String[] args) throws FileNotFoundException, IOException
 
 LineTerminator = \r|\n|\r\n
 Digit = [0-9]
-NonDigit = [^0-9]+
+NonDigit = [^0-9]
 Letter = [A-Za-z]
 InputCharacter = [^\r\n]
 WhiteSpace     = {LineTerminator} | [ \t\f]
@@ -66,14 +66,29 @@ HashComment = "##" {InputCharacter}* {LineTerminator}
 
 
 <YYINITIAL> {
+/*String Literals*/
+\" {
+    stringBuffer.setLength(0);
+    yybegin(STRING);
+    stringBuffer.toString();
+    stringBuffer.append( yytext() );
+}
+    
+/* Integers Literals*/
 {Digit} {
         intBuffer.setLength(0);
         yybegin(INT);
         intBuffer.toString();
         intBuffer.append( yytext() );
 }
+
+    
 /* identifiers */
 {Identifier}                   { return new Yytoken("IDENTIFIER"); }
+
+
+    
+    
 
 /* symbols */
 "{"                            { return new Yytoken("RBRACKET"); }
@@ -99,31 +114,21 @@ HashComment = "##" {InputCharacter}* {LineTerminator}
 /* comment */
 {Comment}                   { return new Yytoken("COMMENT"); }
 
-/*Integer*/
+/*Integer  */
 <INT>{Digit} {
         intBuffer.append( yytext() );
-    }
-<INT>{Letter} {
-    throw new Error("Integer Not Formatted Correct");
     }
 <INT>{WhiteSpace} {
     try  {Integer.valueOf(Integer.parseInt(intBuffer.toString()));
     } catch (NumberFormatException nfe) {
-        
     }
-    return new Yytoken("Integer");
+        return new Yytoken("Integer " + Integer.valueOf(Integer.parseInt(intBuffer.toString())));
 }
+<INT>{NonDigit} {
+    throw new Error("ERROR: Integer Not Formatted Correct");
+    }
 
 
-
-
-/*String Literals*/
-\" {
-    stringBuffer.setLength(0);
-    yybegin(STRING);
-    stringBuffer.toString();
-    stringBuffer.append( yytext() );
-}
 <STRING>{Letter} {
     stringBuffer.append( yytext() );
 }
@@ -133,20 +138,20 @@ HashComment = "##" {InputCharacter}* {LineTerminator}
 <STRING>\" {
     yybegin(YYINITIAL);
     stringBuffer.append( yytext() );
-    return new Yytoken(stringBuffer.toString());
+    return new Yytoken("String " + stringBuffer.toString());
 }
 <STRING><<EOF>> {
-    throw new Error("String Error EOF");
+    throw new Error("ERROR: String Error EOF");
 }
 <STRING>\\\" {
-    throw new Error("tring Error No Escape Characters");
+    throw new Error("ERROR No Escape Characters");
 }
 <STRING>\\\n { stringBuffer.append('\n');}
 <STRING>\\\t { stringBuffer.append('\t');}
 <STRING>\\\r { stringBuffer.append('\r');}
 <STRING>\n {
     yybegin(YYINITIAL);
-    throw new Error("String Error NewLine");
+    throw new Error("ERRORString Error NewLine");
 }
 <STRING>\0 {
     throw new Error("String Error Null Character");
