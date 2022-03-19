@@ -74,13 +74,15 @@ HashComment = "##" {InputCharacter}* {LineTerminator}
     stringBuffer.append( yytext() );
 }
     
-/* Integers Literals*/
+{Digit}+             { return new Yytoken("INTEGER"); }
+/* Integers Literals
 {Digit} {
         intBuffer.setLength(0);
         yybegin(INT);
         intBuffer.toString();
         intBuffer.append( yytext() );
 }
+ */
 
     
 /* identifiers */
@@ -114,7 +116,7 @@ HashComment = "##" {InputCharacter}* {LineTerminator}
 /* comment */
 {Comment}                   { return new Yytoken("COMMENT"); }
 
-/*Integer  */
+/*Integer
 <INT>{Digit} {
         intBuffer.append( yytext() );
     }
@@ -127,7 +129,7 @@ HashComment = "##" {InputCharacter}* {LineTerminator}
 <INT>{NonDigit} {
     throw new Error("ERROR: Integer Not Formatted Correct");
     }
-
+ */
 
 <STRING>{Letter} {
     stringBuffer.append( yytext() );
