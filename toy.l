@@ -49,7 +49,6 @@ HashComment = "##" {InputCharacter}* {LineTerminator}
 
 %%
 /*keywords*/
-<YYINITIAL>
 "bool" { return new Yytoken("BOOL"); }
 "int" { return new Yytoken("INT"); }
 "true" { return new Yytoken("TRUE"); }
@@ -65,7 +64,6 @@ HashComment = "##" {InputCharacter}* {LineTerminator}
 "return" { return new Yytoken("RETURN"); }
 
 
-<YYINITIAL> {
 /*String Literals*/
 \" {
     stringBuffer.setLength(0);
@@ -158,7 +156,7 @@ HashComment = "##" {InputCharacter}* {LineTerminator}
 <STRING>\0 {
     throw new Error("String Error Null Character");
 }
-}
+
 /* error fallback */
 [^]                              { throw new Error("Illegal character <"+
                                                 yytext()+">"); }

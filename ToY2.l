@@ -50,7 +50,6 @@
 
     %%
     /*keywords*/
-    <YYINITIAL>
     "bool" { return new Yytoken("BOOL"); }
     "int" { return new Yytoken("INT"); }
     "true" { return new Yytoken("TRUE"); }
@@ -66,7 +65,6 @@
     "return" { return new Yytoken("RETURN"); }
 
 
-    <YYINITIAL> {
     /* identifiers */
     {Identifier}                   { return new Yytoken("IDENTIFIER"); }
 
