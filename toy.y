@@ -1,3 +1,5 @@
+
+
 %language "Java"
 
 
@@ -41,6 +43,7 @@ public static void main(String[] args) throws IOException {
 %type returnType
 %type struct
 %type stmt
+%type string
 
 %start program
 
@@ -55,7 +58,7 @@ public static void main(String[] args) throws IOException {
     
     input: line | input line;
     
-    declaration: | type IDENTIFIER;
+    declaration: type IDENTIFIER;
     
     line: '\n'
     | exp '\n' { System.out.println($exp); }
@@ -77,18 +80,30 @@ public static void main(String[] args) throws IOException {
     | '-' error { $$ = 0; return YYERROR; }
     ;
     
-    
-    stmt: IF exp THEN list           { $$ = newflow(pp, 'I', $2, $4, NULL); }
-       | IF exp THEN list ELSE list  { $$ = newflow(pp, 'I', $2, $4, $6); }
-       | exp
-    ;
-    
     /* need help on struct */
     /* ask abt statement keyword*/
     stmt:
-    FOR (IDENTIFIER = exp; exp; statement) statement
-    | IF (exp) THEN statement
-    | IF (expr) THEN statement ELSE statement
+    FOR (IDENTIFIER = exp; exp; stmt) stmt
+    | IF (exp) THEN stmt
+    | IF (exp) THEN stmt ELSE stmt
+    | PRINTF (string)
+    | RETURN exp
+    | { stmt-seq }
+    | declaration
+    | l-exp '=' exp
+    ;
+    /* need help on dotdotdot portions*/
+    
+    stmt-seq:
+    | stmt stmt-seq
+    ;
+    
+    1-exp:
+    IDENTIFIER
+    | IDENTIFIER.1-exp
+    ;
+    
+    
 
 
 %%
@@ -120,4 +135,5 @@ public static void main(String[] args) throws IOException {
      return yylex.yylex();
      }
     }
+
 
