@@ -24,15 +24,44 @@ public static void main(String[] args) throws IOException {
 }
 
 /* Bison Declarations */
-%token <Integer> NUM
+/* Questions: does boolean and stuff have to come from the lexer?? */
+%token <Integer> INT
+%token <Identifier> BOOL STRING IDENTIFIER
+%token <Boolean> TRUE FALSE IF THEN ELSE FOR
+%token VOID RETURN PRINTF STRUCT
+
+/* Operator precedence for mathematical operators */
+/* MIGHT NOT NEED!! */
+%left TPLUS TMINUS
+%left TMUL TDIV
+
+%type input
+%type line
 %type exp
+%type returnType
+%type struct
+%type stmt
+
+%start program
 
 %%
+    
+    program:
+    stmts {program}
+    
+    type: int | bool | string;
+    
+    returnType: type | void;
+    
     input: line | input line;
+    
+    declaration: | type IDENTIFIER;
+    
     line: '\n'
     | exp '\n' { System.out.println($exp); }
     | error '\n'
     ;
+    
     exp:
      NUM { $$ = $1; }
     | exp '=' exp { if ($1.intValue() != $3.intValue()) yyerror("calc: error: " + $1 + " != " + $3); }
@@ -46,27 +75,45 @@ public static void main(String[] args) throws IOException {
     | '(' error ')' { $$ = 1111; }
     | '!' { $$ = 0; return YYERROR; }
     | '-' error { $$ = 0; return YYERROR; }
+    ;
+    
+    
+    stmt: IF exp THEN list           { $$ = newflow(pp, 'I', $2, $4, NULL); }
+       | IF exp THEN list ELSE list  { $$ = newflow(pp, 'I', $2, $4, $6); }
+       | exp
+    ;
+    
+    /* need help on struct */
+    /* ask abt statement keyword*/
+    stmt:
+    FOR (IDENTIFIER = exp; exp; statement) statement
+    | IF (exp) THEN statement
+    | IF (expr) THEN statement ELSE statement
 
 
 %%
     
-    class ToYLexer implements ToY.Lexer {
+    class ToYLexer implements ToY.L {
      InputStreamReader it;
      Yylex yylex;
+     
      public ToYLexer(InputStream is){
      it = new InputStreamReader(is);
      yylex = new Yylex(it);
      }
+     
      @Override
      public void yyerror (String s){
      System.err.println(s);
      }
      ParserToken yylval;
+     
      @Override
      public Object getLVal() {
      // Returns the semantic value of the last token that yylex returned.
      return yylval;
      }
+     
      @Override
      public int yylex () throws IOException{
      // Returns the next token. Here we get the next Token from the Lexer
