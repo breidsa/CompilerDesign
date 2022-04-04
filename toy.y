@@ -49,62 +49,67 @@ public static void main(String[] args) throws IOException {
 
 %%
     
-    program:
+    program::
     stmts {program}
+    ;
     
-    type: int | bool | string;
+    type:: int | bool | string;
     
-    returnType: type | void;
+    returnType:: type | void;
     
-    input: line | input line;
+    input:: line | input line;
     
-    declaration: type IDENTIFIER;
+    declaration:: type IDENTIFIER;
     
-    line: '\n'
+    line:: '\n'
     | exp '\n' { System.out.println($exp); }
     | error '\n'
     ;
     
-    exp:
-     NUM { $$ = $1; }
-    | exp '=' exp { if ($1.intValue() != $3.intValue()) yyerror("calc: error: " + $1 + " != " + $3); }
-    | exp '+' exp { $$ = $1 + $3; }
-    | exp '-' exp { $$ = $1 - $3; }
-    | exp '*' exp { $$ = $1 * $3; }
-    | exp '/' exp { $$ = $1 / $3; }
-    | '-' exp %prec NEG { $$ = -$2; }
-    | exp '^' exp { $$ = (int) Math.pow($1, $3); }
-    | '(' exp ')' { $$ = $2; }
-    | '(' error ')' { $$ = 1111; }
-    | '!' { $$ = 0; return YYERROR; }
-    | '-' error { $$ = 0; return YYERROR; }
+    <exp > ::= <int - literal >
+    | < string - literal >
+    | true
+    | false
+    | <exp > <op > <exp >
+    | - <exp >
+    | ! <exp >
+    | <l - exp >
+    | ( <exp > )
+    ;
+    
+    <op > ::= + | - | * | / | mod | and | or | == | > | < | >= | <= | !=
     ;
     
     /* need help on struct */
     /* ask abt statement keyword*/
-    stmt:
-    FOR (IDENTIFIER = exp; exp; stmt) stmt
-    | IF (exp) THEN stmt
-    | IF (exp) THEN stmt ELSE stmt
-    | PRINTF (string)
-    | RETURN exp
-    | { stmt-seq }
-    | declaration
-    | l-exp '=' exp
-    ;
-    /* need help on dotdotdot portions*/
-    
-    stmt-seq:
-    | stmt stmt-seq
+    <stmt > ::= for ( <id > = < expr >; < expr > ; < statement >) < statement >
+    | if (< expr >) then < statement >
+    | if (< expr >) then < statement > else < statement >
+    | printf (< string >);
+    | return <expr >;
+    | { < statement - seq > } # compound statement
+    | <type > <id >; # variable declaration
+    | <l - exp > = <expr >; # assignment
+    | <id >( < expr > ,...); # void procedure call
+    | id = <id >( < expr > ,...); # non - void procedure call
     ;
     
-    1-exp:
-    IDENTIFIER
-    | IDENTIFIER.1-exp
+    < statement - seq > ::= # empty sequence
+    | <stmt > < statement - seq >
     ;
     
+    <l - exp > ::= <id > | <id > . <l - exp >
+    ;
     
-
+    <pgm > ::= <proc > <pgm’>
+    | < struct > <pgm > 
+    ;
+    
+    <pgm’> ::= # empty sequence
+    | <proc> <pgm’>
+    | <struct> <pgm’>
+    ;
+   
 
 %%
     
