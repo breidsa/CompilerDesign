@@ -37,20 +37,25 @@ public static void main(String[] args) throws IOException {
 %left TPLUS TMINUS
 %left TMUL TDIV
 
+%type type
+%type returnType
 %type input
+%type declaration
 %type line
 %type exp
-%type returnType
-%type struct
+%type op
 %type stmt
+%type pgm
+%type struct
 %type string
+
 
 %start program
 
 %%
     
     program::
-    stmts {program}
+    stmt {program}
     ;
     
     type:: int | bool | string;
@@ -66,7 +71,7 @@ public static void main(String[] args) throws IOException {
     | error '\n'
     ;
     
-    <exp > ::= <int - literal >
+    < exp > ::= <int - literal >
     | < string - literal >
     | true
     | false
@@ -77,7 +82,7 @@ public static void main(String[] args) throws IOException {
     | ( <exp > )
     ;
     
-    <op > ::= + | - | * | / | mod | and | or | == | > | < | >= | <= | !=
+    < op > ::= + | - | * | / | mod | and | or | == | > | < | >= | <= | !=
     ;
     
     /* need help on struct */
@@ -94,18 +99,18 @@ public static void main(String[] args) throws IOException {
     | id = <id >( < expr > ,...); # non - void procedure call
     ;
     
-    < statement - seq > ::= # empty sequence
+    < statementt - seq > ::= # empty sequence
     | <stmt > < statement - seq >
     ;
     
-    <l - exp > ::= <id > | <id > . <l - exp >
+    <l - exp > ::= <id > | < id > . <l - exp >
     ;
     
-    <pgm > ::= <proc > <pgm’>
+    < pgm > ::= <proc > <pgm’>
     | < struct > <pgm > 
     ;
     
-    <pgm’> ::= # empty sequence
+    < pgm’> ::= # empty sequence
     | <proc> <pgm’>
     | <struct> <pgm’>
     ;
