@@ -1,6 +1,6 @@
 
 
-%language "Java"
+
 
 
 %define api.parser.class {ToYParser}
