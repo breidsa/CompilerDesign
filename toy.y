@@ -52,24 +52,24 @@ public static void main(String[] args) throws IOException {
 
 %%
     
-    program::
+    program:
     stmt {program}
     ;
     
-    type:: int | bool | string;
+    type: int | bool | string;
     
-    returnType:: type | void;
+    returnType: type | void;
     
-    input:: line | input line;
+    input: line | input line;
     
-    declaration:: type IDENTIFIER;
+    declaration: type IDENTIFIER;
     
-    line:: '\n'
+    line: '\n'
     | exp '\n' { System.out.println($exp); }
     | error '\n'
     ;
     
-    < exp > ::= <int - literal >
+    < exp > : <int - literal >
     | < string - literal >
     | true
     | false
@@ -80,7 +80,7 @@ public static void main(String[] args) throws IOException {
     | ( <exp > )
     ;
     
-    < op > ::= + 
+    < op > : + 
     | - 
     | * 
     | / 
@@ -97,7 +97,7 @@ public static void main(String[] args) throws IOException {
     
     /* need help on struct */
     /* ask abt statement keyword*/
-    <stmt > ::= for ( <id > = < expr >; < expr > ; < statement >) < statement >
+    <stmt > : for ( <id > = < expr >; < expr > ; < statement >) < statement >
     | if (< expr >) then < statement >
     | if (< expr >) then < statement > else < statement >
     | printf (< string >);
@@ -109,26 +109,26 @@ public static void main(String[] args) throws IOException {
     | id = <id >( < expr > ,...); # non - void procedure call
     ;
     
-    < statement - seq > ::= # empty sequence
+    < statement - seq > : # empty sequence
     | <stmt > < statement - seq >
     ;
     
-    <l - exp > ::= <id > | < id > . <l - exp >
+    <l - exp > : <id > | < id > . <l - exp >
     ;
     
-    < pgm > ::= <proc > <pgm’>
+    < pgm > : <proc > <pgm’>
     | < struct > <pgm > 
     ;
     
-    < pgm’> ::= # empty sequence
+    < pgm’> : # empty sequence
     | <proc> <pgm’>
     | <struct> <pgm’>
     ;
     
-    <struct> ::= <struct> <id> { < declaration >, < declaration >, ... }
+    <struct> : <struct> <id> { < declaration >, < declaration >, ... }
     ;
     
-    <proc> ::= <return_type> <id> ( < declaration >, ... ) { < statement > }
+    <proc> : <return_type> <id> ( < declaration >, ... ) { < statement > }
     ;
    
    
