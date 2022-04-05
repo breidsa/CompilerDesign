@@ -93,21 +93,21 @@ public static void main(String[] args) throws IOException {
    
     
     
-    exp : int 
-    | string 
-    | true
-    | false
+    exp : INT
+    | STRING 
+    | TRUE
+    | FALSE
     | exp op exp 
-    | ! exp 
+    | NOT exp 
     | l - exp 
-    | ( exp  )
+    | LEFTPAREN exp RIGHTPAREN
     ;
     
      
     /* need help on struct */
     /* ask abt statement keyword*/
-    stmt  : for ( <id > = < expr >; < expr > ; < statement >) < statement >
-    | if (< expr >) then < statement >
+    stmt : FOR ( IDENTIFIER EQUAL exp ; exp ; < statement >) < statement >
+    | IF LEFTPAREN exp RIGHTPAREN THEN < statement >
     | if (< expr >) then < statement > else < statement >
     | printf (< string >);
     | return <expr >;
