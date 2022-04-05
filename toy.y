@@ -28,6 +28,8 @@ public static void main(String[] args) throws IOException {
 %token <Identifier> BOOL STRING IDENTIFIER
 %token <Boolean> TRUE FALSE IF THEN ELSE FOR
 %token VOID RETURN PRINTF STRUCT
+%token RBRACKET LBRACKET SEMICOLON LESSTHAN GREATERTHAN DOUBLEEQ LESSTHANOREQ GREATERTHANOREQ NOTEQ NOT LEFTPAREN RIGHTPAREN PLUS MINUS MULT DIVIDE EQ
+
 
 /* Operator precedence for mathematical operators */
 /* MIGHT NOT NEED!! */
