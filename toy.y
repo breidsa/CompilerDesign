@@ -67,15 +67,6 @@ public static void main(String[] args) throws IOException {
     ;
     
     
-    /* op : PLUS
-    | MINUS 
-    | MULT
-    | DIVIDE
-    | AND
-    | OR
-    */
-    
-    
     op  : PLUS
     | MINUS
     | MULT
@@ -112,10 +103,10 @@ public static void main(String[] args) throws IOException {
     | PRINTF LEFTPAREN string RIGHTPAREN SEMICOLON
     | RETURN exp SEMICOLON
     | LBRACKET < statement - seq > RBRACKET /* compound statement */
-    | <type > <id > SEMICOLON  /* variable declaration */
-    | <l - exp > = <expr > SEMICOLON /* assignment */
-    | <id >( < expr > ,...) SEMICOLON  /* void procedure call */
-    | id = <id >( < expr > ,...) SEMICOLON  /* non - void procedure call */
+    | type IDENTIFIER SEMICOLON  /* variable declaration */
+    | <l - exp > EQ exp SEMICOLON /* assignment */
+    | IDENTIFIER LEFTPAREN exp ,... RIGHT PAREN SEMICOLON  /* void procedure call */
+    | IDENTIFIER EQ IDENTIFIER LEFTPAREN exp ,... RIGHTPAREN SEMICOLON  /* non - void procedure call */
     ;
     
     < statement - seq > : # empty sequence
