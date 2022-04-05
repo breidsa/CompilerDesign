@@ -143,10 +143,12 @@ public static void main(String[] args) throws IOException {
      }
     }
     
+    /*
     class SymbolTable {
     enter_scope()
     exit_scope()
     
     }
+    */
 
 
