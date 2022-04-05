@@ -66,17 +66,8 @@ public static void main(String[] args) throws IOException {
     | error '\n'
     ;
     
-    exp : int 
-    | string 
-    | true
-    | false
-    | exp op exp 
-    | ! exp 
-    | l - exp 
-    | ( exp  )
-    ;
     
-     op  : + 
+    op  : + 
     | - 
     | * 
     | / 
@@ -91,6 +82,18 @@ public static void main(String[] args) throws IOException {
     | !=
     ;
     
+    
+    exp : int 
+    | string 
+    | true
+    | false
+    | exp op exp 
+    | ! exp 
+    | l - exp 
+    | ( exp  )
+    ;
+    
+     
     /* need help on struct */
     /* ask abt statement keyword*/
     stmt  : for ( <id > = < expr >; < expr > ; < statement >) < statement >
