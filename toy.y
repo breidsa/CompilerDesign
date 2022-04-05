@@ -31,11 +31,6 @@ public static void main(String[] args) throws IOException {
 %token RBRACKET LBRACKET SEMICOLON LESSTHAN GREATERTHAN DOUBLEEQ LESSTHANOREQ GREATERTHANOREQ NOTEQ NOT LEFTPAREN RIGHTPAREN PLUS MINUS MULT DIVIDE EQ
 
 
-/* Operator precedence for mathematical operators */
-/* MIGHT NOT NEED!! */
-%left TPLUS TMINUS
-%left TMUL TDIV
-
 %type type
 %type returnType
 %type input
@@ -76,7 +71,6 @@ public static void main(String[] args) throws IOException {
     | true
     | false
     | exp op exp 
-    | - exp 
     | ! exp 
     | l - exp 
     | ( exp  )
@@ -99,7 +93,7 @@ public static void main(String[] args) throws IOException {
     
     /* need help on struct */
     /* ask abt statement keyword*/
-    <stmt > : for ( <id > = < expr >; < expr > ; < statement >) < statement >
+    stmt  : for ( <id > = < expr >; < expr > ; < statement >) < statement >
     | if (< expr >) then < statement >
     | if (< expr >) then < statement > else < statement >
     | printf (< string >);
