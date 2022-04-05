@@ -71,15 +71,15 @@ public static void main(String[] args) throws IOException {
     | error '\n'
     ;
     
-    < exp > : <int - literal >
+    exp : <int - literal >
     | < string - literal >
     | true
     | false
-    | <exp > <op > <exp >
-    | - <exp >
-    | ! <exp >
-    | <l - exp >
-    | ( <exp > )
+    | exp op exp 
+    | - exp 
+    | ! exp 
+    | l - exp 
+    | ( exp  )
     ;
     
     < op > : + 
