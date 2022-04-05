@@ -67,10 +67,19 @@ public static void main(String[] args) throws IOException {
     ;
     
     
-    op  : + 
-    | - 
-    | * 
-    | / 
+    /* op : PLUS
+    | MINUS 
+    | MULT
+    | DIVIDE
+    | AND
+    | OR
+    */
+    
+    
+    op  : PLUS
+    | MINUS
+    | MULT
+    | DIVIDE
     | mod 
     | and 
     | or 
@@ -81,6 +90,7 @@ public static void main(String[] args) throws IOException {
     | <= 
     | !=
     ;
+   
     
     
     exp : int 
