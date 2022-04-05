@@ -45,6 +45,7 @@ public static void main(String[] args) throws IOException {
 %type pgm
 %type struct
 %type string
+%type proc
 
 
 %start program
@@ -79,7 +80,19 @@ public static void main(String[] args) throws IOException {
     | ( <exp > )
     ;
     
-    < op > ::= + | - | * | / | mod | and | or | == | > | < | >= | <= | !=
+    < op > ::= + 
+    | - 
+    | * 
+    | / 
+    | mod 
+    | and 
+    | or 
+    | == 
+    | > 
+    | < 
+    | >= 
+    | <= 
+    | !=
     ;
     
     /* need help on struct */
@@ -111,6 +124,13 @@ public static void main(String[] args) throws IOException {
     | <proc> <pgm’>
     | <struct> <pgm’>
     ;
+    
+    <struct> ::= <struct> <id> { < declaration >, < declaration >, ... }
+    ;
+    
+    <proc> ::= <return_type> <id> ( < declaration >, ... ) { < statement > }
+    ;
+   
    
 
 %%
