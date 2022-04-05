@@ -106,16 +106,16 @@ public static void main(String[] args) throws IOException {
      
     /* need help on struct */
     /* ask abt statement keyword*/
-    stmt : FOR LEFTPAREN IDENTIFIER EQUAL exp SEMICOLON exp SEMICOLON < statement > RIGHTPAREN < statement >
-    | IF LEFTPAREN exp RIGHTPAREN THEN < statement >
-    | IF (< expr >) then < statement > else < statement >
-    | printf (< string >) SEMICOLON
-    | return <expr > SEMICOLON
-    | { < statement - seq > } # compound statement
-    | <type > <id > SEMICOLON # variable declaration
-    | <l - exp > = <expr > SEMICOLON # assignment
-    | <id >( < expr > ,...) SEMICOLON # void procedure call
-    | id = <id >( < expr > ,...) SEMICOLON # non - void procedure call
+    stmt : FOR LEFTPAREN IDENTIFIER EQUAL exp SEMICOLON exp SEMICOLON stmt RIGHTPAREN stmt
+    | IF LEFTPAREN exp RIGHTPAREN THEN stmt
+    | IF LEFTPAREN exp RIGHTPAREN THEN stmt ELSE stmt
+    | PRINTF LEFTPAREN string RIGHTPAREN SEMICOLON
+    | RETURN exp SEMICOLON
+    | LBRACKET < statement - seq > RBRACKET /* compound statement */
+    | <type > <id > SEMICOLON  /* variable declaration */
+    | <l - exp > = <expr > SEMICOLON /* assignment */
+    | <id >( < expr > ,...) SEMICOLON  /* void procedure call */
+    | id = <id >( < expr > ,...) SEMICOLON  /* non - void procedure call */
     ;
     
     < statement - seq > : # empty sequence
