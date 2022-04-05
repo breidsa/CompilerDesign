@@ -71,8 +71,8 @@ public static void main(String[] args) throws IOException {
     | error '\n'
     ;
     
-    exp : <int - literal >
-    | < string - literal >
+    exp : int 
+    | string 
     | true
     | false
     | exp op exp 
@@ -82,7 +82,7 @@ public static void main(String[] args) throws IOException {
     | ( exp  )
     ;
     
-    < op > : + 
+     op  : + 
     | - 
     | * 
     | / 
