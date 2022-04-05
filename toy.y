@@ -1,8 +1,5 @@
 
 
-
-
-
 %define api.parser.class {ToYParser}
 %define api.parser.public
 %define parse.error verbose
@@ -99,7 +96,7 @@ public static void main(String[] args) throws IOException {
     | id = <id >( < expr > ,...); # non - void procedure call
     ;
     
-    < statementt - seq > ::= # empty sequence
+    < statement - seq > ::= # empty sequence
     | <stmt > < statement - seq >
     ;
     
@@ -144,6 +141,12 @@ public static void main(String[] args) throws IOException {
      // Returns the next token. Here we get the next Token from the Lexer
      return yylex.yylex();
      }
+    }
+    
+    class SymbolTable {
+    enter_scope()
+    exit_scope()
+    
     }
 
 
