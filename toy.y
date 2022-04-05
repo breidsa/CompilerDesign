@@ -80,15 +80,15 @@ public static void main(String[] args) throws IOException {
     | MINUS
     | MULT
     | DIVIDE
-    | mod 
-    | and 
-    | or 
-    | == 
-    | > 
-    | < 
-    | >= 
-    | <= 
-    | !=
+    | AND
+    | OR
+    | DOUBLEEQ
+    | GREATERTHAN
+    | LESSTHAN
+    | GREATERTHANOREQ
+    | LESSTHATOREQ
+    | NOTEQ
+    | EQ
     ;
    
     
