@@ -1,17 +1,17 @@
 
 
 %define api.parser.class {ToYParser}
-%define api.parser.public
+/*%define api.parser.public*/
 %define parse.error verbose
 
 
-%code imports {
+/*%code imports {
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StreamTokenizer
-}
+}*/
 
 
 %code {
