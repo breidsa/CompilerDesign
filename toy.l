@@ -62,7 +62,9 @@ HashComment = "##" {InputCharacter}* {LineTerminator}
 "else" { return new Yytoken("ELSE"); }
 "for" { return new Yytoken("FOR"); }
 "return" { return new Yytoken("RETURN"); }
-
+"and" { return new Yytoken("AND"); }
+"or" { return new Yytoken("OR"); }
+"mod" { return new Yytoken("MOD"); }
 
 /*String Literals*/
 \" {
@@ -94,6 +96,7 @@ HashComment = "##" {InputCharacter}* {LineTerminator}
 "{"                            { return new Yytoken("RBRACKET"); }
 "}"                            { return new Yytoken("LBRACKET"); }
 ";"                            { return new Yytoken("SEMICOLON"); }
+","                            { return new Yytoken("COMMA"); }
 "<"                            { return new Yytoken("LESSTHAN"); }
 ">"                            { return new Yytoken("GREATERTHAN"); }
 "=="                           { return new Yytoken("DOUBLEEQ"); }
@@ -108,6 +111,7 @@ HashComment = "##" {InputCharacter}* {LineTerminator}
 "*"                            { return new Yytoken("MULT"); }
 "/"                            { return new Yytoken("DIVIDE"); }
 "="                            { return new Yytoken("EQ"); }
+"."                            { return new Yytoken("ATTRIBUTE"); }
 
 /* whitespace */
 {WhiteSpace}                   { /* ignore */ }
