@@ -75,7 +75,7 @@ public static void main(String[] args) throws IOException {
     stmt : FOR LEFTPAREN IDENTIFIER EQ exp SEMICOLON exp SEMICOLON stmt RIGHTPAREN stmt
     | IF LEFTPAREN exp RIGHTPAREN THEN stmt
     | IF LEFTPAREN exp RIGHTPAREN THEN stmt ELSE stmt
-    | PRINTF LEFTPAREN string RIGHTPAREN SEMICOLON
+    | PRINTF LEFTPAREN STRING RIGHTPAREN SEMICOLON
     | RETURN exp SEMICOLON
     | LBRACKET stmtSeq RBRACKET /* compound statement */
     | type IDENTIFIER SEMICOLON  /* variable declaration */
