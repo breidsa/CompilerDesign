@@ -33,16 +33,16 @@ public static void main(String[] args) throws IOException {
 
 %type type
 %type returnType
-%type input
+%type struct
 %type declaration
-%type line
+%type proc
+%type stmt
+%type stmtSeq
+%type Lexp
+%type pgm
+%type recursePgm
 %type exp
 %type op
-%type stmt
-%type pgm
-%type struct
-%type string
-%type proc
 
 
 %start program
@@ -53,24 +53,69 @@ public static void main(String[] args) throws IOException {
     stmt {program}
     ;
     
-    type: int | bool | string;
-    
-    returnType: type | void;
-    
-    input: line | input line;
-    
-    declaration: type IDENTIFIER;
-    
-    line: '\n'
-    | exp '\n' { System.out.println($exp); }
-    | error '\n'
+    type: INT 
+    | BOOL 
+    | STRING 
+    | IDENTIFIER
     ;
     
+    returnType: type 
+    | VOID
+    ;
     
-    op  : PLUS
+    struct : STRUCT IDENTIFIER LBRACKET DECLARATION COMMA DECLARATION RBRACKET /* this needs: , ... inside the RBRACKET */
+    ;
+    
+    declaration: type IDENTIFIER
+    ;
+    
+    proc : returnType IDENTIFIER LEFTPAREN declaration RIGHTPAREN LBRACKET stmt RBRACKET /* this needs: , ... after declaration before rightparen */
+    ;
+    
+    stmt : FOR LEFTPAREN IDENTIFIER EQUAL exp SEMICOLON exp SEMICOLON stmt RIGHTPAREN stmt
+    | IF LEFTPAREN exp RIGHTPAREN THEN stmt
+    | IF LEFTPAREN exp RIGHTPAREN THEN stmt ELSE stmt
+    | PRINTF LEFTPAREN string RIGHTPAREN SEMICOLON
+    | RETURN exp SEMICOLON
+    | LBRACKET stmtSeq RBRACKET /* compound statement */
+    | type IDENTIFIER SEMICOLON  /* variable declaration */
+    | Lexp EQ exp SEMICOLON /* assignment */
+    | IDENTIFIER LEFTPAREN exp RIGHTPAREN SEMICOLON  /* void procedure call; needs a ,... after exp before rightparen*/
+    | IDENTIFIER EQ IDENTIFIER LEFTPAREN exp RIGHTPAREN SEMICOLON  /* non - void procedure call;  needs a ,... after exp before rightparen */
+    ;
+    
+    stmtSeq : /* empty sequence */
+    | stmt stmtSeq
+    ;
+    
+    Lexp : IDENTIFIER 
+    | IDENTIFIER ATTRIBUTE Lexp /* attribute is a . like: <id > . <l - exp > */
+    ;
+    
+    pgm : proc recursePgm 
+    | struct pgm 
+    ;
+    
+    recursePgm : /* empty sequence */
+    | proc recursePgm 
+    | struct recursePgm 
+    ;
+    
+    exp : INT
+    | STRING 
+    | TRUE
+    | FALSE
+    | exp op exp 
+    | NOT exp 
+    | Lexp
+    | LEFTPAREN exp RIGHTPAREN
+    ;
+  
+    op : PLUS
     | MINUS
     | MULT
     | DIVIDE
+    | MOD
     | AND
     | OR
     | DOUBLEEQ
@@ -81,58 +126,8 @@ public static void main(String[] args) throws IOException {
     | NOTEQ
     | EQ
     ;
-   
-    
-    
-    exp : INT
-    | STRING 
-    | TRUE
-    | FALSE
-    | exp op exp 
-    | NOT exp 
-    | l - exp 
-    | LEFTPAREN exp RIGHTPAREN
-    ;
-    
-     
-    /* need help on struct */
-    /* ask abt statement keyword*/
-    stmt : FOR LEFTPAREN IDENTIFIER EQUAL exp SEMICOLON exp SEMICOLON stmt RIGHTPAREN stmt
-    | IF LEFTPAREN exp RIGHTPAREN THEN stmt
-    | IF LEFTPAREN exp RIGHTPAREN THEN stmt ELSE stmt
-    | PRINTF LEFTPAREN string RIGHTPAREN SEMICOLON
-    | RETURN exp SEMICOLON
-    | LBRACKET < statement - seq > RBRACKET /* compound statement */
-    | type IDENTIFIER SEMICOLON  /* variable declaration */
-    | <l - exp > EQ exp SEMICOLON /* assignment */
-    | IDENTIFIER LEFTPAREN exp ,... RIGHT PAREN SEMICOLON  /* void procedure call */
-    | IDENTIFIER EQ IDENTIFIER LEFTPAREN exp ,... RIGHTPAREN SEMICOLON  /* non - void procedure call */
-    ;
-    
-    < statement - seq > : # empty sequence
-    | <stmt > < statement - seq >
-    ;
-    
-    <l - exp > : <id > | < id > . <l - exp >
-    ;
-    
-    < pgm > : <proc > <pgm’>
-    | < struct > <pgm > 
-    ;
-    
-    < pgm’> : # empty sequence
-    | <proc> <pgm’>
-    | <struct> <pgm’>
-    ;
-    
-    <struct> : <struct> <id> { < declaration >, < declaration >, ... }
-    ;
-    
-    <proc> : <return_type> <id> ( < declaration >, ... ) { < statement > }
-    ;
-   
-   
-
+ 
+ 
 %%
     
     class ToYLexer implements ToY.L {
