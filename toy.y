@@ -26,9 +26,9 @@ public static void main(String[] args) throws IOException {
 /* Questions: does boolean and stuff have to come from the lexer?? */
 %token <Integer> INT
 %token <Identifier> BOOL STRING IDENTIFIER
-%token <Boolean> TRUE FALSE IF THEN ELSE FOR
+%token <Boolean> TRUE FALSE IF THEN ELSE FOR AND OR MOD
 %token VOID RETURN PRINTF STRUCT
-%token RBRACKET LBRACKET SEMICOLON LESSTHAN GREATERTHAN DOUBLEEQ LESSTHANOREQ GREATERTHANOREQ NOTEQ NOT LEFTPAREN RIGHTPAREN PLUS MINUS MULT DIVIDE EQ
+%token RBRACKET LBRACKET SEMICOLON COMMA LESSTHAN GREATERTHAN DOUBLEEQ LESSTHANOREQ GREATERTHANOREQ NOTEQ NOT LEFTPAREN RIGHTPAREN PLUS MINUS MULT DIVIDE EQ ATTRIBUTE
 
 
 %type type
@@ -63,7 +63,7 @@ public static void main(String[] args) throws IOException {
     | VOID
     ;
     
-    struct : STRUCT IDENTIFIER LBRACKET DECLARATION COMMA DECLARATION RBRACKET /* this needs: , ... inside the RBRACKET */
+    struct : STRUCT IDENTIFIER LBRACKET declaration COMMA declaration RBRACKET /* this needs: , ... inside the RBRACKET */
     ;
     
     declaration: type IDENTIFIER
@@ -72,7 +72,7 @@ public static void main(String[] args) throws IOException {
     proc : returnType IDENTIFIER LEFTPAREN declaration RIGHTPAREN LBRACKET stmt RBRACKET /* this needs: , ... after declaration before rightparen */
     ;
     
-    stmt : FOR LEFTPAREN IDENTIFIER EQUAL exp SEMICOLON exp SEMICOLON stmt RIGHTPAREN stmt
+    stmt : FOR LEFTPAREN IDENTIFIER EQ exp SEMICOLON exp SEMICOLON stmt RIGHTPAREN stmt
     | IF LEFTPAREN exp RIGHTPAREN THEN stmt
     | IF LEFTPAREN exp RIGHTPAREN THEN stmt ELSE stmt
     | PRINTF LEFTPAREN string RIGHTPAREN SEMICOLON
@@ -122,7 +122,7 @@ public static void main(String[] args) throws IOException {
     | GREATERTHAN
     | LESSTHAN
     | GREATERTHANOREQ
-    | LESSTHATOREQ
+    | LESSTHANOREQ
     | NOTEQ
     | EQ
     ;
