@@ -1,8 +1,8 @@
 default:
 	clear
 	jflex toy.l 
-	bison toy.y -L java --o ToYParser.java
-	javac *.java 
+	bison toy.y -L java --o ToYParser.java 
+	javac *.java -Xdiags:verbose  
 	java toy.y < Test
 	
 clean:

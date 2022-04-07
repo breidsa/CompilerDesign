@@ -1,7 +1,4 @@
 
-
-package symbol_table;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -11,10 +8,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Stack;
 
-
 class symbolMethods {
-    
-    
+
     // private Stack<Scope> indexStructure;
 
     public static void main(String args[]) {

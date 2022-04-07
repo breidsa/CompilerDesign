@@ -7,8 +7,8 @@
 
 %code imports {
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.FileReader;
+import java.io.FileNotFoundException;
 import java.io.Reader;
 import java.io.StreamTokenizer;
 }
@@ -16,7 +16,8 @@ import java.io.StreamTokenizer;
 
 %code {
 public static void main(String[] args) throws IOException {
- ToYLexer l = new ToYLexer(System.in);
+FileReader yyin = new FileReader(args[0]);
+ ToyLexer l = new ToyLexer(yyin);
  ToYParser p = new ToYParser(l);
  if (!p.parse()) System.out.println("INVALID");
 }
@@ -126,20 +127,21 @@ public static void main(String[] args) throws IOException {
  
 %%
     
-    class ToyLexer implements toy.Lexer {
-     InputStreamReader it;
+    class ToyLexer implements Yylex.Lexer {
      Yylex yylex;
      
-     public ToyLexer(InputStream is){
-     it = new InputStreamReader(is);
-     yylex = new Yylex(it);
+
+    public ToyLexer(FileReader is){
+      Yylex yy = new Yylex(is);
      }
+
+    
      
      @Override
      public void yyerror (String s){
      System.err.println(s);
      }
-     ParserToken yylval;
+    Object yylval;
      
      @Override
      public Object getLVal() {
@@ -148,7 +150,7 @@ public static void main(String[] args) throws IOException {
      }
      
      @Override
-     public int yylex () throws IOException{
+     public Yytoken yylex () throws IOException{
      // Returns the next token. Here we get the next Token from the Lexer
      return yylex.yylex();
      }
