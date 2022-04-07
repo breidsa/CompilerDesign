@@ -48,7 +48,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StreamTokenizer;
 
-/* "toy.java":52  */
+/* "ToYParser.java":52  */
 
 /**
  * A Bison parser, automatically generated from <tt>toy.y</tt>.
@@ -550,7 +550,7 @@ public class ToYParser
     switch (yyn)
       {
         
-/* "toy.java":554  */
+/* "ToYParser.java":554  */
 
         default: break;
       }
@@ -1230,7 +1230,7 @@ public static void main(String[] args) throws IOException {
  if (!p.parse()) System.out.println("INVALID");
 }
 
-/* "toy.java":1234  */
+/* "ToYParser.java":1234  */
 
 }
 /* "toy.y":127  */
