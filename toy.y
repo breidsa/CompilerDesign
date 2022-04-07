@@ -154,7 +154,7 @@ public static void main(String[] args) throws IOException {
      }
     }
     
-    /*
+    /* 
     public class SymbolTable {
     enter_scope()
     exit_scope()
