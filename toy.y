@@ -130,7 +130,7 @@ public static void main(String[] args) throws IOException {
      InputStreamReader it;
      Yylex yylex;
      
-     public ToYLexer(InputStream is){
+     public ToyLexer(InputStream is){
      it = new InputStreamReader(is);
      yylex = new Yylex(it);
      }
