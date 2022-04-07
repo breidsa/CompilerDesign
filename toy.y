@@ -1,5 +1,5 @@
 
-
+%define api.prefix {ToYParser}
 %define api.parser.class {ToYParser}
 %define api.parser.public
 %define parse.error verbose
