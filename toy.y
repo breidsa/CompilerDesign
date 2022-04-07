@@ -45,13 +45,9 @@ public static void main(String[] args) throws IOException {
 %type op
 
 
-%start program
+%start pgm
 
 %%
-    
-    program:
-    stmt {program}
-    ;
     
     type: INT 
     | BOOL 
