@@ -1236,7 +1236,7 @@ public static void main(String[] args) throws IOException {
 /* "toy.y":127  */
 
     
-    class ToyLexer implements toy.l {
+    class ToyLexer implements toy.Yylex {
      InputStreamReader it;
      Yylex yylex;
      
