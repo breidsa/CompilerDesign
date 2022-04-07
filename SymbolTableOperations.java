@@ -15,7 +15,7 @@ import java.util.Stack;
 class symbolMethods {
     
     
-    private Stack<Scope> indexStructure;
+    // private Stack<Scope> indexStructure;
 
     public static void main(String args[]) {
 
