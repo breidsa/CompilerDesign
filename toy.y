@@ -126,7 +126,7 @@ public static void main(String[] args) throws IOException {
  
 %%
     
-    class ToYLexer implements toy.l {
+    class ToyLexer implements toy.l {
      InputStreamReader it;
      Yylex yylex;
      
