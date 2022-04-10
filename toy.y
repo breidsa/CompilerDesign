@@ -109,7 +109,24 @@ FileReader yyin = new FileReader(args[0]);
     | Lexp
     | LEFTPAREN exp RIGHTPAREN
     ;
+    
+    /*
+    
+    exp:
+ NUM { $$ = $1; }
+| exp '=' exp { if ($1.intValue() != $3.intValue()) yyerror("calc: error: " + $1 + " != " + $3); }
+| exp '+' exp { $$ = $1 + $3; }
+| exp '-' exp { $$ = $1 - $3; }
+| exp '*' exp { $$ = $1 * $3; }
+| exp '/' exp { $$ = $1 / $3; }
+| '-' exp %prec NEG { $$ = -$2; }
+| exp '^' exp { $$ = (int) Math.pow($1, $3); }
+| '(' exp ')' { $$ = $2; }
+| '(' error ')' { $$ = 1111; }
+| '!' { $$ = 0; return YYERROR; }
+| '-' error { $$ = 0; return YYERROR; }
   
+  */
     op : PLUS
     | MINUS
     | MULT
