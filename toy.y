@@ -1,4 +1,4 @@
-
+%language "Java"
 %define api.prefix {ToY}
 %define api.parser.class {ToY}
 %define api.parser.public
@@ -19,7 +19,7 @@ import java.util.*;
 %code {
 public static void main(String[] args) throws IOException {
 FileReader yyin = new FileReader(args[0]);
- ToyLexer l = new ToyLexer(yyin);
+ ToYLexer l = new ToYLexer(yyin);
  ToY p = new ToY(l);
  if (!p.parse()) System.out.println("INVALID");
 }
@@ -28,8 +28,8 @@ FileReader yyin = new FileReader(args[0]);
 /* Bison Declarations */
 /* Questions: does boolean and stuff have to come from the lexer?? */
 %token INT
-%token  BOOL STRING IDENTIFIER
-%token  TRUE FALSE IF THEN ELSE FOR AND OR MOD
+%token BOOL STRING IDENTIFIER COMMENT
+%token TRUE FALSE IF THEN ELSE FOR AND OR MOD
 %token VOID RETURN PRINTF STRUCT
 %token RBRACKET LBRACKET SEMICOLON COMMA LESSTHAN GREATERTHAN DOUBLEEQ LESSTHANOREQ GREATERTHANOREQ NOTEQ NOT LEFTPAREN RIGHTPAREN PLUS MINUS MULT DIVIDE EQ ATTRIBUTE
 
@@ -129,12 +129,12 @@ FileReader yyin = new FileReader(args[0]);
  
 %%
     
-    class ToyLexer implements ToY.Lexer {
+    class ToYLexer implements ToY.Lexer {
       Yylex yylex;
     
      
 
-    public ToyLexer(FileReader is){
+    public ToYLexer(FileReader is){
       yylex = new Yylex(is);
      }
 

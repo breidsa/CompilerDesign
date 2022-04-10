@@ -23,7 +23,7 @@ class Yytoken {
 StringBuffer stringBuffer = new StringBuffer();
 StringBuffer intBuffer = new StringBuffer();
 
-/* public static void main(String[] args) throws FileNotFoundException, IOException{
+public static void main(String[] args) throws FileNotFoundException, IOException{
             FileReader yyin = new FileReader(args[0]);
             Yylex yy = new Yylex(yyin);
             Yytoken t;
@@ -31,7 +31,7 @@ StringBuffer intBuffer = new StringBuffer();
                 System.out.println(t.type);
             System.out.println("VALID");
 }
-*/
+
 %}
 
 LineTerminator = \r|\n|\r\n
@@ -94,7 +94,7 @@ HashComment = "##" {InputCharacter}* {LineTerminator}
     stringBuffer.append( yytext() );
 }
     
-{Digit}+             { return new Yytoken(ToYLexer.INTEGER); }
+{Digit}+             { return new Yytoken(ToYLexer.INT); }
 /* Integers Literals
 {Digit} {
         intBuffer.setLength(0);
@@ -162,7 +162,7 @@ HashComment = "##" {InputCharacter}* {LineTerminator}
 <STRING>\" {
     yybegin(YYINITIAL);
     stringBuffer.append( yytext() );
-    return new Yytoken("String " + stringBuffer.toString());
+    return new Yytoken(ToYLexer.STRING);
 }
 <STRING><<EOF>> {
     throw new Error("ERROR: String Error EOF");
