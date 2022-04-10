@@ -27,9 +27,9 @@ FileReader yyin = new FileReader(args[0]);
 
 /* Bison Declarations */
 /* Questions: does boolean and stuff have to come from the lexer?? */
-%token <Integer> INT
-%token <Identifier> BOOL STRING IDENTIFIER
-%token <Boolean> TRUE FALSE IF THEN ELSE FOR AND OR MOD
+%token INT
+%token  BOOL STRING IDENTIFIER
+%token  TRUE FALSE IF THEN ELSE FOR AND OR MOD
 %token VOID RETURN PRINTF STRUCT
 %token RBRACKET LBRACKET SEMICOLON COMMA LESSTHAN GREATERTHAN DOUBLEEQ LESSTHANOREQ GREATERTHANOREQ NOTEQ NOT LEFTPAREN RIGHTPAREN PLUS MINUS MULT DIVIDE EQ ATTRIBUTE
 
@@ -130,7 +130,7 @@ FileReader yyin = new FileReader(args[0]);
 %%
     
     class ToyLexer implements ToY.Lexer {
-    Yylex yylex;
+      Yylex yylex;
     
      
 

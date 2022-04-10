@@ -94,7 +94,7 @@ HashComment = "##" {InputCharacter}* {LineTerminator}
     stringBuffer.append( yytext() );
 }
     
-{Digit}+             { return new Yytoken("INTEGER"); }
+{Digit}+             { return new Yytoken(ToYLexer.INTEGER); }
 /* Integers Literals
 {Digit} {
         intBuffer.setLength(0);
@@ -106,37 +106,37 @@ HashComment = "##" {InputCharacter}* {LineTerminator}
 
     
 /* identifiers */
-{Identifier}                   { return new Yytoken("IDENTIFIER"); }
+{Identifier}                   { return new Yytoken(ToYLexer.IDENTIFIER); }
 
 
     
     
 
 /* symbols */
-"{"                            { return new Yytoken("RBRACKET"); }
-"}"                            { return new Yytoken("LBRACKET"); }
-";"                            { return new Yytoken("SEMICOLON"); }
-","                            { return new Yytoken("COMMA"); }
-"<"                            { return new Yytoken("LESSTHAN"); }
-">"                            { return new Yytoken("GREATERTHAN"); }
-"=="                           { return new Yytoken("DOUBLEEQ"); }
-"<="                           { return new Yytoken("LESSTHANOREQ"); }
-">="                           { return new Yytoken("GREATERTHANOREQ"); }
-"!="                           { return new Yytoken("NOTEQ"); }
-"!"                            { return new Yytoken("NOT"); }
-"("                            { return new Yytoken("LEFTPAREN"); }
-")"                            { return new Yytoken("RIGHTPAREN"); }
-"+"                            { return new Yytoken("PLUS"); }
-"-"                            { return new Yytoken("MINUS"); }
-"*"                            { return new Yytoken("MULT"); }
-"/"                            { return new Yytoken("DIVIDE"); }
-"="                            { return new Yytoken("EQ"); }
-"."                            { return new Yytoken("ATTRIBUTE"); }
+"{"                            { return new Yytoken(ToYLexer.RBRACKET); }
+"}"                            { return new Yytoken(ToYLexer.LBRACKET); }
+";"                            { return new Yytoken(ToYLexer.SEMICOLON); }
+","                            { return new Yytoken(ToYLexer.COMMA); }
+"<"                            { return new Yytoken(ToYLexer.LESSTHAN); }
+">"                            { return new Yytoken(ToYLexer.GREATERTHAN); }
+"=="                           { return new Yytoken(ToYLexer.DOUBLEEQ); }
+"<="                           { return new Yytoken(ToYLexer.LESSTHANOREQ); }
+">="                           { return new Yytoken(ToYLexer.GREATERTHANOREQ); }
+"!="                           { return new Yytoken(ToYLexer.NOTEQ); }
+"!"                            { return new Yytoken(ToYLexer.NOT); }
+"("                            { return new Yytoken(ToYLexer.LEFTPAREN); }
+")"                            { return new Yytoken(ToYLexer.RIGHTPAREN); }
+"+"                            { return new Yytoken(ToYLexer.PLUS); }
+"-"                            { return new Yytoken(ToYLexer.MINUS); }
+"*"                            { return new Yytoken(ToYLexer.MULT); }
+"/"                            { return new Yytoken(ToYLexer.DIVIDE); }
+"="                            { return new Yytoken(ToYLexer.EQ); }
+"."                            { return new Yytoken(ToYLexer.ATTRIBUTE); }
 
 /* whitespace */
 {WhiteSpace}                   { /* ignore */ }
 /* comment */
-{Comment}                   { return new Yytoken("COMMENT"); }
+{Comment}                   { return new Yytoken(ToYLexer.COMMENT); }
 
 /*Integer
 <INT>{Digit} {

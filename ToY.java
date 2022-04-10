@@ -40,7 +40,7 @@
 import java.text.MessageFormat;
 import java.util.ArrayList;
 /* "%code imports" blocks.  */
-/* "toy.y":9  */
+/* "ToY.y":9  */
 
 import java.io.IOException;
 import java.io.FileReader;
@@ -52,7 +52,7 @@ import java.util.*;
 /* "ToY.java":53  */
 
 /**
- * A Bison parser, automatically generated from <tt>toy.y</tt>.
+ * A Bison parser, automatically generated from <tt>ToY.y</tt>.
  *
  * @author LALR (1) parser skeleton written by Paolo Bonzini.
  */
@@ -1223,7 +1223,7 @@ private static final byte[] yycheck_ = yycheck_init();
   private static final int YYNTOKENS_ = 39;
 
 /* Unqualified %code blocks.  */
-/* "toy.y":19  */
+/* "ToY.y":19  */
 
 public static void main(String[] args) throws IOException {
 FileReader yyin = new FileReader(args[0]);
@@ -1235,11 +1235,11 @@ FileReader yyin = new FileReader(args[0]);
 /* "ToY.java":1236  */
 
 }
-/* "toy.y":130  */
+/* "ToY.y":130  */
 
     
     class ToyLexer implements ToY.Lexer {
-    Yylex yylex;
+      Yylex yylex;
     
      
 

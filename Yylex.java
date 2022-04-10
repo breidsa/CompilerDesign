@@ -1000,7 +1000,7 @@ StringBuffer intBuffer = new StringBuffer();
             // fall through
           case 51: break;
           case 3:
-            { return new Yytoken("NOT");
+            { return new Yytoken(ToYLexer.NOT);
             }
             // fall through
           case 52: break;
@@ -1013,82 +1013,82 @@ StringBuffer intBuffer = new StringBuffer();
             // fall through
           case 53: break;
           case 5:
-            { return new Yytoken("IDENTIFIER");
+            { return new Yytoken(ToYLexer.IDENTIFIER);
             }
             // fall through
           case 54: break;
           case 6:
-            { return new Yytoken("LEFTPAREN");
+            { return new Yytoken(ToYLexer.LEFTPAREN);
             }
             // fall through
           case 55: break;
           case 7:
-            { return new Yytoken("RIGHTPAREN");
+            { return new Yytoken(ToYLexer.RIGHTPAREN);
             }
             // fall through
           case 56: break;
           case 8:
-            { return new Yytoken("MULT");
+            { return new Yytoken(ToYLexer.MULT);
             }
             // fall through
           case 57: break;
           case 9:
-            { return new Yytoken("PLUS");
+            { return new Yytoken(ToYLexer.PLUS);
             }
             // fall through
           case 58: break;
           case 10:
-            { return new Yytoken("COMMA");
+            { return new Yytoken(ToYLexer.COMMA);
             }
             // fall through
           case 59: break;
           case 11:
-            { return new Yytoken("MINUS");
+            { return new Yytoken(ToYLexer.MINUS);
             }
             // fall through
           case 60: break;
           case 12:
-            { return new Yytoken("ATTRIBUTE");
+            { return new Yytoken(ToYLexer.ATTRIBUTE);
             }
             // fall through
           case 61: break;
           case 13:
-            { return new Yytoken("DIVIDE");
+            { return new Yytoken(ToYLexer.DIVIDE);
             }
             // fall through
           case 62: break;
           case 14:
-            { return new Yytoken("INTEGER");
+            { return new Yytoken(ToYLexer.INTEGER);
             }
             // fall through
           case 63: break;
           case 15:
-            { return new Yytoken("SEMICOLON");
+            { return new Yytoken(ToYLexer.SEMICOLON);
             }
             // fall through
           case 64: break;
           case 16:
-            { return new Yytoken("LESSTHAN");
+            { return new Yytoken(ToYLexer.LESSTHAN);
             }
             // fall through
           case 65: break;
           case 17:
-            { return new Yytoken("EQ");
+            { return new Yytoken(ToYLexer.EQ);
             }
             // fall through
           case 66: break;
           case 18:
-            { return new Yytoken("GREATERTHAN");
+            { return new Yytoken(ToYLexer.GREATERTHAN);
             }
             // fall through
           case 67: break;
           case 19:
-            { return new Yytoken("RBRACKET");
+            { return new Yytoken(ToYLexer.RBRACKET);
             }
             // fall through
           case 68: break;
           case 20:
-            { return new Yytoken("LBRACKET");
+            { return new Yytoken(ToYLexer.LBRACKET);
             }
             // fall through
           case 69: break;
@@ -1116,22 +1116,22 @@ StringBuffer intBuffer = new StringBuffer();
             // fall through
           case 73: break;
           case 25:
-            { return new Yytoken("NOTEQ");
+            { return new Yytoken(ToYLexer.NOTEQ);
             }
             // fall through
           case 74: break;
           case 26:
-            { return new Yytoken("LESSTHANOREQ");
+            { return new Yytoken(ToYLexer.LESSTHANOREQ);
             }
             // fall through
           case 75: break;
           case 27:
-            { return new Yytoken("DOUBLEEQ");
+            { return new Yytoken(ToYLexer.DOUBLEEQ);
             }
             // fall through
           case 76: break;
           case 28:
-            { return new Yytoken("GREATERTHANOREQ");
+            { return new Yytoken(ToYLexer.GREATERTHANOREQ);
             }
             // fall through
           case 77: break;
@@ -1166,7 +1166,7 @@ StringBuffer intBuffer = new StringBuffer();
             // fall through
           case 83: break;
           case 35:
-            { return new Yytoken("COMMENT");
+            { return new Yytoken(ToYLexer.COMMENT);
             }
             // fall through
           case 84: break;
