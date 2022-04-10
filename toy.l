@@ -3,12 +3,12 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 class Yytoken {
-  public String type;
+  public int type;
   public Object value;
-  public Yytoken(String type) {
+  public Yytoken(int type) {
     this.type = type;
   }
-  public Yytoken(String type, Object value) {
+  public Yytoken(int type, Object value) {
     this.type = type;
     this.value = value;
   }
@@ -50,6 +50,24 @@ HashComment = "##" {InputCharacter}* {LineTerminator}
 
 %%
 /*keywords*/
+"bool" { return new Yytoken(ToYLexer.BOOL); }
+"int" { return new Yytoken(ToYLexer.INT); }
+"true" { return new Yytoken(ToYLexer.TRUE); }
+"false" { return new Yytoken(ToYLexer.FALSE); }
+"void" { return new Yytoken(ToYLexer.VOID); }
+"printf" { return new Yytoken(ToYLexer.PRINTF); }
+"string" { return new Yytoken(ToYLexer.STRING); }
+"struct" { return new Yytoken(ToYLexer.STRUCT); }
+"if" { return new Yytoken(ToYLexer.IF); }
+"then" { return new Yytoken(ToYLexer.THEN); }
+"else" { return new Yytoken(ToYLexer.ELSE); }
+"for" { return new Yytoken(ToYLexer.FOR); }
+"return" { return new Yytoken(ToYLexer.RETURN); }
+"and" { return new Yytoken(ToYLexer.AND); }
+"or" { return new Yytoken(ToYLexer.OR); }
+"mod" { return new Yytoken(ToYLexer.MOD); }
+
+/*keywords
 "bool" { return new Yytoken("BOOL"); }
 "int" { return new Yytoken("INT"); }
 "true" { return new Yytoken("TRUE"); }
@@ -66,6 +84,7 @@ HashComment = "##" {InputCharacter}* {LineTerminator}
 "and" { return new Yytoken("AND"); }
 "or" { return new Yytoken("OR"); }
 "mod" { return new Yytoken("MOD"); }
+*/
 
 /*String Literals*/
 \" {

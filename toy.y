@@ -1,8 +1,9 @@
 
-%define api.prefix {ToYParser}
-%define api.parser.class {ToYParser}
+%define api.prefix {ToY}
+%define api.parser.class {ToY}
 %define api.parser.public
 %define parse.error verbose
+%define api.value.type {Yytoken}
 
 
 %code imports {
@@ -19,7 +20,7 @@ import java.util.*;
 public static void main(String[] args) throws IOException {
 FileReader yyin = new FileReader(args[0]);
  ToyLexer l = new ToyLexer(yyin);
- ToYParser p = new ToYParser(l);
+ ToY p = new ToY(l);
  if (!p.parse()) System.out.println("INVALID");
 }
 }
@@ -128,12 +129,13 @@ FileReader yyin = new FileReader(args[0]);
  
 %%
     
-    class ToyLexer implements Yylex.Lexer {
-     Yylex yylex;
+    class ToyLexer implements ToY.Lexer {
+    Yylex yylex;
+    
      
 
     public ToyLexer(FileReader is){
-      Yylex yy = new Yylex(is);
+      yylex = new Yylex(is);
      }
 
     
@@ -142,21 +144,39 @@ FileReader yyin = new FileReader(args[0]);
      public void yyerror (String s){
      System.err.println(s);
      }
-    Object yylval;
+      Object yylval;
      
      @Override
-     public Object getLVal() {
-     // Returns the semantic value of the last token that yylex returned.
-     return yylval;
-     }
-     
-     @Override
-     public Yytoken yylex () throws IOException{
-     // Returns the next token. Here we get the next Token from the Lexer
-     return yylex.yylex();
-     }
+      public Yytoken getLVal() {
+         return token;
+      }
+
+      Yytoken token;
+
+      @Override
+      public int yylex () throws IOException{
+         token = yylex.yylex();
+         return token.type;
+      }
     }
     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /*
     public class Scope {
     

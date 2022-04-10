@@ -40,22 +40,23 @@
 import java.text.MessageFormat;
 import java.util.ArrayList;
 /* "%code imports" blocks.  */
-/* "toy.y":8  */
+/* "toy.y":9  */
 
 import java.io.IOException;
 import java.io.FileReader;
 import java.io.FileNotFoundException;
 import java.io.Reader;
 import java.io.StreamTokenizer;
+import java.util.*;
 
-/* "ToYParser.java":52  */
+/* "ToY.java":53  */
 
 /**
  * A Bison parser, automatically generated from <tt>toy.y</tt>.
  *
  * @author LALR (1) parser skeleton written by Paolo Bonzini.
  */
-public class ToYParser
+public class ToY
 {
   /** Version number for the Bison executable that generated this parser.  */
   public static final String bisonVersion = "3.8.2";
@@ -270,7 +271,7 @@ public class ToYParser
 
   /**
    * Communication interface between the scanner and the Bison-generated
-   * parser <tt>ToYParser</tt>.
+   * parser <tt>ToY</tt>.
    */
   public interface Lexer {
     /* Token kinds.  */
@@ -361,7 +362,7 @@ public class ToYParser
      * Method to retrieve the semantic value of the last scanned token.
      * @return the semantic value of the last scanned token.
      */
-    Object getLVal();
+    Yytoken getLVal();
 
     /**
      * Entry point for the scanner.  Returns the token identifier corresponding
@@ -396,7 +397,7 @@ public class ToYParser
    * Instantiates the Bison-generated parser.
    * @param yylexer The scanner that will supply tokens to the parser.
    */
-  public ToYParser(Lexer yylexer)
+  public ToY(Lexer yylexer)
   {
 
     this.yylexer = yylexer;
@@ -425,19 +426,19 @@ public class ToYParser
 
   private final class YYStack {
     private int[] stateStack = new int[16];
-    private Object[] valueStack = new Object[16];
+    private Yytoken[] valueStack = new Yytoken[16];
 
     public int size = 16;
     public int height = -1;
 
-    public final void push(int state, Object value) {
+    public final void push(int state, Yytoken value) {
       height++;
       if (size == height) {
         int[] newStateStack = new int[size * 2];
         System.arraycopy(stateStack, 0, newStateStack, 0, height);
         stateStack = newStateStack;
 
-        Object[] newValueStack = new Object[size * 2];
+        Yytoken[] newValueStack = new Yytoken[size * 2];
         System.arraycopy(valueStack, 0, newValueStack, 0, height);
         valueStack = newValueStack;
 
@@ -464,7 +465,7 @@ public class ToYParser
       return stateStack[height - i];
     }
 
-    public final Object valueAt(int i) {
+    public final Yytoken valueAt(int i) {
       return valueStack[height - i];
     }
 
@@ -545,12 +546,12 @@ public class ToYParser
        Otherwise, the following line sets YYVAL to garbage.
        This behavior is undocumented and Bison
        users should not rely upon it.  */
-    Object yyval = (0 < yylen) ? yystack.valueAt(yylen - 1) : yystack.valueAt(0);
+    Yytoken yyval = (0 < yylen) ? yystack.valueAt(yylen - 1) : yystack.valueAt(0);
 
     switch (yyn)
       {
         
-/* "ToYParser.java":554  */
+/* "ToY.java":555  */
 
         default: break;
       }
@@ -593,7 +594,7 @@ public class ToYParser
 
 
     /* Semantic value of the lookahead.  */
-    Object yylval = null;
+    Yytoken yylval = null;
 
 
 
@@ -812,13 +813,13 @@ public class ToYParser
    * a syntax error diagnostic.
    */
   public static final class Context {
-    Context(ToYParser parser, YYStack stack, SymbolKind token) {
+    Context(ToY parser, YYStack stack, SymbolKind token) {
       yyparser = parser;
       yystack = stack;
       yytoken = token;
     }
 
-    private ToYParser yyparser;
+    private ToY yyparser;
     private YYStack yystack;
 
 
@@ -830,7 +831,7 @@ public class ToYParser
     }
 
     private SymbolKind yytoken;
-    static final int NTOKENS = ToYParser.YYNTOKENS_;
+    static final int NTOKENS = ToY.YYNTOKENS_;
 
     /**
      * Put in YYARG at most YYARGN of the expected tokens given the
@@ -1222,27 +1223,28 @@ private static final byte[] yycheck_ = yycheck_init();
   private static final int YYNTOKENS_ = 39;
 
 /* Unqualified %code blocks.  */
-/* "toy.y":17  */
+/* "toy.y":19  */
 
 public static void main(String[] args) throws IOException {
 FileReader yyin = new FileReader(args[0]);
  ToyLexer l = new ToyLexer(yyin);
- ToYParser p = new ToYParser(l);
+ ToY p = new ToY(l);
  if (!p.parse()) System.out.println("INVALID");
 }
 
-/* "ToYParser.java":1235  */
+/* "ToY.java":1236  */
 
 }
-/* "toy.y":128  */
+/* "toy.y":130  */
 
     
-    class ToyLexer implements Yylex.Lexer {
-     Yylex yylex;
+    class ToyLexer implements ToY.Lexer {
+    Yylex yylex;
+    
      
 
     public ToyLexer(FileReader is){
-      Yylex yy = new Yylex(is);
+      yylex = new Yylex(is);
      }
 
     
@@ -1251,27 +1253,78 @@ FileReader yyin = new FileReader(args[0]);
      public void yyerror (String s){
      System.err.println(s);
      }
-    Object yylval;
+      Object yylval;
      
      @Override
-     public Object getLVal() {
-     // Returns the semantic value of the last token that yylex returned.
-     return yylval;
-     }
-     
-     @Override
-     public Yytoken yylex () throws IOException{
-     // Returns the next token. Here we get the next Token from the Lexer
-     return yylex.yylex();
-     }
+      public Yytoken getLVal() {
+         return token;
+      }
+
+      Yytoken token;
+
+      @Override
+      public int yylex () throws IOException{
+         token = yylex.yylex();
+         return token.type;
+      }
     }
     
-    /* 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /*
+    public class Scope {
+    
+     private Hashtable<String,Integer> hash;
+     private int parseLevel;
+     
+     public Scope(int parseLevel){
+        this.parseLevel = parseLevel;
+        map = new Hashtable<>();
+     }
+     
+     public Scope(){
+        parseLevel = 0;
+     }
+
+     public void define(String name, Integer val){
+        map.put(name, val);
+     }
+
+     public boolean isMatching(String name){
+        return map.containsKey(name);
+     }
+
+     public Integer getVal(String name){
+        return  map.get(name);
+     }
+    
+     public int getParseLevel(){
+        return parseLevel;
+     }
+    }
+
+    
+    
     public class SymbolTable {
     enter_scope()
     exit_scope()
     
     }
-    */
 
+*/
 
