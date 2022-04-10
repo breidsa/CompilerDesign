@@ -122,7 +122,7 @@ FileReader yyin = new FileReader(args[0]);
     
     
     | NOT exp { $$ = 0; return YYERROR; }
-    | MINUS exp { $$ = -$2; }
+    | MINUS exp %prec NEG { $$ = -$2; } /* might not need prec Neg */
     | LEFTPAREN exp RIGHTPAREN { $$ = $2; }
     ;
     
@@ -131,18 +131,16 @@ FileReader yyin = new FileReader(args[0]);
     exp:
  NUM { $$ = $1; }
 | exp '=' exp { if ($1.intValue() != $3.intValue()) yyerror("calc: error: " + $1 + " != " + $3); }
-| exp '+' exp { $$ = $1 + $3; }
-| exp '-' exp { $$ = $1 - $3; }
-| exp '*' exp { $$ = $1 * $3; }
-| exp '/' exp { $$ = $1 / $3; }
+
 | '-' exp %prec NEG { $$ = -$2; }
 | exp '^' exp { $$ = (int) Math.pow($1, $3); }
-| '(' exp ')' { $$ = $2; }
-| '(' error ')' { $$ = 1111; }
+
 | '!' { $$ = 0; return YYERROR; }
 | '-' error { $$ = 0; return YYERROR; }
   
   */
+  
+  /* might not need this */
     op : PLUS
     | MINUS
     | MULT
