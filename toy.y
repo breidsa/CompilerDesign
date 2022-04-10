@@ -11,6 +11,7 @@ import java.io.FileReader;
 import java.io.FileNotFoundException;
 import java.io.Reader;
 import java.io.StreamTokenizer;
+import java.util.*;
 }
 
 
@@ -156,12 +157,45 @@ FileReader yyin = new FileReader(args[0]);
      }
     }
     
-    /* 
+    
+    public class Scope {
+    
+     private Hashtable<String,Integer> hash;
+     private int parseLevel;
+     
+     public Scope(int parseLevel){
+        this.parseLevel = parseLevel;
+        map = new Hashtable<>();
+     }
+     
+     public Scope(){
+        parseLevel = 0;
+     }
+
+     public void define(String name, Integer val){
+        map.put(name, val);
+     }
+
+     public boolean isMatching(String name){
+        return map.containsKey(name);
+     }
+
+     public Integer getVal(String name){
+        return  map.get(name);
+     }
+    
+     public int getParseLevel(){
+        return parseLevel;
+     }
+    }
+
+    
+    
     public class SymbolTable {
     enter_scope()
     exit_scope()
     
     }
-    */
+
 
 
