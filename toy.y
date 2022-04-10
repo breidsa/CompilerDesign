@@ -27,7 +27,7 @@ FileReader yyin = new FileReader(args[0]);
 
 /* Bison Declarations */
 /* Questions: does boolean and stuff have to come from the lexer?? */
-%token INT
+%token <INTEGER> INT
 %token BOOL STRING IDENTIFIER COMMENT
 %token TRUE FALSE IF THEN ELSE FOR AND OR MOD
 %token VOID RETURN PRINTF STRUCT
