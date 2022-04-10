@@ -157,7 +157,7 @@ FileReader yyin = new FileReader(args[0]);
      }
     }
     
-    
+    /*
     public class Scope {
     
      private Hashtable<String,Integer> hash;
@@ -197,5 +197,5 @@ FileReader yyin = new FileReader(args[0]);
     
     }
 
-
+*/
 
