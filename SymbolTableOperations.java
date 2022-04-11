@@ -1,7 +1,7 @@
 
 import java.util.*;
 
-/*
+
  * public class Scope {
  * 
  * private Hashtable<String,Integer> hash;
@@ -135,4 +135,4 @@ import java.util.*;
  * }
  * 
  * }
- */
+ 
