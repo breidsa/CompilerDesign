@@ -1240,18 +1240,77 @@ FileReader yyin = new FileReader(args[0]);
 /* "ToY.y":162  */
 
    // Java code for the HashMaps
-   class Scopes2 {
+   class Function {
+      String name;
+      String type; 
+      ArrayList<String> parameters;
+      //contrustor
+      public Function(String name, String type, ArrayList<String> parameters){
+         this.name = name;
+         this.type = type;
+         this.parameters = parameters;
+      }
+   }
 
-      // hashmap for functions maps from function/variable name to value
-      HashMap<String, ArrayList<String>> functions = new HashMap<>();
+   class Struct {
+      String name;
+      ArrayList<String> definitions;
+      
+      //contrustor
+      public Struct(String name, ArrayList<String> definitions){
+         this.name = name;
+         this.definitions = definitions;
+      }
+   }
 
-      // hashmap for functions maps from fstruct name to list of definitions
-      HashMap<String, ArrayList<String>> struct = new HashMap<>();
+   class Var {
+      String name;
+      String type; 
+      String value;
 
-      // hashmap for functions maps from variable name to type string
-      HashMap<String, String> vars = new HashMap<>();
+      //contrustor
+      public Var(String name, String type, String value){
+         this.name = name;
+         this.type = type;
+         this.value = value;
+      }
    }
    
+   
+   /* class Scopes  {
+
+      //hashmap for functions maps from function/variable name to value
+      HashMap<String, Function> functions = new HashMap<>();
+
+      //hashmap for functions maps from fstruct name to list of definitions
+      HashMap<String, Struct> struct = new HashMap<>();
+
+      //hashmap for functions maps from variable name to type string
+      HashMap<String, Var> vars = new HashMap<>();
+
+      public void addEntry(HashMap<String, Fucntion> map, String name, Function addMe) {
+        map.put(name, addMe);
+      }
+
+      public void addEntry(HashMap<String, Struct> map, String name,
+            Struct addMe) {
+        map.put(name, addMe);
+      }
+
+      public void addEntry(HashMap<String, Var> map, String name, Var addMe) {
+         map.put(name, addMee);
+      }
+
+      public ArrayList<String> getEntry(HashMap<String, ArrayList<String>> map,
+               String name) {
+         return map.get(name);
+      }
+
+      public String getVarEntry(HashMap<String, String> map, String name) {
+         return map.get(name);
+      }
+   }
+   */
 
 
     class ToYLexer implements ToY.Lexer {
