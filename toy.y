@@ -104,9 +104,9 @@ FileReader yyin = new FileReader(args[0]);
     | STRING /*{ $$ = $1; }*/
     | TRUE /*{ $$ = $1; }*/
     | FALSE /*{ $$ = $1; }*/
-    /*| exp PLUS exp /*{ $$ = $1 + $3 }*/
-    | exp MINUS exp /*{ $$ = $1 - $3; }*/
-    | exp MULT exp /*{ $$ = $1 * $3; }*/
+    /*| exp PLUS exp { $$ = $1 + $3 }
+    | exp MINUS exp { $$ = $1 - $3; }
+    | exp MULT exp { $$ = $1 * $3; }
     | exp DIVIDE exp { $$ = $1 / $3; }
     | exp MOD exp
     | exp AND exp
