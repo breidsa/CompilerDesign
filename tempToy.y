@@ -13,8 +13,6 @@ import java.io.FileNotFoundException;
 import java.io.Reader;
 import java.io.StreamTokenizer;
 import java.util.*;
-import java.util.HashMap;
-import java.util.ArrayList;
 }
 
 
@@ -50,12 +48,11 @@ FileReader yyin = new FileReader(args[0]);
 %type op
 
 
-
 %start pgm
 
 %%
     
-    type: INT 
+    type: INT {
     | BOOL 
     | STRING 
     | IDENTIFIER
@@ -103,11 +100,11 @@ FileReader yyin = new FileReader(args[0]);
     | struct recursePgm 
     ;
     
-    exp : INT /*{ $$ = $1; }*/
-    | STRING /*{ $$ = $1; }*/
-    | TRUE /*{ $$ = $1; }*/
-    | FALSE /*{ $$ = $1; }*/
-    /*| exp PLUS exp { $$ = $1 + $3 }
+    exp : INT { $$ = $1; }
+    | STRING { $$ = $1; }
+    | TRUE { $$ = $1; }
+    | FALSE { $$ = $1; }
+    | exp PLUS exp { $$ = $1 + $3 }
     | exp MINUS exp { $$ = $1 - $3; }
     | exp MULT exp { $$ = $1 * $3; }
     | exp DIVIDE exp { $$ = $1 / $3; }
@@ -120,22 +117,21 @@ FileReader yyin = new FileReader(args[0]);
     | exp GREATERTHANOREQ exp
     | exp LESSTHANOREQ exp
     | exp NOTEQ exp
-    | exp EQ exp { if ($1.intValue() != $3.intValue()) yyerror("calc: error: " + $1 + " != " + $3); }*/
+    | exp EQ exp { if ($1.intValue() != $3.intValue()) yyerror("calc: error: " + $1 + " != " + $3); }
     
-    | exp op exp
-    | NOT exp /*{ $$ = 0; return YYERROR; }*/
-    | MINUS exp /*%prec NEG { $$ = -$2; } /* might not need prec Neg */
-    | LEFTPAREN exp RIGHTPAREN /*{ $$ = $2; }*/
+    
+    | NOT exp { $$ = 0; return YYERROR; }
+    | MINUS exp %prec NEG { $$ = -$2; } /* might not need prec Neg */
+    | LEFTPAREN exp RIGHTPAREN { $$ = $2; }
     ;
+    
     /*
     
     exp:
  NUM { $$ = $1; }
 | exp '=' exp { if ($1.intValue() != $3.intValue()) yyerror("calc: error: " + $1 + " != " + $3); }
-
 | '-' exp %prec NEG { $$ = -$2; }
 | exp '^' exp { $$ = (int) Math.pow($1, $3); }
-
 | '!' { $$ = 0; return YYERROR; }
 | '-' error { $$ = 0; return YYERROR; }
   
@@ -160,21 +156,7 @@ FileReader yyin = new FileReader(args[0]);
  
  
 %%
-   // Java code for the HashMaps
-   class Scopes2 {
-
-      // hashmap for functions maps from function/variable name to value
-      HashMap<String, ArrayList<String>> functions = new HashMap<>();
-
-      // hashmap for functions maps from fstruct name to list of definitions
-      HashMap<String, ArrayList<String>> struct = new HashMap<>();
-
-      // hashmap for functions maps from variable name to type string
-      HashMap<String, String> vars = new HashMap<>();
-   }
-   
-
-
+    
     class ToYLexer implements ToY.Lexer {
       Yylex yylex;
     
@@ -223,4 +205,39 @@ FileReader yyin = new FileReader(args[0]);
 
 
 
+    /*
+    public class Scope {
     
+     private Hashtable<String,Integer> hash;
+     private int parseLevel;
+     
+     public Scope(int parseLevel){
+        this.parseLevel = parseLevel;
+        map = new Hashtable<>();
+     }
+     
+     public Scope(){
+        parseLevel = 0;
+     }
+     public void define(String name, Integer val){
+        map.put(name, val);
+     }
+     public boolean isMatching(String name){
+        return map.containsKey(name);
+     }
+     public Integer getVal(String name){
+        return  map.get(name);
+     }
+    
+     public int getParseLevel(){
+        return parseLevel;
+     }
+    }
+    
+    
+    public class SymbolTable {
+    enter_scope()
+    exit_scope()
+    
+    }
+*/
