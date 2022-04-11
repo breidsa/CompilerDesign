@@ -52,7 +52,7 @@ FileReader yyin = new FileReader(args[0]);
 
 %%
     
-    type: INT 
+    type: INT {
     | BOOL 
     | STRING 
     | IDENTIFIER
