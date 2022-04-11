@@ -1,7 +1,8 @@
 
-import java.util.*;
-
-
+/*
+ * import java.util.*;
+ * 
+ * 
  * public class Scope {
  * 
  * private Hashtable<Identifier,Tuple> hash;
@@ -135,4 +136,4 @@ import java.util.*;
  * }
  * 
  * }
- 
+ */

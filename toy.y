@@ -13,6 +13,8 @@ import java.io.FileNotFoundException;
 import java.io.Reader;
 import java.io.StreamTokenizer;
 import java.util.*;
+import java.util.HashMap;
+import java.util.ArrayList;
 }
 
 
@@ -46,6 +48,7 @@ FileReader yyin = new FileReader(args[0]);
 %type recursePgm
 %type exp
 %type op
+%type<val> exp NUM
 
 
 %start pgm
@@ -101,30 +104,30 @@ FileReader yyin = new FileReader(args[0]);
     ;
     
     exp : INT { $$ = $1; }
-    | STRING { $$ = $1; }
-    | TRUE { $$ = $1; }
-    | FALSE { $$ = $1; }
+    | STRING exp { $$ = $1; }
+    | TRUE exp { $$ = $1; }
+    | FALSE exp { $$ = $1; }
     | exp PLUS exp { $$ = $1 + $3 }
     | exp MINUS exp { $$ = $1 - $3; }
     | exp MULT exp { $$ = $1 * $3; }
     | exp DIVIDE exp { $$ = $1 / $3; }
-    | exp MOD exp
-    | exp AND exp
-    | exp OR exp
-    | exp DOUBLEEQ exp
-    | exp GREATERTHAN exp
-    | exp LESSTHAN exp
-    | exp GREATERTHANOREQ exp
-    | exp LESSTHANOREQ exp
-    | exp NOTEQ exp
+    | exp MOD exp exp { $$ = $1 % $3; }
+    | exp AND exp exp { $$ = $1 && $3; }
+    | exp OR exp exp { $$ = $1 | $3; }
+    | exp DOUBLEEQ exp exp { $$ = $1 == $3; }
+    | exp GREATERTHAN exp exp { $$ = $1 > $3; }
+    | exp LESSTHAN exp exp { $$ = $1 < $3; }
+    | exp GREATERTHANOREQ exp exp { $$ = $1 >= $3; }
+    | exp LESSTHANOREQ exp exp { $$ = $1 <= $3; }
+    | exp NOTEQ exp exp { $$ = $1 != $3; }
     | exp EQ exp { if ($1.intValue() != $3.intValue()) yyerror("calc: error: " + $1 + " != " + $3); }
     
     
     | NOT exp { $$ = 0; return YYERROR; }
-    | MINUS exp %prec NEG { $$ = -$2; } /* might not need prec Neg */
+    | MINUS exp %prec NEG { $$ = -$2; } m
     | LEFTPAREN exp RIGHTPAREN { $$ = $2; }
     ;
-    
+
     /*
     
     exp:
@@ -158,7 +161,20 @@ FileReader yyin = new FileReader(args[0]);
  
  
 %%
-    
+   // Java code for the HashMaps
+   public class Scopes {
+
+      // hashmap for functions maps from function/variable name to value
+      HashMap<String, ArrayList<String>> functions = new HashMap<>();
+
+      // hashmap for functions maps from fstruct name to list of definitions
+      HashMap<String, ArrayList<String>> struct = new HashMap<>();
+
+      // hashmap for functions maps from variable name to type string
+      HashMap<String, String> vars = new HashMap<>();
+   }
+
+
     class ToYLexer implements ToY.Lexer {
       Yylex yylex;
     
