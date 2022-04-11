@@ -161,57 +161,41 @@ FileReader yyin = new FileReader(args[0]);
  
 %%
    // Java code for the HashMaps
-   class Function {
-      String name;
-      String type; 
-      ArrayList<String> parameters;
-      //contrustor
-      public Function(String name, String type, ArrayList<String> parameters){
-         this.name = name;
-         this.type = type;
-         this.parameters = parameters;
-      }
-   }
-
-   class Struct {
-      String name;
-      ArrayList<String> definitions;
-      
-      //contrustor
-      public Struct(String name, ArrayList<String> definitions){
-         this.name = name;
-         this.definitions = definitions;
-      }
-   }
-
-   class Var {
-      String name;
-      String type; 
-      String value;
-
-      //contrustor
-      public Var(String name, String type, String value){
-         this.name = name;
-         this.type = type;
-         this.value = value;
-      }
-   }
    
    
   class Symbol{
-
+     String name;
+     String type; 
+     ArrayList<String> parameters;
+    //contrustor
   }
 
   class SymbolVar extends Symbol{
-
+     String value;
+     public SymbolVar(String name, String type, String value){
+         this.name = name;
+         this.type = type;
+         this.value = value; 
+      }
   }
 
   class SymbolFunction extends Symbol{
 
+     public SymbolFunction(String name, String type, ArrayList<String> parameters){
+         this.name = name;
+         this.type = type;
+         this.parameters = parameters;
+      }
 
   }
 
   class SymbolStruct extends Symbol{
+     ArrayList<String> definitions;
+
+     public SymbolStruct(String name, ArrayList<String> definitions){
+         this.name = name;
+         this.definitions = definitions;
+      }
 
   }
 
