@@ -1,10 +1,10 @@
 
 import java.util.*;
 
-/*
+
  * public class Scope {
  * 
- * private Hashtable<String,Integer> hash;
+ * private Hashtable<Identifier,Tuple> hash;
  * private int parseLvl;
  * 
  * public Scope(int parseLvl){
@@ -135,4 +135,4 @@ import java.util.*;
  * }
  * 
  * }
- */
+ 
