@@ -100,13 +100,13 @@ FileReader yyin = new FileReader(args[0]);
     | struct recursePgm 
     ;
     
-    exp : INT { $$ = $1; }
-    | STRING { $$ = $1; }
-    | TRUE { $$ = $1; }
-    | FALSE { $$ = $1; }
-    | exp PLUS exp { $$ = $1 + $3 }
-    | exp MINUS exp { $$ = $1 - $3; }
-    | exp MULT exp { $$ = $1 * $3; }
+    exp : INT /*{ $$ = $1; }*/
+    | STRING /*{ $$ = $1; }*/
+    | TRUE /*{ $$ = $1; }*/
+    | FALSE /*{ $$ = $1; }*/
+    /*| exp PLUS exp /*{ $$ = $1 + $3 }*/
+    | exp MINUS exp /*{ $$ = $1 - $3; }*/
+    | exp MULT exp /*{ $$ = $1 * $3; }*/
     | exp DIVIDE exp { $$ = $1 / $3; }
     | exp MOD exp
     | exp AND exp
@@ -117,12 +117,12 @@ FileReader yyin = new FileReader(args[0]);
     | exp GREATERTHANOREQ exp
     | exp LESSTHANOREQ exp
     | exp NOTEQ exp
-    | exp EQ exp { if ($1.intValue() != $3.intValue()) yyerror("calc: error: " + $1 + " != " + $3); }
+    | exp EQ exp { if ($1.intValue() != $3.intValue()) yyerror("calc: error: " + $1 + " != " + $3); }*/
     
-    
-    | NOT exp { $$ = 0; return YYERROR; }
-    | MINUS exp %prec NEG { $$ = -$2; } /* might not need prec Neg */
-    | LEFTPAREN exp RIGHTPAREN { $$ = $2; }
+    | exp op exp
+    | NOT exp /*{ $$ = 0; return YYERROR; }*/
+    | MINUS exp /*%prec NEG { $$ = -$2; } /* might not need prec Neg */ */
+    | LEFTPAREN exp RIGHTPAREN /*{ $$ = $2; }*/
     ;
     
     /*
