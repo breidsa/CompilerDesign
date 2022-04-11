@@ -72,7 +72,7 @@ FileReader yyin = new FileReader(args[0]);
     ;
     
     stmt : FOR LEFTPAREN IDENTIFIER EQ exp SEMICOLON exp SEMICOLON stmt RIGHTPAREN stmt
-    | IF LEFTPAREN exp RIGHTPAREN THEN stmt
+    | IF LEFTPAREN exp RIGHTPAREN THEN stmt {
     | IF LEFTPAREN exp RIGHTPAREN THEN stmt ELSE stmt
     | PRINTF LEFTPAREN STRING RIGHTPAREN SEMICOLON
     | RETURN exp SEMICOLON
@@ -108,15 +108,15 @@ FileReader yyin = new FileReader(args[0]);
     | exp MINUS exp { $$ = $1 - $3; }
     | exp MULT exp { $$ = $1 * $3; }
     | exp DIVIDE exp { $$ = $1 / $3; }
-    | exp MOD exp
-    | exp AND exp
-    | exp OR exp
-    | exp DOUBLEEQ exp
-    | exp GREATERTHAN exp
-    | exp LESSTHAN exp
-    | exp GREATERTHANOREQ exp
-    | exp LESSTHANOREQ exp
-    | exp NOTEQ exp
+    | exp MOD exp { $$ = $1 % $3; }
+    | exp AND exp { $$ = $1 && $3; }
+    | exp OR exp { $$ = $1 || $3; }
+    | exp DOUBLEEQ exp { $$ = (1$ == $3); }
+    | exp GREATERTHAN exp { $$ = $1 > $3; }
+    | exp LESSTHAN exp { $$ = $1 < $3; }
+    | exp GREATERTHANOREQ exp { $$ = $1 >= $3; }
+    | exp LESSTHANOREQ exp { $$ = $1 <= $3; }
+    | exp NOTEQ exp { if ($1.intValue() == $3.intValue()) yyerror("calc: error: " + $1 + " ==" + $3); }
     | exp EQ exp { if ($1.intValue() != $3.intValue()) yyerror("calc: error: " + $1 + " != " + $3); }
     
     
@@ -188,6 +188,16 @@ FileReader yyin = new FileReader(args[0]);
       }
     }
     
+    
+    
+    public class Symbol {
+    
+    private int scope = 0;
+    private ArrayList<Hashmap<String
+    
+    
+
+
 
 
 
