@@ -188,6 +188,16 @@ FileReader yyin = new FileReader(args[0]);
       }
     }
     
+    
+    
+    public class Symbol {
+    
+    private int scope = 0;
+    private ArrayList<Hashmap<Identifier, Tuple>
+    
+    
+
+
 
 
 
