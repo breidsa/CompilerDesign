@@ -1277,40 +1277,22 @@ FileReader yyin = new FileReader(args[0]);
    }
    
    
-   /* class Scopes  {
+  class Symbol{
 
-      //hashmap for functions maps from function/variable name to value
-      HashMap<String, Function> functions = new HashMap<>();
+  }
 
-      //hashmap for functions maps from fstruct name to list of definitions
-      HashMap<String, Struct> struct = new HashMap<>();
+  class SymbolVar extends Symbol{
 
-      //hashmap for functions maps from variable name to type string
-      HashMap<String, Var> vars = new HashMap<>();
+  }
 
-      public void addEntry(HashMap<String, Fucntion> map, String name, Function addMe) {
-        map.put(name, addMe);
-      }
+  class SymbolFunction extends Symbol{
 
-      public void addEntry(HashMap<String, Struct> map, String name,
-            Struct addMe) {
-        map.put(name, addMe);
-      }
 
-      public void addEntry(HashMap<String, Var> map, String name, Var addMe) {
-         map.put(name, addMee);
-      }
+  }
 
-      public ArrayList<String> getEntry(HashMap<String, ArrayList<String>> map,
-               String name) {
-         return map.get(name);
-      }
+  class SymbolStruct extends Symbol{
 
-      public String getVarEntry(HashMap<String, String> map, String name) {
-         return map.get(name);
-      }
-   }
-   */
+  }
 
 
     class ToYLexer implements ToY.Lexer {
