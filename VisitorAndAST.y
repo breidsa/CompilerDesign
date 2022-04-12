@@ -83,7 +83,7 @@ FileReader yyin = new FileReader(args[0]);
     procCall : IDENTIFIER LEFTPAREN declarationList RIGHTPAREN
     ;
     
-    stmt : FOR LEFTPAREN exp SEMICOLON exp SEMICOLON stmt RIGHTPAREN stmt SEMICOLON { $$ = new ForLoop($3, $5, $7, $9); }
+    stmt : FOR LEFTPAREN exp SEMICOLON exp SEMICOLON stmt RIGHTPAREN stmt SEMICOLON { ForLoop fl = new ForLoop($3, $5, $7, $9); nodeHash.put(fl); $$ = fl; }
     | IF LEFTPAREN exp RIGHTPAREN THEN stmt SEMICOLON{ $$ = new IfStmt($3, $6, null); }
     | IF LEFTPAREN exp RIGHTPAREN THEN stmt ELSE stmt SEMICOLON { $$ = new IfStmt($3, $6, $8); }
     | PRINTF LEFTPAREN STRING RIGHTPAREN SEMICOLON { $$ = new EndFunction($2); }
