@@ -157,9 +157,26 @@ class Type extends ASTNode {
 class FunctionConstuct extends ASTNode {
     String returnType;
     ArrayList<String> parameters;
+    // ASK ABOUT BODY
 
     public FunctionConstuct(String returnType, ArrayList<String> parameters) {
         this.returnType = returnType;
+        this.parameters = parameters;
+    }
+
+    public Object accept(Visitor v) {
+        return v.visit(this);
+    }
+
+}
+
+class FunctionCall extends ASTNode {
+    String name;
+    ArrayList<String> parameters;
+    // ASK ABOUT BODY
+
+    public FunctionCall(String name, ArrayList<String> parameters) {
+        this.name = name;
         this.parameters = parameters;
     }
 
@@ -218,6 +235,10 @@ class AbstractVisitor implements Visitor {
         return null;
     }
 
+    public Object visit(FunctionCall n) {
+        return null;
+    }
+
 }
 
 interface Visitor {
@@ -243,5 +264,7 @@ interface Visitor {
     public Object visit(Type symbol);
 
     public Object visit(FunctionConstuct symbol);
+
+    public Object visit(FunctionCall symbol);
 
 }

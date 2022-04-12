@@ -21,9 +21,9 @@ import java.util.ArrayList;
 %code {
 
 // delcare global hashmaps to fill while parsing -------------------------------------------------------------------------
-HashMap<String, ID> functions;
-HashMap<String, ID> statements;
-HashMap<String, ID> var;
+HashMap<String, ID> functions = new HashMap<String, ID>();
+HashMap<String, ID> statements = new HashMap<String, ID>();
+HashMap<String, ID> var = new HashMap<String, ID>();
 
 public static void main(String[] args) throws IOException {
 FileReader yyin = new FileReader(args[0]);
@@ -228,7 +228,7 @@ class Struct extends ID {
 
 }
    
-   
+ // symbol table class -------------------------------------------------------------------------
   class SymbolTable{
    
    int scope = 0; 
@@ -252,20 +252,7 @@ class Struct extends ID {
    public void exitScope(){
       this.scope--;
    }
-
-   /*
-   public void enterScope(int scope){
-      this.currentScope = table.get(scope);
-   }
    
-
-   //NOT SURE WHAT TO DO WITH THIS METHOD
-   public void exitScope(){
-      this.currentScope = table.get(0);; 
-   }
-   */
-   
-
    //see if the symbol is already included in the table returns the symbol if found
    public ID find_symbol(ID id){
       for (int i = this.scope; i >= 0; i--) {

@@ -1229,9 +1229,9 @@ private static final byte[] yycheck_ = yycheck_init();
 
 
 // delcare global hashmaps to fill while parsing -------------------------------------------------------------------------
-HashMap<String, ID> functions;
-HashMap<String, ID> statements;
-HashMap<String, ID> var;
+HashMap<String, ID> functions = new HashMap<String, ID>();
+HashMap<String, ID> statements = new HashMap<String, ID>();
+HashMap<String, ID> var = new HashMap<String, ID>();
 
 public static void main(String[] args) throws IOException {
 FileReader yyin = new FileReader(args[0]);
@@ -1376,8 +1376,6 @@ class Struct extends ID {
    } 
 
   }
-
-
 
     class ToYLexer implements ToY.Lexer {
       Yylex yylex;
