@@ -298,8 +298,6 @@ class Struct extends ID {
 
   }
 
-
-
     class ToYLexer implements ToY.Lexer {
       Yylex yylex;
     

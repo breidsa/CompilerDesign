@@ -112,12 +112,14 @@ class Asnmt extends ASTNode {
 }
 
 class Decl extends ASTNode {
-    String varName;
-    String value;
+    // QUESTION: would we need type
+    // String varType;
+    // String name;
+    ArrayList<String> names;
 
-    public Decl(String varName, String value) {
-        this.varName = varName;
-        this.value = value;
+    public Decl(ArrayList<String> names) {
+        // this.varType = varType;
+        this.names = names;
     }
 
     public Object accept(Visitor v) {
@@ -144,6 +146,21 @@ class StructCreator extends ASTNode {
 class Type extends ASTNode {
 
     public Type() {
+    }
+
+    public Object accept(Visitor v) {
+        return v.visit(this);
+    }
+
+}
+
+class FunctionConstuct extends ASTNode {
+    String returnType;
+    ArrayList<String> parameters;
+
+    public FunctionConstuct(String returnType, ArrayList<String> parameters) {
+        this.returnType = returnType;
+        this.parameters = parameters;
     }
 
     public Object accept(Visitor v) {
@@ -197,6 +214,10 @@ class AbstractVisitor implements Visitor {
         return null;
     }
 
+    public Object visit(FunctionConstuct n) {
+        return null;
+    }
+
 }
 
 interface Visitor {
@@ -220,5 +241,7 @@ interface Visitor {
     public Object visit(StructCreator symbol);
 
     public Object visit(Type symbol);
+
+    public Object visit(FunctionConstuct symbol);
 
 }
