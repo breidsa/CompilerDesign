@@ -80,7 +80,7 @@ FileReader yyin = new FileReader(args[0]);
     | PRINTF LEFTPAREN STRING RIGHTPAREN SEMICOLON { $$ = new EndFunction($2); }
     | RETURN exp SEMICOLON { $$ = new EndFunction($2); }
     | LBRACKET stmtSeq RBRACKET { $$ = $1; }
-    | declaration SEMICOLON { $$ = $1 } /* variable declaration */
+    | declaration SEMICOLON { $$ = $1; } 
     | Lexp EQ exp SEMICOLON { $$ = new Asnmt($1, $3); }
     | IDENTIFIER LEFTPAREN exp RIGHTPAREN SEMICOLON  /* void procedure call; needs a ,... after exp before rightparen*/
     | IDENTIFIER EQ IDENTIFIER LEFTPAREN exp RIGHTPAREN SEMICOLON  /* non - void procedure call;  needs a ,... after exp before rightparen */
