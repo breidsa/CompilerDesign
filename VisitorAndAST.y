@@ -111,10 +111,10 @@ FileReader yyin = new FileReader(args[0]);
     | STRING /*{ $$ = $1; }*/
     | TRUE /*{ $$ = $1; }*/
     | FALSE /*{ $$ = $1; }*/
-    /*| exp PLUS exp { $$ = $1 + $3 }
-    | exp MINUS exp { $$ = $1 - $3; }
-    | exp MULT exp { $$ = $1 * $3; }
-    | exp DIVIDE exp { $$ = $1 / $3; }
+    | exp PLUS exp { $$ = new PlusExp($1, $3); }
+    | exp MINUS exp { $$ = new MinusExp($1, $3); }
+    | exp MULT exp { $$ = new TimesExp($1, $3); }
+    | exp DIVIDE exp { $$ = new DivideExp($1, $3); }
     | exp MOD exp
     | exp AND exp
     | exp OR exp
@@ -124,7 +124,7 @@ FileReader yyin = new FileReader(args[0]);
     | exp GREATERTHANOREQ exp
     | exp LESSTHANOREQ exp
     | exp NOTEQ exp
-    | exp EQ exp { if ($1.intValue() != $3.intValue()) yyerror("calc: error: " + $1 + " != " + $3); }*/
+    | exp EQ exp { if ($1.intValue() != $3.intValue()) yyerror("calc: error: " + $1 + " != " + $3); }
     
     | exp op exp
     | NOT exp /*{ $$ = 0; return YYERROR; }*/
