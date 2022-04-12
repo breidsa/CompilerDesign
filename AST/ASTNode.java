@@ -14,6 +14,8 @@ public abstract class ASTNode {
 // }
 
 // arithmetic expressions
+
+/*
 class PlusExp extends ASTNode {
     public ASTNode e1, e2;
 
@@ -65,6 +67,48 @@ class DivideExp extends ASTNode {
         return v.visit(this);
     }
 }
+*/
+
+class Arithmetic extends ASTNode {
+    public ASTNode left right;
+    
+    public Arthmetic(ASTNode left, ASTNode right) {
+        this.left = left;
+        this.right = right;
+    }
+    
+    public Object accept(Visitor v) {
+        return v.visit(this);
+    }
+}
+
+class Conditions extends ASTNode {
+    public ASTNode left right;
+    
+    public Conditions(ASTNode left, ASTNode right) {
+        this.left = left;
+        this.right = right;
+    }
+    
+    public Object accept(Visitor v) {
+        return v.visit(this);
+    }
+}
+
+class UnaryOperators extends ASTNode {
+    public ASTNode right;
+    
+    public UnaryOperators(ASTNode right) {
+        this.right = right;
+    }
+    
+    public Object accept(Visitor v) {
+        return v.visit(this);
+    }
+}
+    
+    
+
 
 // For return types ... relevant to line 81 in .y
 class EndFunction extends ASTNode {
