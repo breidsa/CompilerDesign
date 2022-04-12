@@ -285,6 +285,9 @@ class Struct extends ID {
 
   }
 
+
+
+// for the parser and lexer link ------------------------------------------------------
     class ToYLexer implements ToY.Lexer {
       Yylex yylex;
     
