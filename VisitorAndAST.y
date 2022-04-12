@@ -65,7 +65,7 @@ FileReader yyin = new FileReader(args[0]);
     | VOID
     ;
     
-    struct : STRUCT IDENTIFIER LBRACKET declaration COMMA declaration RBRACKET /* { Struct struct = new Struct($1, */
+    struct : STRUCT IDENTIFIER LBRACKET declaration RBRACKET /* { $$ = new StructCreator($2, $4); }
     ;
     
     declaration: type IDENTIFIER { $$ = $2 }
@@ -74,13 +74,13 @@ FileReader yyin = new FileReader(args[0]);
     proc : returnType IDENTIFIER LEFTPAREN declaration RIGHTPAREN LBRACKET stmt RBRACKET /* this needs: , ... after declaration before rightparen */
     ;
     
-    stmt : FOR LEFTPAREN exp SEMICOLON exp SEMICOLON stmt RIGHTPAREN stmt { $$ = new ForLoop($3, $5, $7, $9); }
-    | IF LEFTPAREN exp RIGHTPAREN THEN stmt { $$ = new IfStmt($3, $6, null); }
-    | IF LEFTPAREN exp RIGHTPAREN THEN stmt ELSE stmt { $$ = new IfStmt($3, $6, $8); }
-    | PRINTF LEFTPAREN STRING RIGHTPAREN SEMICOLON
-    | RETURN exp SEMICOLON
-    | LBRACKET stmtSeq RBRACKET /* compound statement */
-    | type IDENTIFIER SEMICOLON  /* variable declaration */
+    stmt : FOR LEFTPAREN exp SEMICOLON exp SEMICOLON stmt RIGHTPAREN stmt SEMICOLON { $$ = new ForLoop($3, $5, $7, $9); }
+    | IF LEFTPAREN exp RIGHTPAREN THEN stmt SEMICOLON{ $$ = new IfStmt($3, $6, null); }
+    | IF LEFTPAREN exp RIGHTPAREN THEN stmt ELSE stmt SEMICOLON { $$ = new IfStmt($3, $6, $8); }
+    | PRINTF LEFTPAREN STRING RIGHTPAREN SEMICOLON { $$ = new EndFunction($2); }
+    | RETURN exp SEMICOLON { $$ = new EndFunction($2); }
+    | LBRACKET stmtSeq RBRACKET { $$ = $1; }
+    | declaration SEMICOLON { $$ = $1 } /* variable declaration */
     | Lexp EQ exp SEMICOLON { $$ = new Asnmt($1, $3); }
     | IDENTIFIER LEFTPAREN exp RIGHTPAREN SEMICOLON  /* void procedure call; needs a ,... after exp before rightparen*/
     | IDENTIFIER EQ IDENTIFIER LEFTPAREN exp RIGHTPAREN SEMICOLON  /* non - void procedure call;  needs a ,... after exp before rightparen */
