@@ -161,11 +161,11 @@ FileReader yyin = new FileReader(args[0]);
  
 %%
    // Java code for the HashMaps
-todo:
-1. make a Visitor class (header would be: public interface Visitor extends ID) 
-  a. this is essentially the equivalent of a .h file
-2. make the current Visitor class into an AbstractVisitorClass (header would be: public class AbstractVisitor implements Visitor)
-3. add semantic actions
+// todo:
+// 1. make a Visitor class (header would be: public interface Visitor extends ID) 
+//   a. this is essentially the equivalent of a .h file
+// 2. make the current Visitor class into an AbstractVisitorClass (header would be: public class AbstractVisitor implements Visitor)
+// 3. add semantic actions
 
 class ID extends ASTNode{
     String name;
