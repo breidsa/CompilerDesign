@@ -40,8 +40,8 @@ FileReader yyin = new FileReader(args[0]);
 %type returnType
 %type struct
 %type declaration
-%type proc
-%type procCall
+%type declarationStmt
+%type function
 %type stmt
 %type stmtSeq
 %type Lexp
@@ -56,31 +56,30 @@ FileReader yyin = new FileReader(args[0]);
 
 %%
     
-    type: INT 
-    | BOOL 
-    | STRING 
+    type: INT /* { $$ = new Type(); } */
+    | BOOL /* { $$ = new Type(); } */
+    | STRING /* { $$ = new Type(); } */
+    /*
     | IDENTIFIER
+    */
     ;
     
     returnType: type { $$ = $1; }
-    | VOID
+    | VOID /* { $$ = new Type(); } */
     ;
     
     struct : STRUCT IDENTIFIER LBRACKET declaration RBRACKET { $$ = new StructCreator($2, $4); }
     ;
     
-    declaration: type IDENTIFIER { $$ = $2 }
+    declaration: type IDENTIFIER { $$ = new Decl($2); }
     ;
     
     declarationList: /*empty*/
-    | declaration
+    | declaration { $$ = $1; }
     | declaration COMMA declarationList
     ;
     
-    proc : returnType procCall LBRACKET stmt RBRACKET /* this needs: , ... after declaration before rightparen */
-    ;
-    
-    procCall : IDENTIFIER LEFTPAREN declarationList RIGHTPAREN
+    function : returnType IDENTIFIER LEFTPAREN declarationList RIGHTPAREN LBRACKET stmt RBRACKET SEMICOLON { $$ = new FunctionConstruct($1, $3) }
     ;
     
     stmt : FOR LEFTPAREN exp SEMICOLON exp SEMICOLON stmt RIGHTPAREN stmt SEMICOLON { ForLoop fl = new ForLoop($3, $5, $7, $9); nodeHash.put(fl); $$ = fl; }
@@ -91,8 +90,8 @@ FileReader yyin = new FileReader(args[0]);
     | LBRACKET stmtSeq RBRACKET { $$ = $1; }
     | declaration SEMICOLON { $$ = $1; } 
     | Lexp EQ exp SEMICOLON { $$ = new Asnmt($1, $3); }
-    | procCall SEMICOLON { $$ = $1; } /* void procedure call; needs a ,... after exp before rightparen*/
-    | IDENTIFIER EQ procCall SEMICOLON { $$ = new Asnmt($1, $3); }  /* non - void procedure call;  needs a ,... after exp before rightparen */
+    | IDENTIFIER declarationList SEMICOLON { $$ = $1; } 
+    | IDENTIFIER EQ IDENTIFIER declarationList SEMICOLON { $$ = new Asnmt($1, $3); }  
     ;
     
     stmtSeq : /* empty sequence */
@@ -103,17 +102,16 @@ FileReader yyin = new FileReader(args[0]);
     | IDENTIFIER ATTRIBUTE Lexp /* attribute is a . like: <id > . <l - exp > */
     ;
     
-    pgm : proc recursePgm 
+    pgm : function recursePgm 
     | struct pgm 
     ;
     
     recursePgm : /* empty sequence */
-    | proc recursePgm 
+    | function recursePgm 
     | struct recursePgm 
     ;
     
-    exp : INT /*{ $$ = $1; }*/
-    | STRING /*{ $$ = $1; }*/
+    exp : type { $$ = $1 }
     | TRUE /*{ $$ = $1; }*/
     | FALSE /*{ $$ = $1; }*/
     | exp PLUS exp { $$ = new Arithemtic($1, $3); }
@@ -140,21 +138,6 @@ FileReader yyin = new FileReader(args[0]);
   */
   
   /* might not need this */
-    op : PLUS
-    | MINUS
-    | MULT
-    | DIVIDE
-    | MOD
-    | AND
-    | OR
-    | DOUBLEEQ
-    | GREATERTHAN
-    | LESSTHAN
-    | GREATERTHANOREQ
-    | LESSTHANOREQ
-    | NOTEQ
-    | EQ
-    ;
  
  
 %%
