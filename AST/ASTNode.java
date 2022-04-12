@@ -1,3 +1,5 @@
+import java.util.*;
+
 public abstract class ASTNode {
     abstract Object accept(Visitor v); /* This may have to be type ID...not sure */
     // might need children nodes
@@ -43,7 +45,6 @@ class UnaryOperators extends ASTNode {
 
 // For return types ... relevant to line 81 in .y
 class EndFunction extends ASTNode {
-
     String exp;
 
     public EndFunction(String exp) {
@@ -139,8 +140,15 @@ class StructCreator extends ASTNode {
     }
 }
 
-// typeclass
-class ASTType extends ASTNode {
+// typeclass ----- ASK QUESTION ABOUT WHAT TO DO FOR JUST TYPES
+class Type extends ASTNode {
+
+    public Type() {
+    }
+
+    public Object accept(Visitor v) {
+        return v.visit(this);
+    }
 
 }
 
@@ -181,34 +189,14 @@ class AbstractVisitor implements Visitor {
         return null;
     }
 
-    // public Object visit(Var var) {
-    // /*
-    // * var.getName().accept(this, id);
-    // * var.getScope().accept(this, id);
-    // * var.getType().accept(this, id);
-    // */
-    // return null;
-    // }
+    public Object visit(StructCreator n) {
+        return null;
+    }
 
-    // public Object visit(Function func, ID id) {
-    // func.getName().accept(this, id);
-    // func.getScope().accept(this, id);
-    // if (func.getParamTypes() != null) {
-    // for (String paramTyoes : Function.getParamTypes()) {
-    // paramTypes.accept(this, id);
-    // }
-    // }
-    // return null;
-    // }
+    public Object visit(Type n) {
+        return null;
+    }
 
-    // public Object visit(Struct struct, ID id) {
-    // /*
-    // * struct.getName().accept(this, id);
-    // * struct.getScope.accept(this, id);
-    // */
-    // struct.getFieldTypes().accept(this, id);
-    // return null;
-    // }
 }
 
 interface Visitor {
@@ -229,10 +217,8 @@ interface Visitor {
 
     public Object visit(IfStmt symbol);
 
-    // public Object visit(Var var);
+    public Object visit(StructCreator symbol);
 
-    // public Object visit(Function func);
-
-    // public Object visit(Struct struct);
+    public Object visit(Type symbol);
 
 }
