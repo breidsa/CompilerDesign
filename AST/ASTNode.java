@@ -14,6 +14,34 @@ class IfStmt extends ASTStmt {
     String thenstmt;
     String elsestmt;
 
+    public IfStmt(String testexp, String thenstmt, String elsestmt) {
+        this.testexp = testexp;
+        this.thenstmt = thenstmt;
+        this.elsestmt = elsestmt;
+    }
+
+}
+
+class Asnmt extends ASTStmt {
+    String var;
+    String exp;
+
+    public Asnmt(String var, String exp) {
+        this.var = var;
+        this.exp = exp;
+    }
+
+}
+
+class VarDec extends ASTStmt {
+    String varType;
+    String varName;
+
+    public VarDec(String varType, String varName) {
+        this.varType = varType;
+        this.varName = varName;
+    }
+
 }
 
 // expression class
