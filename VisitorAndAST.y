@@ -7,3 +7,6 @@ public class ASTNode {
 public class Visitor {
   Object visit(____, Object o);
 }
+
+
+// function declaration node, struct declaration node, and a variable declaration node
