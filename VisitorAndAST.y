@@ -61,14 +61,14 @@ FileReader yyin = new FileReader(args[0]);
     | IDENTIFIER
     ;
     
-    returnType: type 
+    returnType: type { $$ = $1; }
     | VOID
     ;
     
     struct : STRUCT IDENTIFIER LBRACKET declaration COMMA declaration RBRACKET /* { Struct struct = new Struct($1, */
     ;
     
-    declaration: type IDENTIFIER
+    declaration: type IDENTIFIER { $$ = $2 }
     ;
     
     proc : returnType IDENTIFIER LEFTPAREN declaration RIGHTPAREN LBRACKET stmt RBRACKET /* this needs: , ... after declaration before rightparen */
