@@ -42,6 +42,7 @@ FileReader yyin = new FileReader(args[0]);
 %type declaration
 %type declarationStmt
 %type function
+%type paramList
 %type stmt
 %type stmtSeq
 %type Lexp
@@ -82,6 +83,11 @@ FileReader yyin = new FileReader(args[0]);
     function : returnType IDENTIFIER LEFTPAREN declarationList RIGHTPAREN LBRACKET stmt RBRACKET SEMICOLON { $$ = new FunctionConstruct($1, $3) }
     ;
     
+    paramList: /* empty */
+    | IDENTIFIER
+    | IDENTIFIER COMMA paramList
+    ;
+    
     stmt : FOR LEFTPAREN exp SEMICOLON exp SEMICOLON stmt RIGHTPAREN stmt SEMICOLON { ForLoop fl = new ForLoop($3, $5, $7, $9); nodeHash.put(fl); $$ = fl; }
     | IF LEFTPAREN exp RIGHTPAREN THEN stmt SEMICOLON{ $$ = new IfStmt($3, $6, null); }
     | IF LEFTPAREN exp RIGHTPAREN THEN stmt ELSE stmt SEMICOLON { $$ = new IfStmt($3, $6, $8); }
@@ -90,8 +96,8 @@ FileReader yyin = new FileReader(args[0]);
     | LBRACKET stmtSeq RBRACKET { $$ = $1; }
     | declaration SEMICOLON { $$ = $1; } 
     | Lexp EQ exp SEMICOLON { $$ = new Asnmt($1, $3); }
-    | IDENTIFIER declarationList SEMICOLON { $$ = $1; } 
-    | IDENTIFIER EQ IDENTIFIER declarationList SEMICOLON { $$ = new Asnmt($1, $3); }  
+    | IDENTIFIER paramList SEMICOLON { $$ = $1; } 
+    | IDENTIFIER EQ IDENTIFIER paramList SEMICOLON { $$ = new Asnmt($1, $3); }  
     ;
     
     stmtSeq : /* empty sequence */
