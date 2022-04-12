@@ -167,6 +167,8 @@ FileReader yyin = new FileReader(args[0]);
 // 2. make the current Visitor class into an AbstractVisitorClass (header would be: public class AbstractVisitor implements Visitor)
 // 3. add semantic actions
 
+// 4.  add setName() in ID class
+
 class ID extends ASTNode{
     String name;
     int scope;
@@ -257,11 +259,11 @@ class Struct extends ID {
     }
     
     public void setFieldTypes(ArrayList<String> fieldTypes) {
-		    this.fieldTypes = fieldTypes;
+    	this.fieldTypes = fieldTypes;
 	  }
     
     public ID accept(Visitor v, ID id) {
-	      return v.visit(this, id);
+    	return v.visit(this, id);
     }
 
 }
@@ -271,32 +273,41 @@ public class ASTNode {
 	Object accept(Visitor v, ID id);  /* This may have to be type ID...not sure */
 }
 
-public class Visitor extends ID{  
+public class AbstractVisitor implements Visitor{  
 
 	public ID visit(Var var, ID id){
 		/* var.getName().accept(this, id);
-    var.getScope().accept(this, id);
-    var.getType().accept(this, id); */
+    		var.getScope().accept(this, id);
+    		var.getType().accept(this, id); */
 		return null;
 	}
 	
 	public Object visit(Function func, ID id){
 		func.getName().accept(this, id);
-    func.getScope().accept(this, id);
-    if (func.getParamTypes() != null){
-        for (String paramTyoes : Function.getParamTypes()) {
-				    paramTypes.accept(this, id);
-		    }
-    }
+    		func.getScope().accept(this, id);
+    		if (func.getParamTypes() != null){
+        		for (String paramTyoes : Function.getParamTypes()) {
+				paramTypes.accept(this, id);
+		    	}
+    		}
 		return null;
 	}
 	
 	public Object visit(Struct struct, ID id){
 		/* struct.getName().accept(this, id);
-    struct.getScope.accept(this, id); */
-    struct.getFieldTypes().accept(this, id);
+    		struct.getScope.accept(this, id); */
+    		struct.getFieldTypes().accept(this, id);
 		return null;
 	}
+}
+
+public interface Visitor extends ID {
+	
+	ID visit(Var var, ID id);
+	
+	ID visit(Function func, ID id);
+	
+	ID visit(Struct struct, ID id);
 }
 
    
