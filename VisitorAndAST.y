@@ -116,10 +116,10 @@ FileReader yyin = new FileReader(args[0]);
     | STRING /*{ $$ = $1; }*/
     | TRUE /*{ $$ = $1; }*/
     | FALSE /*{ $$ = $1; }*/
-    | exp PLUS exp { $$ = new PlusExp($1, $3); }
-    | exp MINUS exp { $$ = new MinusExp($1, $3); }
-    | exp MULT exp { $$ = new TimesExp($1, $3); }
-    | exp DIVIDE exp { $$ = new DivideExp($1, $3); }
+    | exp PLUS exp { $$ = new Arithemtic($1, $3); }
+    | exp MINUS exp { $$ = new Arithemtic($1, $3); }
+    | exp MULT exp { $$ = new Arithemtic($1, $3); }
+    | exp DIVIDE exp { $$ = new Arithemtic($1, $3); }
     | exp MOD exp
     | exp AND exp
     | exp OR exp
