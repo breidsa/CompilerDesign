@@ -65,7 +65,7 @@ FileReader yyin = new FileReader(args[0]);
     | VOID
     ;
     
-    struct : STRUCT IDENTIFIER LBRACKET declaration COMMA declaration RBRACKET /* this needs: , ... inside the RBRACKET */
+    struct : STRUCT IDENTIFIER LBRACKET declaration COMMA declaration RBRACKET { Struct struct = new Struct($1, 
     ;
     
     declaration: type IDENTIFIER
