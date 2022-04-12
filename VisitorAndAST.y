@@ -41,6 +41,7 @@ FileReader yyin = new FileReader(args[0]);
 %type struct
 %type declaration
 %type proc
+%type procCall
 %type stmt
 %type stmtSeq
 %type Lexp
@@ -71,7 +72,10 @@ FileReader yyin = new FileReader(args[0]);
     declaration: type IDENTIFIER { $$ = $2 }
     ;
     
-    proc : returnType IDENTIFIER LEFTPAREN declaration RIGHTPAREN LBRACKET stmt RBRACKET /* this needs: , ... after declaration before rightparen */
+    proc : returnType procCall LBRACKET stmt RBRACKET /* this needs: , ... after declaration before rightparen */
+    ;
+    
+    procCall : IDENTIFIER LEFTPAREN declaration RIGHTPAREN
     ;
     
     stmt : FOR LEFTPAREN exp SEMICOLON exp SEMICOLON stmt RIGHTPAREN stmt SEMICOLON { $$ = new ForLoop($3, $5, $7, $9); }
@@ -82,8 +86,8 @@ FileReader yyin = new FileReader(args[0]);
     | LBRACKET stmtSeq RBRACKET { $$ = $1; }
     | declaration SEMICOLON { $$ = $1; } 
     | Lexp EQ exp SEMICOLON { $$ = new Asnmt($1, $3); }
-    | IDENTIFIER LEFTPAREN exp RIGHTPAREN SEMICOLON  /* void procedure call; needs a ,... after exp before rightparen*/
-    | IDENTIFIER EQ IDENTIFIER LEFTPAREN exp RIGHTPAREN SEMICOLON  /* non - void procedure call;  needs a ,... after exp before rightparen */
+    | procCall SEMICOLON { $$ = $1; } /* void procedure call; needs a ,... after exp before rightparen*/
+    | IDENTIFIER EQ procCall SEMICOLON { $$ = new Asnmt($1, $3); }  /* non - void procedure call;  needs a ,... after exp before rightparen */
     ;
     
     stmtSeq : /* empty sequence */
