@@ -120,33 +120,22 @@ FileReader yyin = new FileReader(args[0]);
     | exp MINUS exp { $$ = new Arithemtic($1, $3); }
     | exp MULT exp { $$ = new Arithemtic($1, $3); }
     | exp DIVIDE exp { $$ = new Arithemtic($1, $3); }
-    | exp MOD exp
-    | exp AND exp
-    | exp OR exp
-    | exp DOUBLEEQ exp
-    | exp GREATERTHAN exp
-    | exp LESSTHAN exp
-    | exp GREATERTHANOREQ exp
-    | exp LESSTHANOREQ exp
-    | exp NOTEQ exp
-    | exp EQ exp { if ($1.intValue() != $3.intValue()) yyerror("calc: error: " + $1 + " != " + $3); }
-    
-    | exp op exp
-    | NOT exp /*{ $$ = 0; return YYERROR; }*/
-    | MINUS exp /*%prec NEG { $$ = -$2; } /* might not need prec Neg */
-    | LEFTPAREN exp RIGHTPAREN /*{ $$ = $2; }*/
+    | exp MOD exp { $$ = new Arithemtic($1, $3); }
+    | exp AND exp { $$ = new Conditions($1, $3); }
+    | exp OR exp { $$ = new Conditions($1, $3); }
+    | exp DOUBLEEQ exp { $$ = new Conditions($1, $3); }
+    | exp GREATERTHAN exp { $$ = new Conditions($1, $3); }
+    | exp LESSTHAN exp { $$ = new Conditions($1, $3); }
+    | exp GREATERTHANOREQ exp { $$ = new Conditions($1, $3); }
+    | exp LESSTHANOREQ exp { $$ = new Conditions($1, $3); }
+    | exp NOTEQ exp { $$ = new Conditions($1, $3); }
+    | exp EQ exp { $$ = new Asnmt($1, $3); }
+    | NOT exp { $$ = new UnaryOperators($2); }
+    | MINUS exp { $$ = new UnaryOperators($2); }
+    | LEFTPAREN exp RIGHTPAREN { $$ = $2; }
     ;
     /*
     
-    exp:
- NUM { $$ = $1; }
-| exp '=' exp { if ($1.intValue() != $3.intValue()) yyerror("calc: error: " + $1 + " != " + $3); }
-
-| '-' exp %prec NEG { $$ = -$2; }
-| exp '^' exp { $$ = (int) Math.pow($1, $3); }
-
-| '!' { $$ = 0; return YYERROR; }
-| '-' error { $$ = 0; return YYERROR; }
   
   */
   
