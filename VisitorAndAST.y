@@ -65,7 +65,7 @@ FileReader yyin = new FileReader(args[0]);
     | VOID
     ;
     
-    struct : STRUCT IDENTIFIER LBRACKET declaration RBRACKET /* { $$ = new StructCreator($2, $4); }
+    struct : STRUCT IDENTIFIER LBRACKET declaration RBRACKET { $$ = new StructCreator($2, $4); }
     ;
     
     declaration: type IDENTIFIER { $$ = $2 }
