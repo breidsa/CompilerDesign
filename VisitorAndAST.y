@@ -74,9 +74,9 @@ FileReader yyin = new FileReader(args[0]);
     proc : returnType IDENTIFIER LEFTPAREN declaration RIGHTPAREN LBRACKET stmt RBRACKET /* this needs: , ... after declaration before rightparen */
     ;
     
-    stmt : FOR LEFTPAREN IDENTIFIER EQ exp SEMICOLON exp SEMICOLON stmt RIGHTPAREN stmt
-    | IF LEFTPAREN exp RIGHTPAREN THEN stmt
-    | IF LEFTPAREN exp RIGHTPAREN THEN stmt ELSE stmt
+    stmt : FOR LEFTPAREN exp SEMICOLON exp SEMICOLON stmt RIGHTPAREN stmt { $$ = new ForLoop($3, $5, $7, $9); }
+    | IF LEFTPAREN exp RIGHTPAREN THEN stmt { $$ = new IfStmt($3, $6, null); }
+    | IF LEFTPAREN exp RIGHTPAREN THEN stmt ELSE stmt { $$ = new IfStmt($3, $6, $8); }
     | PRINTF LEFTPAREN STRING RIGHTPAREN SEMICOLON
     | RETURN exp SEMICOLON
     | LBRACKET stmtSeq RBRACKET /* compound statement */
