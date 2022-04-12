@@ -72,10 +72,15 @@ FileReader yyin = new FileReader(args[0]);
     declaration: type IDENTIFIER { $$ = $2 }
     ;
     
+    declarationList: /*empty*/
+    | declaration
+    | declaration COMMA declarationList
+    ;
+    
     proc : returnType procCall LBRACKET stmt RBRACKET /* this needs: , ... after declaration before rightparen */
     ;
     
-    procCall : IDENTIFIER LEFTPAREN declaration RIGHTPAREN
+    procCall : IDENTIFIER LEFTPAREN declarationList RIGHTPAREN
     ;
     
     stmt : FOR LEFTPAREN exp SEMICOLON exp SEMICOLON stmt RIGHTPAREN stmt SEMICOLON { $$ = new ForLoop($3, $5, $7, $9); }
