@@ -8,8 +8,24 @@ class ASTStmt extends ASTNode {
 
 }
 
+class ForLoop extends ASTStmt {
+    
+    String iterator;
+    String conditional;
+    String increment;
+    String loopBody;
+    
+    public ForLoop(String iterator, String conditional, String increment, String loopBody){
+        this.iterator = iterator;
+        this.conditional = conditional;
+        this.increment = increment;
+        this.loopBody = loopBody;
+    
+}
+
 // subclasses of statement
 class IfStmt extends ASTStmt {
+    
     String ifStmt
     String thenStmt;
     String elseSTmt;
