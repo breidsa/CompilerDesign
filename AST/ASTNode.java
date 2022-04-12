@@ -10,14 +10,14 @@ class ASTStmt extends ASTNode {
 
 // subclasses of statement
 class IfStmt extends ASTStmt {
-    String testexp;
-    String thenstmt;
-    String elsestmt;
+    String ifStmt
+    String thenStmt;
+    String elseSTmt;
 
-    public IfStmt(String testexp, String thenstmt, String elsestmt) {
-        this.testexp = testexp;
-        this.thenstmt = thenstmt;
-        this.elsestmt = elsestmt;
+    public IfStmt(String ifStmt, String thenStmt, String elseStmt) {
+        this.ifStmt = ifStmt;
+        this.thenStmt = thenStmt;
+        this.elseStmt = elseStmt;
     }
 
 }
