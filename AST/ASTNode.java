@@ -3,93 +3,27 @@ public abstract class ASTNode {
     // might need children nodes
 }
 
-// // 3 main classes for the nodes
-// // statement class
-// class ASTStmt extends ASTNode {
-
-// }
-
-// class Types extends ASTStmt{
-
-// }
-
-// arithmetic expressions
-
-/*
-class PlusExp extends ASTNode {
-    public ASTNode e1, e2;
-
-    public PlusExp(ASTNode a1, ASTNode a2) {
-        e1 = a1;
-        e2 = a2;
-    }
-
-    public Object accept(Visitor v) {
-        return v.visit(this);
-    }
-}
-
-class MinusExp extends ASTNode {
-    public ASTNode e1, e2;
-
-    public MinusExp(ASTNode a1, ASTNode a2) {
-        e1 = a1;
-        e2 = a2;
-    }
-
-    public Object accept(Visitor v) {
-        return v.visit(this);
-    }
-}
-
-class TimesExp extends ASTNode {
-    public ASTNode e1, e2;
-
-    public TimesExp(ASTNode a1, ASTNode a2) {
-        e1 = a1;
-        e2 = a2;
-    }
-
-    public Object accept(Visitor v) {
-        return v.visit(this);
-    }
-}
-
-class DivideExp extends ASTNode {
-    public ASTNode e1, e2;
-
-    public DivideExp(ASTNode a1, ASTNode a2) {
-        e1 = a1;
-        e2 = a2;
-    }
-
-    public Object accept(Visitor v) {
-        return v.visit(this);
-    }
-}
-*/
-
 class Arithmetic extends ASTNode {
-    public ASTNode left right;
-    
-    public Arthmetic(ASTNode left, ASTNode right) {
+    public ASTNode left, right;
+
+    public Arithmetic(ASTNode left, ASTNode right) {
         this.left = left;
         this.right = right;
     }
-    
+
     public Object accept(Visitor v) {
         return v.visit(this);
     }
 }
 
 class Conditions extends ASTNode {
-    public ASTNode left right;
-    
+    public ASTNode left, right;
+
     public Conditions(ASTNode left, ASTNode right) {
         this.left = left;
         this.right = right;
     }
-    
+
     public Object accept(Visitor v) {
         return v.visit(this);
     }
@@ -97,18 +31,15 @@ class Conditions extends ASTNode {
 
 class UnaryOperators extends ASTNode {
     public ASTNode right;
-    
+
     public UnaryOperators(ASTNode right) {
         this.right = right;
     }
-    
+
     public Object accept(Visitor v) {
         return v.visit(this);
     }
 }
-    
-    
-
 
 // For return types ... relevant to line 81 in .y
 class EndFunction extends ASTNode {
@@ -148,9 +79,9 @@ class ForLoop extends ASTNode {
 // subclasses of statement
 class IfStmt extends ASTNode {
 
-    String ifStmt
+    String ifStmt;
     String thenStmt;
-    String elseSTmt;
+    String elseStmt;
 
     public IfStmt(String ifStmt, String thenStmt, String elseStmt) {
         this.ifStmt = ifStmt;
@@ -164,7 +95,7 @@ class IfStmt extends ASTNode {
 
 }
 
-class Asnmt extends ASTStmt {
+class Asnmt extends ASTNode {
     String var;
     String exp;
 
@@ -179,13 +110,13 @@ class Asnmt extends ASTStmt {
 
 }
 
-class VarDec extends ASTStmt {
-    String varType;
+class Decl extends ASTNode {
     String varName;
+    String value;
 
-    public VarDec(String varType, String varName) {
-        this.varType = varType;
+    public Decl(String varName, String value) {
         this.varName = varName;
+        this.value = value;
     }
 
     public Object accept(Visitor v) {
@@ -194,7 +125,7 @@ class VarDec extends ASTStmt {
 
 }
 
-class StructCreator extends ASTStmt {
+class StructCreator extends ASTNode {
     String name;
     ArrayList<String> fieldTypes;
 
@@ -208,11 +139,6 @@ class StructCreator extends ASTStmt {
     }
 }
 
-// expression class
-class ASTExp extends ASTNode {
-
-}
-
 // typeclass
 class ASTType extends ASTNode {
 
@@ -222,61 +148,86 @@ class AbstractVisitor implements Visitor {
 
     // arithmetic expressions
 
-    public Object visit(PlusExp add) {
-        return add.e1.accept(this) + add.e2.accept(this);
-    }
-
-    public Object visit(MinusExp n) {
-        return n.e1.accept(this) - n.e2.accept(this);
-    }
-
-    public Object visit(TimesExp n) {
-        return n.e1.accept(this) * n.e2.accept(this);
-    }
-
-    public Object visit(DivideExp n) {
-        return n.e1.accept(this) / n.e2.accept(this);
-    }
-
-    public Object visit(Var var) {
-        /*
-         * var.getName().accept(this, id);
-         * var.getScope().accept(this, id);
-         * var.getType().accept(this, id);
-         */
+    public Object visit(Arithmetic add) {
+        // return add.e1.accept(this) + add.e2.accept(this);
         return null;
     }
 
-    public Object visit(Function func, ID id) {
-        func.getName().accept(this, id);
-        func.getScope().accept(this, id);
-        if (func.getParamTypes() != null) {
-            for (String paramTyoes : Function.getParamTypes()) {
-                paramTypes.accept(this, id);
-            }
-        }
+    public Object visit(Conditions n) {
         return null;
     }
 
-    public Object visit(Struct struct, ID id) {
-        /*
-         * struct.getName().accept(this, id);
-         * struct.getScope.accept(this, id);
-         */
-        struct.getFieldTypes().accept(this, id);
+    public Object visit(UnaryOperators n) {
         return null;
     }
+
+    public Object visit(Asnmt n) {
+        return null;
+    }
+
+    public Object visit(Decl n) {
+        return null;
+    }
+
+    public Object visit(EndFunction n) {
+        return null;
+    }
+
+    public Object visit(ForLoop n) {
+        return null;
+    }
+
+    public Object visit(IfStmt n) {
+        return null;
+    }
+
+    // public Object visit(Var var) {
+    // /*
+    // * var.getName().accept(this, id);
+    // * var.getScope().accept(this, id);
+    // * var.getType().accept(this, id);
+    // */
+    // return null;
+    // }
+
+    // public Object visit(Function func, ID id) {
+    // func.getName().accept(this, id);
+    // func.getScope().accept(this, id);
+    // if (func.getParamTypes() != null) {
+    // for (String paramTyoes : Function.getParamTypes()) {
+    // paramTypes.accept(this, id);
+    // }
+    // }
+    // return null;
+    // }
+
+    // public Object visit(Struct struct, ID id) {
+    // /*
+    // * struct.getName().accept(this, id);
+    // * struct.getScope.accept(this, id);
+    // */
+    // struct.getFieldTypes().accept(this, id);
+    // return null;
+    // }
 }
 
 interface Visitor {
 
-    public Object visit(PlusExp add);
+    public Object visit(Arithmetic symbol);
 
-    public Object visit(MinusExp minus);
+    public Object visit(Conditions symbol);
 
-    public Object visit(TimesExp times);
+    public Object visit(UnaryOperators symbol);
 
-    public Object visit(DivideExp divide);
+    public Object visit(Asnmt symbol);
+
+    public Object visit(Decl symbol);
+
+    public Object visit(EndFunction symbol);
+
+    public Object visit(ForLoop symbol);
+
+    public Object visit(IfStmt symbol);
 
     // public Object visit(Var var);
 

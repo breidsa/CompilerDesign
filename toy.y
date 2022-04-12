@@ -19,6 +19,12 @@ import java.util.ArrayList;
 
 
 %code {
+
+// delcare global hashmaps to fill while parsing -------------------------------------------------------------------------
+HashMap<String, ID> functions;
+HashMap<String, ID> statements;
+HashMap<String, ID> var;
+
 public static void main(String[] args) throws IOException {
 FileReader yyin = new FileReader(args[0]);
  ToYLexer l = new ToYLexer(yyin);
@@ -160,8 +166,9 @@ FileReader yyin = new FileReader(args[0]);
  
  
 %%
-   // Java code for the HashMaps
 
+
+// Java code for the HashMaps ID TYPES -------------------------------------------------------------------------
 class ID {
     String name;
     int scope;

@@ -1227,6 +1227,12 @@ private static final byte[] yycheck_ = yycheck_init();
 /* Unqualified %code blocks.  */
 /* "ToY.y":21  */
 
+
+// delcare global hashmaps to fill while parsing -------------------------------------------------------------------------
+HashMap<String, ID> functions;
+HashMap<String, ID> statements;
+HashMap<String, ID> var;
+
 public static void main(String[] args) throws IOException {
 FileReader yyin = new FileReader(args[0]);
  ToYLexer l = new ToYLexer(yyin);
@@ -1234,13 +1240,14 @@ FileReader yyin = new FileReader(args[0]);
  if (!p.parse()) System.out.println("INVALID");
 }
 
-/* "ToY.java":1238  */
+/* "ToY.java":1244  */
 
 }
-/* "ToY.y":162  */
+/* "ToY.y":168  */
 
-   // Java code for the HashMaps
 
+
+// Java code for the HashMaps ID TYPES -------------------------------------------------------------------------
 class ID {
     String name;
     int scope;
