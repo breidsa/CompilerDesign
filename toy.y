@@ -49,7 +49,7 @@ FileReader yyin = new FileReader(args[0]);
 %token  PLUS MINUS MULT DIVIDE MOD
 
 %left OR AND 
-
+%nonassoc LESSTHAN GREATERTHAN GREATERTHANOREQ LESSTHANOREQ DOUBLEEQ NOTEQ
 
 
 %type  type
@@ -82,20 +82,19 @@ FileReader yyin = new FileReader(args[0]);
     */
     ;
     
-    returnType: type //{ $$ = $1; }
+    returnType: type { $$ = $1; }
     | VOID /* { $$ = new Type(); } */
     ;
     
     struct : STRUCT IDENTIFIER LBRACKET declarationList RBRACKET //{ $$ = new StructCreator($2, $4); }
     ;
     
-    declaration: type IDENTIFIER // { $$ = new Decl($2); }
+    declaration: type IDENTIFIER  {ArrayList<Object> decs = new ArrayList<Object>(); decs.add($1); $$ = new Decl(decs); }
     ;
     //MAYBE ADD DECLARATION LIST 
    //TRYING LIST HERE 
-    declarationList: /*empty*/
-    | declaration {$$ = new ArrayList<Object>();} // FLAGGGGGGGG ---------- NOT SURE IF THIS IS ADDING OBJECT NEED TO REVIEW  
-    | declaration COMMA declarationList {ArrayList<Object> decs = new ArrayList<Object>(); decs.add($1); ArrayList<Object> dec = new ArrayList<Object>(); dec.add($3); for(Object d:dec){decs.add(d);}$$ = new Decl(decs);}
+    declarationList:{$$ = new ArrayList<Object>();} // FLAGGGGGGGG ---------- NOT SURE IF THIS IS ADDING OBJECT NEED TO REVIEW  
+    | declarationList COMMA declaration {ArrayList<Object> decs = new ArrayList<Object>(); decs.add($1); ArrayList<Object> dec = new ArrayList<Object>(); dec.add($3); for(Object d:dec){decs.add(d);}$$ = new Decl(decs);}
     ;
 
     function : returnType IDENTIFIER LEFTPAREN declarationList RIGHTPAREN LBRACKET stmt RBRACKET SEMICOLON //{ $$ = new FunctionConstruct($1, $3) }
@@ -136,14 +135,14 @@ FileReader yyin = new FileReader(args[0]);
     | struct recursePgm 
     ;
     
-    exp : type //{ $$ = $1 }
-    | TRUE //{ $$ = $1; } DOES NOT COMPILE WHEN I REMOVE THIS 
+    exp : type { $$ = $1; }
+    | TRUE { $$ = $1; } 
     | FALSE { $$ = $1; }
-    | exp PLUS exp { $$ = new Arithmetic($1, $3); }
-    | exp MINUS exp { $$ = new Arithmetic($1, $3); }
-    | exp MULT exp { $$ = new Arithmetic($1, $3); }
-    | exp DIVIDE exp { $$ = new Arithmetic($1, $3); }
-    | exp MOD exp  { $$ = new Arithmetic($1, $3); }
+    | exp PLUS exp { $$ = new Arithmetic($1, $2, $3); }
+    | exp MINUS exp { $$ = new Arithmetic($1,$2,$3); }
+    | exp MULT exp { $$ = new Arithmetic($1, $2,$3); }
+    | exp DIVIDE exp { $$ = new Arithmetic($1,$2, $3); }
+    | exp MOD exp  { $$ = new Arithmetic($1,$2, $3); }
     | exp AND exp { $$ = new Conditions($1, $3); }
     | exp OR exp { $$ = new Conditions($1, $3); }
     | exp DOUBLEEQ exp { $$ = new Conditions($1, $3); }
@@ -216,11 +215,12 @@ class StmtList {
 // creates two Nodes, the left and right sides of an arithmetic statement
 // constructor allows semantic actions to initialize nodes
 class Arithmetic extends ASTNode {
-    public Object left, right;
+    public Object left, right, op;
 
-    public Arithmetic(Object left, Object right) {
+    public Arithmetic(Object left, Object op, Object right) {
         this.left = left;
         this.right = right;
+        this.op = op;
     }
 
     public Object accept(Visitor v) {
@@ -693,22 +693,4 @@ class Struct extends ID {
          return token.type;
       }
     }
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     
