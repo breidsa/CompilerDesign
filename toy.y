@@ -92,10 +92,10 @@ FileReader yyin = new FileReader(args[0]);
     declaration: type IDENTIFIER // { $$ = new Decl($2); }
     ;
     //MAYBE ADD DECLARATION LIST 
-
+   //TRYING LIST HERE 
     declarationList: /*empty*/
-    | declaration //{ $$ = $1; }
-    | declaration COMMA declarationList
+    | declaration {$$ = new ArrayList<Object>();} // FLAGGGGGGGG ---------- NOT SURE IF THIS IS ADDING OBJECT NEED TO REVIEW  
+    | declaration COMMA declarationList {ArrayList<Object> decs = new ArrayList<Object>(); decs.add($1); ArrayList<Object> dec = new ArrayList<Object>(); dec.add($3); for(Object d:dec){decs.add(d);}$$ = new Decl(decs);}
     ;
 
     function : returnType IDENTIFIER LEFTPAREN declarationList RIGHTPAREN LBRACKET stmt RBRACKET SEMICOLON //{ $$ = new FunctionConstruct($1, $3) }
@@ -191,18 +191,18 @@ abstract class ASTNode {
 }
 
 class StmtList {
-    ArrayList<ASTNode> stmts;
+    ArrayList<Object> stmts;
 
     public StmtList() {
-        stmts = new ArrayList<ASTNode>();
+        stmts = new ArrayList<Object>();
     }
 
-    public void addElement(ASTNode n) {
+    public void addElement(Object n) {
         stmts.add(n);
     }
 
-    public ASTNode elementAt(int i) {
-        return (ASTNode) stmts.get(i);
+    public Object elementAt(int i) {
+        return stmts.get(i);
     }
     // public int size() {
     // return stmts.size();
@@ -356,9 +356,9 @@ class Decl extends ASTNode {
     // QUESTION: would we need type
     // String varType;
     // String name;
-    ArrayList<String> names;
+    ArrayList<Object> names;
 
-    public Decl(ArrayList<String> names) {
+    public Decl(ArrayList<Object> names) {
         // this.varType = varType;
         this.names = names;
     }

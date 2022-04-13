@@ -559,7 +559,21 @@ public class ToY
 
     switch (yyn)
       {
-          case 37: /* exp: FALSE  */
+          case 10: /* declarationList: declaration  */
+  if (yyn == 10)
+    /* "ToY.y":97  */
+                  {yyval = new ArrayList<Object>();};
+  break;
+
+
+  case 11: /* declarationList: declaration COMMA declarationList  */
+  if (yyn == 11)
+    /* "ToY.y":98  */
+                                        {ArrayList<Object> decs = new ArrayList<Object>(); decs.add(yystack.valueAt (2)); ArrayList<Object> dec = new ArrayList<Object>(); dec.add(yystack.valueAt (0)); for(Object d:dec){decs.add(d);}yyval = new Decl(decs);};
+  break;
+
+
+  case 37: /* exp: FALSE  */
   if (yyn == 37)
     /* "ToY.y":141  */
             { yyval = yystack.valueAt (0); };
@@ -686,7 +700,7 @@ public class ToY
 
 
 
-/* "ToY.java":690  */
+/* "ToY.java":704  */
 
         default: break;
       }
@@ -1368,7 +1382,7 @@ FileReader yyin = new FileReader(args[0]);
  if (!p.parse()) System.out.println("INVALID");
 }
 
-/* "ToY.java":1372  */
+/* "ToY.java":1386  */
 
 }
 /* "ToY.y":180  */
@@ -1386,18 +1400,18 @@ abstract class ASTNode {
 }
 
 class StmtList {
-    ArrayList<ASTNode> stmts;
+    ArrayList<Object> stmts;
 
     public StmtList() {
-        stmts = new ArrayList<ASTNode>();
+        stmts = new ArrayList<Object>();
     }
 
-    public void addElement(ASTNode n) {
+    public void addElement(Object n) {
         stmts.add(n);
     }
 
-    public ASTNode elementAt(int i) {
-        return (ASTNode) stmts.get(i);
+    public Object elementAt(int i) {
+        return stmts.get(i);
     }
     // public int size() {
     // return stmts.size();
@@ -1551,9 +1565,9 @@ class Decl extends ASTNode {
     // QUESTION: would we need type
     // String varType;
     // String name;
-    ArrayList<String> names;
+    ArrayList<Object> names;
 
-    public Decl(ArrayList<String> names) {
+    public Decl(ArrayList<Object> names) {
         // this.varType = varType;
         this.names = names;
     }
