@@ -92,21 +92,25 @@ FileReader yyin = new FileReader(args[0]);
     
     struct : STRUCT IDENTIFIER LBRACKET declarationList RBRACKET //{ $$ = new StructCreator($2, $4); }
     ;
+                                 
+    declaration: type IDENTIFIER {$$ = new VarDef($1, $2); } /* {ArrayList<Object> decs = new ArrayList<Object>(); decs.add($1); $$ = new Decl(decs); } */
+    ;                           /* ^ Anneliese's Idea          ^ Emma's Idea */
     
-    declaration: type IDENTIFIER  {ArrayList<Object> decs = new ArrayList<Object>(); decs.add($1); $$ = new Decl(decs); }
-    ;
     //MAYBE ADD DECLARATION LIST 
    //TRYING LIST HERE 
-    declarationList:{$$ = new ArrayList<Object>();} // FLAGGGGGGGG ---------- NOT SURE IF THIS IS ADDING OBJECT NEED TO REVIEW  
-    | declarationList COMMA declaration {ArrayList<Object> decs = new ArrayList<Object>(); decs.add($1); ArrayList<Object> dec = new ArrayList<Object>(); dec.add($3); for(Object d:dec){decs.add(d);}$$ = new Decl(decs);}
-    ;
+    declarationList: /* empty */ {$$ = new ArrayList<Object>();} // FLAGGGGGGGG ---------- NOT SURE IF THIS IS ADDING OBJECT NEED TO REVIEW  
+    | declarationList COMMA declaration {ArrayList<Object> decls = $1; decls.add($3); $$ = decls;} /*  {ArrayList<Object> decs = new ArrayList<Object>(); decs.add($1); ArrayList<Object> dec = new ArrayList<Object>(); dec.add($3); for(Object d:dec){decs.add(d);}$$ = new Decl(decs);} */
+    ;                                   /* ^ Anneliese's Idea                                           ^ Emma's Idea */
+    
 
     function : returnType IDENTIFIER LEFTPAREN declarationList RIGHTPAREN LBRACKET stmt RBRACKET SEMICOLON //{ $$ = new FunctionConstruct($1, $3) }
     ;
+    
+    param: IDENTIFIER ($$ = new VarDef(null, $1); } /*{ArrayList<Object> param = new ArrayList<Object>(); param.add($1); $$ = param;}*/
+    ;
 
-    paramList: IDENTIFIER 
-    | IDENTIFIER COMMA paramList
-    | /* empty */
+    paramList:  /* empty */  {$$ = new ArrayList<Object>();}
+    | paramList COMMA param {ArrayList<Object> params = $1; params.add($3); $$ = params;}
     ;
     
     
@@ -360,6 +364,8 @@ class Decl extends ASTNode {
     // QUESTION: would we need type
     // String varType;
     // String name;
+    
+    // MAYBE DECL NEEDS A HASMAP
     ArrayList<Object> names;
 
     public Decl(ArrayList<Object> names) {
@@ -370,8 +376,37 @@ class Decl extends ASTNode {
     public Object accept(Visitor v) {
         return v.visit(this);
     }
-
 }
+
+
+// this might just be a Var definition situation????
+class ParamList extends ASTNode {
+	ArrayList<Object> params;
+	
+	public ParamList(ArrayList<Object> params){
+		this.params = params;
+	}
+	
+	public Object accept(Visitor v) {
+        	return v.visit(this);
+    	}
+}
+
+// ********************** POTENTIAL SOLUTION FOR VAR AND PARAM ***************
+
+class VarDef extends ASTNode {
+	
+	Object type, Object name;
+	
+	public VarDef(Object type, Object name){
+		this.type = type;
+		this.name = name;
+		
+	public Object accept(Visitor v) {
+        	return v.visit(this);
+    	}
+}
+
 
 // ------------------------------ Type class question
 // -------------------------------------------
