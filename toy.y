@@ -143,7 +143,7 @@ FileReader yyin = new FileReader(args[0]);
     | stmt SEMICOLON stmtSeq { StmtList sequence = $3; sequence.addElement($1); $$ = sequence; }
     ;
     
-    Lexp : IDENTIFIER { $$ = new VarDef(null, $1);
+    Lexp : IDENTIFIER { $$ = new VarDef(null, $1); }
     | IDENTIFIER ATTRIBUTE Lexp /* want to brainstorm abt this....not sure abt it */
     ;
     
@@ -565,6 +565,14 @@ class AbstractVisitor implements Visitor {
     public Object visit(FunctionCall n) {
         return null;
     }
+    
+    public Object visit(ParamList n) {
+        return null;
+    }
+    
+    public Object visit(VarDef n) {
+        return null;
+    }
 
 }
 
@@ -588,12 +596,16 @@ interface Visitor {
     public Object visit(IfStmt symbol);
 
     public Object visit(StructCreator symbol);
+    
+    public Object visit(VarDef vardef);
 
     public Object visit(Type symbol);
 
     public Object visit(FunctionConstuct symbol);
 
     public Object visit(FunctionCall symbol);
+    
+    public Object visit(ParamList paramList);
 
 }
 
