@@ -90,7 +90,7 @@ FileReader yyin = new FileReader(args[0]);
     | VOID /* { $$ = new Type(); } */
     ;
     
-    struct : STRUCT IDENTIFIER LBRACKET declarationList RBRACKET //{ $$ = new StructCreator($2, $4); } /* {StmtList fieldTypes = new StmtList(); fieldTypes.add($4); $$ = new StructCreator($2, fieldTypes);} */
+    struct : STRUCT IDENTIFIER LBRACKET declarationList RBRACKET //{ $$ = new StructCreator($2, $4); } /* {StmtList fieldTypes = new StmtList(); fieldTypes.addElement($4); $$ = new StructCreator($2, fieldTypes);} */
     ;                                                              /* ^ INITIAL IDEA                      ^ SECOND THOUGHT */
                                  
     declaration: type IDENTIFIER {$$ = new VarDef($1, $2); } /* {ArrayList<Object> decs = new ArrayList<Object>(); decs.add($1); $$ = new Decl(decs); } */
@@ -104,7 +104,7 @@ FileReader yyin = new FileReader(args[0]);
     
 
     function : returnType IDENTIFIER LEFTPAREN declarationList RIGHTPAREN LBRACKET stmt RBRACKET SEMICOLON { StmtList stmt = new StmtList();  
-                                                                                                             stmt.add($7); 
+                                                                                                             stmt.addElement($7); 
 													     $$ = new FunctionConstruct($1, $2, $4, stmt); }
     ;
     
@@ -118,17 +118,17 @@ FileReader yyin = new FileReader(args[0]);
     
     /* I want to look at the 1st stmt for the for loop */
     stmt : FOR LEFTPAREN IDENTIFIER EQ exp SEMICOLON exp SEMICOLON stmt RIGHTPAREN stmt SEMICOLON { StmtList body = new stmtList();
-                                                                                                    body.add($11);
+                                                                                                    body.addElement($11);
 											            Asnmt iterator = newAsnmt($3, $5);
 											            $$ = new ForLoop(iterator, $7, $9, body);
 											            /* nodeHash.put(fl); $$ = fl; */ }
     | IF LEFTPAREN exp RIGHTPAREN THEN stmt SEMICOLON { StmtList ifBody = new StmtList();
-                                                        ifBody.add($6);
+                                                        ifBody.addElement($6);
                                                         $$ = new IfStmt($3, ifBody, null); }
     | IF LEFTPAREN exp RIGHTPAREN THEN stmt ELSE stmt SEMICOLON { StmtList ifBody = new StmtList();
                                                                   StmtList elseBody = new StmtList();
-                                                                  ifBody.add($6);
-						                  elseBody.add($8);}
+                                                                  ifBody.addElement($6);
+						                  elseBody.addElement($8);}
     | PRINTF LEFTPAREN STRING RIGHTPAREN SEMICOLON { $$ = new EndFunction($2); }
     | RETURN exp SEMICOLON { $$ = new EndFunction($2); }
     | LBRACKET stmtSeq RBRACKET { $$ = $1; }
@@ -139,8 +139,8 @@ FileReader yyin = new FileReader(args[0]);
                                                        $$ = new Asnmt($1, func); }  
     ;
     
-    stmtSeq : /* empty sequence */
-    | stmt SEMICOLON stmtSeq //{make a list of statements HERE}
+    stmtSeq : /* empty sequence */ { $$ = new StmtList();}
+    | stmt SEMICOLON stmtSeq { StmtList sequence = $3; sequence.addElement($1); $$ = sequence; }
     ;
     
     Lexp : IDENTIFIER 
