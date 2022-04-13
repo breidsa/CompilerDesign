@@ -135,14 +135,15 @@ public class ToY
     S_returnType(42),              /* returnType  */
     S_struct(43),                  /* struct  */
     S_declaration(44),             /* declaration  */
-    S_proc(45),                    /* proc  */
-    S_stmt(46),                    /* stmt  */
-    S_stmtSeq(47),                 /* stmtSeq  */
-    S_Lexp(48),                    /* Lexp  */
-    S_pgm(49),                     /* pgm  */
-    S_recursePgm(50),              /* recursePgm  */
-    S_exp(51),                     /* exp  */
-    S_op(52);                      /* op  */
+    S_declarationList(45),         /* declarationList  */
+    S_function(46),                /* function  */
+    S_paramList(47),               /* paramList  */
+    S_stmt(48),                    /* stmt  */
+    S_stmtSeq(49),                 /* stmtSeq  */
+    S_Lexp(50),                    /* Lexp  */
+    S_pgm(51),                     /* pgm  */
+    S_recursePgm(52),              /* recursePgm  */
+    S_exp(53);                     /* exp  */
 
 
     private final int yycode_;
@@ -197,14 +198,15 @@ public class ToY
       SymbolKind.S_returnType,
       SymbolKind.S_struct,
       SymbolKind.S_declaration,
-      SymbolKind.S_proc,
+      SymbolKind.S_declarationList,
+      SymbolKind.S_function,
+      SymbolKind.S_paramList,
       SymbolKind.S_stmt,
       SymbolKind.S_stmtSeq,
       SymbolKind.S_Lexp,
       SymbolKind.S_pgm,
       SymbolKind.S_recursePgm,
-      SymbolKind.S_exp,
-      SymbolKind.S_op
+      SymbolKind.S_exp
     };
 
     static final SymbolKind get(int code) {
@@ -261,7 +263,8 @@ public class ToY
   "DOUBLEEQ", "LESSTHANOREQ", "GREATERTHANOREQ", "NOTEQ", "NOT",
   "LEFTPAREN", "RIGHTPAREN", "PLUS", "MINUS", "MULT", "DIVIDE", "EQ",
   "ATTRIBUTE", "$accept", "type", "returnType", "struct", "declaration",
-  "proc", "stmt", "stmtSeq", "Lexp", "pgm", "recursePgm", "exp", "op", null
+  "declarationList", "function", "paramList", "stmt", "stmtSeq", "Lexp",
+  "pgm", "recursePgm", "exp", null
     };
   }
 
@@ -557,7 +560,7 @@ public class ToY
     switch (yyn)
       {
         
-/* "ToY.java":561  */
+/* "ToY.java":564  */
 
         default: break;
       }
@@ -969,7 +972,7 @@ public class ToY
     return yyvalue == yytable_ninf_;
   }
 
-  private static final short yypact_ninf_ = -41;
+  private static final short yypact_ninf_ = -55;
   private static final byte yytable_ninf_ = -1;
 
 /* YYPACT[STATE-NUM] -- Index in YYTABLE of the portion describing
@@ -979,18 +982,19 @@ public class ToY
   {
     return new short[]
     {
-      35,   -41,   -41,   -41,   -41,   -41,    -4,   -41,     1,    35,
-      35,    47,    26,    -8,   -41,    35,    35,   -41,   -41,    55,
-      55,   -41,   -41,    43,    30,    29,   -41,    55,    41,    45,
-      24,   -41,    18,    32,    37,     0,    39,    24,    61,    54,
-      38,     0,    62,    72,     0,    73,   -41,   -41,   -41,   -41,
-       0,     0,     0,    58,    92,    24,    77,    76,   -41,     0,
-      75,    74,    68,   -41,   100,    79,   226,   125,   226,   -41,
-     -41,   -41,   -41,   -41,   -41,   -41,   -41,   -41,   -41,   -41,
-     -41,   -41,   -41,   -41,     0,    85,   -41,   -41,   -41,   150,
-      96,     0,   109,     0,   -41,   226,    98,   -41,   -41,   167,
-      24,   192,   -41,    99,   111,     0,   -41,    24,   209,   -41,
-      24,    91,    24,   -41
+      72,   -55,   -55,   -55,   -55,    -2,   -55,    11,    72,    72,
+      28,    22,    13,   -55,    72,    72,   -55,   -55,    29,    29,
+     -55,   -55,    41,    24,    30,    17,   -55,    29,   -55,    32,
+     -55,    75,     4,    25,    26,    21,    27,    75,    40,    63,
+      52,    71,    90,    92,    76,    21,    21,   -55,   -55,    21,
+      21,    21,   -55,    99,    95,    75,    80,   -55,    79,    21,
+      97,    97,    65,   -55,   -55,   116,   141,   217,   158,   217,
+      21,    21,    21,   -55,    21,    21,    21,    21,    21,    21,
+      21,    21,    21,    21,    21,    73,   -55,   -55,   -55,   183,
+     -55,    82,    96,    21,   -55,   217,   217,   217,   217,   217,
+     217,   217,   217,   217,   217,   217,   217,   217,   217,    85,
+     -55,   -55,    75,   200,   -55,    -7,    75,    75,   -55,    77,
+      86,    75,   -55,    88,   -55
     };
   }
 
@@ -1002,18 +1006,19 @@ public class ToY
   {
     return new byte[]
     {
-       0,     2,     3,     4,     5,     7,     0,     6,     0,     0,
-      27,     0,     0,     0,    26,    27,    27,    25,     1,     0,
-       0,    29,    28,     0,     0,     0,     9,     0,     0,     0,
-       0,     8,     5,     0,     0,     0,     0,    21,     0,     0,
-       0,     0,     0,     0,     0,     0,    30,    31,    32,    33,
-       0,     0,     0,     0,     0,    21,     0,     0,    10,     0,
-       0,     0,    23,    24,     0,     0,    35,     0,    36,    43,
-      44,    42,    15,    47,    46,    45,    49,    48,    50,    38,
-      39,    40,    41,    51,     0,     0,    22,    16,    17,     0,
-       0,     0,     0,     0,    37,    34,     0,    18,    19,     0,
-       0,     0,    14,     0,    12,     0,    20,     0,     0,    13,
-       0,     0,     0,    11
+       0,     2,     3,     4,     6,     0,     5,     0,     0,    32,
+       0,     0,     0,    31,    32,    32,    30,     1,     9,     9,
+      34,    33,     0,    10,     0,     0,     8,     9,     7,     0,
+      11,     0,    13,     0,     0,     0,     0,    26,     0,     0,
+       0,    14,     0,     0,     0,     0,     0,    36,    37,     0,
+       0,     0,    35,     0,     0,    26,     0,    22,     0,     0,
+      13,    13,    28,    29,    24,     0,     0,    52,     0,    53,
+       0,     0,     0,    20,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,    27,    21,    12,     0,
+      15,     0,     0,     0,    54,    43,    44,    42,    47,    46,
+      45,    49,    48,    50,    38,    39,    40,    41,    51,     0,
+      23,    25,     0,     0,    19,     0,     0,     0,    17,     0,
+       0,     0,    18,     0,    16
     };
   }
 
@@ -1023,8 +1028,8 @@ public class ToY
   {
     return new byte[]
     {
-     -41,     6,   -41,    14,    -7,    36,   -30,    87,    88,   123,
-       2,   -40,   -41
+     -55,     0,   -55,    12,   -16,    -6,    38,   -54,   -30,    64,
+     104,   110,     8,   -10
     };
   }
 
@@ -1034,8 +1039,8 @@ public class ToY
   {
     return new byte[]
     {
-       0,    38,     8,    15,    24,    16,    55,    56,    40,    11,
-      17,    53,    84
+       0,    52,     7,    14,    38,    24,    15,    44,    55,    56,
+      40,    10,    16,    53
     };
   }
 
@@ -1047,33 +1052,32 @@ public class ToY
   {
     return new byte[]
     {
-      39,    60,    12,    46,    64,    47,     7,    13,    48,    49,
-      66,    67,    68,    25,     9,     7,     7,    21,    22,    89,
-      29,     7,     7,     9,    20,    23,    23,     1,     2,     3,
-      32,    50,    51,    23,    33,    52,    10,    34,     1,     2,
-       3,     4,    35,    36,    95,    10,    37,    18,    19,    26,
-      41,    99,     5,   101,    27,     6,    42,    43,     1,     2,
-       3,     4,    28,    30,    44,   108,    31,    57,    61,    45,
-     104,    54,    69,    70,    71,    58,    59,   109,    62,    65,
-     111,    72,   113,    73,    74,    75,    76,    77,    78,    69,
-      70,    71,    79,    80,    81,    82,    83,    85,    87,    88,
-      73,    74,    75,    76,    77,    78,    91,    43,    90,    79,
-      80,    81,    82,    83,    69,    70,    71,    93,    96,    98,
-     100,   102,   106,   107,   112,    73,    74,    75,    76,    77,
-      78,    63,    14,    92,    79,    80,    81,    82,    83,    69,
-      70,    71,    86,     0,     0,     0,     0,     0,     0,     0,
-      73,    74,    75,    76,    77,    78,     0,     0,    94,    79,
-      80,    81,    82,    83,    69,    70,    71,     0,     0,     0,
-       0,     0,     0,    97,     0,    73,    74,    75,    76,    77,
-      78,    69,    70,    71,    79,    80,    81,    82,    83,     0,
-       0,     0,    73,    74,    75,    76,    77,    78,     0,     0,
-     103,    79,    80,    81,    82,    83,    69,    70,    71,     0,
-       0,     0,     0,     0,     0,   105,     0,    73,    74,    75,
-      76,    77,    78,    69,    70,    71,    79,    80,    81,    82,
-      83,     0,   110,     0,    73,    74,    75,    76,    77,    78,
-      69,    70,    71,    79,    80,    81,    82,    83,     0,     0,
-       0,    73,    74,    75,    76,    77,    78,     0,     0,     0,
-      79,    80,    81,    82,    83
+       6,    39,    23,    23,    11,   117,    90,    91,     6,     6,
+      41,    23,     8,    25,     6,     6,   118,    12,    22,    22,
+       8,    30,    20,    21,     1,     2,     3,    22,    17,    47,
+      48,    22,     1,     2,     3,    65,    66,    22,     9,    67,
+      68,    69,    42,    43,    18,    19,     9,    26,    27,    89,
+      29,    28,    49,    50,    31,    22,    51,    45,    46,    54,
+      95,    96,    97,    57,    98,    99,   100,   101,   102,   103,
+     104,   105,   106,   107,   108,     1,     2,     3,     1,     2,
+       3,    32,   115,   113,    58,    33,   119,   120,    34,     4,
+      59,   123,     5,    35,    36,    60,    61,    37,    62,    64,
+      85,    87,    88,    41,    43,   111,   109,   112,   114,   122,
+     121,   124,    22,    70,    71,    72,    22,    22,    13,    86,
+       0,    22,    73,     0,    74,    75,    76,    77,    78,    79,
+      70,    71,    72,    80,    81,    82,    83,    84,     0,     0,
+       0,    74,    75,    76,    77,    78,    79,    63,     0,    92,
+      80,    81,    82,    83,    84,    70,    71,    72,     0,     0,
+       0,     0,     0,     0,    93,     0,    74,    75,    76,    77,
+      78,    79,    70,    71,    72,    80,    81,    82,    83,    84,
+       0,     0,     0,    74,    75,    76,    77,    78,    79,     0,
+       0,    94,    80,    81,    82,    83,    84,    70,    71,    72,
+       0,     0,     0,     0,     0,     0,   110,     0,    74,    75,
+      76,    77,    78,    79,    70,    71,    72,    80,    81,    82,
+      83,    84,     0,   116,     0,    74,    75,    76,    77,    78,
+      79,    70,    71,    72,    80,    81,    82,    83,    84,     0,
+       0,     0,    74,    75,    76,    77,    78,    79,     0,     0,
+       0,    80,    81,    82,    83,    84
     };
   }
 
@@ -1082,33 +1086,32 @@ private static final byte[] yycheck_ = yycheck_init();
   {
     return new byte[]
     {
-      30,    41,     6,     3,    44,     5,     0,     6,     8,     9,
-      50,    51,    52,    20,     0,     9,    10,    15,    16,    59,
-      27,    15,    16,     9,    32,    19,    20,     3,     4,     5,
-       6,    31,    32,    27,    10,    35,     0,    13,     3,     4,
-       5,     6,    18,    19,    84,     9,    22,     0,    22,     6,
-      32,    91,    17,    93,    24,    20,    38,    39,     3,     4,
-       5,     6,    33,    22,    32,   105,    21,     6,     6,    32,
-     100,    32,    14,    15,    16,    21,    38,   107,     6,     6,
-     110,    23,   112,    25,    26,    27,    28,    29,    30,    14,
-      15,    16,    34,    35,    36,    37,    38,     5,    21,    23,
-      25,    26,    27,    28,    29,    30,    32,    39,    33,    34,
-      35,    36,    37,    38,    14,    15,    16,    38,    33,    23,
-      11,    23,    23,    12,    33,    25,    26,    27,    28,    29,
-      30,    43,     9,    33,    34,    35,    36,    37,    38,    14,
-      15,    16,    55,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
-      25,    26,    27,    28,    29,    30,    -1,    -1,    33,    34,
-      35,    36,    37,    38,    14,    15,    16,    -1,    -1,    -1,
-      -1,    -1,    -1,    23,    -1,    25,    26,    27,    28,    29,
+       0,    31,    18,    19,     6,    12,    60,    61,     8,     9,
+       6,    27,     0,    19,    14,    15,    23,     6,    18,    19,
+       8,    27,    14,    15,     3,     4,     5,    27,     0,     8,
+       9,    31,     3,     4,     5,    45,    46,    37,     0,    49,
+      50,    51,    38,    39,    22,    32,     8,     6,    24,    59,
+      33,    21,    31,    32,    22,    55,    35,    32,    32,    32,
+      70,    71,    72,    23,    74,    75,    76,    77,    78,    79,
+      80,    81,    82,    83,    84,     3,     4,     5,     3,     4,
+       5,     6,   112,    93,    21,    10,   116,   117,    13,    17,
+      38,   121,    20,    18,    19,    24,     6,    22,     6,    23,
+       5,    21,    23,     6,    39,    23,    33,    11,    23,    23,
+      33,    23,   112,    14,    15,    16,   116,   117,     8,    55,
+      -1,   121,    23,    -1,    25,    26,    27,    28,    29,    30,
+      14,    15,    16,    34,    35,    36,    37,    38,    -1,    -1,
+      -1,    25,    26,    27,    28,    29,    30,    43,    -1,    33,
+      34,    35,    36,    37,    38,    14,    15,    16,    -1,    -1,
+      -1,    -1,    -1,    -1,    23,    -1,    25,    26,    27,    28,
+      29,    30,    14,    15,    16,    34,    35,    36,    37,    38,
+      -1,    -1,    -1,    25,    26,    27,    28,    29,    30,    -1,
+      -1,    33,    34,    35,    36,    37,    38,    14,    15,    16,
+      -1,    -1,    -1,    -1,    -1,    -1,    23,    -1,    25,    26,
+      27,    28,    29,    30,    14,    15,    16,    34,    35,    36,
+      37,    38,    -1,    23,    -1,    25,    26,    27,    28,    29,
       30,    14,    15,    16,    34,    35,    36,    37,    38,    -1,
       -1,    -1,    25,    26,    27,    28,    29,    30,    -1,    -1,
-      33,    34,    35,    36,    37,    38,    14,    15,    16,    -1,
-      -1,    -1,    -1,    -1,    -1,    23,    -1,    25,    26,    27,
-      28,    29,    30,    14,    15,    16,    34,    35,    36,    37,
-      38,    -1,    23,    -1,    25,    26,    27,    28,    29,    30,
-      14,    15,    16,    34,    35,    36,    37,    38,    -1,    -1,
-      -1,    25,    26,    27,    28,    29,    30,    -1,    -1,    -1,
-      34,    35,    36,    37,    38
+      -1,    34,    35,    36,    37,    38
     };
   }
 
@@ -1119,18 +1122,19 @@ private static final byte[] yycheck_ = yycheck_init();
   {
     return new byte[]
     {
-       0,     3,     4,     5,     6,    17,    20,    41,    42,    43,
-      45,    49,     6,     6,    49,    43,    45,    50,     0,    22,
-      32,    50,    50,    41,    44,    44,     6,    24,    33,    44,
-      22,    21,     6,    10,    13,    18,    19,    22,    41,    46,
-      48,    32,    38,    39,    32,    32,     3,     5,     8,     9,
-      31,    32,    35,    51,    32,    46,    47,     6,    21,    38,
-      51,     6,     6,    48,    51,     6,    51,    51,    51,    14,
-      15,    16,    23,    25,    26,    27,    28,    29,    30,    34,
-      35,    36,    37,    38,    52,     5,    47,    21,    23,    51,
-      33,    32,    33,    38,    33,    51,    33,    23,    23,    51,
-      11,    51,    23,    33,    46,    23,    23,    12,    51,    46,
-      23,    46,    33,    46
+       0,     3,     4,     5,    17,    20,    41,    42,    43,    46,
+      51,     6,     6,    51,    43,    46,    52,     0,    22,    32,
+      52,    52,    41,    44,    45,    45,     6,    24,    21,    33,
+      45,    22,     6,    10,    13,    18,    19,    22,    44,    48,
+      50,     6,    38,    39,    47,    32,    32,     8,     9,    31,
+      32,    35,    41,    53,    32,    48,    49,    23,    21,    38,
+      24,     6,     6,    50,    23,    53,    53,    53,    53,    53,
+      14,    15,    16,    23,    25,    26,    27,    28,    29,    30,
+      34,    35,    36,    37,    38,     5,    49,    21,    23,    53,
+      47,    47,    33,    23,    33,    53,    53,    53,    53,    53,
+      53,    53,    53,    53,    53,    53,    53,    53,    53,    33,
+      23,    23,    11,    53,    23,    48,    23,    12,    23,    48,
+      48,    33,    23,    48,    23
     };
   }
 
@@ -1140,12 +1144,12 @@ private static final byte[] yycheck_ = yycheck_init();
   {
     return new byte[]
     {
-       0,    40,    41,    41,    41,    41,    42,    42,    43,    44,
-      45,    46,    46,    46,    46,    46,    46,    46,    46,    46,
-      46,    47,    47,    48,    48,    49,    49,    50,    50,    50,
-      51,    51,    51,    51,    51,    51,    51,    51,    52,    52,
-      52,    52,    52,    52,    52,    52,    52,    52,    52,    52,
-      52,    52
+       0,    40,    41,    41,    41,    42,    42,    43,    44,    45,
+      45,    45,    46,    47,    47,    47,    48,    48,    48,    48,
+      48,    48,    48,    48,    48,    48,    49,    49,    50,    50,
+      51,    51,    52,    52,    52,    53,    53,    53,    53,    53,
+      53,    53,    53,    53,    53,    53,    53,    53,    53,    53,
+      53,    53,    53,    53,    53
     };
   }
 
@@ -1155,12 +1159,12 @@ private static final byte[] yycheck_ = yycheck_init();
   {
     return new byte[]
     {
-       0,     2,     1,     1,     1,     1,     1,     1,     7,     2,
-       8,    11,     6,     8,     5,     3,     3,     3,     4,     5,
-       7,     0,     2,     1,     3,     2,     2,     0,     2,     2,
-       1,     1,     1,     1,     3,     2,     2,     3,     1,     1,
-       1,     1,     1,     1,     1,     1,     1,     1,     1,     1,
-       1,     1
+       0,     2,     1,     1,     1,     1,     1,     5,     2,     0,
+       1,     3,     9,     0,     1,     3,    10,     7,     9,     5,
+       3,     3,     2,     4,     3,     5,     0,     2,     1,     3,
+       2,     2,     0,     2,     2,     1,     1,     1,     3,     3,
+       3,     3,     3,     3,     3,     3,     3,     3,     3,     3,
+       3,     3,     2,     2,     3
     };
   }
 
@@ -1219,9 +1223,9 @@ private static final byte[] yycheck_ = yycheck_init();
   }
 
 
-  private static final int YYLAST_ = 264;
+  private static final int YYLAST_ = 255;
   private static final int YYEMPTY_ = -2;
-  private static final int YYFINAL_ = 18;
+  private static final int YYFINAL_ = 17;
   private static final int YYNTOKENS_ = 40;
 
 /* Unqualified %code blocks.  */
@@ -1240,11 +1244,374 @@ FileReader yyin = new FileReader(args[0]);
  if (!p.parse()) System.out.println("INVALID");
 }
 
-/* "ToY.java":1244  */
+/* "ToY.java":1248  */
 
 }
 /* "ToY.y":168  */
 
+//java code for making the AST and the visitor class -----------------------------------------------------------
+// ~~~~~~ idea: what if we made a variable class and made all names and stuff of type Var ~~~~~~~ 
+
+// Asbstract syntax tree base class.  
+// methods: accept
+//          accept method will call the Visitor class, will accept a node if deemed "correct" by semantic analysis 
+//          this method will be applied in all subclasses that create nodes
+abstract class ASTNode {
+    abstract Object accept(Visitor v); /* This may have to be type ID...not sure */
+    // might need children nodes
+}
+
+class StmtList {
+    ArrayList<ASTNode> stmts;
+
+    public StmtList() {
+        stmts = new ArrayList<ASTNode>();
+    }
+
+    public void addElement(ASTNode n) {
+        stmts.add(n);
+    }
+
+    public ASTNode elementAt(int i) {
+        return (ASTNode) stmts.get(i);
+    }
+    // public int size() {
+    // return stmts.size();
+    // }
+}
+
+// ------------------------------- Expression subclasses
+// ------------------------------------------
+
+// Arithmetic Class that extends the ASTNode class
+// creates two Nodes, the left and right sides of an arithmetic statement
+// constructor allows semantic actions to initialize nodes
+class Arithmetic extends ASTNode {
+    public ASTNode left, right;
+
+    public Arithmetic(ASTNode left, ASTNode right) {
+        this.left = left;
+        this.right = right;
+    }
+
+    public Object accept(Visitor v) {
+        return v.visit(this);
+    }
+}
+
+// Conditions class that extends the ASTNode class
+// creates two Nodes, the left and right sides of a conditional statement
+// constructor allows semantic actions to initialize nodes
+class Conditions extends ASTNode {
+    public ASTNode left, right;
+
+    public Conditions(ASTNode left, ASTNode right) {
+        this.left = left;
+        this.right = right;
+    }
+
+    public Object accept(Visitor v) {
+        return v.visit(this);
+    }
+}
+
+// UnaryOperators class that extends the ASTNode class
+// creates one Node, the right statement of a unary expression
+// constructor allows semantic actions to initialize nodes
+class UnaryOperators extends ASTNode {
+    public ASTNode right;
+
+    public UnaryOperators(ASTNode right) {
+        this.right = right;
+    }
+
+    public Object accept(Visitor v) {
+        return v.visit(this);
+    }
+}
+
+// EndFunctions class that extends the ASTNode class
+// Used for return and print functions
+// creates one node, the expression to be printed or returned
+// constructor allows semantic actions to initialize nodes
+class EndFunction extends ASTNode {
+    String exp;
+
+    public EndFunction(String exp) {
+        this.exp = exp;
+    }
+
+    public Object accept(Visitor v) {
+        return v.visit(this);
+    }
+
+}
+
+// ----------------------------------- Method subclasses
+// ---------------------------------------------
+
+// ForLoop class that extends the ASTNode class
+// creates four nodes, the for loop iterator, it's conditional, its
+// incrementation statement, and the loop body
+// constructor allows semantic actions to initialize nodes
+class ForLoop extends ASTNode {
+
+    String iterator;
+    String conditional;
+    String increment;
+    StmtList body;
+
+    public ForLoop(String iterator, String conditional, String increment, StmtList body) {
+        this.iterator = iterator;
+        this.conditional = conditional;
+        this.increment = increment;
+        this.body = body;
+    }
+
+    public Object accept(Visitor v) {
+        return v.visit(this);
+    }
+
+}
+
+// IfStmt class that extends the ASTNode class
+// creates three nodes, the if statment conditional, the if statment body, and
+// the else statement
+// else statement can bc a null pointer, in which case only 2 nodes are created
+// constructor allows semantic actions to initialize nodes
+class IfStmt extends ASTNode {
+
+    String conditional;
+    StmtList body;
+    String elseStmt;
+
+    public IfStmt(String conditional, StmtList body, String elseStmt) {
+        this.conditional = conditional;
+        this.body = body;
+        this.elseStmt = elseStmt;
+    }
+
+    public Object accept(Visitor v) {
+        return v.visit(this);
+    }
+
+}
+
+// ---------------------------- Variable subclasses
+// ----------------------------------------------
+
+// Asnmt class that extends the ASTNode class
+// The class is used when assigning objects to variables
+// Creates two nodes, the variable and the expression
+// constructor allows semantic actions to initialize nodes
+class Asnmt extends ASTNode {
+    String var;
+    String exp;
+
+    public Asnmt(String var, String exp) {
+        this.var = var;
+        this.exp = exp;
+    }
+
+    public Object accept(Visitor v) {
+        return v.visit(this);
+    }
+
+}
+
+// Decl class that extends the ASTNode class
+// used for variable declarations, which can potentially be multiple in a row
+// creates 1 node: a list of all the variable names
+// constructor allows semantic actions to initialize nodes
+class Decl extends ASTNode {
+    // QUESTION: would we need type
+    // String varType;
+    // String name;
+    ArrayList<String> names;
+
+    public Decl(ArrayList<String> names) {
+        // this.varType = varType;
+        this.names = names;
+    }
+
+    public Object accept(Visitor v) {
+        return v.visit(this);
+    }
+
+}
+
+// ------------------------------ Type class question
+// -------------------------------------------
+
+// ******** ASK QUESTION ABOUT WHAT TO DO FOR JUST TYPES ********
+class Type extends ASTNode {
+
+    public Type() {
+    }
+
+    public Object accept(Visitor v) {
+        return v.visit(this);
+    }
+
+}
+
+// ---------------------------------------- Program subclasses
+// --------------------------------------
+
+// Struct class that extends the ASTNode class
+// creates 2 nodes: the name of the struct and an ArrayList of all the struct
+// fieldTypes
+// constructor allows semantic actions to initialize nodes
+class StructCreator extends ASTNode {
+    String name;
+    StmtList fieldTypes;
+
+    public StructCreator(String name, StmtList fieldTypes) {
+        this.name = name;
+        this.fieldTypes = fieldTypes;
+    }
+
+    public Object accept(Visitor v) {
+        return v.visit(this);
+    }
+}
+
+// ****** QUESTION: does the body need to be another node? *******
+
+// Function class that extends the ASTNode class
+// creates 2 nodes, the function name and it's parameters
+// constructor allows semantic actions to initialize nodes
+class FunctionConstuct extends ASTNode {
+    String returnType;
+    String name;
+    ArrayList<String> parameters;
+    StmtList body;
+
+    public FunctionConstuct(String returnType, String name, ArrayList<String> parameters, StmtList body) {
+        this.returnType = returnType;
+        this.name = name;
+        this.parameters = parameters;
+        this.body = body;
+    }
+
+    public Object accept(Visitor v) {
+        return v.visit(this);
+    }
+
+}
+
+// FunctionCall class that extends the ASTNode class
+// specifically for when you don't want to have full declarations in the
+// parenthesis, just already declared param names
+// creates 2 nodes, the name (a string) and the parameters, which are an array
+// of strings (variable names)
+// constructor allows semantic actions to initialize nodes
+class FunctionCall extends ASTNode {
+    String name;
+    ArrayList<String> parameters;
+    // ASK ABOUT BODY
+
+    public FunctionCall(String name, ArrayList<String> parameters) {
+        this.name = name;
+        this.parameters = parameters;
+    }
+
+    public Object accept(Visitor v) {
+        return v.visit(this);
+    }
+
+}
+
+// ------------------------------------- Semantic Analysis
+// ------------------------------------------
+
+// An implementation of all the visitor methods
+// These act as semantic analysis, so each of these methods will visit the nodes
+// in the AST tree and make
+// sure that they are semantically doing the correct thing
+class AbstractVisitor implements Visitor {
+
+    // arithmetic expressions
+
+    public Object visit(Arithmetic add) {
+        // return add.e1.accept(this) + add.e2.accept(this);
+        return null;
+    }
+
+    public Object visit(Conditions n) {
+        return null;
+    }
+
+    public Object visit(UnaryOperators n) {
+        return null;
+    }
+
+    public Object visit(Asnmt n) {
+        return null;
+    }
+
+    public Object visit(Decl n) {
+        return null;
+    }
+
+    public Object visit(EndFunction n) {
+        return null;
+    }
+
+    public Object visit(ForLoop n) {
+        return null;
+    }
+
+    public Object visit(IfStmt n) {
+        return null;
+    }
+
+    public Object visit(StructCreator n) {
+        return null;
+    }
+
+    public Object visit(Type n) {
+        return null;
+    }
+
+    public Object visit(FunctionConstuct n) {
+        return null;
+    }
+
+    public Object visit(FunctionCall n) {
+        return null;
+    }
+
+}
+
+// A declaration of all the visitor methods for each AST subclass
+interface Visitor {
+
+    public Object visit(Arithmetic symbol);
+
+    public Object visit(Conditions symbol);
+
+    public Object visit(UnaryOperators symbol);
+
+    public Object visit(Asnmt symbol);
+
+    public Object visit(Decl symbol);
+
+    public Object visit(EndFunction symbol);
+
+    public Object visit(ForLoop symbol);
+
+    public Object visit(IfStmt symbol);
+
+    public Object visit(StructCreator symbol);
+
+    public Object visit(Type symbol);
+
+    public Object visit(FunctionConstuct symbol);
+
+    public Object visit(FunctionCall symbol);
+
+}
 
 
 // Java code for the HashMaps ID TYPES -------------------------------------------------------------------------
@@ -1363,275 +1730,6 @@ class Struct extends ID {
    } 
 
   }
-
-abstract class ASTNode {
-    abstract Object accept(Visitor v); /* This may have to be type ID...not sure */
-    // might need children nodes
-}
-
-class Arithmetic extends ASTNode {
-    public ASTNode left, right;
-
-    public Arithmetic(ASTNode left, ASTNode right) {
-        this.left = left;
-        this.right = right;
-    }
-
-    public Object accept(Visitor v) {
-        return v.visit(this);
-    }
-}
-
-class Conditions extends ASTNode {
-    public ASTNode left, right;
-
-    public Conditions(ASTNode left, ASTNode right) {
-        this.left = left;
-        this.right = right;
-    }
-
-    public Object accept(Visitor v) {
-        return v.visit(this);
-    }
-}
-
-class UnaryOperators extends ASTNode {
-    public ASTNode right;
-
-    public UnaryOperators(ASTNode right) {
-        this.right = right;
-    }
-
-    public Object accept(Visitor v) {
-        return v.visit(this);
-    }
-}
-
-// For return types ... relevant to line 81 in .y
-class EndFunction extends ASTNode {
-    String exp;
-
-    public EndFunction(String exp) {
-        this.exp = exp;
-    }
-
-    public Object accept(Visitor v) {
-        return v.visit(this);
-    }
-
-}
-
-class ForLoop extends ASTNode {
-
-    String iterator;
-    String conditional;
-    String increment;
-    String loopBody;
-
-    public ForLoop(String iterator, String conditional, String increment, String loopBody) {
-        this.iterator = iterator;
-        this.conditional = conditional;
-        this.increment = increment;
-        this.loopBody = loopBody;
-    }
-
-    public Object accept(Visitor v) {
-        return v.visit(this);
-    }
-
-}
-
-// subclasses of statement
-class IfStmt extends ASTNode {
-
-    String ifStmt;
-    String thenStmt;
-    String elseStmt;
-
-    public IfStmt(String ifStmt, String thenStmt, String elseStmt) {
-        this.ifStmt = ifStmt;
-        this.thenStmt = thenStmt;
-        this.elseStmt = elseStmt;
-    }
-
-    public Object accept(Visitor v) {
-        return v.visit(this);
-    }
-
-}
-
-class Asnmt extends ASTNode {
-    String var;
-    String exp;
-
-    public Asnmt(String var, String exp) {
-        this.var = var;
-        this.exp = exp;
-    }
-
-    public Object accept(Visitor v) {
-        return v.visit(this);
-    }
-
-}
-
-class Decl extends ASTNode {
-    // QUESTION: would we need type
-    // String varType;
-    // String name;
-    ArrayList<String> names;
-
-    public Decl(ArrayList<String> names) {
-        // this.varType = varType;
-        this.names = names;
-    }
-
-    public Object accept(Visitor v) {
-        return v.visit(this);
-    }
-
-}
-
-class StructCreator extends ASTNode {
-    String name;
-    ArrayList<String> fieldTypes;
-
-    public StructCreator(String name, ArrayList<String> fieldTypes) {
-        this.name = name;
-        this.fieldTypes = fieldTypes;
-    }
-
-    public Object accept(Visitor v) {
-        return v.visit(this);
-    }
-}
-
-// typeclass ----- ASK QUESTION ABOUT WHAT TO DO FOR JUST TYPES
-class Type extends ASTNode {
-
-    public Type() {
-    }
-
-    public Object accept(Visitor v) {
-        return v.visit(this);
-    }
-
-}
-
-class FunctionConstuct extends ASTNode {
-    String returnType;
-    ArrayList<String> parameters;
-    // ASK ABOUT BODY
-
-    public FunctionConstuct(String returnType, ArrayList<String> parameters) {
-        this.returnType = returnType;
-        this.parameters = parameters;
-    }
-
-    public Object accept(Visitor v) {
-        return v.visit(this);
-    }
-
-}
-
-class FunctionCall extends ASTNode {
-    String name;
-    ArrayList<String> parameters;
-    // ASK ABOUT BODY
-
-    public FunctionCall(String name, ArrayList<String> parameters) {
-        this.name = name;
-        this.parameters = parameters;
-    }
-
-    public Object accept(Visitor v) {
-        return v.visit(this);
-    }
-
-}
-
-class AbstractVisitor implements Visitor {
-
-    // arithmetic expressions
-
-    public Object visit(Arithmetic add) {
-        // return add.e1.accept(this) + add.e2.accept(this);
-        return null;
-    }
-
-    public Object visit(Conditions n) {
-        return null;
-    }
-
-    public Object visit(UnaryOperators n) {
-        return null;
-    }
-
-    public Object visit(Asnmt n) {
-        return null;
-    }
-
-    public Object visit(Decl n) {
-        return null;
-    }
-
-    public Object visit(EndFunction n) {
-        return null;
-    }
-
-    public Object visit(ForLoop n) {
-        return null;
-    }
-
-    public Object visit(IfStmt n) {
-        return null;
-    }
-
-    public Object visit(StructCreator n) {
-        return null;
-    }
-
-    public Object visit(Type n) {
-        return null;
-    }
-
-    public Object visit(FunctionConstuct n) {
-        return null;
-    }
-
-    public Object visit(FunctionCall n) {
-        return null;
-    }
-
-}
-
-interface Visitor {
-
-    public Object visit(Arithmetic symbol);
-
-    public Object visit(Conditions symbol);
-
-    public Object visit(UnaryOperators symbol);
-
-    public Object visit(Asnmt symbol);
-
-    public Object visit(Decl symbol);
-
-    public Object visit(EndFunction symbol);
-
-    public Object visit(ForLoop symbol);
-
-    public Object visit(IfStmt symbol);
-
-    public Object visit(StructCreator symbol);
-
-    public Object visit(Type symbol);
-
-    public Object visit(FunctionConstuct symbol);
-
-    public Object visit(FunctionCall symbol);
-
-}
 
 
 

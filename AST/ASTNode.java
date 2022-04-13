@@ -2,7 +2,6 @@ import java.util.*;
 
 // ~~~~~~ idea: what if we made a variable class and made all names and stuff of type Var ~~~~~~~ 
 
-
 // Asbstract syntax tree base class.  
 // methods: accept
 //          accept method will call the Visitor class, will accept a node if deemed "correct" by semantic analysis 
@@ -12,10 +11,30 @@ public abstract class ASTNode {
     // might need children nodes
 }
 
-// ------------------------------- Expression subclasses ------------------------------------------
+class StmtList {
+    ArrayList<ASTNode> stmts;
+
+    public StmtList() {
+        stmts = new ArrayList<ASTNode>();
+    }
+
+    public void addElement(ASTNode n) {
+        stmts.add(n);
+    }
+
+    public ASTNode elementAt(int i) {
+        return (ASTNode) stmts.get(i);
+    }
+    // public int size() {
+    // return stmts.size();
+    // }
+}
+
+// ------------------------------- Expression subclasses
+// ------------------------------------------
 
 // Arithmetic Class that extends the ASTNode class
-// creates two Nodes, the left and right sides of an arithmetic statement 
+// creates two Nodes, the left and right sides of an arithmetic statement
 // constructor allows semantic actions to initialize nodes
 class Arithmetic extends ASTNode {
     public ASTNode left, right;
@@ -30,9 +49,8 @@ class Arithmetic extends ASTNode {
     }
 }
 
-
 // Conditions class that extends the ASTNode class
-// creates two Nodes, the left and right sides of a conditional statement 
+// creates two Nodes, the left and right sides of a conditional statement
 // constructor allows semantic actions to initialize nodes
 class Conditions extends ASTNode {
     public ASTNode left, right;
@@ -48,7 +66,7 @@ class Conditions extends ASTNode {
 }
 
 // UnaryOperators class that extends the ASTNode class
-// creates one Node, the right statement of a unary expression 
+// creates one Node, the right statement of a unary expression
 // constructor allows semantic actions to initialize nodes
 class UnaryOperators extends ASTNode {
     public ASTNode right;
@@ -64,7 +82,7 @@ class UnaryOperators extends ASTNode {
 
 // EndFunctions class that extends the ASTNode class
 // Used for return and print functions
-// creates one node, the expression to be printed or returned 
+// creates one node, the expression to be printed or returned
 // constructor allows semantic actions to initialize nodes
 class EndFunction extends ASTNode {
     String exp;
@@ -79,23 +97,25 @@ class EndFunction extends ASTNode {
 
 }
 
-// ----------------------------------- Method subclasses ---------------------------------------------
+// ----------------------------------- Method subclasses
+// ---------------------------------------------
 
 // ForLoop class that extends the ASTNode class
-// creates four nodes, the for loop iterator, it's conditional, its incrementation statement, and the loop body 
+// creates four nodes, the for loop iterator, it's conditional, its
+// incrementation statement, and the loop body
 // constructor allows semantic actions to initialize nodes
 class ForLoop extends ASTNode {
 
     String iterator;
     String conditional;
     String increment;
-    String loopBody;
+    StmtList body;
 
-    public ForLoop(String iterator, String conditional, String increment, String loopBody) {
+    public ForLoop(String iterator, String conditional, String increment, StmtList body) {
         this.iterator = iterator;
         this.conditional = conditional;
         this.increment = increment;
-        this.loopBody = loopBody;
+        this.body = body;
     }
 
     public Object accept(Visitor v) {
@@ -105,16 +125,17 @@ class ForLoop extends ASTNode {
 }
 
 // IfStmt class that extends the ASTNode class
-// creates three nodes, the if statment conditional, the if statment body, and the else statement 
-// else statement can bc a null pointer, in which case only 2 nodes are created 
+// creates three nodes, the if statment conditional, the if statment body, and
+// the else statement
+// else statement can bc a null pointer, in which case only 2 nodes are created
 // constructor allows semantic actions to initialize nodes
 class IfStmt extends ASTNode {
 
-    String conditional
-    String body;
+    String conditional;
+    StmtList body;
     String elseStmt;
 
-    public IfStmt(String conditional, String body, String elseStmt) {
+    public IfStmt(String conditional, StmtList body, String elseStmt) {
         this.conditional = conditional;
         this.body = body;
         this.elseStmt = elseStmt;
@@ -126,10 +147,11 @@ class IfStmt extends ASTNode {
 
 }
 
-// ---------------------------- Variable subclasses ----------------------------------------------
+// ---------------------------- Variable subclasses
+// ----------------------------------------------
 
 // Asnmt class that extends the ASTNode class
-// The class is used when assigning objects to variables 
+// The class is used when assigning objects to variables
 // Creates two nodes, the variable and the expression
 // constructor allows semantic actions to initialize nodes
 class Asnmt extends ASTNode {
@@ -149,7 +171,7 @@ class Asnmt extends ASTNode {
 
 // Decl class that extends the ASTNode class
 // used for variable declarations, which can potentially be multiple in a row
-// creates 1 node: a list of all the variable names 
+// creates 1 node: a list of all the variable names
 // constructor allows semantic actions to initialize nodes
 class Decl extends ASTNode {
     // QUESTION: would we need type
@@ -168,7 +190,8 @@ class Decl extends ASTNode {
 
 }
 
-// ------------------------------ Type class question -------------------------------------------
+// ------------------------------ Type class question
+// -------------------------------------------
 
 // ******** ASK QUESTION ABOUT WHAT TO DO FOR JUST TYPES ********
 class Type extends ASTNode {
@@ -182,16 +205,18 @@ class Type extends ASTNode {
 
 }
 
-// ---------------------------------------- Program subclasses --------------------------------------
+// ---------------------------------------- Program subclasses
+// --------------------------------------
 
 // Struct class that extends the ASTNode class
-// creates 2 nodes: the name of the struct and an ArrayList of all the struct fieldTypes
+// creates 2 nodes: the name of the struct and an ArrayList of all the struct
+// fieldTypes
 // constructor allows semantic actions to initialize nodes
 class StructCreator extends ASTNode {
     String name;
-    ArrayList<String> fieldTypes;
+    StmtList fieldTypes;
 
-    public StructCreator(String name, ArrayList<String> fieldTypes) {
+    public StructCreator(String name, StmtList fieldTypes) {
         this.name = name;
         this.fieldTypes = fieldTypes;
     }
@@ -204,15 +229,19 @@ class StructCreator extends ASTNode {
 // ****** QUESTION: does the body need to be another node? *******
 
 // Function class that extends the ASTNode class
-// creates 2 nodes, the function name and it's parameters 
+// creates 2 nodes, the function name and it's parameters
 // constructor allows semantic actions to initialize nodes
 class FunctionConstuct extends ASTNode {
     String returnType;
+    String name;
     ArrayList<String> parameters;
+    StmtList body;
 
-    public FunctionConstuct(String returnType, ArrayList<String> parameters) {
+    public FunctionConstuct(String returnType, String name, ArrayList<String> parameters, StmtList body) {
         this.returnType = returnType;
+        this.name = name;
         this.parameters = parameters;
+        this.body = body;
     }
 
     public Object accept(Visitor v) {
@@ -222,8 +251,10 @@ class FunctionConstuct extends ASTNode {
 }
 
 // FunctionCall class that extends the ASTNode class
-// specifically for when you don't want to have full declarations in the parenthesis, just already declared param names
-// creates 2 nodes, the name (a string) and the parameters, which are an array of strings (variable names)
+// specifically for when you don't want to have full declarations in the
+// parenthesis, just already declared param names
+// creates 2 nodes, the name (a string) and the parameters, which are an array
+// of strings (variable names)
 // constructor allows semantic actions to initialize nodes
 class FunctionCall extends ASTNode {
     String name;
@@ -241,11 +272,12 @@ class FunctionCall extends ASTNode {
 
 }
 
-
-// ------------------------------------- Semantic Analysis ------------------------------------------
+// ------------------------------------- Semantic Analysis
+// ------------------------------------------
 
 // An implementation of all the visitor methods
-// These act as semantic analysis, so each of these methods will visit the nodes in the AST tree and make
+// These act as semantic analysis, so each of these methods will visit the nodes
+// in the AST tree and make
 // sure that they are semantically doing the correct thing
 class AbstractVisitor implements Visitor {
 

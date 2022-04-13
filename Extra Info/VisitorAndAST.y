@@ -3,7 +3,7 @@
 %define api.parser.class {ToY}
 %define api.parser.public
 %define parse.error verbose
-%define api.value.type {Yytoken}
+
 
 
 %code imports {
