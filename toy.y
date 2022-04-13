@@ -103,7 +103,9 @@ FileReader yyin = new FileReader(args[0]);
     ;                                   /* ^ Anneliese's Idea                                           ^ Emma's Idea */
     
 
-    function : returnType IDENTIFIER LEFTPAREN declarationList RIGHTPAREN LBRACKET stmt RBRACKET SEMICOLON //{ $$ = new FunctionConstruct($1, $3) }
+    function : returnType IDENTIFIER LEFTPAREN declarationList RIGHTPAREN LBRACKET stmt RBRACKET SEMICOLON { StmtList stmt = new StmtList();  
+                                                                                                             stmt.add($7); 
+													     $$ = new FunctionConstruct($1, $2, $4, stmt); }
     ;
     
     param: IDENTIFIER ($$ = new VarDef(null, $1); } /*{ArrayList<Object> param = new ArrayList<Object>(); param.add($1); $$ = param;}*/
