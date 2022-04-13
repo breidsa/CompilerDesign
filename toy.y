@@ -33,27 +33,39 @@ FileReader yyin = new FileReader(args[0]);
 }
 }
 
-/* Bison Declarations */
+/* Bison Declarations do we need the AST NODE HERE */
 /* Questions: does boolean and stuff have to come from the lexer?? */
-%token <INTEGER> INT
-%token BOOL STRING IDENTIFIER COMMENT
-%token TRUE FALSE IF THEN ELSE FOR AND OR MOD
-%token VOID RETURN PRINTF STRUCT
-%token RBRACKET LBRACKET SEMICOLON COMMA LESSTHAN GREATERTHAN DOUBLEEQ LESSTHANOREQ GREATERTHANOREQ NOTEQ NOT LEFTPAREN RIGHTPAREN PLUS MINUS MULT DIVIDE EQ ATTRIBUTE
+%token  INT BOOL STRING VOID
+%token  IDENTIFIER 
+%token  COMMENT
+%token  TRUE FALSE 
+%token  IF THEN ELSE FOR STRUCT
+%token  RETURN PRINTF 
+%token  SEMICOLON COMMA
+%token  EQ ATTRIBUTE
+%token  RBRACKET LBRACKET LEFTPAREN RIGHTPAREN
+%token  LESSTHAN GREATERTHAN DOUBLEEQ LESSTHANOREQ GREATERTHANOREQ NOTEQ
+%token  AND OR NOT 
+%token  PLUS MINUS MULT DIVIDE MOD
+
+%left OR AND 
 
 
-%type type
-%type returnType
-%type struct
-%type declaration
-%type function
-%type paramList
-%type stmt
-%type stmtSeq
-%type Lexp
-%type pgm
-%type recursePgm
-%type exp
+
+%type  type
+%type  returnType
+%type  struct
+%type  declaration
+%type  function
+%type  paramList
+%type  stmt
+%type  stmtSeq
+%type  Lexp
+%type  pgm
+%type  recursePgm
+%type  exp
+
+
 /* %type op */
 
 
@@ -89,9 +101,9 @@ FileReader yyin = new FileReader(args[0]);
     function : returnType IDENTIFIER LEFTPAREN declarationList RIGHTPAREN LBRACKET stmt RBRACKET SEMICOLON //{ $$ = new FunctionConstruct($1, $3) }
     ;
 
-    paramList: /* empty */
-    | IDENTIFIER
+    paramList: IDENTIFIER 
     | IDENTIFIER COMMA paramList
+    | /* empty */
     ;
     
     
@@ -108,7 +120,7 @@ FileReader yyin = new FileReader(args[0]);
     ;
     
     stmtSeq : /* empty sequence */
-    | stmt stmtSeq
+    | stmt SEMICOLON stmtSeq //{make a list of statements HERE}
     ;
     
     Lexp : IDENTIFIER 
@@ -127,7 +139,7 @@ FileReader yyin = new FileReader(args[0]);
     exp : type //{ $$ = $1 }
     | TRUE /*{ $$ = $1; }*/
     | FALSE /*{ $$ = $1; }*/
-    | exp PLUS exp { $$ = new Arithemtic((ASTNode)$1, (ASTNode)$3); }
+    | exp PLUS exp { $$ = new Arithmetic($1, $3); }
     | exp MINUS exp //{ $$ = new Arithemtic($1, $3); }
     | exp MULT exp //{ $$ = new Arithemtic($1, $3); }
     | exp DIVIDE exp //{ $$ = new Arithemtic($1, $3); }
@@ -204,9 +216,9 @@ class StmtList {
 // creates two Nodes, the left and right sides of an arithmetic statement
 // constructor allows semantic actions to initialize nodes
 class Arithmetic extends ASTNode {
-    public ASTNode left, right;
+    public Yytoken left, right;
 
-    public Arithmetic(ASTNode left, ASTNode right) {
+    public Arithmetic(Yytoken left, Yytoken right) {
         this.left = left;
         this.right = right;
     }
