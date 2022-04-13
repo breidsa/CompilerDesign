@@ -117,20 +117,26 @@ FileReader yyin = new FileReader(args[0]);
     
     
     /* I want to look at the 1st stmt for the for loop */
-    stmt : FOR LEFTPAREN IDENTIFIER EQ exp SEMICOLON exp SEMICOLON stmt RIGHTPAREN stmt SEMICOLON // { StmtList body = new stmtList();
-                                                                                                       body.add($11);
-											               Asnmt iterator = newAsnmt($3, $5);
-											               $$ = new ForLoop(iterator, $7, $9, body);
-											               /* nodeHash.put(fl); $$ = fl; */ }
-    | IF LEFTPAREN exp RIGHTPAREN THEN stmt SEMICOLON //{ $$ = new IfStmt($3, $6, null); }
-    | IF LEFTPAREN exp RIGHTPAREN THEN stmt ELSE stmt SEMICOLON //{ $$ = new IfStmt($3, $6, $8); }
-    | PRINTF LEFTPAREN STRING RIGHTPAREN SEMICOLON //{ $$ = new EndFunction($2); }
-    | RETURN exp SEMICOLON //{ $$ = new EndFunction($2); }
-    | LBRACKET stmtSeq RBRACKET //{ $$ = $1; }
-    | declaration SEMICOLON //{ $$ = $1; } 
-    | Lexp EQ exp SEMICOLON //{ $$ = new Asnmt($1, $3); }
-    | IDENTIFIER paramList SEMICOLON //{ $$ = $1; } 
-    | IDENTIFIER EQ IDENTIFIER paramList SEMICOLON //{ $$ = new Asnmt($1, $3); }  
+    stmt : FOR LEFTPAREN IDENTIFIER EQ exp SEMICOLON exp SEMICOLON stmt RIGHTPAREN stmt SEMICOLON { StmtList body = new stmtList();
+                                                                                                    body.add($11);
+											            Asnmt iterator = newAsnmt($3, $5);
+											            $$ = new ForLoop(iterator, $7, $9, body);
+											            /* nodeHash.put(fl); $$ = fl; */ }
+    | IF LEFTPAREN exp RIGHTPAREN THEN stmt SEMICOLON { StmtList ifBody = new StmtList();
+                                                        ifBody.add($6);
+                                                        $$ = new IfStmt($3, ifBody, null); }
+    | IF LEFTPAREN exp RIGHTPAREN THEN stmt ELSE stmt SEMICOLON { StmtList ifBody = new StmtList();
+                                                                  StmtList elseBody = new StmtList();
+                                                                  ifBody.add($6);
+						                  elseBody.add($8);}
+    | PRINTF LEFTPAREN STRING RIGHTPAREN SEMICOLON { $$ = new EndFunction($2); }
+    | RETURN exp SEMICOLON { $$ = new EndFunction($2); }
+    | LBRACKET stmtSeq RBRACKET { $$ = $1; }
+    | declaration SEMICOLON { $$ = $1; } 
+    | Lexp EQ exp SEMICOLON { $$ = new Asnmt($1, $3); }
+    | IDENTIFIER paramList SEMICOLON { $$ = new FunctionCall($1, $2); } /* i dont think w need to instantiate an array list bc we already do that in paramList... */
+    | IDENTIFIER EQ IDENTIFIER paramList SEMICOLON //{ FunctionCall func = new FunctionCall($3, $4);
+                                                       $$ = new Asnmt($1, func); }  
     ;
     
     stmtSeq : /* empty sequence */
@@ -323,16 +329,18 @@ class ForLoop extends ASTNode {
 // the else statement
 // else statement can bc a null pointer, in which case only 2 nodes are created
 // constructor allows semantic actions to initialize nodes
+
+	
 class IfStmt extends ASTNode {
 
     Object conditional;
-    StmtList body;
-    Object elseStmt;
+    StmtList ifBody;
+    StmtList elseBody;
 
-    public IfStmt(Object conditional, StmtList body, Object elseStmt) {
+    public IfStmt(Object conditional, StmtList ifBody, StmtList elseBody) {
         this.conditional = conditional;
-        this.body = body;
-        this.elseStmt = elseStmt;
+        this.ifBody = ifBody;
+        this.elseBody = elseBody;
     }
 
     public Object accept(Visitor v) {
