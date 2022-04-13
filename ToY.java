@@ -371,7 +371,7 @@ public class ToY
      * Method to retrieve the semantic value of the last scanned token.
      * @return the semantic value of the last scanned token.
      */
-    Yytoken getLVal();
+    Object getLVal();
 
     /**
      * Entry point for the scanner.  Returns the token identifier corresponding
@@ -435,19 +435,19 @@ public class ToY
 
   private final class YYStack {
     private int[] stateStack = new int[16];
-    private Yytoken[] valueStack = new Yytoken[16];
+    private Object[] valueStack = new Object[16];
 
     public int size = 16;
     public int height = -1;
 
-    public final void push(int state, Yytoken value) {
+    public final void push(int state, Object value) {
       height++;
       if (size == height) {
         int[] newStateStack = new int[size * 2];
         System.arraycopy(stateStack, 0, newStateStack, 0, height);
         stateStack = newStateStack;
 
-        Yytoken[] newValueStack = new Yytoken[size * 2];
+        Object[] newValueStack = new Object[size * 2];
         System.arraycopy(valueStack, 0, newValueStack, 0, height);
         valueStack = newValueStack;
 
@@ -474,7 +474,7 @@ public class ToY
       return stateStack[height - i];
     }
 
-    public final Yytoken valueAt(int i) {
+    public final Object valueAt(int i) {
       return valueStack[height - i];
     }
 
@@ -555,19 +555,138 @@ public class ToY
        Otherwise, the following line sets YYVAL to garbage.
        This behavior is undocumented and Bison
        users should not rely upon it.  */
-    Yytoken yyval = (0 < yylen) ? yystack.valueAt(yylen - 1) : yystack.valueAt(0);
+    Object yyval = (0 < yylen) ? yystack.valueAt(yylen - 1) : yystack.valueAt(0);
 
     switch (yyn)
       {
-          case 38: /* exp: exp PLUS exp  */
+          case 37: /* exp: FALSE  */
+  if (yyn == 37)
+    /* "ToY.y":141  */
+            { yyval = yystack.valueAt (0); };
+  break;
+
+
+  case 38: /* exp: exp PLUS exp  */
   if (yyn == 38)
     /* "ToY.y":142  */
                    { yyval = new Arithmetic(yystack.valueAt (2), yystack.valueAt (0)); };
   break;
 
 
+  case 39: /* exp: exp MINUS exp  */
+  if (yyn == 39)
+    /* "ToY.y":143  */
+                    { yyval = new Arithmetic(yystack.valueAt (2), yystack.valueAt (0)); };
+  break;
 
-/* "ToY.java":571  */
+
+  case 40: /* exp: exp MULT exp  */
+  if (yyn == 40)
+    /* "ToY.y":144  */
+                   { yyval = new Arithmetic(yystack.valueAt (2), yystack.valueAt (0)); };
+  break;
+
+
+  case 41: /* exp: exp DIVIDE exp  */
+  if (yyn == 41)
+    /* "ToY.y":145  */
+                     { yyval = new Arithmetic(yystack.valueAt (2), yystack.valueAt (0)); };
+  break;
+
+
+  case 42: /* exp: exp MOD exp  */
+  if (yyn == 42)
+    /* "ToY.y":146  */
+                   { yyval = new Arithmetic(yystack.valueAt (2), yystack.valueAt (0)); };
+  break;
+
+
+  case 43: /* exp: exp AND exp  */
+  if (yyn == 43)
+    /* "ToY.y":147  */
+                  { yyval = new Conditions(yystack.valueAt (2), yystack.valueAt (0)); };
+  break;
+
+
+  case 44: /* exp: exp OR exp  */
+  if (yyn == 44)
+    /* "ToY.y":148  */
+                 { yyval = new Conditions(yystack.valueAt (2), yystack.valueAt (0)); };
+  break;
+
+
+  case 45: /* exp: exp DOUBLEEQ exp  */
+  if (yyn == 45)
+    /* "ToY.y":149  */
+                       { yyval = new Conditions(yystack.valueAt (2), yystack.valueAt (0)); };
+  break;
+
+
+  case 46: /* exp: exp GREATERTHAN exp  */
+  if (yyn == 46)
+    /* "ToY.y":150  */
+                          { yyval = new Conditions(yystack.valueAt (2), yystack.valueAt (0)); };
+  break;
+
+
+  case 47: /* exp: exp LESSTHAN exp  */
+  if (yyn == 47)
+    /* "ToY.y":151  */
+                       { yyval = new Conditions(yystack.valueAt (2), yystack.valueAt (0)); };
+  break;
+
+
+  case 48: /* exp: exp GREATERTHANOREQ exp  */
+  if (yyn == 48)
+    /* "ToY.y":152  */
+                              { yyval = new Conditions(yystack.valueAt (2), yystack.valueAt (0)); };
+  break;
+
+
+  case 49: /* exp: exp LESSTHANOREQ exp  */
+  if (yyn == 49)
+    /* "ToY.y":153  */
+                           { yyval = new Conditions(yystack.valueAt (2), yystack.valueAt (0)); };
+  break;
+
+
+  case 50: /* exp: exp NOTEQ exp  */
+  if (yyn == 50)
+    /* "ToY.y":154  */
+                    { yyval = new Conditions(yystack.valueAt (2), yystack.valueAt (0)); };
+  break;
+
+
+  case 51: /* exp: exp EQ exp  */
+  if (yyn == 51)
+    /* "ToY.y":155  */
+                 { yyval = new Asnmt(yystack.valueAt (2), yystack.valueAt (0)); };
+  break;
+
+
+  case 52: /* exp: NOT exp  */
+  if (yyn == 52)
+    /* "ToY.y":156  */
+              { yyval = new UnaryOperators(yystack.valueAt (0)); };
+  break;
+
+
+  case 53: /* exp: MINUS exp  */
+  if (yyn == 53)
+    /* "ToY.y":157  */
+                { yyval = new UnaryOperators(yystack.valueAt (0)); };
+  break;
+
+
+  case 54: /* exp: LEFTPAREN exp RIGHTPAREN  */
+  if (yyn == 54)
+    /* "ToY.y":158  */
+                               { yyval = yystack.valueAt (1); };
+  break;
+
+
+
+/* "ToY.java":690  */
 
         default: break;
       }
@@ -610,7 +729,7 @@ public class ToY
 
 
     /* Semantic value of the lookahead.  */
-    Yytoken yylval = null;
+    Object yylval = null;
 
 
 
@@ -1249,7 +1368,7 @@ FileReader yyin = new FileReader(args[0]);
  if (!p.parse()) System.out.println("INVALID");
 }
 
-/* "ToY.java":1253  */
+/* "ToY.java":1372  */
 
 }
 /* "ToY.y":180  */
@@ -1292,9 +1411,9 @@ class StmtList {
 // creates two Nodes, the left and right sides of an arithmetic statement
 // constructor allows semantic actions to initialize nodes
 class Arithmetic extends ASTNode {
-    public Yytoken left, right;
+    public Object left, right;
 
-    public Arithmetic(Yytoken left, Yytoken right) {
+    public Arithmetic(Object left, Object right) {
         this.left = left;
         this.right = right;
     }
@@ -1308,9 +1427,9 @@ class Arithmetic extends ASTNode {
 // creates two Nodes, the left and right sides of a conditional statement
 // constructor allows semantic actions to initialize nodes
 class Conditions extends ASTNode {
-    public ASTNode left, right;
+    public Object left, right;
 
-    public Conditions(ASTNode left, ASTNode right) {
+    public Conditions(Object left, Object right) {
         this.left = left;
         this.right = right;
     }
@@ -1324,9 +1443,9 @@ class Conditions extends ASTNode {
 // creates one Node, the right statement of a unary expression
 // constructor allows semantic actions to initialize nodes
 class UnaryOperators extends ASTNode {
-    public ASTNode right;
+    public Object right;
 
-    public UnaryOperators(ASTNode right) {
+    public UnaryOperators(Object right) {
         this.right = right;
     }
 
@@ -1340,9 +1459,9 @@ class UnaryOperators extends ASTNode {
 // creates one node, the expression to be printed or returned
 // constructor allows semantic actions to initialize nodes
 class EndFunction extends ASTNode {
-    String exp;
+    Object exp;
 
-    public EndFunction(String exp) {
+    public EndFunction(Object exp) {
         this.exp = exp;
     }
 
@@ -1361,12 +1480,12 @@ class EndFunction extends ASTNode {
 // constructor allows semantic actions to initialize nodes
 class ForLoop extends ASTNode {
 
-    String iterator;
-    String conditional;
-    String increment;
+    Object iterator;
+    Object conditional;
+    Object increment;
     StmtList body;
 
-    public ForLoop(String iterator, String conditional, String increment, StmtList body) {
+    public ForLoop(Object iterator, Object conditional, Object increment, StmtList body) {
         this.iterator = iterator;
         this.conditional = conditional;
         this.increment = increment;
@@ -1386,11 +1505,11 @@ class ForLoop extends ASTNode {
 // constructor allows semantic actions to initialize nodes
 class IfStmt extends ASTNode {
 
-    String conditional;
+    Object conditional;
     StmtList body;
-    String elseStmt;
+    Object elseStmt;
 
-    public IfStmt(String conditional, StmtList body, String elseStmt) {
+    public IfStmt(Object conditional, StmtList body, Object elseStmt) {
         this.conditional = conditional;
         this.body = body;
         this.elseStmt = elseStmt;
@@ -1410,10 +1529,10 @@ class IfStmt extends ASTNode {
 // Creates two nodes, the variable and the expression
 // constructor allows semantic actions to initialize nodes
 class Asnmt extends ASTNode {
-    String var;
-    String exp;
+    Object var;
+    Object exp;
 
-    public Asnmt(String var, String exp) {
+    public Asnmt(Object var, Object exp) {
         this.var = var;
         this.exp = exp;
     }
@@ -1468,10 +1587,10 @@ class Type extends ASTNode {
 // fieldTypes
 // constructor allows semantic actions to initialize nodes
 class StructCreator extends ASTNode {
-    String name;
+    Object name;
     StmtList fieldTypes;
 
-    public StructCreator(String name, StmtList fieldTypes) {
+    public StructCreator(Object name, StmtList fieldTypes) {
         this.name = name;
         this.fieldTypes = fieldTypes;
     }
@@ -1487,12 +1606,12 @@ class StructCreator extends ASTNode {
 // creates 2 nodes, the function name and it's parameters
 // constructor allows semantic actions to initialize nodes
 class FunctionConstuct extends ASTNode {
-    String returnType;
-    String name;
+    Object returnType;
+    Object name;
     ArrayList<String> parameters;
     StmtList body;
 
-    public FunctionConstuct(String returnType, String name, ArrayList<String> parameters, StmtList body) {
+    public FunctionConstuct(Object returnType, Object name, ArrayList<String> parameters, StmtList body) {
         this.returnType = returnType;
         this.name = name;
         this.parameters = parameters;
@@ -1512,11 +1631,11 @@ class FunctionConstuct extends ASTNode {
 // of strings (variable names)
 // constructor allows semantic actions to initialize nodes
 class FunctionCall extends ASTNode {
-    String name;
+    Object name;
     ArrayList<String> parameters;
     // ASK ABOUT BODY
 
-    public FunctionCall(String name, ArrayList<String> parameters) {
+    public FunctionCall(Object name, ArrayList<String> parameters) {
         this.name = name;
         this.parameters = parameters;
     }

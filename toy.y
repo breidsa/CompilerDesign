@@ -3,7 +3,7 @@
 %define api.parser.class {ToY}
 %define api.parser.public
 %define parse.error verbose
-%define api.value.type {Yytoken}
+//%define api.value.type {Yytoken}
 
 
 %code imports {
@@ -137,25 +137,25 @@ FileReader yyin = new FileReader(args[0]);
     ;
     
     exp : type //{ $$ = $1 }
-    | TRUE /*{ $$ = $1; }*/
-    | FALSE /*{ $$ = $1; }*/
+    | TRUE //{ $$ = $1; } DOES NOT COMPILE WHEN I REMOVE THIS 
+    | FALSE { $$ = $1; }
     | exp PLUS exp { $$ = new Arithmetic($1, $3); }
-    | exp MINUS exp //{ $$ = new Arithemtic($1, $3); }
-    | exp MULT exp //{ $$ = new Arithemtic($1, $3); }
-    | exp DIVIDE exp //{ $$ = new Arithemtic($1, $3); }
-    | exp MOD exp //{ $$ = new Arithemtic($1, $3); }
-    | exp AND exp //{ $$ = new Conditions($1, $3); }
-    | exp OR exp //{ $$ = new Conditions($1, $3); }
-    | exp DOUBLEEQ exp //{ $$ = new Conditions($1, $3); }
-    | exp GREATERTHAN exp //{ $$ = new Conditions($1, $3); }
-    | exp LESSTHAN exp //{ $$ = new Conditions($1, $3); }
-    | exp GREATERTHANOREQ exp //{ $$ = new Conditions($1, $3); }
-    | exp LESSTHANOREQ exp //{ $$ = new Conditions($1, $3); }
-    | exp NOTEQ exp //{ $$ = new Conditions($1, $3); }
-    | exp EQ exp //{ $$ = new Asnmt($1, $3); }
-    | NOT exp //{ $$ = new UnaryOperators($2); }
-    | MINUS exp //{ $$ = new UnaryOperators($2); }
-    | LEFTPAREN exp RIGHTPAREN //{ $$ = $2; }
+    | exp MINUS exp { $$ = new Arithmetic($1, $3); }
+    | exp MULT exp { $$ = new Arithmetic($1, $3); }
+    | exp DIVIDE exp { $$ = new Arithmetic($1, $3); }
+    | exp MOD exp  { $$ = new Arithmetic($1, $3); }
+    | exp AND exp { $$ = new Conditions($1, $3); }
+    | exp OR exp { $$ = new Conditions($1, $3); }
+    | exp DOUBLEEQ exp { $$ = new Conditions($1, $3); }
+    | exp GREATERTHAN exp { $$ = new Conditions($1, $3); }
+    | exp LESSTHAN exp { $$ = new Conditions($1, $3); }
+    | exp GREATERTHANOREQ exp { $$ = new Conditions($1, $3); }
+    | exp LESSTHANOREQ exp { $$ = new Conditions($1, $3); }
+    | exp NOTEQ exp { $$ = new Conditions($1, $3); }
+    | exp EQ exp { $$ = new Asnmt($1, $3); }
+    | NOT exp { $$ = new UnaryOperators($2); }
+    | MINUS exp { $$ = new UnaryOperators($2); }
+    | LEFTPAREN exp RIGHTPAREN { $$ = $2; }
     ;
 
   
@@ -216,9 +216,9 @@ class StmtList {
 // creates two Nodes, the left and right sides of an arithmetic statement
 // constructor allows semantic actions to initialize nodes
 class Arithmetic extends ASTNode {
-    public Yytoken left, right;
+    public Object left, right;
 
-    public Arithmetic(Yytoken left, Yytoken right) {
+    public Arithmetic(Object left, Object right) {
         this.left = left;
         this.right = right;
     }
@@ -232,9 +232,9 @@ class Arithmetic extends ASTNode {
 // creates two Nodes, the left and right sides of a conditional statement
 // constructor allows semantic actions to initialize nodes
 class Conditions extends ASTNode {
-    public ASTNode left, right;
+    public Object left, right;
 
-    public Conditions(ASTNode left, ASTNode right) {
+    public Conditions(Object left, Object right) {
         this.left = left;
         this.right = right;
     }
@@ -248,9 +248,9 @@ class Conditions extends ASTNode {
 // creates one Node, the right statement of a unary expression
 // constructor allows semantic actions to initialize nodes
 class UnaryOperators extends ASTNode {
-    public ASTNode right;
+    public Object right;
 
-    public UnaryOperators(ASTNode right) {
+    public UnaryOperators(Object right) {
         this.right = right;
     }
 
@@ -264,9 +264,9 @@ class UnaryOperators extends ASTNode {
 // creates one node, the expression to be printed or returned
 // constructor allows semantic actions to initialize nodes
 class EndFunction extends ASTNode {
-    String exp;
+    Object exp;
 
-    public EndFunction(String exp) {
+    public EndFunction(Object exp) {
         this.exp = exp;
     }
 
@@ -285,12 +285,12 @@ class EndFunction extends ASTNode {
 // constructor allows semantic actions to initialize nodes
 class ForLoop extends ASTNode {
 
-    String iterator;
-    String conditional;
-    String increment;
+    Object iterator;
+    Object conditional;
+    Object increment;
     StmtList body;
 
-    public ForLoop(String iterator, String conditional, String increment, StmtList body) {
+    public ForLoop(Object iterator, Object conditional, Object increment, StmtList body) {
         this.iterator = iterator;
         this.conditional = conditional;
         this.increment = increment;
@@ -310,11 +310,11 @@ class ForLoop extends ASTNode {
 // constructor allows semantic actions to initialize nodes
 class IfStmt extends ASTNode {
 
-    String conditional;
+    Object conditional;
     StmtList body;
-    String elseStmt;
+    Object elseStmt;
 
-    public IfStmt(String conditional, StmtList body, String elseStmt) {
+    public IfStmt(Object conditional, StmtList body, Object elseStmt) {
         this.conditional = conditional;
         this.body = body;
         this.elseStmt = elseStmt;
@@ -334,10 +334,10 @@ class IfStmt extends ASTNode {
 // Creates two nodes, the variable and the expression
 // constructor allows semantic actions to initialize nodes
 class Asnmt extends ASTNode {
-    String var;
-    String exp;
+    Object var;
+    Object exp;
 
-    public Asnmt(String var, String exp) {
+    public Asnmt(Object var, Object exp) {
         this.var = var;
         this.exp = exp;
     }
@@ -392,10 +392,10 @@ class Type extends ASTNode {
 // fieldTypes
 // constructor allows semantic actions to initialize nodes
 class StructCreator extends ASTNode {
-    String name;
+    Object name;
     StmtList fieldTypes;
 
-    public StructCreator(String name, StmtList fieldTypes) {
+    public StructCreator(Object name, StmtList fieldTypes) {
         this.name = name;
         this.fieldTypes = fieldTypes;
     }
@@ -411,12 +411,12 @@ class StructCreator extends ASTNode {
 // creates 2 nodes, the function name and it's parameters
 // constructor allows semantic actions to initialize nodes
 class FunctionConstuct extends ASTNode {
-    String returnType;
-    String name;
+    Object returnType;
+    Object name;
     ArrayList<String> parameters;
     StmtList body;
 
-    public FunctionConstuct(String returnType, String name, ArrayList<String> parameters, StmtList body) {
+    public FunctionConstuct(Object returnType, Object name, ArrayList<String> parameters, StmtList body) {
         this.returnType = returnType;
         this.name = name;
         this.parameters = parameters;
@@ -436,11 +436,11 @@ class FunctionConstuct extends ASTNode {
 // of strings (variable names)
 // constructor allows semantic actions to initialize nodes
 class FunctionCall extends ASTNode {
-    String name;
+    Object name;
     ArrayList<String> parameters;
     // ASK ABOUT BODY
 
-    public FunctionCall(String name, ArrayList<String> parameters) {
+    public FunctionCall(Object name, ArrayList<String> parameters) {
         this.name = name;
         this.parameters = parameters;
     }
