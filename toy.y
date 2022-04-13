@@ -87,64 +87,49 @@ FileReader yyin = new FileReader(args[0]);
     ;
     
     returnType: type { $$ = $1; }
-    | VOID /* { $$ = new Type(); } */
+    | VOID { $$ = $1; }
     ;
     
-    struct : STRUCT IDENTIFIER LBRACKET declarationList RBRACKET //{ $$ = new StructCreator($2, $4); } /* {StmtList fieldTypes = new StmtList(); fieldTypes.addElement($4); $$ = new StructCreator($2, fieldTypes);} */
-    ;                                                              /* ^ INITIAL IDEA                      ^ SECOND THOUGHT */
+    struct : STRUCT IDENTIFIER LBRACKET declarationList RBRACKET { $$ = new StructCreator($2, (StmtList)$4); Struct st = new Struct($2,(StmtList)$4); statements.put($2, st);} /* {StmtList fieldTypes = new StmtList(); fieldTypes.addElement($4); $$ = new StructCreator($2, fieldTypes);} */
+    ;                                                              
 
-    //ADDME Struct st = new Struct($2,$4)                    
-    declaration: type IDENTIFIER {$$ = new VarDef($1, $2); } /* {ArrayList<Object> decs = new ArrayList<Object>(); decs.add($1); $$ = new Decl(decs); } */
-    ;                           /* ^ Anneliese's Idea          ^ Emma's Idea */
+                   
+    declaration: type IDENTIFIER {$$ = new VarDef($1, $2); } 
+    ;
     
-    //MAYBE ADD DECLARATION LIST 
-   //TRYING LIST HERE 
-    declarationList: /* empty */ {$$ = new StmtList();} // FLAGGGGGGGG ---------- NOT SURE IF THIS IS ADDING OBJECT NEED TO REVIEW  
+    declarationList: /* empty */ {$$ = new StmtList();}  
     | declarationList COMMA declaration {StmtList decls = (StmtList) $1; decls.addElement($3); $$ = decls;} 
-    //{ArrayList<Object> decls = new ArrayList<Object>(); decls.add($1); decls.add($3); $$ = decls;} 
-    /*  {ArrayList<Object> decs = new ArrayList<Object>(); decs.add($1); ArrayList<Object> dec = new ArrayList<Object>(); dec.add($3); for(Object d:dec){decs.add(d);}$$ = new Decl(decs);} EMMAS IDEA */
-    ;                                   /* ^ Anneliese's Idea                                           ^ Emma's Idea */
+    ;                         
     
 
-    function : returnType IDENTIFIER LEFTPAREN declarationList RIGHTPAREN LBRACKET stmt RBRACKET SEMICOLON { StmtList stmt = new StmtList();  
-                                                                                                             stmt.addElement($7); 
-													     $$ = new FunctionConstruct($1, $2, $4, stmt); Function ft = new Function($2, $1, stmt); functions.put($2, ft);}//ADDEDME)}
+    function : returnType IDENTIFIER LEFTPAREN declarationList RIGHTPAREN LBRACKET stmtSeq RBRACKET SEMICOLON {$$ = new FunctionConstruct($1, $2, $4, (StmtList)$7);
+                                                                                                             Function ft = new Function($2, $1, (StmtList)$4); functions.put($2, ft);}
     ;
     
-    param: IDENTIFIER {$$ = new VarDef(null, $1); } /*{ArrayList<Object> param = new ArrayList<Object>(); param.add($1); $$ = param;}*/
+    param: IDENTIFIER {$$ = new VarDef(null, $1); } 
     ;
 
     paramList:  {$$ = new StmtList();}
     | paramList COMMA param {StmtList params = (StmtList) $1; params.addElement($3); $$ = params;}
-    // THINK WRONG {ArrayList<Object> params = new ArrayList<Object>(); params.add($1); params.add($3); $$ = params;}
     ;
     
     
     /* I want to look at the 1st stmt for the for loop */
-    stmt : FOR LEFTPAREN IDENTIFIER EQ exp SEMICOLON exp SEMICOLON stmt RIGHTPAREN stmt SEMICOLON { StmtList body = new StmtList();
-                                                                                                    body.addElement($11);
-											            Asnmt iterator = new Asnmt($3, $5);
-											            $$ = new ForLoop(iterator, $7, $9, body);
-											            /* nodeHash.put(fl); $$ = fl; */ }
-    | IF LEFTPAREN exp RIGHTPAREN THEN stmt SEMICOLON { StmtList ifBody = new StmtList();
-                                                        ifBody.addElement($6);
-                                                        $$ = new IfStmt($3, ifBody, null); }
-    | IF LEFTPAREN exp RIGHTPAREN THEN stmt ELSE stmt SEMICOLON { StmtList ifBody = new StmtList();
-                                                                  StmtList elseBody = new StmtList();
-                                                                  ifBody.addElement($6);
-						                  elseBody.addElement($8);}
+    stmt : FOR LEFTPAREN IDENTIFIER EQ exp SEMICOLON exp SEMICOLON stmt RIGHTPAREN stmtSeq SEMICOLON { Asnmt iterator = new Asnmt($3, $5);
+											                                                           $$ = new ForLoop(iterator, $7, $9, (StmtList)$11);}
+    | IF LEFTPAREN exp RIGHTPAREN THEN stmtSeq SEMICOLON { $$ = new IfStmt($3, (StmtList) $6, null); }
+    | IF LEFTPAREN exp RIGHTPAREN THEN stmtSeq ELSE stmtSeq SEMICOLON { $$ = new IfStmt($3, (StmtList)$6, (StmtList)$8);}
     | PRINTF LEFTPAREN STRING RIGHTPAREN SEMICOLON { $$ = new EndFunction($2); }
     | RETURN exp SEMICOLON { $$ = new EndFunction($2); }
     | LBRACKET stmtSeq RBRACKET { $$ = $1; }
     | declaration SEMICOLON { $$ = $1; } 
     | Lexp EQ exp SEMICOLON { $$ = new Asnmt($1, $3); }
-    | IDENTIFIER paramList SEMICOLON { $$ = new FunctionCall($1, $2); } /* i dont think w need to instantiate an array list bc we already do that in paramList... */
-    | IDENTIFIER EQ IDENTIFIER paramList SEMICOLON //{ FunctionCall func = new FunctionCall($3, $4); $$ = new Asnmt($1, func); }  
+    | IDENTIFIER paramList SEMICOLON { $$ = new FunctionCall($1, $2); }
+    | IDENTIFIER EQ IDENTIFIER paramList SEMICOLON { FunctionCall func = new FunctionCall($3, (StmtList) $4); $$ = new Asnmt($1, func); }  
     ;
     
     stmtSeq : /* empty sequence */ { $$ = new StmtList();}
     | stmt SEMICOLON stmtSeq { StmtList sequence = (StmtList) $3; sequence.addElement($1); $$ = sequence; }
-    //{ StmtList sequence = new StmtList(); sequence.addElement($3); sequence.addElement($1); $$ = sequence; } 
     ;
     
     Lexp : IDENTIFIER { $$ = new VarDef(null, $1); }
@@ -168,8 +153,8 @@ FileReader yyin = new FileReader(args[0]);
     | exp MULT exp { $$ = new Arithmetic($1, $2,$3); }
     | exp DIVIDE exp { $$ = new Arithmetic($1,$2, $3); }
     | exp MOD exp  { $$ = new Arithmetic($1,$2, $3); }
-    | exp AND exp { $$ = new Conditions($1, $3); }
-    | exp OR exp { $$ = new Conditions($1, $3); }
+    | exp AND exp { $$ = new Logic($1, $2, $3); }
+    | exp OR exp { $$ = new Logic($1, $2, $3); }
     | exp DOUBLEEQ exp { $$ = new Conditions($1, $3); }
     | exp GREATERTHAN exp { $$ = new Conditions($1, $3); }
     | exp LESSTHAN exp { $$ = new Conditions($1, $3); }
@@ -243,6 +228,20 @@ class Arithmetic extends ASTNode {
     public Object left, right, op;
 
     public Arithmetic(Object left, Object op, Object right) {
+        this.left = left;
+        this.right = right;
+        this.op = op;
+    }
+
+    public Object accept(Visitor v) {
+        return v.visit(this);
+    }
+}
+
+class Logic extends ASTNode {
+    public Object left, right, op;
+
+    public Logic(Object left, Object op, Object right) {
         this.left = left;
         this.right = right;
         this.op = op;
@@ -526,6 +525,10 @@ class AbstractVisitor implements Visitor {
         return null;
     }
 
+    public Object visit(Logic add) {
+        return null;
+    }
+
     public Object visit(Conditions n) {
         return null;
     }
@@ -584,6 +587,8 @@ class AbstractVisitor implements Visitor {
 interface Visitor {
 
     public Object visit(Arithmetic symbol);
+
+    public Object visit(Logic symbol);
 
     public Object visit(Conditions symbol);
 
