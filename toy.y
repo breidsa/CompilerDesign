@@ -90,8 +90,8 @@ FileReader yyin = new FileReader(args[0]);
     | VOID /* { $$ = new Type(); } */
     ;
     
-    struct : STRUCT IDENTIFIER LBRACKET declarationList RBRACKET //{ $$ = new StructCreator($2, $4); }
-    ;
+    struct : STRUCT IDENTIFIER LBRACKET declarationList RBRACKET //{ $$ = new StructCreator($2, $4); } /* {StmtList fieldTypes = new StmtList(); fieldTypes.add($4); $$ = new StructCreator($2, fieldTypes);} */
+    ;                                                              /* ^ INITIAL IDEA                      ^ SECOND THOUGHT */
                                  
     declaration: type IDENTIFIER {$$ = new VarDef($1, $2); } /* {ArrayList<Object> decs = new ArrayList<Object>(); decs.add($1); $$ = new Decl(decs); } */
     ;                           /* ^ Anneliese's Idea          ^ Emma's Idea */
@@ -431,6 +431,7 @@ class Type extends ASTNode {
 // fieldTypes
 // constructor allows semantic actions to initialize nodes
 class StructCreator extends ASTNode {
+    
     Object name;
     StmtList fieldTypes;
 
