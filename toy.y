@@ -78,9 +78,9 @@ FileReader yyin = new FileReader(args[0]);
 
 %%
     
-     type: INT /* { $$ = new Type(); } */
-    | BOOL /* { $$ = new Type(); } */
-    | STRING /* { $$ = new Type(); } */
+     type: INT { $$ = new VarDef($1, null); }
+    | BOOL { $$ = new VarDef($1, null); }
+    | STRING { $$ = new VarDef($1, null); }
     /*
     | IDENTIFIER
     */
@@ -143,8 +143,8 @@ FileReader yyin = new FileReader(args[0]);
     | stmt SEMICOLON stmtSeq { StmtList sequence = $3; sequence.addElement($1); $$ = sequence; }
     ;
     
-    Lexp : IDENTIFIER 
-    | IDENTIFIER ATTRIBUTE Lexp /* attribute is a . like: <id > . <l - exp > */
+    Lexp : IDENTIFIER { $$ = new VarDef(null, $1);
+    | IDENTIFIER ATTRIBUTE Lexp /* want to brainstorm abt this....not sure abt it */
     ;
     
     pgm : function recursePgm 
