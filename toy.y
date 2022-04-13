@@ -21,9 +21,9 @@ import java.util.ArrayList;
 %code {
 
 // delcare global hashmaps to fill while parsing -------------------------------------------------------------------------
-HashMap<String, ID> functions = new HashMap<String, ID>();
-HashMap<String, ID> statements = new HashMap<String, ID>();
-HashMap<String, ID> var = new HashMap<String, ID>();
+HashMap<Object, ID> functions = new HashMap<Object, ID>();
+HashMap<Object, ID> statements = new HashMap<Object, ID>();
+HashMap<Object, ID> var = new HashMap<Object, ID>();
 
 public static void main(String[] args) throws IOException {
 FileReader yyin = new FileReader(args[0]);
@@ -92,34 +92,38 @@ FileReader yyin = new FileReader(args[0]);
     
     struct : STRUCT IDENTIFIER LBRACKET declarationList RBRACKET //{ $$ = new StructCreator($2, $4); } /* {StmtList fieldTypes = new StmtList(); fieldTypes.addElement($4); $$ = new StructCreator($2, fieldTypes);} */
     ;                                                              /* ^ INITIAL IDEA                      ^ SECOND THOUGHT */
-                                 
+
+    //ADDME Struct st = new Struct($2,$4)                    
     declaration: type IDENTIFIER {$$ = new VarDef($1, $2); } /* {ArrayList<Object> decs = new ArrayList<Object>(); decs.add($1); $$ = new Decl(decs); } */
     ;                           /* ^ Anneliese's Idea          ^ Emma's Idea */
     
     //MAYBE ADD DECLARATION LIST 
    //TRYING LIST HERE 
-    declarationList: /* empty */ {$$ = new ArrayList<Object>();} // FLAGGGGGGGG ---------- NOT SURE IF THIS IS ADDING OBJECT NEED TO REVIEW  
-    | declarationList COMMA declaration {ArrayList<Object> decls = $1; decls.add($3); $$ = decls;} /*  {ArrayList<Object> decs = new ArrayList<Object>(); decs.add($1); ArrayList<Object> dec = new ArrayList<Object>(); dec.add($3); for(Object d:dec){decs.add(d);}$$ = new Decl(decs);} */
+    declarationList: /* empty */ {$$ = new StmtList();} // FLAGGGGGGGG ---------- NOT SURE IF THIS IS ADDING OBJECT NEED TO REVIEW  
+    | declarationList COMMA declaration {StmtList decls = (StmtList) $1; decls.addElement($3); $$ = decls;} 
+    //{ArrayList<Object> decls = new ArrayList<Object>(); decls.add($1); decls.add($3); $$ = decls;} 
+    /*  {ArrayList<Object> decs = new ArrayList<Object>(); decs.add($1); ArrayList<Object> dec = new ArrayList<Object>(); dec.add($3); for(Object d:dec){decs.add(d);}$$ = new Decl(decs);} EMMAS IDEA */
     ;                                   /* ^ Anneliese's Idea                                           ^ Emma's Idea */
     
 
     function : returnType IDENTIFIER LEFTPAREN declarationList RIGHTPAREN LBRACKET stmt RBRACKET SEMICOLON { StmtList stmt = new StmtList();  
                                                                                                              stmt.addElement($7); 
-													     $$ = new FunctionConstruct($1, $2, $4, stmt); }
+													     $$ = new FunctionConstruct($1, $2, $4, stmt); Function ft = new Function($2, $1, stmt); functions.put($2, ft);}//ADDEDME)}
     ;
     
-    param: IDENTIFIER ($$ = new VarDef(null, $1); } /*{ArrayList<Object> param = new ArrayList<Object>(); param.add($1); $$ = param;}*/
+    param: IDENTIFIER {$$ = new VarDef(null, $1); } /*{ArrayList<Object> param = new ArrayList<Object>(); param.add($1); $$ = param;}*/
     ;
 
-    paramList:  /* empty */  {$$ = new ArrayList<Object>();}
-    | paramList COMMA param {ArrayList<Object> params = $1; params.add($3); $$ = params;}
+    paramList:  {$$ = new StmtList();}
+    | paramList COMMA param {StmtList params = (StmtList) $1; params.addElement($3); $$ = params;}
+    // THINK WRONG {ArrayList<Object> params = new ArrayList<Object>(); params.add($1); params.add($3); $$ = params;}
     ;
     
     
     /* I want to look at the 1st stmt for the for loop */
-    stmt : FOR LEFTPAREN IDENTIFIER EQ exp SEMICOLON exp SEMICOLON stmt RIGHTPAREN stmt SEMICOLON { StmtList body = new stmtList();
+    stmt : FOR LEFTPAREN IDENTIFIER EQ exp SEMICOLON exp SEMICOLON stmt RIGHTPAREN stmt SEMICOLON { StmtList body = new StmtList();
                                                                                                     body.addElement($11);
-											            Asnmt iterator = newAsnmt($3, $5);
+											            Asnmt iterator = new Asnmt($3, $5);
 											            $$ = new ForLoop(iterator, $7, $9, body);
 											            /* nodeHash.put(fl); $$ = fl; */ }
     | IF LEFTPAREN exp RIGHTPAREN THEN stmt SEMICOLON { StmtList ifBody = new StmtList();
@@ -135,12 +139,12 @@ FileReader yyin = new FileReader(args[0]);
     | declaration SEMICOLON { $$ = $1; } 
     | Lexp EQ exp SEMICOLON { $$ = new Asnmt($1, $3); }
     | IDENTIFIER paramList SEMICOLON { $$ = new FunctionCall($1, $2); } /* i dont think w need to instantiate an array list bc we already do that in paramList... */
-    | IDENTIFIER EQ IDENTIFIER paramList SEMICOLON //{ FunctionCall func = new FunctionCall($3, $4);
-                                                       $$ = new Asnmt($1, func); }  
+    | IDENTIFIER EQ IDENTIFIER paramList SEMICOLON //{ FunctionCall func = new FunctionCall($3, $4); $$ = new Asnmt($1, func); }  
     ;
     
     stmtSeq : /* empty sequence */ { $$ = new StmtList();}
-    | stmt SEMICOLON stmtSeq { StmtList sequence = $3; sequence.addElement($1); $$ = sequence; }
+    | stmt SEMICOLON stmtSeq { StmtList sequence = (StmtList) $3; sequence.addElement($1); $$ = sequence; }
+    //{ StmtList sequence = new StmtList(); sequence.addElement($3); sequence.addElement($1); $$ = sequence; } 
     ;
     
     Lexp : IDENTIFIER { $$ = new VarDef(null, $1); }
@@ -396,9 +400,9 @@ class Decl extends ASTNode {
 
 // this might just be a Var definition situation????
 class ParamList extends ASTNode {
-	ArrayList<Object> params;
+	StmtList params;
 	
-	public ParamList(ArrayList<Object> params){
+	public ParamList(StmtList params){
 		this.params = params;
 	}
 	
@@ -411,15 +415,15 @@ class ParamList extends ASTNode {
 
 class VarDef extends ASTNode {
 	
-	Object type, Object name;
+	Object type, name;
 	
 	public VarDef(Object type, Object name){
 		this.type = type;
 		this.name = name;
-		
+    }	
 	public Object accept(Visitor v) {
         	return v.visit(this);
-    	}
+    }
 }
 
 
@@ -465,13 +469,13 @@ class StructCreator extends ASTNode {
 // Function class that extends the ASTNode class
 // creates 2 nodes, the function name and it's parameters
 // constructor allows semantic actions to initialize nodes
-class FunctionConstuct extends ASTNode {
+class FunctionConstruct extends ASTNode {
     Object returnType;
     Object name;
-    ArrayList<String> parameters;
+    Object parameters;
     StmtList body;
 
-    public FunctionConstuct(Object returnType, Object name, ArrayList<String> parameters, StmtList body) {
+    public FunctionConstruct(Object returnType, Object name, Object parameters, StmtList body) {
         this.returnType = returnType;
         this.name = name;
         this.parameters = parameters;
@@ -492,10 +496,10 @@ class FunctionConstuct extends ASTNode {
 // constructor allows semantic actions to initialize nodes
 class FunctionCall extends ASTNode {
     Object name;
-    ArrayList<String> parameters;
+    Object parameters;
     // ASK ABOUT BODY
 
-    public FunctionCall(Object name, ArrayList<String> parameters) {
+    public FunctionCall(Object name, Object parameters) {
         this.name = name;
         this.parameters = parameters;
     }
@@ -558,7 +562,7 @@ class AbstractVisitor implements Visitor {
         return null;
     }
 
-    public Object visit(FunctionConstuct n) {
+    public Object visit(FunctionConstruct n) {
         return null;
     }
 
@@ -601,7 +605,7 @@ interface Visitor {
 
     public Object visit(Type symbol);
 
-    public Object visit(FunctionConstuct symbol);
+    public Object visit(FunctionConstruct symbol);
 
     public Object visit(FunctionCall symbol);
     
@@ -612,15 +616,15 @@ interface Visitor {
 
 // Java code for the HashMaps ID TYPES -------------------------------------------------------------------------
 class ID {
-    String name;
-    int scope;
+    Object name;
+    Object scope;
     // String type;
     // String returnType;
     // ArrayList<String> parameterTypes;
     // ArrayList<String> fieldTypes;
     // int size;
 
-    public ID(String name) {
+    public ID(Object name) {
         this.name = name;
         // this.type = type;
         // this.returnType = returnType;
@@ -628,18 +632,21 @@ class ID {
         // this.fieldTypes = fieldTypes;
         // this.size = size;
     }
-    public String getName(){
+    public Object getName(){
        return this.name;
     }
-    public void setScope(int Scope){
+    public Object getScope(Object Scope){
+       return this.scope;
+    }
+    public void setScope(Object Scope){
        this.scope = scope;
     }
 }
 
 class Var extends ID {
-    String type;
+    Object type;
 
-    public Var(String name, String type) {
+    public Var(Object name, Object type) {
         super(name);
         this.type = type;
 
@@ -647,10 +654,10 @@ class Var extends ID {
 }
 
 class Function extends ID {
-    String returnType;
-    ArrayList<String> parameterTypes;
+    Object returnType;
+    StmtList parameterTypes;
 
-    public Function(String name, String returnType, ArrayList<String> parameterTypes) {
+    public Function(Object name, Object returnType, StmtList parameterTypes) {
         super(name);
         this.returnType = returnType;
         this.parameterTypes = parameterTypes;
@@ -659,13 +666,13 @@ class Function extends ID {
 }
 
 class Struct extends ID {
-    ArrayList<String> fieldTypes;
-    int size;
+    StmtList fieldTypes;
+    //Object size; TOOK OUT SIZE
 
-    public Struct(String name, ArrayList<String> fieldTypes, int size) {
+    public Struct(Object name, StmtList fieldTypes){ //Object size
         super(name);
         this.fieldTypes = fieldTypes;
-        this.size = size;
+        //this.size = size;
     }
 
 }
@@ -674,16 +681,16 @@ class Struct extends ID {
   class SymbolTable{
    
    int scope = 0; 
-   HashMap<String, ID> currentScope; 
-   ArrayList<HashMap<String, ID>> table;
+   HashMap<Object, ID> currentScope; 
+   ArrayList<HashMap<Object, ID>> table;
 
    public SymbolTable() {
-		table = new ArrayList<HashMap<String, ID>>();
-		table.add(new HashMap<String, ID>());
+		table = new ArrayList<HashMap<Object, ID>>();
+		table.add(new HashMap<Object, ID>());
 	}
 
    public void addScope(){
-      table.add(new HashMap<String, ID>());
+      table.add(new HashMap<Object, ID>());
       scope++;
    }
 
