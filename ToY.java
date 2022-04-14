@@ -592,7 +592,7 @@ public class ToY
   case 6: /* returnType: VOID  */
   if (yyn == 6)
     /* "ToY.y":89  */
-           { yyval = yystack.valueAt (0); };
+           { yyval = new Keyword(yystack.valueAt (0)); };
   break;
 
 
@@ -738,10 +738,17 @@ public class ToY
   break;
 
 
-  case 27: /* Lexp: IDENTIFIER  */
+  case 27: /* Lexp: param  */
   if (yyn == 27)
     /* "ToY.y":134  */
-                      { yyval = new VarDef(null, yystack.valueAt (0)); };
+                 { StmtList emptyList = new StmtList(); emptyList.addElement(yystack.valueAt (0)); yyval = emptyList; };
+  break;
+
+
+  case 28: /* Lexp: param ATTRIBUTE Lexp  */
+  if (yyn == 28)
+    /* "ToY.y":135  */
+                           { StmtList attributeList = (StmtList)yystack.valueAt (0); attributeList.addElement(yystack.valueAt (2)); yyval = attributeList; };
   break;
 
 
@@ -783,14 +790,14 @@ public class ToY
   case 34: /* exp: TRUE  */
   if (yyn == 34)
     /* "ToY.y":151  */
-           { yyval = yystack.valueAt (0); };
+           { yyval = new Keyword(yystack.valueAt (0)); };
   break;
 
 
   case 35: /* exp: FALSE  */
   if (yyn == 35)
     /* "ToY.y":152  */
-            { yyval = yystack.valueAt (0); };
+            { yyval = new Keyword(yystack.valueAt (0)); };
   break;
 
 
@@ -895,14 +902,14 @@ public class ToY
   case 50: /* exp: NOT exp  */
   if (yyn == 50)
     /* "ToY.y":167  */
-              { yyval = new UnaryOperators(yystack.valueAt (0)); };
+              { yyval = new UnaryOperators(yystack.valueAt (1), yystack.valueAt (0)); };
   break;
 
 
   case 51: /* exp: MINUS exp  */
   if (yyn == 51)
     /* "ToY.y":168  */
-                { yyval = new UnaryOperators(yystack.valueAt (0)); };
+                { yyval = new UnaryOperators(yystack.valueAt (1), yystack.valueAt (0)); };
   break;
 
 
@@ -914,7 +921,7 @@ public class ToY
 
 
 
-/* "ToY.java":918  */
+/* "ToY.java":925  */
 
         default: break;
       }
@@ -1326,8 +1333,8 @@ public class ToY
     return yyvalue == yytable_ninf_;
   }
 
-  private static final short yypact_ninf_ = -32;
-  private static final byte yytable_ninf_ = -1;
+  private static final short yypact_ninf_ = -33;
+  private static final byte yytable_ninf_ = -13;
 
 /* YYPACT[STATE-NUM] -- Index in YYTABLE of the portion describing
    STATE-NUM.  */
@@ -1336,19 +1343,19 @@ public class ToY
   {
     return new short[]
     {
-      76,   -32,   -32,   -32,   -32,     5,   -32,     7,    76,    76,
-      30,   -32,   -20,    10,   -32,   -32,   -32,   -32,   -32,    39,
-     -18,    84,   -32,    13,    31,   -32,   156,   -32,     3,    32,
-      47,     1,    53,   156,    36,    90,    94,    99,   113,   115,
-      41,     1,   124,   -32,   -32,     1,     1,     1,   -32,    37,
-     133,   118,   -32,   156,   123,     1,   -32,   121,   -32,   -32,
-     136,   155,   142,   175,    80,    80,   -32,     1,     1,     1,
-       1,     1,     1,     1,     1,     1,     1,     1,     1,     1,
-       1,   128,   -32,   -32,   -32,    66,    88,   -32,   -32,   132,
-       1,   -32,   189,   203,   203,   203,   203,   203,   203,   189,
-     189,    80,    80,    -4,    -4,    -4,   146,   -32,   -32,   156,
-      97,   -32,     2,     1,   156,   -32,   119,   147,   156,   -32,
-     141,   156,   150,   -32
+      64,   -33,   -33,   -33,   -33,    -4,   -33,    -2,    64,    64,
+       7,   -33,   -10,    12,   -33,   -33,   -33,   -33,   -33,     1,
+     -15,    25,   -33,    30,    53,   -33,   178,   -33,     4,    38,
+      47,    54,    48,   178,    55,    59,    56,    77,    61,    68,
+      33,    54,    69,   -33,   -33,    54,    54,    54,   -33,    65,
+      81,    83,   -33,    80,   178,    88,    54,   -33,   -33,    80,
+     177,    87,   197,   -18,   -18,   -33,    54,    54,    54,    54,
+      54,    54,    54,    54,    54,    54,    54,    54,    54,    54,
+      85,   -33,   -33,   -33,   -33,   -33,    97,    37,   -33,    96,
+      54,   -33,   211,   225,   225,   225,   225,   225,   225,   211,
+     211,   -18,   -18,    -1,    -1,    -1,    93,   -33,   -33,   178,
+     119,   -33,    -7,    54,   178,   -33,   141,    94,   178,   -33,
+      91,   178,    95,   -33
     };
   }
 
@@ -1363,12 +1370,12 @@ public class ToY
       30,     2,     3,     4,     6,     0,     5,     0,    30,    30,
        0,    29,     0,     0,    32,    31,     1,     9,     9,     0,
        0,     0,     7,     0,     0,    10,    25,     8,    13,     0,
-       0,     0,     0,    25,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,    25,     0,    27,     0,     0,     0,     0,
        0,     0,     0,    34,    35,     0,     0,     0,    33,     0,
-       0,     0,    21,    25,     0,     0,    13,    27,    28,    23,
-       0,     0,     0,     0,    50,    51,    19,     0,     0,     0,
+       0,     0,    21,     0,    25,     0,     0,    13,    23,     0,
+       0,     0,     0,    50,    51,    19,     0,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,    20,    26,    11,     0,     0,    12,    14,     0,
+       0,    20,    12,    28,    26,    11,     0,     0,    14,     0,
        0,    52,    49,    45,    44,    43,    47,    46,    48,    41,
       42,    36,    37,    38,    39,    40,     0,    22,    24,    25,
        0,    18,     0,     0,    25,    16,     0,     0,     0,    17,
@@ -1377,13 +1384,13 @@ public class ToY
   }
 
 /* YYPGOTO[NTERM-NUM].  */
-  private static final short[] yypgoto_ = yypgoto_init();
-  private static final short[] yypgoto_init()
+  private static final byte[] yypgoto_ = yypgoto_init();
+  private static final byte[] yypgoto_init()
   {
-    return new short[]
+    return new byte[]
     {
-     -32,     0,   -32,   -32,   148,   153,   -32,   -32,   120,    56,
-     -31,   138,   -32,   102,   -28
+     -33,     0,   -33,   -33,    98,   102,   -33,    63,    74,    20,
+     -32,    89,   -33,    57,   -29
     };
   }
 
@@ -1393,8 +1400,8 @@ public class ToY
   {
     return new byte[]
     {
-       0,    48,     7,     8,    34,    19,     9,    88,    40,    35,
-      36,    37,    10,    11,    49
+       0,    48,     7,     8,    34,    19,     9,    35,    40,    36,
+      37,    38,    10,    11,    49
     };
   }
 
@@ -1406,31 +1413,33 @@ public class ToY
   {
     return new byte[]
     {
-       6,    21,    51,    17,     1,     2,     3,    23,     6,     6,
-      43,    44,    12,    61,    13,   114,    67,    63,    64,    65,
-     115,    24,    83,    38,    39,    45,    24,    85,    74,    75,
-      16,    76,    77,    24,    18,    46,    26,    47,    27,    92,
-      93,    94,    95,    96,    97,    98,    99,   100,   101,   102,
-     103,   104,   105,    24,    52,    66,    41,    67,    21,    59,
-      60,    22,   110,    68,    69,    70,    71,    72,    73,    74,
-      75,    42,    76,    77,    78,    79,    80,    50,   112,     1,
-       2,     3,     4,   117,   107,   116,    67,     1,     2,     3,
-     122,     5,    68,    69,    70,    71,    72,    73,    74,    75,
-      67,    76,    77,    78,    79,    80,   108,    60,    53,    24,
-      14,    15,    74,    75,    24,   113,    54,    67,    24,    55,
-      56,    24,    57,    68,    69,    70,    71,    72,    73,    74,
-      75,    62,    76,    77,    78,    79,    80,   118,    81,    67,
-      82,    84,    39,    87,   109,    68,    69,    70,    71,    72,
-      73,    74,    75,   106,    76,    77,    78,    79,    80,     1,
-       2,     3,    90,    28,   111,   119,   121,    29,   123,    25,
-      30,    20,    31,    32,   120,    67,    86,    58,     0,    33,
-      89,    68,    69,    70,    71,    72,    73,    74,    75,     0,
-      76,    77,    78,    79,    80,    67,     0,     0,     0,     0,
-      91,    68,    69,    70,    71,    72,    73,    74,    75,    67,
-      76,    77,    78,    79,    80,    68,    69,    70,    71,    72,
-      73,    74,    75,    67,    76,    77,    78,    79,    80,    -1,
-      -1,    -1,    -1,    -1,    -1,    74,    75,     0,    76,    77,
-      78,    79,    80
+       6,    51,    66,    12,    21,    13,   114,    16,     6,     6,
+      23,   115,    60,    17,    73,    74,    62,    63,    64,    66,
+      21,    24,    84,    22,    39,   -12,    24,    86,     1,     2,
+       3,    73,    74,    24,    75,    76,    18,    92,    93,    94,
+      95,    96,    97,    98,    99,   100,   101,   102,   103,   104,
+     105,    58,    59,    26,    24,   108,    59,     1,     2,     3,
+      27,   110,    41,    43,    44,    14,    15,     1,     2,     3,
+       4,    42,    50,    52,    54,    57,    61,   112,    45,     5,
+      53,    56,   117,    65,   116,    66,    80,    82,    46,   122,
+      47,    67,    68,    69,    70,    71,    72,    73,    74,    55,
+      75,    76,    77,    78,    79,    81,    85,    90,   109,    24,
+     106,   111,   119,   123,    24,   107,   121,    66,    24,    25,
+      20,    24,    88,    67,    68,    69,    70,    71,    72,    73,
+      74,    87,    75,    76,    77,    78,    79,   113,   120,    66,
+       0,     0,    83,     0,     0,    67,    68,    69,    70,    71,
+      72,    73,    74,     0,    75,    76,    77,    78,    79,   118,
+       0,    66,     0,     0,     0,     0,     0,    67,    68,    69,
+      70,    71,    72,    73,    74,     0,    75,    76,    77,    78,
+      79,     1,     2,     3,     0,    28,     0,     0,     0,    29,
+       0,     0,    30,     0,    31,    32,     0,    66,     0,     0,
+       0,    33,    89,    67,    68,    69,    70,    71,    72,    73,
+      74,     0,    75,    76,    77,    78,    79,    66,     0,     0,
+       0,     0,    91,    67,    68,    69,    70,    71,    72,    73,
+      74,    66,    75,    76,    77,    78,    79,    67,    68,    69,
+      70,    71,    72,    73,    74,    66,    75,    76,    77,    78,
+      79,   -13,   -13,   -13,   -13,   -13,   -13,    73,    74,     0,
+      75,    76,    77,    78,    79
     };
   }
 
@@ -1439,31 +1448,33 @@ private static final byte[] yycheck_ = yycheck_init();
   {
     return new byte[]
     {
-       0,    19,    33,    23,     3,     4,     5,    25,     8,     9,
-       9,    10,     7,    41,     7,    13,    20,    45,    46,    47,
-      18,    21,    53,    20,    21,    24,    26,    55,    32,    33,
-       0,    35,    36,    33,    24,    34,    23,    36,     7,    67,
-      68,    69,    70,    71,    72,    73,    74,    75,    76,    77,
-      78,    79,    80,    53,    18,    18,    24,    20,    19,    18,
-      19,    22,    90,    26,    27,    28,    29,    30,    31,    32,
-      33,    24,    35,    36,    37,    38,    39,    24,   109,     3,
-       4,     5,     6,   114,    18,   113,    20,     3,     4,     5,
-     121,    15,    26,    27,    28,    29,    30,    31,    32,    33,
-      20,    35,    36,    37,    38,    39,    18,    19,    18,   109,
-       8,     9,    32,    33,   114,    18,    22,    20,   118,    20,
-       7,   121,     7,    26,    27,    28,    29,    30,    31,    32,
-      33,     7,    35,    36,    37,    38,    39,    18,     5,    20,
-      22,    18,    21,     7,    12,    26,    27,    28,    29,    30,
-      31,    32,    33,    25,    35,    36,    37,    38,    39,     3,
-       4,     5,    20,     7,    18,    18,    25,    11,    18,    21,
-      14,    18,    16,    17,   118,    20,    56,    39,    -1,    23,
-      25,    26,    27,    28,    29,    30,    31,    32,    33,    -1,
-      35,    36,    37,    38,    39,    20,    -1,    -1,    -1,    -1,
-      25,    26,    27,    28,    29,    30,    31,    32,    33,    20,
-      35,    36,    37,    38,    39,    26,    27,    28,    29,    30,
-      31,    32,    33,    20,    35,    36,    37,    38,    39,    26,
-      27,    28,    29,    30,    31,    32,    33,    -1,    35,    36,
-      37,    38,    39
+       0,    33,    20,     7,    19,     7,    13,     0,     8,     9,
+      25,    18,    41,    23,    32,    33,    45,    46,    47,    20,
+      19,    21,    54,    22,    20,    21,    26,    56,     3,     4,
+       5,    32,    33,    33,    35,    36,    24,    66,    67,    68,
+      69,    70,    71,    72,    73,    74,    75,    76,    77,    78,
+      79,    18,    19,    23,    54,    18,    19,     3,     4,     5,
+       7,    90,    24,     9,    10,     8,     9,     3,     4,     5,
+       6,    24,    24,    18,    18,     7,     7,   109,    24,    15,
+      21,    20,   114,    18,   113,    20,     5,     7,    34,   121,
+      36,    26,    27,    28,    29,    30,    31,    32,    33,    22,
+      35,    36,    37,    38,    39,    22,    18,    20,    12,   109,
+      25,    18,    18,    18,   114,    18,    25,    20,   118,    21,
+      18,   121,    59,    26,    27,    28,    29,    30,    31,    32,
+      33,    57,    35,    36,    37,    38,    39,    18,   118,    20,
+      -1,    -1,    53,    -1,    -1,    26,    27,    28,    29,    30,
+      31,    32,    33,    -1,    35,    36,    37,    38,    39,    18,
+      -1,    20,    -1,    -1,    -1,    -1,    -1,    26,    27,    28,
+      29,    30,    31,    32,    33,    -1,    35,    36,    37,    38,
+      39,     3,     4,     5,    -1,     7,    -1,    -1,    -1,    11,
+      -1,    -1,    14,    -1,    16,    17,    -1,    20,    -1,    -1,
+      -1,    23,    25,    26,    27,    28,    29,    30,    31,    32,
+      33,    -1,    35,    36,    37,    38,    39,    20,    -1,    -1,
+      -1,    -1,    25,    26,    27,    28,    29,    30,    31,    32,
+      33,    20,    35,    36,    37,    38,    39,    26,    27,    28,
+      29,    30,    31,    32,    33,    20,    35,    36,    37,    38,
+      39,    26,    27,    28,    29,    30,    31,    32,    33,    -1,
+      35,    36,    37,    38,    39
     };
   }
 
@@ -1477,12 +1488,12 @@ private static final byte[] yycheck_ = yycheck_init();
        0,     3,     4,     5,     6,    15,    41,    42,    43,    46,
       52,    53,     7,     7,    53,    53,     0,    23,    24,    45,
       45,    19,    22,    25,    41,    44,    23,     7,     7,    11,
-      14,    16,    17,    23,    44,    49,    50,    51,    20,    21,
+      14,    16,    17,    23,    44,    47,    49,    50,    51,    20,
       48,    24,    24,     9,    10,    24,    34,    36,    41,    54,
-      24,    50,    18,    18,    22,    20,     7,     7,    51,    18,
-      19,    54,     7,    54,    54,    54,    18,    20,    26,    27,
-      28,    29,    30,    31,    32,    33,    35,    36,    37,    38,
-      39,     5,    22,    50,    18,    54,    48,     7,    47,    25,
+      24,    50,    18,    21,    18,    22,    20,     7,    18,    19,
+      54,     7,    54,    54,    54,    18,    20,    26,    27,    28,
+      29,    30,    31,    32,    33,    35,    36,    37,    38,    39,
+       5,    22,     7,    51,    50,    18,    54,    48,    47,    25,
       20,    25,    54,    54,    54,    54,    54,    54,    54,    54,
       54,    54,    54,    54,    54,    54,    25,    18,    18,    12,
       54,    18,    50,    18,    13,    18,    54,    50,    18,    18,
@@ -1575,7 +1586,7 @@ private static final byte[] yycheck_ = yycheck_init();
   }
 
 
-  private static final int YYLAST_ = 242;
+  private static final int YYLAST_ = 264;
   private static final int YYEMPTY_ = -2;
   private static final int YYFINAL_ = 16;
   private static final int YYNTOKENS_ = 40;
@@ -1596,10 +1607,10 @@ FileReader yyin = new FileReader(args[0]);
  if (!p.parse()) System.out.println("INVALID");
 }
 
-/* "ToY.java":1600  */
+/* "ToY.java":1611  */
 
 }
-/* "ToY.y":191  */
+/* "ToY.y":174  */
 
 //java code for making the AST and the visitor class -----------------------------------------------------------
 // ~~~~~~ idea: what if we made a variable class and made all names and stuff of type Var ~~~~~~~ 
@@ -1725,10 +1736,19 @@ class Conditions extends ASTNode {
 // creates one Node, the right statement of a unary expression
 // constructor allows semantic actions to initialize nodes
 class UnaryOperators extends ASTNode {
-    public Object right;
+    public Object op, right;
 
-    public UnaryOperators(Object right) {
+    public UnaryOperators(Object op, Object right) {
+        this.op = op;
         this.right = right;
+    }
+
+    public Object getRight(){
+        return this.right;
+    }
+
+    public Object getOp(){
+        return this.op;
     }
 
     public Object accept(Visitor v) {
@@ -1819,6 +1839,14 @@ class Asnmt extends ASTNode {
         this.exp = exp;
     }
 
+    public Object getVar(){
+        return this.var;
+    }
+
+    public Object getExp(){
+        return this.exp;
+    }
+
     public Object accept(Visitor v) {
         return v.visit(this);
     }
@@ -1842,6 +1870,10 @@ class Decl extends ASTNode {
         this.names = names;
     }
 
+    public Object getNames(){
+        return this.names;
+    }
+
     public Object accept(Visitor v) {
         return v.visit(this);
     }
@@ -1855,11 +1887,32 @@ class ParamList extends ASTNode {
 	public ParamList(StmtList params){
 		this.params = params;
 	}
+
+    public Object getParams(){
+        return this.params;
+    }
 	
 	public Object accept(Visitor v) {
         	return v.visit(this);
     	}
 }
+
+class Keyword extends ASTNode {
+	Object keyword;
+	
+	public Keyword(Object keyword){
+		this.keyword = keyword;
+	}
+
+    public Object getKeyword(){
+        return this.keyword;
+    }
+	
+	public Object accept(Visitor v) {
+        	return v.visit(this);
+    	}
+}
+	
 
 // ********************** POTENTIAL SOLUTION FOR VAR AND PARAM ***************
 
@@ -1871,6 +1924,15 @@ class VarDef extends ASTNode {
 		this.type = type;
 		this.name = name;
     }	
+
+    public Object getType(){
+        return this.type;
+    }
+
+    public Object getName(){
+        return this.name;
+    }
+
 	public Object accept(Visitor v) {
         	return v.visit(this);
     }
@@ -1909,6 +1971,14 @@ class StructCreator extends ASTNode {
         this.fieldTypes = fieldTypes;
     }
 
+    public Object getName(){
+        return this.name;
+    }
+
+    public StmtList getFeilds(){
+        return this.fieldTypes;
+    }
+
     public Object accept(Visitor v) {
         return v.visit(this);
     }
@@ -1930,6 +2000,22 @@ class FunctionConstruct extends ASTNode {
         this.name = name;
         this.parameters = parameters;
         this.body = body;
+    }
+
+    public Object getReturnType(){
+        return this.returnType;
+    }
+
+    public Object getName(){
+        return this.name;
+    }
+
+    public Object getParameters(){
+        return this.parameters;
+    }
+
+    public StmtList getBody(){
+        return this.body;
     }
 
     public Object accept(Visitor v) {
@@ -1954,6 +2040,14 @@ class FunctionCall extends ASTNode {
         this.parameters = parameters;
     }
 
+    public Object getName(){
+        return this.name;
+    }
+
+    public Object getParameters(){
+        return this.parameters;
+    }
+
     public Object accept(Visitor v) {
         return v.visit(this);
     }
@@ -1967,6 +2061,10 @@ class Program extends ASTNode {
 	public Program(StmtList program){
 		this.program = program;
 	}
+
+    public StmtList getProgram(){
+        return this.program;
+    }
 	
 	public Object accept(Visitor v) {
         	return v.visit(this);
@@ -1975,7 +2073,7 @@ class Program extends ASTNode {
 	
 
 
-// ------------------------------------- Semantic Analysis
+// ------------------------------------- Semantic Analysis JUMP
 // ------------------------------------------
 
 // An implementation of all the visitor methods
@@ -2033,56 +2131,79 @@ class AbstractVisitor implements Visitor {
         return false;
     }
 
-    public Object visit(UnaryOperators n) {
-        return null;
+    public boolean visit(UnaryOperators add) {
+        int op = ((Yytoken)(add.getOp())).getToken();
+        int right = ((Yytoken)(add.getRight())).getToken();
+        if (op == ToYLexer.NOT && right == ToYLexer.BOOL){
+            return true;
+        }
+        if (op == ToYLexer.MINUS && right == ToYLexer.INT){
+            return true;
+        }
+        return false;
     }
 
-    public Object visit(Asnmt n) {
-        return null;
+    //SO I THINK FOR THIS WE MIGHT NEED TO PULL THE TYPE FROM SOMEWHERE I AM KINDA CONFUSED 
+    public boolean visit(Asnmt add) {
+        return false;
     }
 
-    public Object visit(Decl n) {
-        return null;
+    public boolean visit(Decl add) {
+        return false;
     }
 
-    public Object visit(EndFunction n) {
-        return null;
+    public boolean visit(EndFunction add) {
+        return false;
     }
 
-    public Object visit(ForLoop n) {
-        return null;
+    public boolean visit(ForLoop add) {
+        return false;
     }
 
-    public Object visit(IfStmt n) {
-        return null;
+    public boolean visit(IfStmt add) {
+        return false;
     }
 
-    public Object visit(StructCreator n) {
-        return null;
+    public boolean visit(StructCreator add) {
+        return false;
     }
 
-    public Object visit(Type n) {
-        return null;
+    public boolean visit(Type add) {
+        return false;
     }
 
-    public Object visit(FunctionConstruct n) {
-        return null;
+    public boolean visit(FunctionConstruct add) {
+        return false;
     }
 
-    public Object visit(FunctionCall n) {
-        return null;
+    public boolean visit(FunctionCall add) {
+        return false;
     }
     
-    public Object visit(ParamList n) {
-        return null;
+    public boolean visit(ParamList add) {
+        return false;
     }
     
-    public Object visit(VarDef n) {
-        return null;
+    public boolean visit(VarDef add) {
+        int type = ((Yytoken)(add.getType())).getToken();
+        int name = ((Yytoken)(add.getName())).getToken();
+        // CHECK DO WE NEED TO CHECK IF THIS IS OF TYPE STRUCT 
+        if ((type == ToYLexer.BOOL || type == ToYLexer.INT || type == ToYLexer.STRING ) && name == ToYLexer.IDENTIFIER){
+            return true;
+        }
+        return false;
     }
     
-    public Object visit(Program n) {
-    	return null;
+    public boolean visit(Program add) {
+    	return false;
+    }
+    
+    public boolean visit(Keyword add) {
+        int keyword = ((Yytoken)(add.getKeyword())).getToken();
+        if( keyword == ToYLexer.VOID || keyword == ToYLexer.TRUE || keyword == ToYLexer.FALSE ){
+            return true;
+        }
+    	return false;
     }
 
 }
@@ -2096,31 +2217,33 @@ interface Visitor {
 
     public boolean visit(Conditions symbol);
 
-    public Object visit(UnaryOperators symbol);
+    public boolean visit(UnaryOperators symbol);
 
-    public Object visit(Asnmt symbol);
+    public boolean visit(Asnmt symbol);
 
-    public Object visit(Decl symbol);
+    public boolean visit(Decl symbol);
 
-    public Object visit(EndFunction symbol);
+    public boolean visit(EndFunction symbol);
 
-    public Object visit(ForLoop symbol);
+    public boolean visit(ForLoop symbol);
 
-    public Object visit(IfStmt symbol);
+    public boolean visit(IfStmt symbol);
 
-    public Object visit(StructCreator symbol);
+    public boolean visit(StructCreator symbol);
     
-    public Object visit(VarDef vardef);
+    public boolean visit(VarDef vardef);
 
-    public Object visit(Type symbol);
+    public boolean visit(Type symbol);
 
-    public Object visit(FunctionConstruct symbol);
+    public boolean visit(FunctionConstruct symbol);
 
-    public Object visit(FunctionCall symbol);
+    public boolean visit(FunctionCall symbol);
     
-    public Object visit(ParamList paramList);
+    public boolean visit(ParamList paramList);
     
-    public Object visit(Program program);
+    public boolean visit(Program program);
+    
+    public boolean visit(Keyword keyword);
 
 }
 

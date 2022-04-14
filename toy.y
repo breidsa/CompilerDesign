@@ -164,8 +164,8 @@ FileReader yyin = new FileReader(args[0]);
     | exp LESSTHANOREQ exp { $$ = new Conditions($1, $2, $3); }
     | exp NOTEQ exp { $$ = new Conditions($1, $2, $3); }
     | exp EQ exp { $$ = new Asnmt($1, $3); }
-    | NOT exp { $$ = new UnaryOperators($2); }
-    | MINUS exp { $$ = new UnaryOperators($2); }
+    | NOT exp { $$ = new UnaryOperators($1, $2); }
+    | MINUS exp { $$ = new UnaryOperators($1, $2); }
     | LEFTPAREN exp RIGHTPAREN { $$ = $2; }
     ;
 
@@ -296,10 +296,19 @@ class Conditions extends ASTNode {
 // creates one Node, the right statement of a unary expression
 // constructor allows semantic actions to initialize nodes
 class UnaryOperators extends ASTNode {
-    public Object right;
+    public Object op, right;
 
-    public UnaryOperators(Object right) {
+    public UnaryOperators(Object op, Object right) {
+        this.op = op;
         this.right = right;
+    }
+
+    public Object getRight(){
+        return this.right;
+    }
+
+    public Object getOp(){
+        return this.op;
     }
 
     public Object accept(Visitor v) {
@@ -390,6 +399,14 @@ class Asnmt extends ASTNode {
         this.exp = exp;
     }
 
+    public Object getVar(){
+        return this.var;
+    }
+
+    public Object getExp(){
+        return this.exp;
+    }
+
     public Object accept(Visitor v) {
         return v.visit(this);
     }
@@ -413,6 +430,10 @@ class Decl extends ASTNode {
         this.names = names;
     }
 
+    public Object getNames(){
+        return this.names;
+    }
+
     public Object accept(Visitor v) {
         return v.visit(this);
     }
@@ -426,6 +447,10 @@ class ParamList extends ASTNode {
 	public ParamList(StmtList params){
 		this.params = params;
 	}
+
+    public Object getParams(){
+        return this.params;
+    }
 	
 	public Object accept(Visitor v) {
         	return v.visit(this);
@@ -438,6 +463,10 @@ class Keyword extends ASTNode {
 	public Keyword(Object keyword){
 		this.keyword = keyword;
 	}
+
+    public Object getKeyword(){
+        return this.keyword;
+    }
 	
 	public Object accept(Visitor v) {
         	return v.visit(this);
@@ -455,6 +484,15 @@ class VarDef extends ASTNode {
 		this.type = type;
 		this.name = name;
     }	
+
+    public Object getType(){
+        return this.type;
+    }
+
+    public Object getName(){
+        return this.name;
+    }
+
 	public Object accept(Visitor v) {
         	return v.visit(this);
     }
@@ -493,6 +531,14 @@ class StructCreator extends ASTNode {
         this.fieldTypes = fieldTypes;
     }
 
+    public Object getName(){
+        return this.name;
+    }
+
+    public StmtList getFeilds(){
+        return this.fieldTypes;
+    }
+
     public Object accept(Visitor v) {
         return v.visit(this);
     }
@@ -514,6 +560,22 @@ class FunctionConstruct extends ASTNode {
         this.name = name;
         this.parameters = parameters;
         this.body = body;
+    }
+
+    public Object getReturnType(){
+        return this.returnType;
+    }
+
+    public Object getName(){
+        return this.name;
+    }
+
+    public Object getParameters(){
+        return this.parameters;
+    }
+
+    public StmtList getBody(){
+        return this.body;
     }
 
     public Object accept(Visitor v) {
@@ -538,6 +600,14 @@ class FunctionCall extends ASTNode {
         this.parameters = parameters;
     }
 
+    public Object getName(){
+        return this.name;
+    }
+
+    public Object getParameters(){
+        return this.parameters;
+    }
+
     public Object accept(Visitor v) {
         return v.visit(this);
     }
@@ -551,6 +621,10 @@ class Program extends ASTNode {
 	public Program(StmtList program){
 		this.program = program;
 	}
+
+    public StmtList getProgram(){
+        return this.program;
+    }
 	
 	public Object accept(Visitor v) {
         	return v.visit(this);
@@ -559,7 +633,7 @@ class Program extends ASTNode {
 	
 
 
-// ------------------------------------- Semantic Analysis
+// ------------------------------------- Semantic Analysis JUMP
 // ------------------------------------------
 
 // An implementation of all the visitor methods
@@ -617,60 +691,79 @@ class AbstractVisitor implements Visitor {
         return false;
     }
 
-    public Object visit(UnaryOperators n) {
-        return null;
+    public boolean visit(UnaryOperators add) {
+        int op = ((Yytoken)(add.getOp())).getToken();
+        int right = ((Yytoken)(add.getRight())).getToken();
+        if (op == ToYLexer.NOT && right == ToYLexer.BOOL){
+            return true;
+        }
+        if (op == ToYLexer.MINUS && right == ToYLexer.INT){
+            return true;
+        }
+        return false;
     }
 
-    public Object visit(Asnmt n) {
-        return null;
+    //SO I THINK FOR THIS WE MIGHT NEED TO PULL THE TYPE FROM SOMEWHERE I AM KINDA CONFUSED 
+    public boolean visit(Asnmt add) {
+        return false;
     }
 
-    public Object visit(Decl n) {
-        return null;
+    public boolean visit(Decl add) {
+        return false;
     }
 
-    public Object visit(EndFunction n) {
-        return null;
+    public boolean visit(EndFunction add) {
+        return false;
     }
 
-    public Object visit(ForLoop n) {
-        return null;
+    public boolean visit(ForLoop add) {
+        return false;
     }
 
-    public Object visit(IfStmt n) {
-        return null;
+    public boolean visit(IfStmt add) {
+        return false;
     }
 
-    public Object visit(StructCreator n) {
-        return null;
+    public boolean visit(StructCreator add) {
+        return false;
     }
 
-    public Object visit(Type n) {
-        return null;
+    public boolean visit(Type add) {
+        return false;
     }
 
-    public Object visit(FunctionConstruct n) {
-        return null;
+    public boolean visit(FunctionConstruct add) {
+        return false;
     }
 
-    public Object visit(FunctionCall n) {
-        return null;
+    public boolean visit(FunctionCall add) {
+        return false;
     }
     
-    public Object visit(ParamList n) {
-        return null;
+    public boolean visit(ParamList add) {
+        return false;
     }
     
-    public Object visit(VarDef n) {
-        return null;
+    public boolean visit(VarDef add) {
+        int type = ((Yytoken)(add.getType())).getToken();
+        int name = ((Yytoken)(add.getName())).getToken();
+        // CHECK DO WE NEED TO CHECK IF THIS IS OF TYPE STRUCT 
+        if ((type == ToYLexer.BOOL || type == ToYLexer.INT || type == ToYLexer.STRING ) && name == ToYLexer.IDENTIFIER){
+            return true;
+        }
+        return false;
     }
     
-    public Object visit(Program n) {
-    	return null;
+    public boolean visit(Program add) {
+    	return false;
     }
     
-    public Object visit(Keyword n) {
-    	return null;
+    public boolean visit(Keyword add) {
+        int keyword = ((Yytoken)(add.getKeyword())).getToken();
+        if( keyword == ToYLexer.VOID || keyword == ToYLexer.TRUE || keyword == ToYLexer.FALSE ){
+            return true;
+        }
+    	return false;
     }
 
 }
@@ -684,33 +777,33 @@ interface Visitor {
 
     public boolean visit(Conditions symbol);
 
-    public Object visit(UnaryOperators symbol);
+    public boolean visit(UnaryOperators symbol);
 
-    public Object visit(Asnmt symbol);
+    public boolean visit(Asnmt symbol);
 
-    public Object visit(Decl symbol);
+    public boolean visit(Decl symbol);
 
-    public Object visit(EndFunction symbol);
+    public boolean visit(EndFunction symbol);
 
-    public Object visit(ForLoop symbol);
+    public boolean visit(ForLoop symbol);
 
-    public Object visit(IfStmt symbol);
+    public boolean visit(IfStmt symbol);
 
-    public Object visit(StructCreator symbol);
+    public boolean visit(StructCreator symbol);
     
-    public Object visit(VarDef vardef);
+    public boolean visit(VarDef vardef);
 
-    public Object visit(Type symbol);
+    public boolean visit(Type symbol);
 
-    public Object visit(FunctionConstruct symbol);
+    public boolean visit(FunctionConstruct symbol);
 
-    public Object visit(FunctionCall symbol);
+    public boolean visit(FunctionCall symbol);
     
-    public Object visit(ParamList paramList);
+    public boolean visit(ParamList paramList);
     
-    public Object visit(Program program);
+    public boolean visit(Program program);
     
-    public Object visit(Keyword keyword);
+    public boolean visit(Keyword keyword);
 
 }
 
