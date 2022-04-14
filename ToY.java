@@ -40,7 +40,7 @@
 import java.text.MessageFormat;
 import java.util.ArrayList;
 /* "%code imports" blocks.  */
-/* "ToY.y":9  */
+/* "ToY.y":33  */
 
 import java.io.IOException;
 import java.io.FileReader;
@@ -563,365 +563,372 @@ public class ToY
       {
           case 2: /* type: INT  */
   if (yyn == 2)
-    /* "ToY.y":83  */
+    /* "ToY.y":105  */
               { yyval = new VarDef(yystack.valueAt (0), null); };
   break;
 
 
   case 3: /* type: BOOL  */
   if (yyn == 3)
-    /* "ToY.y":84  */
+    /* "ToY.y":106  */
            { yyval = new VarDef(yystack.valueAt (0), null); };
   break;
 
 
   case 4: /* type: STRING  */
   if (yyn == 4)
-    /* "ToY.y":85  */
+    /* "ToY.y":107  */
              { yyval = new VarDef(yystack.valueAt (0), null); };
   break;
 
 
   case 5: /* returnType: type  */
   if (yyn == 5)
-    /* "ToY.y":88  */
+    /* "ToY.y":110  */
                      { yyval = yystack.valueAt (0); };
   break;
 
 
   case 6: /* returnType: VOID  */
   if (yyn == 6)
-    /* "ToY.y":89  */
+    /* "ToY.y":111  */
            { yyval = new Keyword(yystack.valueAt (0)); };
   break;
 
 
   case 7: /* struct: STRUCT IDENTIFIER LBRACKET declarationList RBRACKET  */
   if (yyn == 7)
-    /* "ToY.y":92  */
+    /* "ToY.y":114  */
                                                                  { yyval = new StructCreator(yystack.valueAt (3), (StmtList)yystack.valueAt (1)); Struct st = new Struct(yystack.valueAt (3),(StmtList)yystack.valueAt (1)); statements.put(yystack.valueAt (3), st);};
   break;
 
 
   case 8: /* declaration: type IDENTIFIER  */
   if (yyn == 8)
-    /* "ToY.y":96  */
+    /* "ToY.y":118  */
                                  {yyval = new VarDef(yystack.valueAt (1), yystack.valueAt (0)); };
   break;
 
 
-  case 9: /* declarationList: %empty  */
+  case 9: /* declaration: COMMA IDENTIFIER  */
   if (yyn == 9)
-    /* "ToY.y":99  */
+    /* "ToY.y":119  */
+                       {yyval = new VarDef(null, yystack.valueAt (0));};
+  break;
+
+
+  case 10: /* declarationList: %empty  */
+  if (yyn == 10)
+    /* "ToY.y":122  */
                                  {yyval = new StmtList();};
   break;
 
 
-  case 10: /* declarationList: declarationList COMMA declaration  */
-  if (yyn == 10)
-    /* "ToY.y":100  */
+  case 11: /* declarationList: declarationList COMMA declaration  */
+  if (yyn == 11)
+    /* "ToY.y":123  */
                                         {StmtList decls = (StmtList) yystack.valueAt (2); decls.addElement(yystack.valueAt (0)); yyval = decls;};
   break;
 
 
-  case 11: /* function: returnType IDENTIFIER LEFTPAREN declarationList RIGHTPAREN LBRACKET stmtSeq RBRACKET SEMICOLON  */
-  if (yyn == 11)
-    /* "ToY.y":104  */
+  case 12: /* function: returnType IDENTIFIER LEFTPAREN declarationList RIGHTPAREN LBRACKET stmtSeq RBRACKET SEMICOLON  */
+  if (yyn == 12)
+    /* "ToY.y":127  */
                                                                                                               {yyval = new FunctionConstruct(yystack.valueAt (8), yystack.valueAt (7), yystack.valueAt (5), (StmtList)yystack.valueAt (2));
                                                                                                              Function ft = new Function(yystack.valueAt (7), yystack.valueAt (8), (StmtList)yystack.valueAt (5)); functions.put(yystack.valueAt (7), ft);};
   break;
 
 
-  case 12: /* param: IDENTIFIER  */
-  if (yyn == 12)
-    /* "ToY.y":108  */
+  case 13: /* param: IDENTIFIER  */
+  if (yyn == 13)
+    /* "ToY.y":131  */
                       {yyval = new VarDef(null, yystack.valueAt (0)); };
   break;
 
 
-  case 13: /* paramList: %empty  */
-  if (yyn == 13)
-    /* "ToY.y":111  */
+  case 14: /* paramList: %empty  */
+  if (yyn == 14)
+    /* "ToY.y":134  */
                 {yyval = new StmtList();};
   break;
 
 
-  case 14: /* paramList: paramList COMMA param  */
-  if (yyn == 14)
-    /* "ToY.y":112  */
+  case 15: /* paramList: paramList COMMA param  */
+  if (yyn == 15)
+    /* "ToY.y":135  */
                             {StmtList params = (StmtList) yystack.valueAt (2); params.addElement(yystack.valueAt (0)); yyval = params;};
   break;
 
 
-  case 15: /* stmt: FOR LEFTPAREN IDENTIFIER EQ exp SEMICOLON exp SEMICOLON stmt RIGHTPAREN stmtSeq SEMICOLON  */
-  if (yyn == 15)
-    /* "ToY.y":117  */
+  case 16: /* stmt: FOR LEFTPAREN IDENTIFIER EQ exp SEMICOLON exp SEMICOLON stmt RIGHTPAREN stmtSeq SEMICOLON  */
+  if (yyn == 16)
+    /* "ToY.y":140  */
                                                                                                      { Asnmt iterator = new Asnmt(yystack.valueAt (9), yystack.valueAt (7));
 											               yyval = new ForLoop(iterator, yystack.valueAt (5), yystack.valueAt (3), (StmtList)yystack.valueAt (1));};
   break;
 
 
-  case 16: /* stmt: IF LEFTPAREN exp RIGHTPAREN THEN stmtSeq SEMICOLON  */
-  if (yyn == 16)
-    /* "ToY.y":119  */
+  case 17: /* stmt: IF LEFTPAREN exp RIGHTPAREN THEN stmtSeq SEMICOLON  */
+  if (yyn == 17)
+    /* "ToY.y":142  */
                                                          { yyval = new IfStmt(yystack.valueAt (4), (StmtList) yystack.valueAt (1), null); };
   break;
 
 
-  case 17: /* stmt: IF LEFTPAREN exp RIGHTPAREN THEN stmtSeq ELSE stmtSeq SEMICOLON  */
-  if (yyn == 17)
-    /* "ToY.y":120  */
+  case 18: /* stmt: IF LEFTPAREN exp RIGHTPAREN THEN stmtSeq ELSE stmtSeq SEMICOLON  */
+  if (yyn == 18)
+    /* "ToY.y":143  */
                                                                       { yyval = new IfStmt(yystack.valueAt (6), (StmtList)yystack.valueAt (3), (StmtList)yystack.valueAt (1));};
   break;
 
 
-  case 18: /* stmt: PRINTF LEFTPAREN STRING RIGHTPAREN SEMICOLON  */
-  if (yyn == 18)
-    /* "ToY.y":121  */
+  case 19: /* stmt: PRINTF LEFTPAREN STRING RIGHTPAREN SEMICOLON  */
+  if (yyn == 19)
+    /* "ToY.y":144  */
                                                    { yyval = new EndFunction(yystack.valueAt (3)); };
   break;
 
 
-  case 19: /* stmt: RETURN exp SEMICOLON  */
-  if (yyn == 19)
-    /* "ToY.y":122  */
+  case 20: /* stmt: RETURN exp SEMICOLON  */
+  if (yyn == 20)
+    /* "ToY.y":145  */
                            { yyval = new EndFunction(yystack.valueAt (1)); };
   break;
 
 
-  case 20: /* stmt: LBRACKET stmtSeq RBRACKET  */
-  if (yyn == 20)
-    /* "ToY.y":123  */
+  case 21: /* stmt: LBRACKET stmtSeq RBRACKET  */
+  if (yyn == 21)
+    /* "ToY.y":146  */
                                 { yyval = yystack.valueAt (2); };
   break;
 
 
-  case 21: /* stmt: declaration SEMICOLON  */
-  if (yyn == 21)
-    /* "ToY.y":124  */
+  case 22: /* stmt: declaration SEMICOLON  */
+  if (yyn == 22)
+    /* "ToY.y":147  */
                             { yyval = yystack.valueAt (1); };
   break;
 
 
-  case 22: /* stmt: Lexp EQ exp SEMICOLON  */
-  if (yyn == 22)
-    /* "ToY.y":125  */
+  case 23: /* stmt: Lexp EQ exp SEMICOLON  */
+  if (yyn == 23)
+    /* "ToY.y":148  */
                             { yyval = new Asnmt(yystack.valueAt (3), yystack.valueAt (1)); };
   break;
 
 
-  case 23: /* stmt: IDENTIFIER paramList SEMICOLON  */
-  if (yyn == 23)
-    /* "ToY.y":126  */
+  case 24: /* stmt: IDENTIFIER paramList SEMICOLON  */
+  if (yyn == 24)
+    /* "ToY.y":149  */
                                      { yyval = new FunctionCall(yystack.valueAt (2), yystack.valueAt (1)); };
   break;
 
 
-  case 24: /* stmt: IDENTIFIER EQ IDENTIFIER paramList SEMICOLON  */
-  if (yyn == 24)
-    /* "ToY.y":127  */
+  case 25: /* stmt: IDENTIFIER EQ IDENTIFIER paramList SEMICOLON  */
+  if (yyn == 25)
+    /* "ToY.y":150  */
                                                    { FunctionCall func = new FunctionCall(yystack.valueAt (2), (StmtList) yystack.valueAt (1)); yyval = new Asnmt(yystack.valueAt (4), func); };
   break;
 
 
-  case 25: /* stmtSeq: %empty  */
-  if (yyn == 25)
-    /* "ToY.y":130  */
+  case 26: /* stmtSeq: %empty  */
+  if (yyn == 26)
+    /* "ToY.y":153  */
                                    { yyval = new StmtList();};
   break;
 
 
-  case 26: /* stmtSeq: stmt SEMICOLON stmtSeq  */
-  if (yyn == 26)
-    /* "ToY.y":131  */
+  case 27: /* stmtSeq: stmt SEMICOLON stmtSeq  */
+  if (yyn == 27)
+    /* "ToY.y":154  */
                              { StmtList sequence = (StmtList) yystack.valueAt (0); sequence.addElement(yystack.valueAt (2)); yyval = sequence; };
   break;
 
 
-  case 27: /* Lexp: param  */
-  if (yyn == 27)
-    /* "ToY.y":134  */
+  case 28: /* Lexp: param  */
+  if (yyn == 28)
+    /* "ToY.y":157  */
                  { StmtList emptyList = new StmtList(); emptyList.addElement(yystack.valueAt (0)); yyval = emptyList; };
   break;
 
 
-  case 28: /* Lexp: param ATTRIBUTE Lexp  */
-  if (yyn == 28)
-    /* "ToY.y":135  */
+  case 29: /* Lexp: param ATTRIBUTE Lexp  */
+  if (yyn == 29)
+    /* "ToY.y":158  */
                            { StmtList attributeList = (StmtList)yystack.valueAt (0); attributeList.addElement(yystack.valueAt (2)); yyval = attributeList; };
   break;
 
 
-  case 29: /* pgm: recursePgm  */
-  if (yyn == 29)
-    /* "ToY.y":142  */
+  case 30: /* pgm: recursePgm  */
+  if (yyn == 30)
+    /* "ToY.y":165  */
                      { yyval = yystack.valueAt (0); };
   break;
 
 
-  case 30: /* recursePgm: %empty  */
-  if (yyn == 30)
-    /* "ToY.y":145  */
+  case 31: /* recursePgm: %empty  */
+  if (yyn == 31)
+    /* "ToY.y":168  */
                                       { yyval = new StmtList(); };
   break;
 
 
-  case 31: /* recursePgm: function recursePgm  */
-  if (yyn == 31)
-    /* "ToY.y":146  */
+  case 32: /* recursePgm: function recursePgm  */
+  if (yyn == 32)
+    /* "ToY.y":169  */
                           { StmtList pgm = (StmtList) yystack.valueAt (0); pgm.addElement(yystack.valueAt (1)); yyval = pgm; };
   break;
 
 
-  case 32: /* recursePgm: struct recursePgm  */
-  if (yyn == 32)
-    /* "ToY.y":147  */
+  case 33: /* recursePgm: struct recursePgm  */
+  if (yyn == 33)
+    /* "ToY.y":170  */
                          { StmtList pgm = (StmtList) yystack.valueAt (0); pgm.addElement(yystack.valueAt (1)); yyval = pgm; };
   break;
 
 
-  case 33: /* exp: type  */
-  if (yyn == 33)
-    /* "ToY.y":150  */
+  case 34: /* exp: type  */
+  if (yyn == 34)
+    /* "ToY.y":173  */
                { yyval = yystack.valueAt (0); };
   break;
 
 
-  case 34: /* exp: TRUE  */
-  if (yyn == 34)
-    /* "ToY.y":151  */
+  case 35: /* exp: TRUE  */
+  if (yyn == 35)
+    /* "ToY.y":174  */
            { yyval = new Keyword(yystack.valueAt (0)); };
   break;
 
 
-  case 35: /* exp: FALSE  */
-  if (yyn == 35)
-    /* "ToY.y":152  */
+  case 36: /* exp: FALSE  */
+  if (yyn == 36)
+    /* "ToY.y":175  */
             { yyval = new Keyword(yystack.valueAt (0)); };
   break;
 
 
-  case 36: /* exp: exp PLUS exp  */
-  if (yyn == 36)
-    /* "ToY.y":153  */
+  case 37: /* exp: exp PLUS exp  */
+  if (yyn == 37)
+    /* "ToY.y":176  */
                    { yyval = new Arithmetic(yystack.valueAt (2), yystack.valueAt (1), yystack.valueAt (0)); };
   break;
 
 
-  case 37: /* exp: exp MINUS exp  */
-  if (yyn == 37)
-    /* "ToY.y":154  */
+  case 38: /* exp: exp MINUS exp  */
+  if (yyn == 38)
+    /* "ToY.y":177  */
                     { yyval = new Arithmetic(yystack.valueAt (2),yystack.valueAt (1),yystack.valueAt (0)); };
   break;
 
 
-  case 38: /* exp: exp MULT exp  */
-  if (yyn == 38)
-    /* "ToY.y":155  */
+  case 39: /* exp: exp MULT exp  */
+  if (yyn == 39)
+    /* "ToY.y":178  */
                    { yyval = new Arithmetic(yystack.valueAt (2), yystack.valueAt (1),yystack.valueAt (0)); };
   break;
 
 
-  case 39: /* exp: exp DIVIDE exp  */
-  if (yyn == 39)
-    /* "ToY.y":156  */
+  case 40: /* exp: exp DIVIDE exp  */
+  if (yyn == 40)
+    /* "ToY.y":179  */
                      { yyval = new Arithmetic(yystack.valueAt (2),yystack.valueAt (1), yystack.valueAt (0)); };
   break;
 
 
-  case 40: /* exp: exp MOD exp  */
-  if (yyn == 40)
-    /* "ToY.y":157  */
+  case 41: /* exp: exp MOD exp  */
+  if (yyn == 41)
+    /* "ToY.y":180  */
                    { yyval = new Arithmetic(yystack.valueAt (2),yystack.valueAt (1), yystack.valueAt (0)); };
   break;
 
 
-  case 41: /* exp: exp AND exp  */
-  if (yyn == 41)
-    /* "ToY.y":158  */
+  case 42: /* exp: exp AND exp  */
+  if (yyn == 42)
+    /* "ToY.y":181  */
                   { yyval = new Logic(yystack.valueAt (2), yystack.valueAt (1), yystack.valueAt (0)); };
   break;
 
 
-  case 42: /* exp: exp OR exp  */
-  if (yyn == 42)
-    /* "ToY.y":159  */
+  case 43: /* exp: exp OR exp  */
+  if (yyn == 43)
+    /* "ToY.y":182  */
                  { yyval = new Logic(yystack.valueAt (2), yystack.valueAt (1), yystack.valueAt (0)); };
   break;
 
 
-  case 43: /* exp: exp DOUBLEEQ exp  */
-  if (yyn == 43)
-    /* "ToY.y":160  */
+  case 44: /* exp: exp DOUBLEEQ exp  */
+  if (yyn == 44)
+    /* "ToY.y":183  */
                        { yyval = new Conditions(yystack.valueAt (2), yystack.valueAt (1), yystack.valueAt (0)); };
   break;
 
 
-  case 44: /* exp: exp GREATERTHAN exp  */
-  if (yyn == 44)
-    /* "ToY.y":161  */
+  case 45: /* exp: exp GREATERTHAN exp  */
+  if (yyn == 45)
+    /* "ToY.y":184  */
                           { yyval = new Conditions(yystack.valueAt (2), yystack.valueAt (1), yystack.valueAt (0)); };
   break;
 
 
-  case 45: /* exp: exp LESSTHAN exp  */
-  if (yyn == 45)
-    /* "ToY.y":162  */
+  case 46: /* exp: exp LESSTHAN exp  */
+  if (yyn == 46)
+    /* "ToY.y":185  */
                        { yyval = new Conditions(yystack.valueAt (2), yystack.valueAt (1), yystack.valueAt (0)); };
   break;
 
 
-  case 46: /* exp: exp GREATERTHANOREQ exp  */
-  if (yyn == 46)
-    /* "ToY.y":163  */
+  case 47: /* exp: exp GREATERTHANOREQ exp  */
+  if (yyn == 47)
+    /* "ToY.y":186  */
                               { yyval = new Conditions(yystack.valueAt (2), yystack.valueAt (1), yystack.valueAt (0)); };
   break;
 
 
-  case 47: /* exp: exp LESSTHANOREQ exp  */
-  if (yyn == 47)
-    /* "ToY.y":164  */
+  case 48: /* exp: exp LESSTHANOREQ exp  */
+  if (yyn == 48)
+    /* "ToY.y":187  */
                            { yyval = new Conditions(yystack.valueAt (2), yystack.valueAt (1), yystack.valueAt (0)); };
   break;
 
 
-  case 48: /* exp: exp NOTEQ exp  */
-  if (yyn == 48)
-    /* "ToY.y":165  */
+  case 49: /* exp: exp NOTEQ exp  */
+  if (yyn == 49)
+    /* "ToY.y":188  */
                     { yyval = new Conditions(yystack.valueAt (2), yystack.valueAt (1), yystack.valueAt (0)); };
   break;
 
 
-  case 49: /* exp: exp EQ exp  */
-  if (yyn == 49)
-    /* "ToY.y":166  */
+  case 50: /* exp: exp EQ exp  */
+  if (yyn == 50)
+    /* "ToY.y":189  */
                  { yyval = new Asnmt(yystack.valueAt (2), yystack.valueAt (0)); };
   break;
 
 
-  case 50: /* exp: NOT exp  */
-  if (yyn == 50)
-    /* "ToY.y":167  */
+  case 51: /* exp: NOT exp  */
+  if (yyn == 51)
+    /* "ToY.y":190  */
               { yyval = new UnaryOperators(yystack.valueAt (1), yystack.valueAt (0)); };
   break;
 
 
-  case 51: /* exp: MINUS exp  */
-  if (yyn == 51)
-    /* "ToY.y":168  */
+  case 52: /* exp: MINUS exp  */
+  if (yyn == 52)
+    /* "ToY.y":191  */
                 { yyval = new UnaryOperators(yystack.valueAt (1), yystack.valueAt (0)); };
   break;
 
 
-  case 52: /* exp: LEFTPAREN exp RIGHTPAREN  */
-  if (yyn == 52)
-    /* "ToY.y":169  */
+  case 53: /* exp: LEFTPAREN exp RIGHTPAREN  */
+  if (yyn == 53)
+    /* "ToY.y":192  */
                                { yyval = yystack.valueAt (1); };
   break;
 
 
 
-/* "ToY.java":925  */
+/* "ToY.java":932  */
 
         default: break;
       }
@@ -1333,8 +1340,8 @@ public class ToY
     return yyvalue == yytable_ninf_;
   }
 
-  private static final short yypact_ninf_ = -33;
-  private static final byte yytable_ninf_ = -13;
+  private static final short yypact_ninf_ = -35;
+  private static final byte yytable_ninf_ = -14;
 
 /* YYPACT[STATE-NUM] -- Index in YYTABLE of the portion describing
    STATE-NUM.  */
@@ -1343,19 +1350,19 @@ public class ToY
   {
     return new short[]
     {
-      64,   -33,   -33,   -33,   -33,    -4,   -33,    -2,    64,    64,
-       7,   -33,   -10,    12,   -33,   -33,   -33,   -33,   -33,     1,
-     -15,    25,   -33,    30,    53,   -33,   178,   -33,     4,    38,
-      47,    54,    48,   178,    55,    59,    56,    77,    61,    68,
-      33,    54,    69,   -33,   -33,    54,    54,    54,   -33,    65,
-      81,    83,   -33,    80,   178,    88,    54,   -33,   -33,    80,
-     177,    87,   197,   -18,   -18,   -33,    54,    54,    54,    54,
+      47,   -35,   -35,   -35,   -35,     3,   -35,     7,    47,    47,
+      19,   -35,     6,     8,   -35,   -35,   -35,   -35,   -35,    46,
+     -12,     1,   -35,    38,    64,    65,   -35,   180,   -35,   -35,
+     -18,    49,    50,    54,    51,   180,    58,    59,    63,    57,
+      67,    78,    36,    54,    84,   -35,   -35,    54,    54,    54,
+     -35,    66,    95,    85,   -35,   101,   180,    88,    54,   -35,
+     -35,   101,   181,    89,   201,    -8,    -8,   -35,    54,    54,
       54,    54,    54,    54,    54,    54,    54,    54,    54,    54,
-      85,   -33,   -33,   -33,   -33,   -33,    97,    37,   -33,    96,
-      54,   -33,   211,   225,   225,   225,   225,   225,   225,   211,
-     211,   -18,   -18,    -1,    -1,    -1,    93,   -33,   -33,   178,
-     119,   -33,    -7,    54,   178,   -33,   141,    94,   178,   -33,
-      91,   178,    95,   -33
+      54,    54,    87,   -35,   -35,   -35,   -35,   -35,    99,    48,
+     -35,    98,    54,   -35,   215,   229,   229,   229,   229,   229,
+     229,   215,   215,    -8,    -8,    -2,    -2,    -2,    96,   -35,
+     -35,   180,   121,   -35,    10,    54,   180,   -35,   143,    97,
+     180,   -35,    93,   180,   103,   -35
     };
   }
 
@@ -1367,19 +1374,19 @@ public class ToY
   {
     return new byte[]
     {
-      30,     2,     3,     4,     6,     0,     5,     0,    30,    30,
-       0,    29,     0,     0,    32,    31,     1,     9,     9,     0,
-       0,     0,     7,     0,     0,    10,    25,     8,    13,     0,
-       0,     0,     0,    25,     0,    27,     0,     0,     0,     0,
-       0,     0,     0,    34,    35,     0,     0,     0,    33,     0,
-       0,     0,    21,     0,    25,     0,     0,    13,    23,     0,
-       0,     0,     0,    50,    51,    19,     0,     0,     0,     0,
+      31,     2,     3,     4,     6,     0,     5,     0,    31,    31,
+       0,    30,     0,     0,    33,    32,     1,    10,    10,     0,
+       0,     0,     7,     0,     0,     0,    11,    26,     9,     8,
+      14,     0,     0,     0,     0,    26,     0,    28,     0,     0,
+       0,     0,     0,     0,     0,    35,    36,     0,     0,     0,
+      34,     0,     0,     0,    22,     0,    26,     0,     0,    14,
+      24,     0,     0,     0,     0,    51,    52,    20,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,    20,    12,    28,    26,    11,     0,     0,    14,     0,
-       0,    52,    49,    45,    44,    43,    47,    46,    48,    41,
-      42,    36,    37,    38,    39,    40,     0,    22,    24,    25,
-       0,    18,     0,     0,    25,    16,     0,     0,     0,    17,
-       0,    25,     0,    15
+       0,     0,     0,    21,    13,    29,    27,    12,     0,     0,
+      15,     0,     0,    53,    50,    46,    45,    44,    48,    47,
+      49,    42,    43,    37,    38,    39,    40,    41,     0,    23,
+      25,    26,     0,    19,     0,     0,    26,    17,     0,     0,
+       0,    18,     0,    26,     0,    16
     };
   }
 
@@ -1389,8 +1396,8 @@ public class ToY
   {
     return new byte[]
     {
-     -33,     0,   -33,   -33,    98,   102,   -33,    63,    74,    20,
-     -32,    89,   -33,    57,   -29
+     -35,     0,   -35,   -35,    92,   104,   -35,    72,    81,     4,
+     -34,    90,   -35,    61,   -32
     };
   }
 
@@ -1400,8 +1407,8 @@ public class ToY
   {
     return new byte[]
     {
-       0,    48,     7,     8,    34,    19,     9,    35,    40,    36,
-      37,    38,    10,    11,    49
+       0,    50,     7,     8,    36,    19,     9,    37,    42,    38,
+      39,    40,    10,    11,    51
     };
   }
 
@@ -1413,33 +1420,33 @@ public class ToY
   {
     return new byte[]
     {
-       6,    51,    66,    12,    21,    13,   114,    16,     6,     6,
-      23,   115,    60,    17,    73,    74,    62,    63,    64,    66,
-      21,    24,    84,    22,    39,   -12,    24,    86,     1,     2,
-       3,    73,    74,    24,    75,    76,    18,    92,    93,    94,
-      95,    96,    97,    98,    99,   100,   101,   102,   103,   104,
-     105,    58,    59,    26,    24,   108,    59,     1,     2,     3,
-      27,   110,    41,    43,    44,    14,    15,     1,     2,     3,
-       4,    42,    50,    52,    54,    57,    61,   112,    45,     5,
-      53,    56,   117,    65,   116,    66,    80,    82,    46,   122,
-      47,    67,    68,    69,    70,    71,    72,    73,    74,    55,
-      75,    76,    77,    78,    79,    81,    85,    90,   109,    24,
-     106,   111,   119,   123,    24,   107,   121,    66,    24,    25,
-      20,    24,    88,    67,    68,    69,    70,    71,    72,    73,
-      74,    87,    75,    76,    77,    78,    79,   113,   120,    66,
-       0,     0,    83,     0,     0,    67,    68,    69,    70,    71,
-      72,    73,    74,     0,    75,    76,    77,    78,    79,   118,
-       0,    66,     0,     0,     0,     0,     0,    67,    68,    69,
-      70,    71,    72,    73,    74,     0,    75,    76,    77,    78,
-      79,     1,     2,     3,     0,    28,     0,     0,     0,    29,
-       0,     0,    30,     0,    31,    32,     0,    66,     0,     0,
-       0,    33,    89,    67,    68,    69,    70,    71,    72,    73,
-      74,     0,    75,    76,    77,    78,    79,    66,     0,     0,
-       0,     0,    91,    67,    68,    69,    70,    71,    72,    73,
-      74,    66,    75,    76,    77,    78,    79,    67,    68,    69,
-      70,    71,    72,    73,    74,    66,    75,    76,    77,    78,
-      79,   -13,   -13,   -13,   -13,   -13,   -13,    73,    74,     0,
-      75,    76,    77,    78,    79
+       6,    53,    41,   -13,     1,     2,     3,    21,     6,     6,
+      12,    62,    68,    23,    13,    64,    65,    66,    68,    16,
+      24,    25,    86,   116,    75,    76,    88,    25,   117,    17,
+      75,    76,    18,    77,    78,    25,    94,    95,    96,    97,
+      98,    99,   100,   101,   102,   103,   104,   105,   106,   107,
+       1,     2,     3,     4,    60,    61,    25,     1,     2,     3,
+     112,    27,     5,    45,    46,    21,   110,    61,    22,    14,
+      15,    28,    29,    43,    44,    52,    54,   114,    47,    57,
+      55,    56,   119,   118,    67,    59,    68,    58,    48,   124,
+      49,    63,    69,    70,    71,    72,    73,    74,    75,    76,
+      82,    77,    78,    79,    80,    81,    87,    83,    84,    92,
+     111,    25,   108,    26,   113,   121,    25,   109,   123,    68,
+      25,   125,    20,    25,   122,    69,    70,    71,    72,    73,
+      74,    75,    76,    90,    77,    78,    79,    80,    81,   115,
+      89,    68,     0,     0,     0,    85,     0,    69,    70,    71,
+      72,    73,    74,    75,    76,     0,    77,    78,    79,    80,
+      81,   120,     0,    68,     0,     0,     0,     0,     0,    69,
+      70,    71,    72,    73,    74,    75,    76,     0,    77,    78,
+      79,    80,    81,     1,     2,     3,     0,    30,     0,     0,
+       0,    31,     0,     0,    32,     0,    33,    34,     0,    24,
+       0,    68,     0,    35,     0,     0,    91,    69,    70,    71,
+      72,    73,    74,    75,    76,     0,    77,    78,    79,    80,
+      81,    68,     0,     0,     0,     0,    93,    69,    70,    71,
+      72,    73,    74,    75,    76,    68,    77,    78,    79,    80,
+      81,    69,    70,    71,    72,    73,    74,    75,    76,    68,
+      77,    78,    79,    80,    81,   -14,   -14,   -14,   -14,   -14,
+     -14,    75,    76,     0,    77,    78,    79,    80,    81
     };
   }
 
@@ -1448,33 +1455,33 @@ private static final byte[] yycheck_ = yycheck_init();
   {
     return new byte[]
     {
-       0,    33,    20,     7,    19,     7,    13,     0,     8,     9,
-      25,    18,    41,    23,    32,    33,    45,    46,    47,    20,
-      19,    21,    54,    22,    20,    21,    26,    56,     3,     4,
-       5,    32,    33,    33,    35,    36,    24,    66,    67,    68,
-      69,    70,    71,    72,    73,    74,    75,    76,    77,    78,
-      79,    18,    19,    23,    54,    18,    19,     3,     4,     5,
-       7,    90,    24,     9,    10,     8,     9,     3,     4,     5,
-       6,    24,    24,    18,    18,     7,     7,   109,    24,    15,
-      21,    20,   114,    18,   113,    20,     5,     7,    34,   121,
-      36,    26,    27,    28,    29,    30,    31,    32,    33,    22,
-      35,    36,    37,    38,    39,    22,    18,    20,    12,   109,
-      25,    18,    18,    18,   114,    18,    25,    20,   118,    21,
-      18,   121,    59,    26,    27,    28,    29,    30,    31,    32,
-      33,    57,    35,    36,    37,    38,    39,    18,   118,    20,
-      -1,    -1,    53,    -1,    -1,    26,    27,    28,    29,    30,
-      31,    32,    33,    -1,    35,    36,    37,    38,    39,    18,
-      -1,    20,    -1,    -1,    -1,    -1,    -1,    26,    27,    28,
+       0,    35,    20,    21,     3,     4,     5,    19,     8,     9,
+       7,    43,    20,    25,     7,    47,    48,    49,    20,     0,
+      19,    21,    56,    13,    32,    33,    58,    27,    18,    23,
+      32,    33,    24,    35,    36,    35,    68,    69,    70,    71,
+      72,    73,    74,    75,    76,    77,    78,    79,    80,    81,
+       3,     4,     5,     6,    18,    19,    56,     3,     4,     5,
+      92,    23,    15,     9,    10,    19,    18,    19,    22,     8,
+       9,     7,     7,    24,    24,    24,    18,   111,    24,    22,
+      21,    18,   116,   115,    18,     7,    20,    20,    34,   123,
+      36,     7,    26,    27,    28,    29,    30,    31,    32,    33,
+       5,    35,    36,    37,    38,    39,    18,    22,     7,    20,
+      12,   111,    25,    21,    18,    18,   116,    18,    25,    20,
+     120,    18,    18,   123,   120,    26,    27,    28,    29,    30,
+      31,    32,    33,    61,    35,    36,    37,    38,    39,    18,
+      59,    20,    -1,    -1,    -1,    55,    -1,    26,    27,    28,
       29,    30,    31,    32,    33,    -1,    35,    36,    37,    38,
-      39,     3,     4,     5,    -1,     7,    -1,    -1,    -1,    11,
-      -1,    -1,    14,    -1,    16,    17,    -1,    20,    -1,    -1,
-      -1,    23,    25,    26,    27,    28,    29,    30,    31,    32,
-      33,    -1,    35,    36,    37,    38,    39,    20,    -1,    -1,
-      -1,    -1,    25,    26,    27,    28,    29,    30,    31,    32,
-      33,    20,    35,    36,    37,    38,    39,    26,    27,    28,
+      39,    18,    -1,    20,    -1,    -1,    -1,    -1,    -1,    26,
+      27,    28,    29,    30,    31,    32,    33,    -1,    35,    36,
+      37,    38,    39,     3,     4,     5,    -1,     7,    -1,    -1,
+      -1,    11,    -1,    -1,    14,    -1,    16,    17,    -1,    19,
+      -1,    20,    -1,    23,    -1,    -1,    25,    26,    27,    28,
+      29,    30,    31,    32,    33,    -1,    35,    36,    37,    38,
+      39,    20,    -1,    -1,    -1,    -1,    25,    26,    27,    28,
       29,    30,    31,    32,    33,    20,    35,    36,    37,    38,
-      39,    26,    27,    28,    29,    30,    31,    32,    33,    -1,
-      35,    36,    37,    38,    39
+      39,    26,    27,    28,    29,    30,    31,    32,    33,    20,
+      35,    36,    37,    38,    39,    26,    27,    28,    29,    30,
+      31,    32,    33,    -1,    35,    36,    37,    38,    39
     };
   }
 
@@ -1487,17 +1494,17 @@ private static final byte[] yycheck_ = yycheck_init();
     {
        0,     3,     4,     5,     6,    15,    41,    42,    43,    46,
       52,    53,     7,     7,    53,    53,     0,    23,    24,    45,
-      45,    19,    22,    25,    41,    44,    23,     7,     7,    11,
-      14,    16,    17,    23,    44,    47,    49,    50,    51,    20,
-      48,    24,    24,     9,    10,    24,    34,    36,    41,    54,
-      24,    50,    18,    21,    18,    22,    20,     7,    18,    19,
-      54,     7,    54,    54,    54,    18,    20,    26,    27,    28,
-      29,    30,    31,    32,    33,    35,    36,    37,    38,    39,
-       5,    22,     7,    51,    50,    18,    54,    48,    47,    25,
-      20,    25,    54,    54,    54,    54,    54,    54,    54,    54,
-      54,    54,    54,    54,    54,    54,    25,    18,    18,    12,
-      54,    18,    50,    18,    13,    18,    54,    50,    18,    18,
-      49,    25,    50,    18
+      45,    19,    22,    25,    19,    41,    44,    23,     7,     7,
+       7,    11,    14,    16,    17,    23,    44,    47,    49,    50,
+      51,    20,    48,    24,    24,     9,    10,    24,    34,    36,
+      41,    54,    24,    50,    18,    21,    18,    22,    20,     7,
+      18,    19,    54,     7,    54,    54,    54,    18,    20,    26,
+      27,    28,    29,    30,    31,    32,    33,    35,    36,    37,
+      38,    39,     5,    22,     7,    51,    50,    18,    54,    48,
+      47,    25,    20,    25,    54,    54,    54,    54,    54,    54,
+      54,    54,    54,    54,    54,    54,    54,    54,    25,    18,
+      18,    12,    54,    18,    50,    18,    13,    18,    54,    50,
+      18,    18,    49,    25,    50,    18
     };
   }
 
@@ -1507,12 +1514,12 @@ private static final byte[] yycheck_ = yycheck_init();
   {
     return new byte[]
     {
-       0,    40,    41,    41,    41,    42,    42,    43,    44,    45,
-      45,    46,    47,    48,    48,    49,    49,    49,    49,    49,
-      49,    49,    49,    49,    49,    50,    50,    51,    51,    52,
-      53,    53,    53,    54,    54,    54,    54,    54,    54,    54,
+       0,    40,    41,    41,    41,    42,    42,    43,    44,    44,
+      45,    45,    46,    47,    48,    48,    49,    49,    49,    49,
+      49,    49,    49,    49,    49,    49,    50,    50,    51,    51,
+      52,    53,    53,    53,    54,    54,    54,    54,    54,    54,
       54,    54,    54,    54,    54,    54,    54,    54,    54,    54,
-      54,    54,    54
+      54,    54,    54,    54
     };
   }
 
@@ -1522,12 +1529,12 @@ private static final byte[] yycheck_ = yycheck_init();
   {
     return new byte[]
     {
-       0,     2,     1,     1,     1,     1,     1,     5,     2,     0,
-       3,     9,     1,     0,     3,    12,     7,     9,     5,     3,
-       3,     2,     4,     3,     5,     0,     3,     1,     3,     1,
-       0,     2,     2,     1,     1,     1,     3,     3,     3,     3,
+       0,     2,     1,     1,     1,     1,     1,     5,     2,     2,
+       0,     3,     9,     1,     0,     3,    12,     7,     9,     5,
+       3,     3,     2,     4,     3,     5,     0,     3,     1,     3,
+       1,     0,     2,     2,     1,     1,     1,     3,     3,     3,
        3,     3,     3,     3,     3,     3,     3,     3,     3,     3,
-       2,     2,     3
+       3,     2,     2,     3
     };
   }
 
@@ -1586,16 +1593,17 @@ private static final byte[] yycheck_ = yycheck_init();
   }
 
 
-  private static final int YYLAST_ = 264;
+  private static final int YYLAST_ = 268;
   private static final int YYEMPTY_ = -2;
   private static final int YYFINAL_ = 16;
   private static final int YYNTOKENS_ = 40;
 
 /* Unqualified %code blocks.  */
-/* "ToY.y":21  */
+/* "ToY.y":45  */
 
 
-// delcare global hashmaps to fill while parsing -------------------------------------------------------------------------
+/* ----------------- Global Hashmaps and Main Function ---------------- */
+
 HashMap<Object, ID> functions = new HashMap<Object, ID>();
 HashMap<Object, ID> statements = new HashMap<Object, ID>();
 // HashMap<Object, ID> var = new HashMap<Object, ID>();
@@ -1605,15 +1613,16 @@ FileReader yyin = new FileReader(args[0]);
  ToYLexer l = new ToYLexer(yyin);
  ToY p = new ToY(l);
  if (!p.parse()) System.out.println("INVALID");
+ }
+
+/* "ToY.java":1619  */
+
 }
+/* "ToY.y":197  */
 
-/* "ToY.java":1611  */
-
-}
-/* "ToY.y":174  */
-
-//java code for making the AST and the visitor class -----------------------------------------------------------
-// ~~~~~~ idea: what if we made a variable class and made all names and stuff of type Var ~~~~~~~ 
+/* ------------------------------------------------------- */
+/*                       Start of AST                      */
+/* ------------------------------------------------------- */
 
 // Asbstract syntax tree base class.  
 // methods: accept
@@ -1644,8 +1653,8 @@ class StmtList {
     // }
 }
 
-// ------------------------------- Expression subclasses
-// ------------------------------------------
+/* ----------------- AST Expression Subclasses ---------------- */
+/* ------------------------------------------------------------ */
 
 // Arithmetic Class that extends the ASTNode class
 // creates two Nodes, the left and right sides of an arithmetic statement
@@ -1773,8 +1782,8 @@ class EndFunction extends ASTNode {
 
 }
 
-// ----------------------------------- Method subclasses
-// ---------------------------------------------
+/* ----------------- AST Statement/Method subclasses ---------------- */
+/* ------------------------------------------------------------------ */
 
 // ForLoop class that extends the ASTNode class
 // creates four nodes, the for loop iterator, it's conditional, its
@@ -1792,6 +1801,22 @@ class ForLoop extends ASTNode {
         this.conditional = conditional;
         this.increment = increment;
         this.body = body;
+    }
+
+    public Object getIterator(){
+        return this.iterator;
+    }
+
+    public Object getConditional(){
+        return this.conditional;
+    }
+
+    public Object getIncrement(){
+        return this.increment;
+    }
+
+    public Object getBody(){
+        return this.body;
     }
 
     public Object accept(Visitor v) {
@@ -1823,8 +1848,8 @@ class IfStmt extends ASTNode {
 
 }
 
-// ---------------------------- Variable subclasses
-// ----------------------------------------------
+/* ----------------- AST Variable Subclasses ---------------- */
+/* ---------------------------------------------------------- */
 
 // Asnmt class that extends the ASTNode class
 // The class is used when assigning objects to variables
@@ -1912,9 +1937,6 @@ class Keyword extends ASTNode {
         	return v.visit(this);
     	}
 }
-	
-
-// ********************** POTENTIAL SOLUTION FOR VAR AND PARAM ***************
 
 class VarDef extends ASTNode {
 	
@@ -2103,7 +2125,6 @@ class AbstractVisitor implements Visitor {
     }
 
     public boolean visit(Logic add) {
-        //int op = ((Yytoken)(add.getOp())).getToken();
         int left = ((Yytoken)(add.getLeft())).getToken();
         int right = ((Yytoken)(add.getRight())).getToken();
         if (left == ToYLexer.BOOL && right == ToYLexer.BOOL){
@@ -2123,7 +2144,7 @@ class AbstractVisitor implements Visitor {
             }
         }
         if (op == ToYLexer.DOUBLEEQ || op == ToYLexer.NOTEQ ){
-            if ((left == ToYLexer.INT && right == ToYLexer.INT) ||(left == ToYLexer.STRING && right == ToYLexer.STRING) ){
+            if ((left == ToYLexer.INT && right == ToYLexer.INT) || (left == ToYLexer.STRING && right == ToYLexer.STRING) ){
                 return true;
             }
         }
@@ -2392,14 +2413,6 @@ class Struct extends ID {
       public Yytoken getLVal() {
          return token;
       }
-
-    // ADDED THIS IF IT DOESNT COMPILE
-    /*
-      @Override
-      public int getToken() {
-         return this.type;
-      }
-    */
 
       Yytoken token;
 

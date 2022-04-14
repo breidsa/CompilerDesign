@@ -115,7 +115,8 @@ FileReader yyin = new FileReader(args[0]);
     ;                                                              
 
                    
-    declaration: type IDENTIFIER {$$ = new VarDef($1, $2); } 
+    declaration: type IDENTIFIER {$$ = new VarDef($1, $2); }
+    | COMMA IDENTIFIER {$$ = new VarDef(null, $2);}
     ;
     
     declarationList: /* empty */ {$$ = new StmtList();}  
@@ -375,6 +376,22 @@ class ForLoop extends ASTNode {
         this.conditional = conditional;
         this.increment = increment;
         this.body = body;
+    }
+
+    public Object getIterator(){
+        return this.iterator;
+    }
+
+    public Object getConditional(){
+        return this.conditional;
+    }
+
+    public Object getIncrement(){
+        return this.increment;
+    }
+
+    public Object getBody(){
+        return this.body;
     }
 
     public Object accept(Visitor v) {
@@ -683,7 +700,6 @@ class AbstractVisitor implements Visitor {
     }
 
     public boolean visit(Logic add) {
-        //int op = ((Yytoken)(add.getOp())).getToken();
         int left = ((Yytoken)(add.getLeft())).getToken();
         int right = ((Yytoken)(add.getRight())).getToken();
         if (left == ToYLexer.BOOL && right == ToYLexer.BOOL){
@@ -703,7 +719,7 @@ class AbstractVisitor implements Visitor {
             }
         }
         if (op == ToYLexer.DOUBLEEQ || op == ToYLexer.NOTEQ ){
-            if ((left == ToYLexer.INT && right == ToYLexer.INT) ||(left == ToYLexer.STRING && right == ToYLexer.STRING) ){
+            if ((left == ToYLexer.INT && right == ToYLexer.INT) || (left == ToYLexer.STRING && right == ToYLexer.STRING) ){
                 return true;
             }
         }
@@ -972,14 +988,6 @@ class Struct extends ID {
       public Yytoken getLVal() {
          return token;
       }
-
-    // ADDED THIS IF IT DOESNT COMPILE
-    /*
-      @Override
-      public int getToken() {
-         return this.type;
-      }
-    */
 
       Yytoken token;
 
