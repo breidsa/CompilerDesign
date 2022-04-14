@@ -3,26 +3,25 @@
    
   Start Line    |    Code Type
  -----------------------------------------------------------------------------------------------------------
-                |  defines and imports
-	        |  global hashmaps and main function
-	        |  Bison Declarations
-	        |  Bison grammar rules and semantic actions
+      26        |  defines and imports
+      47        |  global hashmaps and main function
+      62        |  Bison Declarations
+      100       |  Bison grammar rules and semantic actions
  -----------------------------------------------------------------------------------------------------------	       
-	        |  Start of the AST (AST constructor and StmtList helper function)
-	        |  AST expression subclasses (Arithmetic, Logic, Conditions, UnaryOperators, EndFunctions)
+      198       |  Start of the AST (AST constructor and StmtList helper function)
+      204       |  AST expression subclasses (Arithmetic, Logic, Conditions, UnaryOperators, EndFunctions)
 	        |  AST statement/method subclasses (ForLoop, IfStmt)
 	        |  AST variable subclasses (Asnmt, Decl, ParamList, Keyword, VarDef)
 	        |  AST program subclasses (StructCreater, FunctionConstruct, FunctionCall, Program)
  ------------------------------------------------------------------------------------------------------------		
 	        |  Start of Semantic Analysis 
 		|  AbstractVisitor implementations and Visitor definitions
-		|  
+		|  Symbol Table Helper Functions
+		|  Symbol Table Class
+		|  Parser - Lexer Link 
 		
 */
 	       
-
-
-
 
 %language "Java"
 %define api.prefix {ToY}
@@ -30,7 +29,6 @@
 %define api.parser.public
 %define parse.error verbose
 //%define api.value.type {Yytoken}
-
 
 %code imports {
 import java.io.IOException;
@@ -46,7 +44,8 @@ import java.util.ArrayList;
 
 %code {
 
-// delcare global hashmaps to fill while parsing -------------------------------------------------------------------------
+/* ----------------- Global Hashmaps and Main Function ---------------- */
+
 HashMap<Object, ID> functions = new HashMap<Object, ID>();
 HashMap<Object, ID> statements = new HashMap<Object, ID>();
 // HashMap<Object, ID> var = new HashMap<Object, ID>();
@@ -56,10 +55,12 @@ FileReader yyin = new FileReader(args[0]);
  ToYLexer l = new ToYLexer(yyin);
  ToY p = new ToY(l);
  if (!p.parse()) System.out.println("INVALID");
-}
+ }
 }
 
-/* Bison Declarations do we need the AST NODE HERE */
+
+/* ----------------- Bison Declarations ---------------- */
+
 /* Questions: does boolean and stuff have to come from the lexer?? */
 %token  INT BOOL STRING VOID
 %token  IDENTIFIER 
@@ -96,16 +97,11 @@ FileReader yyin = new FileReader(args[0]);
 %type  exp
 
 
-/* %type op */
-
-
+/* ----------------- Bison Grammar ---------------- */
 
 %start pgm
 
-%%
-
-//MGARG@TCD.IE
-    
+%%   
     type: INT { $$ = new VarDef($1, null); }
     | BOOL { $$ = new VarDef($1, null); }
     | STRING { $$ = new VarDef($1, null); }
@@ -198,8 +194,9 @@ FileReader yyin = new FileReader(args[0]);
  
  
 %%
-//java code for making the AST and the visitor class -----------------------------------------------------------
-// ~~~~~~ idea: what if we made a variable class and made all names and stuff of type Var ~~~~~~~ 
+/* ------------------------------------------------------- */
+/*                       Start of AST                      */
+/* ------------------------------------------------------- */
 
 // Asbstract syntax tree base class.  
 // methods: accept
@@ -230,8 +227,8 @@ class StmtList {
     // }
 }
 
-// ------------------------------- Expression subclasses
-// ------------------------------------------
+/* ----------------- AST Expression Subclasses ---------------- */
+/* ------------------------------------------------------------ */
 
 // Arithmetic Class that extends the ASTNode class
 // creates two Nodes, the left and right sides of an arithmetic statement
@@ -359,8 +356,8 @@ class EndFunction extends ASTNode {
 
 }
 
-// ----------------------------------- Method subclasses
-// ---------------------------------------------
+/* ----------------- AST Statement/Method subclasses ---------------- */
+/* ------------------------------------------------------------------ */
 
 // ForLoop class that extends the ASTNode class
 // creates four nodes, the for loop iterator, it's conditional, its
@@ -409,8 +406,8 @@ class IfStmt extends ASTNode {
 
 }
 
-// ---------------------------- Variable subclasses
-// ----------------------------------------------
+/* ----------------- AST Variable Subclasses ---------------- */
+/* ---------------------------------------------------------- */
 
 // Asnmt class that extends the ASTNode class
 // The class is used when assigning objects to variables
