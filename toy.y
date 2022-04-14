@@ -157,12 +157,12 @@ FileReader yyin = new FileReader(args[0]);
     | exp MOD exp  { $$ = new Arithmetic($1,$2, $3); }
     | exp AND exp { $$ = new Logic($1, $2, $3); }
     | exp OR exp { $$ = new Logic($1, $2, $3); }
-    | exp DOUBLEEQ exp { $$ = new Conditions($1, $3); }
-    | exp GREATERTHAN exp { $$ = new Conditions($1, $3); }
-    | exp LESSTHAN exp { $$ = new Conditions($1, $3); }
-    | exp GREATERTHANOREQ exp { $$ = new Conditions($1, $3); }
-    | exp LESSTHANOREQ exp { $$ = new Conditions($1, $3); }
-    | exp NOTEQ exp { $$ = new Conditions($1, $3); }
+    | exp DOUBLEEQ exp { $$ = new Conditions($1, $2, $3); }
+    | exp GREATERTHAN exp { $$ = new Conditions($1, $2, $3); }
+    | exp LESSTHAN exp { $$ = new Conditions($1, $2, $3); }
+    | exp GREATERTHANOREQ exp { $$ = new Conditions($1, $2, $3); }
+    | exp LESSTHANOREQ exp { $$ = new Conditions($1, $2, $3); }
+    | exp NOTEQ exp { $$ = new Conditions($1, $2, $3); }
     | exp EQ exp { $$ = new Asnmt($1, $3); }
     | NOT exp { $$ = new UnaryOperators($2); }
     | MINUS exp { $$ = new UnaryOperators($2); }
@@ -283,10 +283,11 @@ class Logic extends ASTNode {
 // creates two Nodes, the left and right sides of a conditional statement
 // constructor allows semantic actions to initialize nodes
 class Conditions extends ASTNode {
-    public Object left, right;
+    public Object left, op, right;
 
-    public Conditions(Object left, Object right) {
+    public Conditions(Object left, Object op, Object right) {
         this.left = left;
+        this.op = op;
         this.right = right;
     }
 
@@ -296,6 +297,10 @@ class Conditions extends ASTNode {
 
     public Object getRight(){
         return this.right;
+    }
+
+    public Object getOp(){
+        return this.op;
     }
 
 
@@ -588,6 +593,17 @@ class AbstractVisitor implements Visitor {
     }
 
     public boolean visit(Logic add) {
+        //int op = ((Yytoken)(add.getOp())).getToken();
+        int left = ((Yytoken)(add.getLeft())).getToken();
+        int right = ((Yytoken)(add.getRight())).getToken();
+        if (left == ToYLexer.BOOL && right == ToYLexer.BOOL){
+            return true;
+        }
+        
+        return false;
+    }
+
+    public boolean visit(Conditions add) {
         int op = ((Yytoken)(add.getOp())).getToken();
         int left = ((Yytoken)(add.getLeft())).getToken();
         int right = ((Yytoken)(add.getRight())).getToken();
@@ -602,10 +618,6 @@ class AbstractVisitor implements Visitor {
             }
         }
         
-        return false;
-    }
-
-    public boolean visit(Conditions n) {
         return false;
     }
 

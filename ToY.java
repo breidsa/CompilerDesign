@@ -846,42 +846,42 @@ public class ToY
   case 43: /* exp: exp DOUBLEEQ exp  */
   if (yyn == 43)
     /* "ToY.y":160  */
-                       { yyval = new Conditions(yystack.valueAt (2), yystack.valueAt (0)); };
+                       { yyval = new Conditions(yystack.valueAt (2), yystack.valueAt (1), yystack.valueAt (0)); };
   break;
 
 
   case 44: /* exp: exp GREATERTHAN exp  */
   if (yyn == 44)
     /* "ToY.y":161  */
-                          { yyval = new Conditions(yystack.valueAt (2), yystack.valueAt (0)); };
+                          { yyval = new Conditions(yystack.valueAt (2), yystack.valueAt (1), yystack.valueAt (0)); };
   break;
 
 
   case 45: /* exp: exp LESSTHAN exp  */
   if (yyn == 45)
     /* "ToY.y":162  */
-                       { yyval = new Conditions(yystack.valueAt (2), yystack.valueAt (0)); };
+                       { yyval = new Conditions(yystack.valueAt (2), yystack.valueAt (1), yystack.valueAt (0)); };
   break;
 
 
   case 46: /* exp: exp GREATERTHANOREQ exp  */
   if (yyn == 46)
     /* "ToY.y":163  */
-                              { yyval = new Conditions(yystack.valueAt (2), yystack.valueAt (0)); };
+                              { yyval = new Conditions(yystack.valueAt (2), yystack.valueAt (1), yystack.valueAt (0)); };
   break;
 
 
   case 47: /* exp: exp LESSTHANOREQ exp  */
   if (yyn == 47)
     /* "ToY.y":164  */
-                           { yyval = new Conditions(yystack.valueAt (2), yystack.valueAt (0)); };
+                           { yyval = new Conditions(yystack.valueAt (2), yystack.valueAt (1), yystack.valueAt (0)); };
   break;
 
 
   case 48: /* exp: exp NOTEQ exp  */
   if (yyn == 48)
     /* "ToY.y":165  */
-                    { yyval = new Conditions(yystack.valueAt (2), yystack.valueAt (0)); };
+                    { yyval = new Conditions(yystack.valueAt (2), yystack.valueAt (1), yystack.valueAt (0)); };
   break;
 
 
@@ -1695,10 +1695,11 @@ class Logic extends ASTNode {
 // creates two Nodes, the left and right sides of a conditional statement
 // constructor allows semantic actions to initialize nodes
 class Conditions extends ASTNode {
-    public Object left, right;
+    public Object left, op, right;
 
-    public Conditions(Object left, Object right) {
+    public Conditions(Object left, Object op, Object right) {
         this.left = left;
+        this.op = op;
         this.right = right;
     }
 
@@ -1708,6 +1709,10 @@ class Conditions extends ASTNode {
 
     public Object getRight(){
         return this.right;
+    }
+
+    public Object getOp(){
+        return this.op;
     }
 
 
@@ -2000,6 +2005,17 @@ class AbstractVisitor implements Visitor {
     }
 
     public boolean visit(Logic add) {
+        //int op = ((Yytoken)(add.getOp())).getToken();
+        int left = ((Yytoken)(add.getLeft())).getToken();
+        int right = ((Yytoken)(add.getRight())).getToken();
+        if (left == ToYLexer.BOOL && right == ToYLexer.BOOL){
+            return true;
+        }
+        
+        return false;
+    }
+
+    public boolean visit(Conditions add) {
         int op = ((Yytoken)(add.getOp())).getToken();
         int left = ((Yytoken)(add.getLeft())).getToken();
         int right = ((Yytoken)(add.getRight())).getToken();
@@ -2014,10 +2030,6 @@ class AbstractVisitor implements Visitor {
             }
         }
         
-        return false;
-    }
-
-    public boolean visit(Conditions n) {
         return false;
     }
 
