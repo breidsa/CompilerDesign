@@ -80,7 +80,7 @@ FileReader yyin = new FileReader(args[0]);
 
 //MGARG@TCD.IE
     
-     type: INT { $$ = new VarDef($1, null); }
+    type: INT { $$ = new VarDef($1, null); }
     | BOOL { $$ = new VarDef($1, null); }
     | STRING { $$ = new VarDef($1, null); }
     ;
@@ -139,12 +139,12 @@ FileReader yyin = new FileReader(args[0]);
     // if there is only one in the test code
     
     // create pgm class that has a list of ASTNodes 
-    pgm : recursePgm { $$ = $1 }
+    pgm : recursePgm { $$ = $1; }
     ;
     
-    recursePgm : /* empty sequence */ { $$ = StmtList(); }
+    recursePgm : /* empty sequence */ { $$ = new StmtList(); }
     | function recursePgm { StmtList pgm = (StmtList) $2; pgm.addElement($1); $$ = pgm; }
-    | struct recursePgm  { StmtList pmg = (StmtList) $2; pgm.addElement($1); $$ = pgm; }
+    | struct recursePgm  { StmtList pgm = (StmtList) $2; pgm.addElement($1); $$ = pgm; }
     ;
     
     exp : type { $$ = $1; }
@@ -298,9 +298,6 @@ class Conditions extends ASTNode {
         return this.right;
     }
 
-    public Object getOp(){
-        return this.op;
-    }
 
     public Object accept(Visitor v) {
         return v.visit(this);
@@ -556,11 +553,9 @@ class Program extends ASTNode {
 	
 	public Object accept(Visitor v) {
         	return v.visit(this);
-    	}
+    }
 }
 	
-
-class main extends ASTNode {
 
 
 // ------------------------------------- Semantic Analysis
@@ -580,25 +575,33 @@ class AbstractVisitor implements Visitor {
         int right = ((Yytoken)(add.getRight())).getToken();
         if (op == ToYLexer.PLUS || op == ToYLexer.MINUS ){
             if ((left == ToYLexer.INT && right == ToYLexer.INT) ||(left == ToYLexer.STRING && right == ToYLexer.STRING) ){
-            return true;
+                return true;
             }
         }
         if (op == ToYLexer.MULT || op == ToYLexer.DIVIDE ){
             if (left == ToYLexer.INT && right == ToYLexer.INT){
-            return true;
+                return true;
             }
         }
-        
         
         return false;
     }
 
     public boolean visit(Logic add) {
+        int op = ((Yytoken)(add.getOp())).getToken();
         int left = ((Yytoken)(add.getLeft())).getToken();
         int right = ((Yytoken)(add.getRight())).getToken();
-        if ((left == ToYLexer.BOOL && right == ToYLexer.BOOL)){
-            return true;
+        if (op == ToYLexer.GREATERTHAN || op == ToYLexer.GREATERTHANOREQ || op == ToYLexer.LESSTHAN || op == ToYLexer.LESSTHANOREQ ){
+            if (left == ToYLexer.INT && right == ToYLexer.INT){
+                return true;
             }
+        }
+        if (op == ToYLexer.DOUBLEEQ || op == ToYLexer.NOTEQ ){
+            if ((left == ToYLexer.INT && right == ToYLexer.INT) ||(left == ToYLexer.STRING && right == ToYLexer.STRING) ){
+                return true;
+            }
+        }
+        
         return false;
     }
 
