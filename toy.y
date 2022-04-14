@@ -1,3 +1,29 @@
+
+/* As this parser file is very long, here is a general table of contents to make it easier to go through the code:
+   
+  Start Line    |    Code Type
+ -----------------------------------------------------------------------------------------------------------
+                |  defines and imports
+	        |  global hashmaps and main function
+	        |  Bison Declarations
+	        |  Bison grammar rules and semantic actions
+ -----------------------------------------------------------------------------------------------------------	       
+	        |  Start of the AST (AST constructor and StmtList helper function)
+	        |  AST expression subclasses (Arithmetic, Logic, Conditions, UnaryOperators, EndFunctions)
+	        |  AST statement/method subclasses (ForLoop, IfStmt)
+	        |  AST variable subclasses (Asnmt, Decl, ParamList, Keyword, VarDef)
+	        |  AST program subclasses (StructCreater, FunctionConstruct, FunctionCall, Program)
+ ------------------------------------------------------------------------------------------------------------		
+	        |  Start of Semantic Analysis 
+		|  AbstractVisitor implementations and Visitor definitions
+		|  
+		
+*/
+	       
+
+
+
+
 %language "Java"
 %define api.prefix {ToY}
 %define api.parser.class {ToY}
@@ -472,9 +498,6 @@ class Keyword extends ASTNode {
         	return v.visit(this);
     	}
 }
-	
-
-// ********************** POTENTIAL SOLUTION FOR VAR AND PARAM ***************
 
 class VarDef extends ASTNode {
 	
