@@ -86,7 +86,7 @@ FileReader yyin = new FileReader(args[0]);
     ;
     
     returnType: type { $$ = $1; }
-    | VOID { $$ = $1; }
+    | VOID { $$ = new Keyword($1); }
     ;
     
     struct : STRUCT IDENTIFIER LBRACKET declarationList RBRACKET { $$ = new StructCreator($2, (StmtList)$4); Struct st = new Struct($2,(StmtList)$4); statements.put($2, st);} /* {StmtList fieldTypes = new StmtList(); fieldTypes.addElement($4); $$ = new StructCreator($2, fieldTypes);} */
@@ -131,8 +131,8 @@ FileReader yyin = new FileReader(args[0]);
     | stmt SEMICOLON stmtSeq { StmtList sequence = (StmtList) $3; sequence.addElement($1); $$ = sequence; }
     ;
     
-    Lexp : IDENTIFIER { $$ = new VarDef(null, $1); }
-    | IDENTIFIER ATTRIBUTE Lexp /* full transparency: I do not know how to create an ASTNode for this */
+    Lexp : param { StmtList emptyList = new StmtList(); emptyList.addElement($1); $$ = emptyList; }
+    | param ATTRIBUTE Lexp { StmtList attributeList = (StmtList)$3; attributeList.addElement($1); $$ = attributeList; }
     ;
     
     // This will initially go to recurseProgram, and create an empty function that will either act as main, or just have the 1 required function
@@ -148,8 +148,8 @@ FileReader yyin = new FileReader(args[0]);
     ;
     
     exp : type { $$ = $1; }
-    | TRUE { $$ = $1; } 
-    | FALSE { $$ = $1; }
+    | TRUE { $$ = new Keyword($1); } 
+    | FALSE { $$ = new Keyword($1); }
     | exp PLUS exp { $$ = new Arithmetic($1, $2, $3); }
     | exp MINUS exp { $$ = new Arithmetic($1,$2,$3); }
     | exp MULT exp { $$ = new Arithmetic($1, $2,$3); }
@@ -169,23 +169,6 @@ FileReader yyin = new FileReader(args[0]);
     | LEFTPAREN exp RIGHTPAREN { $$ = $2; }
     ;
 
-  
-  /* might not need this */
-   //  op : PLUS
-   //  | MINUS
-   //  | MULT
-   //  | DIVIDE
-   //  | MOD
-   //  | AND
-   //  | OR
-   //  | DOUBLEEQ
-   //  | GREATERTHAN
-   //  | LESSTHAN
-   //  | GREATERTHANOREQ
-   //  | LESSTHANOREQ
-   //  | NOTEQ
-   //  | EQ
-   //  ;
  
  
 %%
@@ -444,6 +427,19 @@ class ParamList extends ASTNode {
     	}
 }
 
+class Keyword extends ASTNode {
+	Object keyword;
+	
+	public Keyword(Object keyword){
+		this.keyword = keyword;
+	}
+	
+	public Object accept(Visitor v) {
+        	return v.visit(this);
+    	}
+}
+	
+
 // ********************** POTENTIAL SOLUTION FOR VAR AND PARAM ***************
 
 class VarDef extends ASTNode {
@@ -660,6 +656,10 @@ class AbstractVisitor implements Visitor {
     public Object visit(Program n) {
     	return null;
     }
+    
+    public Object visit(Keyword n) {
+    	return null;
+    }
 
 }
 
@@ -697,6 +697,8 @@ interface Visitor {
     public Object visit(ParamList paramList);
     
     public Object visit(Program program);
+    
+    public Object visit(Keyword keyword);
 
 }
 
