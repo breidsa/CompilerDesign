@@ -137,12 +137,12 @@ FileReader yyin = new FileReader(args[0]);
     
     
     /* I want to look at the 1st stmt for the for loop */
-    stmt : FOR LEFTPAREN IDENTIFIER EQ exp SEMICOLON exp SEMICOLON stmt RIGHTPAREN stmtSeq SEMICOLON { Asnmt iterator = new Asnmt($3, $5);
+    stmt : FOR LEFTPAREN IDENTIFIER EQ exp SEMICOLON exp SEMICOLON stmt RIGHTPAREN LBRACKET stmtSeq RBRACKET{ Asnmt iterator = new Asnmt($3, $5);
 											               $$ = new ForLoop(iterator, $7, $9, (StmtList)$11);}
     | IF LEFTPAREN exp RIGHTPAREN THEN stmtSeq SEMICOLON { $$ = new IfStmt($3, (StmtList) $6, null); }
     | IF LEFTPAREN exp RIGHTPAREN THEN stmtSeq ELSE stmtSeq SEMICOLON { $$ = new IfStmt($3, (StmtList)$6, (StmtList)$8);}
-    | PRINTF LEFTPAREN STRING RIGHTPAREN SEMICOLON { $$ = new EndFunction($2); }
-    | RETURN exp SEMICOLON { $$ = new EndFunction($2); }
+    | PRINTF LEFTPAREN STRING RIGHTPAREN SEMICOLON { $$ = new EndFunction($1, $3); }
+    | RETURN exp SEMICOLON { $$ = new EndFunction($1, $2); }
     | LBRACKET stmtSeq RBRACKET { $$ = $1; }
     | declaration SEMICOLON { $$ = $1; } 
     | Lexp EQ exp SEMICOLON { $$ = new Asnmt($1, $3); }
@@ -186,7 +186,7 @@ FileReader yyin = new FileReader(args[0]);
     | exp GREATERTHANOREQ exp { $$ = new Conditions($1, $2, $3); }
     | exp LESSTHANOREQ exp { $$ = new Conditions($1, $2, $3); }
     | exp NOTEQ exp { $$ = new Conditions($1, $2, $3); }
-    | exp EQ exp { $$ = new Asnmt($1, $3); }
+    | IDENTIFIER EQ exp { $$ = new Asnmt($1, $3); }
     | NOT exp { $$ = new UnaryOperators($1, $2); }
     | MINUS exp { $$ = new UnaryOperators($1, $2); }
     | LEFTPAREN exp RIGHTPAREN { $$ = $2; }
@@ -218,6 +218,10 @@ class StmtList {
 
     public void addElement(Object n) {
         stmts.add(n);
+    }
+
+    public int getSize(){
+        return stmts.size();
     }
 
     public Object elementAt(int i) {
@@ -345,10 +349,20 @@ class UnaryOperators extends ASTNode {
 // creates one node, the expression to be printed or returned
 // constructor allows semantic actions to initialize nodes
 class EndFunction extends ASTNode {
+    Object type;
     Object exp;
 
-    public EndFunction(Object exp) {
+    public EndFunction(Object type, Object exp) {
+        this.type = type;   
         this.exp = exp;
+    }
+
+    public Object getType(){
+        return this.type;
+    }
+
+    public Object getExp(){
+        return this.exp;
     }
 
     public Object accept(Visitor v) {
@@ -739,45 +753,114 @@ class AbstractVisitor implements Visitor {
         return false;
     }
 
-    //SO I THINK FOR THIS WE MIGHT NEED TO PULL THE TYPE FROM SOMEWHERE I AM KINDA CONFUSED 
+    //SYMBOL TABLE CHECKING!!!!!! SO I THINK FOR THIS WE MIGHT NEED TO PULL THE TYPE FROM SOMEWHERE I AM KINDA CONFUSED 
     public boolean visit(Asnmt add) {
+        int name = ((Yytoken)(add.getVar())).getToken();
+        if (name == ToYLexer.IDENTIFIER){
+            return true;
+        }
+        // Asnmt iterator = ((Asnmt)(add.getIterator()));
         return false;
     }
 
+    //DONT USE THIS ANYMORE 
     public boolean visit(Decl add) {
         return false;
     }
 
+
     public boolean visit(EndFunction add) {
+        int type = ((Yytoken)(add.getType())).getToken();
+        // ADD have to add expresison here 
+        if (type == ToYLexer.PRINTF){
+            //if string here 
+        }
+        if(type == ToYLexer.RETURN){
+            //if exp here
+        }
         return false;
     }
 
     public boolean visit(ForLoop add) {
-        return false;
-    }
+        //checks for iteration at pos 1 in for loop 
+        Asnmt iterator = ((Asnmt)(add.getIterator()));
+        if (!visit(iterator)){
+            return false; 
+        }
+        //checks for conditional expression at pos 2 in for loop 
+        Conditions condition = ((Conditions)(add.getConditional()));
+        if (!visit(condition)){
+            return false; 
+        }
+        //checks for incrementation at pos 3 of for loop 
+        Arithmetic increment = ((Arithmetic)(add.getIncrement()));
+        if (!visit(increment)){
+            return false; 
+        }
 
+        StmtList body = ((StmtList)(add.getBody()));
+        for (int i = 0; i < body.getSize(); i++){
+            // Object v = body.elementAt(i);
+            // visit(v);
+         }
+        return true;
+    }
+    //same issue with body
     public boolean visit(IfStmt add) {
         return false;
     }
 
     public boolean visit(StructCreator add) {
-        return false;
+        int name = ((Yytoken)(add.getName())).getToken();
+        StmtList fields = ((StmtList)(add.getFeilds()));
+        if(!(name == ToYLexer.IDENTIFIER)){
+            return false; 
+        }
+        for (int i = 0; i < fields.getSize(); i++){
+            VarDef v = (VarDef) fields.elementAt(i);
+            if(!visit(v)){
+                return false;
+            }
+         }
+        return true;
     }
+
 
     public boolean visit(Type add) {
         return false;
     }
 
+    //same issue with the body here 
     public boolean visit(FunctionConstruct add) {
+        
         return false;
     }
 
     public boolean visit(FunctionCall add) {
-        return false;
+        int name = ((Yytoken)(add.getName())).getToken();
+        StmtList params = ((StmtList)(add.getParameters()));
+        if(!(name == ToYLexer.IDENTIFIER)){
+            return false; 
+        }
+        for (int i = 0; i < params.getSize(); i++){
+            int v = ((Yytoken)(params.elementAt(i))).getToken();
+            if(!(v == ToYLexer.IDENTIFIER)){
+                return false;
+            }
+         }
+        return true;
+        
     }
     
     public boolean visit(ParamList add) {
-        return false;
+        StmtList params = ((StmtList)(add.getParameters()));
+        for (int i = 0; i < params.getSize(); i++){
+            int v = ((Yytoken)(params.elementAt(i))).getToken();
+            if(!(v == ToYLexer.IDENTIFIER)){
+                return false;
+            }
+         }
+        return true;
     }
     
     public boolean visit(VarDef add) {
