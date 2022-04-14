@@ -1619,6 +1619,18 @@ class Arithmetic extends ASTNode {
         this.op = op;
     }
 
+    public Object getLeft(){
+        return this.left;
+    }
+
+    public Object getRight(){
+        return this.right;
+    }
+
+    public Object getOp(){
+        return this.op;
+    }
+
     public Object accept(Visitor v) {
         return v.visit(this);
     }
@@ -1906,9 +1918,23 @@ class AbstractVisitor implements Visitor {
 
     // arithmetic expressions
 
-    public Object visit(Arithmetic add) {
-        // return add.e1.accept(this) + add.e2.accept(this);
-        return null;
+    public boolean visit(Arithmetic add) {
+        int op = ((Yytoken)(add.getOp())).getToken();
+        int left = ((Yytoken)(add.getLeft())).getToken();
+        int right = ((Yytoken)(add.getRight())).getToken();
+        if (op == ToYLexer.PLUS || op == ToYLexer.MINUS ){
+            if ((left == ToYLexer.INT && right == ToYLexer.INT) ||(left == ToYLexer.STRING && right == ToYLexer.STRING) ){
+            return true;
+            }
+        }
+        if (op == ToYLexer.MULT || op == ToYLexer.DIVIDE ){
+            if (left == ToYLexer.INT && right == ToYLexer.INT){
+            return true;
+            }
+        }
+        
+        
+        return false;
     }
 
     public Object visit(Logic add) {
@@ -1972,7 +1998,7 @@ class AbstractVisitor implements Visitor {
 // A declaration of all the visitor methods for each AST subclass
 interface Visitor {
 
-    public Object visit(Arithmetic symbol);
+    public boolean visit(Arithmetic symbol);
 
     public Object visit(Logic symbol);
 
@@ -2149,6 +2175,14 @@ class Struct extends ID {
       public Yytoken getLVal() {
          return token;
       }
+
+    // ADDED THIS IF IT DOESNT COMPILE
+    /*
+      @Override
+      public int getToken() {
+         return this.type;
+      }
+    */
 
       Yytoken token;
 

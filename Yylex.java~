@@ -16,6 +16,11 @@ class Yytoken {
     this.type = type;
     this.value = value;
   }
+  //ADDED THIS IF IT DOESNT COMPILE
+  public int getToken(){
+      return this.type;
+  }
+  
 }
 
 
