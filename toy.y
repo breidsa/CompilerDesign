@@ -23,7 +23,7 @@ import java.util.ArrayList;
 // delcare global hashmaps to fill while parsing -------------------------------------------------------------------------
 HashMap<Object, ID> functions = new HashMap<Object, ID>();
 HashMap<Object, ID> statements = new HashMap<Object, ID>();
-HashMap<Object, ID> var = new HashMap<Object, ID>();
+// HashMap<Object, ID> var = new HashMap<Object, ID>();
 
 public static void main(String[] args) throws IOException {
 FileReader yyin = new FileReader(args[0]);
@@ -77,13 +77,12 @@ FileReader yyin = new FileReader(args[0]);
 %start pgm
 
 %%
+
+//MGARG@TCD.IE
     
      type: INT { $$ = new VarDef($1, null); }
     | BOOL { $$ = new VarDef($1, null); }
     | STRING { $$ = new VarDef($1, null); }
-    /*
-    | IDENTIFIER
-    */
     ;
     
     returnType: type { $$ = $1; }
@@ -116,7 +115,7 @@ FileReader yyin = new FileReader(args[0]);
     
     /* I want to look at the 1st stmt for the for loop */
     stmt : FOR LEFTPAREN IDENTIFIER EQ exp SEMICOLON exp SEMICOLON stmt RIGHTPAREN stmtSeq SEMICOLON { Asnmt iterator = new Asnmt($3, $5);
-											                                                           $$ = new ForLoop(iterator, $7, $9, (StmtList)$11);}
+											               $$ = new ForLoop(iterator, $7, $9, (StmtList)$11);}
     | IF LEFTPAREN exp RIGHTPAREN THEN stmtSeq SEMICOLON { $$ = new IfStmt($3, (StmtList) $6, null); }
     | IF LEFTPAREN exp RIGHTPAREN THEN stmtSeq ELSE stmtSeq SEMICOLON { $$ = new IfStmt($3, (StmtList)$6, (StmtList)$8);}
     | PRINTF LEFTPAREN STRING RIGHTPAREN SEMICOLON { $$ = new EndFunction($2); }
@@ -133,16 +132,19 @@ FileReader yyin = new FileReader(args[0]);
     ;
     
     Lexp : IDENTIFIER { $$ = new VarDef(null, $1); }
-    | IDENTIFIER ATTRIBUTE Lexp /* want to brainstorm abt this....not sure abt it */
+    | IDENTIFIER ATTRIBUTE Lexp /* full transparency: I do not know how to create an ASTNode for this */
     ;
     
-    pgm : function recursePgm 
-    | struct pgm 
+    // This will initially go to recurseProgram, and create an empty function that will either act as main, or just have the 1 required function
+    // if there is only one in the test code
+    
+    // create pgm class that has a list of ASTNodes 
+    pgm : recursePgm { $$ = $1 }
     ;
     
-    recursePgm : /* empty sequence */
-    | function recursePgm 
-    | struct recursePgm 
+    recursePgm : /* empty sequence */ { $$ = StmtList(); }
+    | function recursePgm { StmtList pgm = (StmtList) $2; pgm.addElement($1); $$ = pgm; }
+    | struct recursePgm  { StmtList pmg = (StmtList) $2; pgm.addElement($1); $$ = pgm; }
     ;
     
     exp : type { $$ = $1; }
@@ -200,6 +202,7 @@ abstract class ASTNode {
 }
 
 class StmtList {
+	// stmtLists are ArrayList<Object>s, but are used in classes that create ASTNodes, so an Array<List> in this case is an ASTNode.
     ArrayList<Object> stmts;
 
     public StmtList() {
@@ -368,8 +371,6 @@ class ForLoop extends ASTNode {
 // the else statement
 // else statement can bc a null pointer, in which case only 2 nodes are created
 // constructor allows semantic actions to initialize nodes
-
-	
 class IfStmt extends ASTNode {
 
     Object conditional;
@@ -477,7 +478,7 @@ class Type extends ASTNode {
 
 }
 
-// ---------------------------------------- Program subclasses
+// ---------------------------------------- Program classes & subclasses 
 // --------------------------------------
 
 // Struct class that extends the ASTNode class
@@ -544,6 +545,23 @@ class FunctionCall extends ASTNode {
     }
 
 }
+
+// Program class, almost acts are our main parent node :)
+class Program extends ASTNode {
+	StmtList program;
+	
+	public Program(StmtList program){
+		this.program = program;
+	}
+	
+	public Object accept(Visitor v) {
+        	return v.visit(this);
+    	}
+}
+	
+
+class main extends ASTNode {
+
 
 // ------------------------------------- Semantic Analysis
 // ------------------------------------------
@@ -635,6 +653,10 @@ class AbstractVisitor implements Visitor {
     public Object visit(VarDef n) {
         return null;
     }
+    
+    public Object visit(Program n) {
+    	return null;
+    }
 
 }
 
@@ -670,6 +692,8 @@ interface Visitor {
     public Object visit(FunctionCall symbol);
     
     public Object visit(ParamList paramList);
+    
+    public Object visit(Program program);
 
 }
 
