@@ -1627,7 +1627,7 @@ FileReader yyin = new FileReader(args[0]);
 // WAIT. I JUST GOOGLED IT.  ACCEPT IS WHAT DOES THE TYPE CONVERSION (CASTING) FOR US.  SO THIS WILL FIX THAT FORLOOP AND IF STATEMENT PROBLEM (i think)
 // This is the link I used: https://stackoverflow.com/questions/9132178/what-is-the-point-of-accept-method-in-visitor-pattern#:~:text=So%2C%20accept()%20performs%20the,is%20without%20the%20accept%20method.
 abstract class ASTNode {
-    abstract Object accept(Visitor v); /* This may have to be type ID...not sure */
+    public abstract Object accept(Visitor v);  /* This may have to be type ID...not sure */
     // might need children nodes
 }
 
@@ -1682,6 +1682,7 @@ class Arithmetic extends ASTNode {
         return this.op;
     }
 
+    @Override
     public Object accept(Visitor v) {
         return v.visit(this);
     }
@@ -1708,6 +1709,7 @@ class Logic extends ASTNode {
         return this.op;
     }
 
+    @Override
     public Object accept(Visitor v) {
         return v.visit(this);
     }
@@ -1737,7 +1739,7 @@ class Conditions extends ASTNode {
         return this.op;
     }
 
-
+    @Override
     public Object accept(Visitor v) {
         return v.visit(this);
     }
@@ -1761,7 +1763,7 @@ class UnaryOperators extends ASTNode {
     public Object getOp(){
         return this.op;
     }
-
+    @Override
     public Object accept(Visitor v) {
         return v.visit(this);
     }
@@ -1787,7 +1789,7 @@ class EndFunction extends ASTNode {
     public Object getExp(){
         return this.exp;
     }
-
+    @Override
     public Object accept(Visitor v) {
         return v.visit(this);
     }
@@ -1831,6 +1833,7 @@ class ForLoop extends ASTNode {
         return this.body;
     }
 
+    @Override
     public Object accept(Visitor v) {
         return v.visit(this);
     }
@@ -1854,6 +1857,19 @@ class IfStmt extends ASTNode {
         this.elseBody = elseBody;
     }
 
+    public Object getConditional(){
+        return this.conditional;
+    }
+
+    public Object getIfBody(){
+        return this.ifBody;
+    }
+
+    public Object getElseBody(){
+        return this.elseBody;
+    }
+
+    @Override
     public Object accept(Visitor v) {
         return v.visit(this);
     }
@@ -1883,7 +1899,7 @@ class Asnmt extends ASTNode {
     public Object getExp(){
         return this.exp;
     }
-
+    @Override
     public Object accept(Visitor v) {
         return v.visit(this);
     }
@@ -1910,7 +1926,7 @@ class Decl extends ASTNode {
     public Object getNames(){
         return this.names;
     }
-
+    @Override
     public Object accept(Visitor v) {
         return v.visit(this);
     }
@@ -1927,7 +1943,7 @@ class ParamList extends ASTNode {
     public Object getParameters(){
         return this.params;
     }
-	
+	@Override
 	public Object accept(Visitor v) {
         	return v.visit(this);
     	}
@@ -1943,7 +1959,7 @@ class Keyword extends ASTNode {
     public Object getKeyword(){
         return this.keyword;
     }
-	
+	@Override
 	public Object accept(Visitor v) {
         	return v.visit(this);
     	}
@@ -1965,7 +1981,7 @@ class VarDef extends ASTNode {
     public Object getName(){
         return this.name;
     }
-
+    @Override
 	public Object accept(Visitor v) {
         	return v.visit(this);
     }
@@ -1976,7 +1992,7 @@ class Type extends ASTNode {
 
     public Type() {
     }
-
+    @Override
     public Object accept(Visitor v) {
         return v.visit(this);
     }
@@ -2007,7 +2023,7 @@ class StructCreator extends ASTNode {
     public StmtList getFeilds(){
         return this.fieldTypes;
     }
-
+    @Override
     public Object accept(Visitor v) {
         return v.visit(this);
     }
@@ -2046,7 +2062,7 @@ class FunctionConstruct extends ASTNode {
     public StmtList getBody(){
         return this.body;
     }
-
+    @Override
     public Object accept(Visitor v) {
         return v.visit(this);
     }
@@ -2076,7 +2092,7 @@ class FunctionCall extends ASTNode {
     public Object getParameters(){
         return this.parameters;
     }
-
+    @Override
     public Object accept(Visitor v) {
         return v.visit(this);
     }
@@ -2094,7 +2110,7 @@ class Program extends ASTNode {
     public StmtList getProgram(){
         return this.program;
     }
-	
+	@Override
 	public Object accept(Visitor v) {
         	return v.visit(this);
     }
@@ -2113,7 +2129,6 @@ class Program extends ASTNode {
 // in the AST tree and make
 // sure that they are semantically doing the correct thing
 class AbstractVisitor implements Visitor {
-
     // arithmetic expressions
 
     public boolean visit(Arithmetic add) {
@@ -2174,7 +2189,7 @@ class AbstractVisitor implements Visitor {
         return false;
     }
 
-    //SYMBOL TABLE CHECKING!!!!!! SO I THINK FOR THIS WE MIGHT NEED TO PULL THE TYPE FROM SOMEWHERE I AM KINDA CONFUSED 
+    //TODO -- do we need to check expression here? 
     public boolean visit(Asnmt add) {
         int name = ((Yytoken)(add.getVar())).getToken();
         if (name == ToYLexer.IDENTIFIER){
@@ -2189,61 +2204,69 @@ class AbstractVisitor implements Visitor {
         return false;
     }
 
-
+    //TODO -- do we need to check expression 
     public boolean visit(EndFunction add) {
         int type = ((Yytoken)(add.getType())).getToken();
         // ADD have to add expresison here 
         if (type == ToYLexer.PRINTF){
-            //if string here 
+            int printME = ((Yytoken)(add.getExp())).getToken(); 
+            if(printME != ToYLexer.STRING){
+                return false;
+            }
         }
         if(type == ToYLexer.RETURN){
-            //if exp here
+            //if exp here 
         }
-        return false;
+        return true;
     }
 
+    //TODO -- do we need to check the statements in the body of the for loop?
     public boolean visit(ForLoop add) {
-        //checks for iteration at pos 1 in for loop 
+        //get info from node 
         Asnmt iterator = ((Asnmt)(add.getIterator()));
-        if (!visit(iterator)){
+        Conditions condition = ((Conditions)(add.getConditional()));
+        Arithmetic increment = ((Arithmetic)(add.getIncrement()));
+        StmtList body = ((StmtList)(add.getBody()));
+        
+        //checks for iteration at pos 1 in for loop 
+        if (!((boolean)iterator.accept(this))){
             return false; 
         }
         //checks for conditional expression at pos 2 in for loop 
-        Conditions condition = ((Conditions)(add.getConditional()));
         if (!visit(condition)){
             return false; 
         }
         //checks for incrementation at pos 3 of for loop 
-        Arithmetic increment = ((Arithmetic)(add.getIncrement()));
         if (!visit(increment)){
             return false; 
         }
-
+       //TODO ERROR
+        // if (body!= null){
+        //     for(int i = 0; i < body.getSize(); i++) {
+        //         Visitor bodyE = (Visitor) body.elementAt(i);
+        //         if(!(accept(bodyE))){             // a potential solution to the problem we we're having w. different types is to add
+        //             return false;               // a second parameter to all our visit functions: Object o.
+        //         }                                   // I'm not sure this will work but I think it's worth a shot?  I'ts what that guy has
+        //     }
+	    // }
+	    return true;
+    }
 
 	// What I'm right now thinking is that maybe we don't need to recursively call visit, since
 	// the for loop should go over everything.  Instead maybe we can add something like:
-	// if (forLoop.getBody()!= null){
-	//	for(StmtList body : forLoop.getBody()) {
-	//		if(!(body.accept(this){             // a potential solution to the problem we we're having w. different types is to add
-	//			return false;               // a second parameter to all our visit functions: Object o.
-	//		}                                   // I'm not sure this will work but I think it's worth a shot?  I'ts what that guy has
-	//	}
-	// }
-	// return true;
 			
-			
-        StmtList body = ((StmtList)(add.getBody()));
-        for (int i = 0; i < body.getSize(); i++){
-            // Object v = body.elementAt(i);
-            // visit(v);
-         }
-        return true;
-    }
-    
-    
-    //same issue with body
+   
+    //TODO -- check the if and else bodies 
     public boolean visit(IfStmt add) {
-        return false;
+        Conditions condition = ((Conditions)(add.getConditional()));
+        StmtList ifBody = ((StmtList)(add.getIfBody()));
+        StmtList elseBody = ((StmtList)(add.getElseBody()));
+        //checks for conditional expression at pos 2 in for loop 
+        if (!visit(condition)){
+            return false; 
+        }
+
+        return true;
     }
 
     public boolean visit(StructCreator add) {
@@ -2263,13 +2286,28 @@ class AbstractVisitor implements Visitor {
 
 
     public boolean visit(Type add) {
-        return false;
+        return true;
     }
 
-    //same issue with the body here 
+    //TODO -- body 
     public boolean visit(FunctionConstruct add) {
-        
-        return false;
+        int returnType = ((Yytoken)(add.getReturnType())).getToken();
+        int name = ((Yytoken)(add.getName())).getToken();
+        StmtList params = ((StmtList)(add.getParameters()));
+        if(!(returnType == ToYLexer.INT || returnType == ToYLexer.STRING || returnType == ToYLexer.BOOL || returnType == ToYLexer.VOID)){
+            return false; 
+        }
+        if(!(name == ToYLexer.IDENTIFIER)){
+            return false; 
+        }
+        for (int i = 0; i < params.getSize(); i++){
+            VarDef v = ((VarDef)(params.elementAt(i)));
+            if(!visit(v)){
+                return false;
+            }
+         }
+        return true;
+
     }
 
     public boolean visit(FunctionCall add) {
@@ -2302,14 +2340,35 @@ class AbstractVisitor implements Visitor {
     public boolean visit(VarDef add) {
         int type = ((Yytoken)(add.getType())).getToken();
         int name = ((Yytoken)(add.getName())).getToken();
-        // CHECK DO WE NEED TO CHECK IF THIS IS OF TYPE STRUCT 
         if ((type == ToYLexer.BOOL || type == ToYLexer.INT || type == ToYLexer.STRING ) && name == ToYLexer.IDENTIFIER){
             return true;
         }
         return false;
     }
     
+    //TODO how to different between type function and construct 
     public boolean visit(Program add) {
+        StmtList pgm = (StmtList) add.getProgram();
+        for (int i = 0; i < pgm.getSize(); i++){
+            try{
+                FunctionConstruct function = (FunctionConstruct)(pgm.elementAt(i));
+                if(visit(function)){
+                    return true;
+                }
+                try{
+                    StructCreator struct = (StructCreator)(pgm.elementAt(i));
+                    if(visit(struct)){
+                        return true;
+                    }
+                }catch(Exception e){
+                    
+                }
+
+            }catch(Exception e){
+
+            }
+        }
+
     	return false;
     }
     
