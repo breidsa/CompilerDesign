@@ -2192,8 +2192,64 @@ class AbstractVisitor implements Visitor {
     //TODO -- do we need to check expression here? 
     public boolean visit(Asnmt add) {
         int name = ((Yytoken)(add.getVar())).getToken();
+        Object item = add.getExp();
         if (name == ToYLexer.IDENTIFIER){
             return true;
+        }
+        try{
+            Keyword keyword = (Keyword)item;
+            if(visit(keyword)){
+                return true;
+            }
+            try{
+                Arithmetic arithmetic = (Arithmetic)item;
+                if(visit(arithmetic)){
+                    return true;
+                }
+                try{
+                    Logic logic = (Logic)item;
+                    if(visit(logic)){
+                        return true;
+                    }
+                    try{
+                        Conditions condition = (Conditions)item;
+                        if(visit(condition)){
+                            return true;
+                        }
+                        try{
+                            Asnmt assignment = (Asnmt)item;
+                            if(visit(assignment)){
+                                return true;
+                            }
+                            try{
+                                UnaryOperators unary = (UnaryOperators)item;
+                                if(visit(unary)){
+                                    return true;
+                                }
+                            }catch(Exception e){
+                                
+                            }
+
+                        }catch(Exception e){
+                            
+                        }
+                            
+
+                    }catch(Exception e){
+                        
+                    }
+
+                }catch(Exception e){
+                    
+                }
+
+            }catch(Exception e){
+                
+            }
+            
+
+        }catch(Exception e){
+
         }
         // Asnmt iterator = ((Asnmt)(add.getIterator()));
         return false;
