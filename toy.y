@@ -506,7 +506,7 @@ class ParamList extends ASTNode {
 		this.params = params;
 	}
 
-    public Object getParams(){
+    public Object getParameters(){
         return this.params;
     }
 	
@@ -784,7 +784,7 @@ class AbstractVisitor implements Visitor {
         return false;
     }
 
-    public boolean visit(ForLoop forLoop) {
+    public boolean visit(ForLoop add) {
         //checks for iteration at pos 1 in for loop 
         Asnmt iterator = ((Asnmt)(add.getIterator()));
         if (!visit(iterator)){
