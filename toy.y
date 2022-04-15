@@ -1,24 +1,25 @@
 
 /* As this parser file is very long, here is a general table of contents to make it easier to go through the code:
+// as of Friday at 2 am ... we can command F since the names are the same
    
   Start Line    |    Code Type
  -----------------------------------------------------------------------------------------------------------
-      26        |  defines and imports
-      47        |  global hashmaps and main function
-      62        |  Bison Declarations
-      100       |  Bison grammar rules and semantic actions
+      27        |  defines and imports
+      48        |  global hashmaps and main function
+      63        |  Bison Declarations
+      101       |  Bison grammar rules and semantic actions
  -----------------------------------------------------------------------------------------------------------	       
-      198       |  Start of the AST (AST constructor and StmtList helper function)
-      204       |  AST expression subclasses (Arithmetic, Logic, Conditions, UnaryOperators, EndFunctions)
-	        |  AST statement/method subclasses (ForLoop, IfStmt)
-	        |  AST variable subclasses (Asnmt, Decl, ParamList, Keyword, VarDef)
-	        |  AST program subclasses (StructCreater, FunctionConstruct, FunctionCall, Program)
+      200       |  Start of the AST (AST constructor and StmtList helper function)
+      240       |  AST expression subclasses (Arithmetic, Logic, Conditions, UnaryOperators, EndFunctions)
+      379       |  AST statement/method subclasses (ForLoop, IfStmt)
+      445       |  AST variable subclasses (Asnmt, Decl, ParamList, Keyword, VarDef, Type[might not need])
+      568       |  AST program subclasses (StructCreater, FunctionConstruct, FunctionCall, Program)
  ------------------------------------------------------------------------------------------------------------		
-	        |  Start of Semantic Analysis 
-		|  AbstractVisitor implementations and Visitor definitions
-		|  Symbol Table Helper Functions
-		|  Symbol Table Class
-		|  Parser - Lexer Link 
+      687       |  Start of Semantic Analysis 
+      691	|  AbstractVisitor implementations and Visitor definitions
+      948	|  Symbol Table Helper Functions
+      1012      |  Symbol Table Class
+      1073 	|  Parser - Lexer Link 
 		
 */
 	       
@@ -203,6 +204,10 @@ FileReader yyin = new FileReader(args[0]);
 // methods: accept
 //          accept method will call the Visitor class, will accept a node if deemed "correct" by semantic analysis 
 //          this method will be applied in all subclasses that create nodes
+
+// we honestly might not need accept?  If we're just returning true and false for all the visit classes...I want to go back and read the textbook for this.
+// WAIT. I JUST GOOGLED IT.  ACCEPT IS WHAT DOES THE TYPE CONVERSION (CASTING) FOR US.  SO THIS WILL FIX THAT FORLOOP AND IF STATEMENT PROBLEM (i think)
+// This is the link I used: https://stackoverflow.com/questions/9132178/what-is-the-point-of-accept-method-in-visitor-pattern#:~:text=So%2C%20accept()%20performs%20the,is%20without%20the%20accept%20method.
 abstract class ASTNode {
     abstract Object accept(Visitor v); /* This may have to be type ID...not sure */
     // might need children nodes
@@ -494,7 +499,6 @@ class Decl extends ASTNode {
 }
 
 
-// this might just be a Var definition situation????
 class ParamList extends ASTNode {
 	StmtList params;
 	
@@ -549,11 +553,7 @@ class VarDef extends ASTNode {
     }
 }
 
-
-// ------------------------------ Type class question
-// -------------------------------------------
-
-// ******** ASK QUESTION ABOUT WHAT TO DO FOR JUST TYPES ********
+// --- TYPE CLASS QUESTION
 class Type extends ASTNode {
 
     public Type() {
@@ -565,8 +565,8 @@ class Type extends ASTNode {
 
 }
 
-// ---------------------------------------- Program classes & subclasses 
-// --------------------------------------
+/* ------------------- Program classes & subclasses------------------ */
+/* ------------------------------------------------------------------ */
 
 // Struct class that extends the ASTNode class
 // creates 2 nodes: the name of the struct and an ArrayList of all the struct
@@ -684,9 +684,12 @@ class Program extends ASTNode {
 	
 
 
-// ------------------------------------- Semantic Analysis JUMP
-// ------------------------------------------
+/* ---------------------------- Start of Semantic Analysis ---------------------------- */
+/* ------------------------------------------------------------------------------------ */
 
+
+/* ----------------- AbstractVisitor implementations and Visitor definitions ----------------- */
+/* ------------------------------------------------------------------------------------------- */
 // An implementation of all the visitor methods
 // These act as semantic analysis, so each of these methods will visit the nodes
 // in the AST tree and make
@@ -781,7 +784,7 @@ class AbstractVisitor implements Visitor {
         return false;
     }
 
-    public boolean visit(ForLoop add) {
+    public boolean visit(ForLoop forLoop) {
         //checks for iteration at pos 1 in for loop 
         Asnmt iterator = ((Asnmt)(add.getIterator()));
         if (!visit(iterator)){
@@ -798,6 +801,19 @@ class AbstractVisitor implements Visitor {
             return false; 
         }
 
+
+	// What I'm right now thinking is that maybe we don't need to recursively call visit, since
+	// the for loop should go over everything.  Instead maybe we can add something like:
+	// if (forLoop.getBody()!= null){
+	//	for(StmtList body : forLoop.getBody()) {
+	//		if(!(body.accept(this){             // a potential solution to the problem we we're having w. different types is to add
+	//			return false;               // a second parameter to all our visit functions: Object o.
+	//		}                                   // I'm not sure this will work but I think it's worth a shot?  I'ts what that guy has
+	//	}
+	// }
+	// return true;
+			
+			
         StmtList body = ((StmtList)(add.getBody()));
         for (int i = 0; i < body.getSize(); i++){
             // Object v = body.elementAt(i);
@@ -805,6 +821,8 @@ class AbstractVisitor implements Visitor {
          }
         return true;
     }
+    
+    
     //same issue with body
     public boolean visit(IfStmt add) {
         return false;
@@ -927,7 +945,8 @@ interface Visitor {
 }
 
 
-// Java code for the HashMaps ID TYPES -------------------------------------------------------------------------
+/* ------------------------- Symbol Table Helper Functions ------------------------- */
+/* --------------------------------------------------------------------------------- */
 class ID {
     Object name;
     Object scope;
@@ -990,7 +1009,9 @@ class Struct extends ID {
 
 }
    
- // symbol table class -------------------------------------------------------------------------
+/* ---------------------------- Symbol Table Class ------------------------ */
+/* ------------------------------------------------------------------------ */
+
   class SymbolTable{
    
    int scope = 0; 
@@ -1049,7 +1070,8 @@ class Struct extends ID {
 
 
 
-// for the parser and lexer link ------------------------------------------------------
+/* --------------------- Parser - Lexer Link --------------------- */
+/* ------------------------------------------------------------- */
     class ToYLexer implements ToY.Lexer {
       Yylex yylex;
     
