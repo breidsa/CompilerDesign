@@ -12,9 +12,13 @@ class Yytoken {
     this.type = type;
     this.value = value;
   }
+  
   //ADDED THIS IF IT DOESNT COMPILE
   public int getToken(){
       return this.type;
+  }
+  public Object getValue(){
+      return this.value;
   }
   
 }
@@ -111,7 +115,7 @@ HashComment = "##" {InputCharacter}* {LineTerminator}
 
     
 /* identifiers */
-{Identifier}                   { return new Yytoken(ToYLexer.IDENTIFIER); }
+{Identifier}                   { return new Yytoken(ToYLexer.IDENTIFIER, yytext()); }
 
 
     
@@ -167,7 +171,7 @@ HashComment = "##" {InputCharacter}* {LineTerminator}
 <STRING>\" {
     yybegin(YYINITIAL);
     stringBuffer.append( yytext() );
-    return new Yytoken(ToYLexer.STRING);
+    return new Yytoken(ToYLexer.STRING, stringBuffer.toString());
 }
 <STRING><<EOF>> {
     throw new Error("ERROR: String Error EOF");

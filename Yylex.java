@@ -16,9 +16,13 @@ class Yytoken {
     this.type = type;
     this.value = value;
   }
+  
   //ADDED THIS IF IT DOESNT COMPILE
   public int getToken(){
       return this.type;
+  }
+  public Object getValue(){
+      return this.value;
   }
   
 }
@@ -1018,7 +1022,7 @@ public static void main(String[] args) throws FileNotFoundException, IOException
             // fall through
           case 52: break;
           case 5:
-            { return new Yytoken(ToYLexer.IDENTIFIER);
+            { return new Yytoken(ToYLexer.IDENTIFIER, yytext());
             }
             // fall through
           case 53: break;
@@ -1111,7 +1115,7 @@ public static void main(String[] args) throws FileNotFoundException, IOException
           case 23:
             { yybegin(YYINITIAL);
     stringBuffer.append( yytext() );
-    return new Yytoken(ToYLexer.STRING);
+    return new Yytoken(ToYLexer.STRING, stringBuffer.toString());
             }
             // fall through
           case 71: break;
