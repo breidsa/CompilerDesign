@@ -200,6 +200,12 @@ FileReader yyin = new FileReader(args[0]);
 /*                       Start of AST                      */
 /* ------------------------------------------------------- */
 
+public ASTNode ast;
+
+public ASTNode getAST(){
+	return ast;
+}
+
 // Asbstract syntax tree base class.  
 // methods: accept
 //          accept method will call the Visitor class, will accept a node if deemed "correct" by semantic analysis 
@@ -702,6 +708,54 @@ class Program extends ASTNode {
 
 /* ---------------------------- Start of Semantic Analysis ---------------------------- */
 /* ------------------------------------------------------------------------------------ */
+
+public boolean tryHelper(Object item) {
+	try {
+		ForLoop forloop = (ForLoop)item;
+		if(visit(forLoop)){
+                	return true;
+		}
+		try {
+			IfStmt ifStmt = (IfStmt)item;
+			if(visit(ifStmt)){
+                		return true;
+			}
+			try {
+				EndFunction endFunction = (EndFunction)item;
+				if(visit(endFunction)){
+                			return true;
+				}
+				try {
+					VarDef varDef = (VarDef)item;
+					if(visit(varDef)){
+						return true;
+					}
+					try {
+						Asnmt asnmt = (Asnmt)item;
+						if(visit(asnmt)){
+							return true;
+						} 
+						try {
+							ParamList paramlist = (ParamList)item;
+							if(visit(paramList)){
+								return true;
+							}
+							try {
+								FunctionCall funcCall = (FunctionCall)item;
+								if(visit(funcCall)){
+									return true;
+								}
+							} catch(Exception e) {} // funcCall
+						} catch(Exception e) {} // paramList
+					} catch(Exception e) {} // Asnmt
+				} catch(Exception e) {} // VarDef
+			} catch(Exception e) {} // EndFunction
+		} catch(Excpetion e) {} // IfStmt 	
+	} catch(Exception e) {} // ForLoop
+	
+	return false;
+}
+	
 
 
 /* ----------------- AbstractVisitor implementations and Visitor definitions ----------------- */
