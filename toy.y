@@ -53,13 +53,18 @@ HashMap<Object, ID> statements = new HashMap<Object, ID>();
 SymbolTable symbolTable = new SymbolTable();
 
 public static void main(String[] args) throws IOException {
-FileReader yyin = new FileReader(args[0]);
- ToYLexer l = new ToYLexer(yyin);
- ToY p = new ToY(l);
- if (!p.parse()) System.out.println("INVALID");
- }
+    FileReader yyin = new FileReader(args[0]);
+    ToYLexer l = new ToYLexer(yyin);
+    ToY p = new ToY(l);
+    //runs bison and parser checks 
+    if (!p.parse()){
+        System.out.println("INVALID");
+    }else{
+    //TODO how to run the visitor class over all nodes and then return true or false 
+    System.out.println("VALID"); 
+    }
+    }
 }
-
 
 /* ----------------- Bison Declarations ---------------- */
 
