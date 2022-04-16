@@ -200,11 +200,12 @@ FileReader yyin = new FileReader(args[0]);
 /*                       Start of AST                      */
 /* ------------------------------------------------------- */
 
-public ASTNode ast;
+//TODO COMMENTED OUT AST
+// public ASTNode ast;
 
-public ASTNode getAST(){
-	return ast;
-}
+// public ASTNode getAST(){
+// 	return ast;
+// }
 
 // Asbstract syntax tree base class.  
 // methods: accept
@@ -709,21 +710,33 @@ class Program extends ASTNode {
 /* ---------------------------- Start of Semantic Analysis ---------------------------- */
 /* ------------------------------------------------------------------------------------ */
 
-public boolean tryHelper(Object item) {
+
+
+
+/* ----------------- AbstractVisitor implementations and Visitor definitions ----------------- */
+/* ------------------------------------------------------------------------------------------- */
+// An implementation of all the visitor methods
+// These act as semantic analysis, so each of these methods will visit the nodes
+// in the AST tree and make
+// sure that they are semantically doing the correct thing
+class AbstractVisitor implements Visitor {
+    // arithmetic expressions
+
+    public boolean tryHelper(Object item) {
 	try {
 		ForLoop forloop = (ForLoop)item;
-		if(visit(forLoop)){
-                	return true;
-		}
+		if(visit(forloop)){
+                return true;
+        }
 		try {
 			IfStmt ifStmt = (IfStmt)item;
 			if(visit(ifStmt)){
-                		return true;
+                	return true;
 			}
 			try {
 				EndFunction endFunction = (EndFunction)item;
 				if(visit(endFunction)){
-                			return true;
+                		return true;
 				}
 				try {
 					VarDef varDef = (VarDef)item;
@@ -737,7 +750,7 @@ public boolean tryHelper(Object item) {
 						} 
 						try {
 							ParamList paramlist = (ParamList)item;
-							if(visit(paramList)){
+							if(visit(paramlist)){
 								return true;
 							}
 							try {
@@ -750,22 +763,12 @@ public boolean tryHelper(Object item) {
 					} catch(Exception e) {} // Asnmt
 				} catch(Exception e) {} // VarDef
 			} catch(Exception e) {} // EndFunction
-		} catch(Excpetion e) {} // IfStmt 	
+		} catch(Exception e) {} // IfStmt 	
 	} catch(Exception e) {} // ForLoop
 	
 	return false;
 }
 	
-
-
-/* ----------------- AbstractVisitor implementations and Visitor definitions ----------------- */
-/* ------------------------------------------------------------------------------------------- */
-// An implementation of all the visitor methods
-// These act as semantic analysis, so each of these methods will visit the nodes
-// in the AST tree and make
-// sure that they are semantically doing the correct thing
-class AbstractVisitor implements Visitor {
-    // arithmetic expressions
 
     public boolean visit(Arithmetic add) {
         int op = ((Yytoken)(add.getOp())).getToken();
@@ -862,32 +865,13 @@ class AbstractVisitor implements Visitor {
                                 if(visit(unary)){
                                     return true;
                                 }
-                            }catch(Exception e){
-                                
-                            }
-
-                        }catch(Exception e){
-                            
-                        }
-                            
-
-                    }catch(Exception e){
-                        
-                    }
-
-                }catch(Exception e){
-                    
-                }
-
-            }catch(Exception e){
-                
-            }
-            
-
+                            }catch(Exception e){}
+                        }catch(Exception e){}
+                    }catch(Exception e){}
+                }catch(Exception e){}
+            }catch(Exception e){}
         }catch(Exception e){
-
         }
-        // Asnmt iterator = ((Asnmt)(add.getIterator()));
         return false;
     }
 

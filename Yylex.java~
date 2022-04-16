@@ -21,7 +21,7 @@ class Yytoken {
   public int getToken(){
       return this.type;
   }
-  public int getValue(){
+  public Object getValue(){
       return this.value;
   }
   
