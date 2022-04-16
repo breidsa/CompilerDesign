@@ -50,6 +50,7 @@ import java.util.ArrayList;
 HashMap<Object, ID> functions = new HashMap<Object, ID>();
 HashMap<Object, ID> statements = new HashMap<Object, ID>();
 // HashMap<Object, ID> var = new HashMap<Object, ID>();
+SymbolTable symbolTable = new SymbolTable();
 
 public static void main(String[] args) throws IOException {
 FileReader yyin = new FileReader(args[0]);
@@ -1256,3 +1257,8 @@ class Struct extends ID {
       }
     }
     
+/*
+to get the string name Yytoken.getValue();
+Var addVar = new Var(name.type);
+symbolTable.add_symbol(addVar);
+*/
