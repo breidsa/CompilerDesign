@@ -88,29 +88,34 @@ public static void main(String[] args) throws IOException {
 /* ----------------- Bison Declarations ---------------- */
 
 /* Questions: does boolean and stuff have to come from the lexer?? */
-%token <Yytoken> INT BOOL STRING VOID
-%token  <Yytoken> IDENTIFIER 
-%token  <Yytoken> COMMENT
-%token  <Yytoken> TRUE FALSE 
-%token  <Yytoken> IF THEN ELSE FOR STRUCT
-%token   <Yytoken>RETURN PRINTF 
-%token   <Yytoken>SEMICOLON COMMA
-%token   <Yytoken>EQ ATTRIBUTE
-%token   <Yytoken>RBRACKET LBRACKET LEFTPAREN RIGHTPAREN
-%token   <Yytoken>LESSTHAN GREATERTHAN DOUBLEEQ LESSTHANOREQ GREATERTHANOREQ NOTEQ
-%token   <Yytoken>AND OR NOT 
-%token   <Yytoken>PLUS MINUS MULT DIVIDE MOD
-%token <Yytoken> NUMBER WORD
-%token END O "end of file"
+// %token <Yytoken> INT BOOL STRING VOID
+// %token  <Yytoken> IDENTIFIER 
+// %token  <Yytoken> COMMENT
+// %token  <Yytoken> TRUE FALSE 
+// %token  <Yytoken> IF THEN ELSE FOR STRUCT
+// %token   <Yytoken>RETURN PRINTF 
+// %token   <Yytoken>SEMICOLON COMMA
+// %token   <Yytoken>EQ ATTRIBUTE
+// %token   <Yytoken>RBRACKET LBRACKET LEFTPAREN RIGHTPAREN
+// %token   <Yytoken>LESSTHAN GREATERTHAN DOUBLEEQ LESSTHANOREQ GREATERTHANOREQ NOTEQ
+// %token   <Yytoken>AND OR NOT 
+// %token   <Yytoken>PLUS MINUS MULT DIVIDE MOD
+// %token <Yytoken> NUMBER WORD
+// %token END O "end of file"
 
-
+/*
 %nonassoc LESSTHAN GREATERTHAN GREATERTHANOREQ LESSTHANOREQ DOUBLEEQ NOTEQ
 %left MULT DIVIDE 
 %left PLUS MINUS
 %nonassoc NOT AND OR MOD
 
 %left ATTRIBUTE
+*/
+%token STRING 
+%token IDENTIFIER
 
+%type declaration
+/*
 %type  type
 %type  returnType
 %type  struct
@@ -123,6 +128,7 @@ public static void main(String[] args) throws IOException {
 %type  pgm
 %type  recursePgm
 %type  exp
+*/
 
 
 /* ----------------- Bison Grammar ---------------- */
@@ -130,7 +136,7 @@ public static void main(String[] args) throws IOException {
 %start pgm
 
 %%  
-
+/*
     pgm : function recursePgm 
     | struct pgm 
     ; 
@@ -159,10 +165,10 @@ public static void main(String[] args) throws IOException {
     stmts :
     | stmt stmts 
     ;
-
+*/
     declaration: type IDENTIFIER 
     ;
-
+/*
     stmt : FOR LEFTPAREN IDENTIFIER EQ exp SEMICOLON exp SEMICOLON stmt RIGHTPAREN LBRACKET stmts RBRACKET 
     | IF LEFTPAREN exp RIGHTPAREN LBRACKET stmts RBRACKET 
     | IF LEFTPAREN exp RIGHTPAREN LBRACKET stmts RBRACKET ELSE LBRACKET stmt RBRACKET 
@@ -221,6 +227,7 @@ public static void main(String[] args) throws IOException {
     Lexp : IDENTIFIER 
     | IDENTIFIER ATTRIBUTE Lexp 
     ;
+    */
     
 //START COMMENT OUT
 
