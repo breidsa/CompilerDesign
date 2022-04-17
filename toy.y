@@ -195,10 +195,10 @@ public static void main(String[] args) throws IOException {
     | VOID 
     ;
        
-    exp: TRUE 
-    | FALSE 
-    | INT
-    | STRING
+    exp: NUMBER 
+    | WORD 
+    | TRUE
+    | FALSE
     | exp PLUS exp 
     | exp MINUS exp
     | exp MULT exp  
