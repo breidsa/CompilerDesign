@@ -59,7 +59,6 @@ SlashComment = "//" {InputCharacter}* {LineTerminator}
 HashComment = "##" {InputCharacter}* {LineTerminator}
 %x STRING
 %x INT
-%x EOF
 
 
 %%
