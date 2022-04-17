@@ -108,7 +108,7 @@ HashComment = "##" {InputCharacter}* {LineTerminator}
     stringBuffer.append( yytext() );
 }
     
-{Digit}+             { return new Yytoken(ToY.Lexer.INT); }
+{Digit}+             { return new Yytoken(ToY.Lexer.NUMBER); }
 /* Integers Literals
 {Digit} {
         intBuffer.setLength(0);
@@ -176,7 +176,7 @@ HashComment = "##" {InputCharacter}* {LineTerminator}
 <STRING>\" {
     yybegin(YYINITIAL);
     stringBuffer.append( yytext() );
-    return new Yytoken(ToY.Lexer.STRING, stringBuffer.toString());
+    return new Yytoken(ToY.Lexer.WORD, stringBuffer.toString());
 }
 <STRING><<EOF>> {
     throw new Error("ERROR: String Error EOF");

@@ -368,9 +368,9 @@ public class Yylex {
     "\1\17\1\20\1\21\14\4\1\22\1\23\1\24\1\25"+
     "\1\26\1\27\1\0\1\30\1\31\1\0\1\32\1\33"+
     "\1\34\5\4\1\35\2\4\1\36\6\4\1\37\1\40"+
-    "\1\41\1\42\2\43\1\44\3\4\1\45\1\15\1\46"+
-    "\6\4\1\47\1\50\5\4\1\51\1\52\1\53\1\54"+
-    "\4\4\1\55\1\56\1\57\1\60";
+    "\1\41\1\42\2\43\1\44\3\4\1\45\1\46\1\47"+
+    "\6\4\1\50\1\51\5\4\1\52\1\53\1\54\1\55"+
+    "\4\4\1\56\1\57\1\60\1\61";
 
   private static int [] zzUnpackAction() {
     int [] result = new int[101];
@@ -1005,12 +1005,12 @@ public static void main(String[] args) throws FileNotFoundException, IOException
             { /* ignore */
             }
             // fall through
-          case 49: break;
+          case 50: break;
           case 2:
             { return new Yytoken(ToY.Lexer.NOT);
             }
             // fall through
-          case 50: break;
+          case 51: break;
           case 3:
             { stringBuffer.setLength(0);
     yybegin(STRING);
@@ -1018,236 +1018,241 @@ public static void main(String[] args) throws FileNotFoundException, IOException
     stringBuffer.append( yytext() );
             }
             // fall through
-          case 51: break;
+          case 52: break;
           case 4:
             { return new Yytoken(ToY.Lexer.IDENTIFIER, yytext());
             }
             // fall through
-          case 52: break;
+          case 53: break;
           case 5:
             { return new Yytoken(ToY.Lexer.LEFTPAREN);
             }
             // fall through
-          case 53: break;
+          case 54: break;
           case 6:
             { return new Yytoken(ToY.Lexer.RIGHTPAREN);
             }
             // fall through
-          case 54: break;
+          case 55: break;
           case 7:
             { return new Yytoken(ToY.Lexer.MULT);
             }
             // fall through
-          case 55: break;
+          case 56: break;
           case 8:
             { return new Yytoken(ToY.Lexer.PLUS);
             }
             // fall through
-          case 56: break;
+          case 57: break;
           case 9:
             { return new Yytoken(ToY.Lexer.COMMA);
             }
             // fall through
-          case 57: break;
+          case 58: break;
           case 10:
             { return new Yytoken(ToY.Lexer.MINUS);
             }
             // fall through
-          case 58: break;
+          case 59: break;
           case 11:
             { return new Yytoken(ToY.Lexer.ATTRIBUTE);
             }
             // fall through
-          case 59: break;
+          case 60: break;
           case 12:
             { return new Yytoken(ToY.Lexer.DIVIDE);
             }
             // fall through
-          case 60: break;
+          case 61: break;
           case 13:
-            { return new Yytoken(ToY.Lexer.INT);
+            { return new Yytoken(ToY.Lexer.NUMBER);
             }
             // fall through
-          case 61: break;
+          case 62: break;
           case 14:
             { return new Yytoken(ToY.Lexer.SEMICOLON);
             }
             // fall through
-          case 62: break;
+          case 63: break;
           case 15:
             { return new Yytoken(ToY.Lexer.LESSTHAN);
             }
             // fall through
-          case 63: break;
+          case 64: break;
           case 16:
             { return new Yytoken(ToY.Lexer.EQ);
             }
             // fall through
-          case 64: break;
+          case 65: break;
           case 17:
             { return new Yytoken(ToY.Lexer.GREATERTHAN);
             }
             // fall through
-          case 65: break;
+          case 66: break;
           case 18:
             { return new Yytoken(ToY.Lexer.LBRACKET);
             }
             // fall through
-          case 66: break;
+          case 67: break;
           case 19:
             { return new Yytoken(ToY.Lexer.RBRACKET);
             }
             // fall through
-          case 67: break;
+          case 68: break;
           case 20:
             { throw new Error("String Error Null Character");
             }
             // fall through
-          case 68: break;
+          case 69: break;
           case 21:
             { yybegin(YYINITIAL);
     throw new Error("ERRORString Error NewLine");
             }
             // fall through
-          case 69: break;
+          case 70: break;
           case 22:
             { yybegin(YYINITIAL);
     stringBuffer.append( yytext() );
-    return new Yytoken(ToY.Lexer.STRING, stringBuffer.toString());
+    return new Yytoken(ToY.Lexer.WORD, stringBuffer.toString());
             }
             // fall through
-          case 70: break;
+          case 71: break;
           case 23:
             { stringBuffer.append( yytext() );
             }
             // fall through
-          case 71: break;
+          case 72: break;
           case 24:
             { throw new Error("Illegal character <"+
                                                 yytext()+">");
             }
             // fall through
-          case 72: break;
+          case 73: break;
           case 25:
             { return new Yytoken(ToY.Lexer.NOTEQ);
             }
             // fall through
-          case 73: break;
+          case 74: break;
           case 26:
             { return new Yytoken(ToY.Lexer.LESSTHANOREQ);
             }
             // fall through
-          case 74: break;
+          case 75: break;
           case 27:
             { return new Yytoken(ToY.Lexer.DOUBLEEQ);
             }
             // fall through
-          case 75: break;
+          case 76: break;
           case 28:
             { return new Yytoken(ToY.Lexer.GREATERTHANOREQ);
             }
             // fall through
-          case 76: break;
+          case 77: break;
           case 29:
             { return new Yytoken(ToY.Lexer.IF);
             }
             // fall through
-          case 77: break;
+          case 78: break;
           case 30:
             { return new Yytoken(ToY.Lexer.OR);
             }
             // fall through
-          case 78: break;
+          case 79: break;
           case 31:
             { stringBuffer.append('\t');
             }
             // fall through
-          case 79: break;
+          case 80: break;
           case 32:
             { stringBuffer.append('\n');
             }
             // fall through
-          case 80: break;
+          case 81: break;
           case 33:
             { stringBuffer.append('\r');
             }
             // fall through
-          case 81: break;
+          case 82: break;
           case 34:
             { throw new Error("ERROR No Escape Characters");
             }
             // fall through
-          case 82: break;
+          case 83: break;
           case 35:
             { return new Yytoken(ToY.Lexer.COMMENT);
             }
             // fall through
-          case 83: break;
+          case 84: break;
           case 36:
             { return new Yytoken(ToY.Lexer.AND);
             }
             // fall through
-          case 84: break;
+          case 85: break;
           case 37:
             { return new Yytoken(ToY.Lexer.FOR);
             }
             // fall through
-          case 85: break;
-          case 38:
-            { return new Yytoken(ToY.Lexer.MOD);
-            }
-            // fall through
           case 86: break;
-          case 39:
-            { return new Yytoken(ToY.Lexer.BOOL);
+          case 38:
+            { return new Yytoken(ToY.Lexer.INT);
             }
             // fall through
           case 87: break;
-          case 40:
-            { return new Yytoken(ToY.Lexer.ELSE);
+          case 39:
+            { return new Yytoken(ToY.Lexer.MOD);
             }
             // fall through
           case 88: break;
-          case 41:
-            { return new Yytoken(ToY.Lexer.THEN);
+          case 40:
+            { return new Yytoken(ToY.Lexer.BOOL);
             }
             // fall through
           case 89: break;
-          case 42:
-            { return new Yytoken(ToY.Lexer.TRUE);
+          case 41:
+            { return new Yytoken(ToY.Lexer.ELSE);
             }
             // fall through
           case 90: break;
-          case 43:
-            { return new Yytoken(ToY.Lexer.VOID);
+          case 42:
+            { return new Yytoken(ToY.Lexer.THEN);
             }
             // fall through
           case 91: break;
-          case 44:
-            { return new Yytoken(ToY.Lexer.FALSE);
+          case 43:
+            { return new Yytoken(ToY.Lexer.TRUE);
             }
             // fall through
           case 92: break;
-          case 45:
-            { return new Yytoken(ToY.Lexer.PRINTF);
+          case 44:
+            { return new Yytoken(ToY.Lexer.VOID);
             }
             // fall through
           case 93: break;
-          case 46:
-            { return new Yytoken(ToY.Lexer.RETURN);
+          case 45:
+            { return new Yytoken(ToY.Lexer.FALSE);
             }
             // fall through
           case 94: break;
-          case 47:
-            { return new Yytoken(ToY.Lexer.STRING);
+          case 46:
+            { return new Yytoken(ToY.Lexer.PRINTF);
             }
             // fall through
           case 95: break;
-          case 48:
-            { return new Yytoken(ToY.Lexer.STRUCT);
+          case 47:
+            { return new Yytoken(ToY.Lexer.RETURN);
             }
             // fall through
           case 96: break;
+          case 48:
+            { return new Yytoken(ToY.Lexer.STRING);
+            }
+            // fall through
+          case 97: break;
+          case 49:
+            { return new Yytoken(ToY.Lexer.STRUCT);
+            }
+            // fall through
+          case 98: break;
           default:
             zzScanError(ZZ_NO_MATCH);
         }
