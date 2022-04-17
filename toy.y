@@ -133,7 +133,8 @@ public static void main(String[] args) throws IOException {
 
 /* ----------------- Bison Grammar ---------------- */
 
-%start pgm
+// %start pgm
+%start declaration
 
 %%  
 /*
