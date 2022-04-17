@@ -1,1 +1,3 @@
-String x;
+void main(){
+    
+}

@@ -1,6 +1,8 @@
 import java.io.FileReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+//import util.ToY;
+
 
 class Yytoken {
   public int type;
@@ -26,11 +28,13 @@ class Yytoken {
 %%
 
 %unicode
+%public
 
 
 %{
 StringBuffer stringBuffer = new StringBuffer();
 StringBuffer intBuffer = new StringBuffer();
+
 
 public static void main(String[] args) throws FileNotFoundException, IOException{
             FileReader yyin = new FileReader(args[0]);
@@ -55,33 +59,34 @@ SlashComment = "//" {InputCharacter}* {LineTerminator}
 HashComment = "##" {InputCharacter}* {LineTerminator}
 %x STRING
 %x INT
+%x EOF
 
 
 %%
 /*keywords*/
-"bool" { return new Yytoken(ToYLexer.BOOL); }
-"int" { return new Yytoken(ToYLexer.INT); }
-"true" { return new Yytoken(ToYLexer.TRUE); }
-"false" { return new Yytoken(ToYLexer.FALSE); }
-"void" { return new Yytoken(ToYLexer.VOID); }
-"printf" { return new Yytoken(ToYLexer.PRINTF); }
-"string" { return new Yytoken(ToYLexer.STRING); }
-"struct" { return new Yytoken(ToYLexer.STRUCT); }
-"if" { return new Yytoken(ToYLexer.IF); }
-"then" { return new Yytoken(ToYLexer.THEN); }
-"else" { return new Yytoken(ToYLexer.ELSE); }
-"for" { return new Yytoken(ToYLexer.FOR); }
-"return" { return new Yytoken(ToYLexer.RETURN); }
-"and" { return new Yytoken(ToYLexer.AND); }
-"or" { return new Yytoken(ToYLexer.OR); }
-"mod" { return new Yytoken(ToYLexer.MOD); }
+"bool" { return new Yytoken(ToY.Lexer.BOOL); }
+"int" { return new Yytoken(ToY.Lexer.INT); }
+"true" { return new Yytoken(ToY.Lexer.TRUE); }
+"false" { return new Yytoken(ToY.Lexer.FALSE); }
+"void" { return new Yytoken(ToY.Lexer.VOID); }
+"printf" { return new Yytoken(ToY.Lexer.PRINTF); }
+"string" { return new Yytoken(ToY.Lexer.STRING); }
+"struct" { return new Yytoken(ToY.Lexer.STRUCT); }
+"if" { return new Yytoken(ToY.Lexer.IF); }
+"then" { return new Yytoken(ToY.Lexer.THEN); }
+"else" { return new Yytoken(ToY.Lexer.ELSE); }
+"for" { return new Yytoken(ToY.Lexer.FOR); }
+"return" { return new Yytoken(ToY.Lexer.RETURN); }
+"and" { return new Yytoken(ToY.Lexer.AND); }
+"or" { return new Yytoken(ToY.Lexer.OR); }
+"mod" { return new Yytoken(ToY.Lexer.MOD); }
 
 /*keywords
 "bool" { return new Yytoken("BOOL"); }
 "int" { return new Yytoken("INT"); }
 "true" { return new Yytoken("TRUE"); }
 "false" { return new Yytoken("FALSE"); }
-"void" { return new Yytoken("VOID"); }
+"void" { return new Yytoken("VOID"); System.out.println("Reached Void"); }
 "printf" { return new Yytoken("PRINTF"); }
 "string" { return new Yytoken("STRING"); }
 "struct" { return new Yytoken("STRUCT"); }
@@ -103,7 +108,7 @@ HashComment = "##" {InputCharacter}* {LineTerminator}
     stringBuffer.append( yytext() );
 }
     
-{Digit}+             { return new Yytoken(ToYLexer.INT); }
+{Digit}+             { return new Yytoken(ToY.Lexer.INT); }
 /* Integers Literals
 {Digit} {
         intBuffer.setLength(0);
@@ -115,37 +120,37 @@ HashComment = "##" {InputCharacter}* {LineTerminator}
 
     
 /* identifiers */
-{Identifier}                   { return new Yytoken(ToYLexer.IDENTIFIER, yytext()); }
+{Identifier}                   { return new Yytoken(ToY.Lexer.IDENTIFIER, yytext()); }
 
 
     
     
 
 /* symbols */
-"{"                            { return new Yytoken(ToYLexer.RBRACKET); }
-"}"                            { return new Yytoken(ToYLexer.LBRACKET); }
-";"                            { return new Yytoken(ToYLexer.SEMICOLON); }
-","                            { return new Yytoken(ToYLexer.COMMA); }
-"<"                            { return new Yytoken(ToYLexer.LESSTHAN); }
-">"                            { return new Yytoken(ToYLexer.GREATERTHAN); }
-"=="                           { return new Yytoken(ToYLexer.DOUBLEEQ); }
-"<="                           { return new Yytoken(ToYLexer.LESSTHANOREQ); }
-">="                           { return new Yytoken(ToYLexer.GREATERTHANOREQ); }
-"!="                           { return new Yytoken(ToYLexer.NOTEQ); }
-"!"                            { return new Yytoken(ToYLexer.NOT); }
-"("                            { return new Yytoken(ToYLexer.LEFTPAREN); }
-")"                            { return new Yytoken(ToYLexer.RIGHTPAREN); }
-"+"                            { return new Yytoken(ToYLexer.PLUS); }
-"-"                            { return new Yytoken(ToYLexer.MINUS); }
-"*"                            { return new Yytoken(ToYLexer.MULT); }
-"/"                            { return new Yytoken(ToYLexer.DIVIDE); }
-"="                            { return new Yytoken(ToYLexer.EQ); }
-"."                            { return new Yytoken(ToYLexer.ATTRIBUTE); }
+"}"                            { return new Yytoken(ToY.Lexer.RBRACKET); }
+"{"                            { return new Yytoken(ToY.Lexer.LBRACKET); }
+";"                            { return new Yytoken(ToY.Lexer.SEMICOLON); }
+","                            { return new Yytoken(ToY.Lexer.COMMA); }
+"<"                            { return new Yytoken(ToY.Lexer.LESSTHAN); }
+">"                            { return new Yytoken(ToY.Lexer.GREATERTHAN); }
+"=="                           { return new Yytoken(ToY.Lexer.DOUBLEEQ); }
+"<="                           { return new Yytoken(ToY.Lexer.LESSTHANOREQ); }
+">="                           { return new Yytoken(ToY.Lexer.GREATERTHANOREQ); }
+"!="                           { return new Yytoken(ToY.Lexer.NOTEQ); }
+"!"                            { return new Yytoken(ToY.Lexer.NOT); }
+"("                            { return new Yytoken(ToY.Lexer.LEFTPAREN); }
+")"                            { return new Yytoken(ToY.Lexer.RIGHTPAREN); }
+"+"                            { return new Yytoken(ToY.Lexer.PLUS); }
+"-"                            { return new Yytoken(ToY.Lexer.MINUS); }
+"*"                            { return new Yytoken(ToY.Lexer.MULT); }
+"/"                            { return new Yytoken(ToY.Lexer.DIVIDE); }
+"="                            { return new Yytoken(ToY.Lexer.EQ); }
+"."                            { return new Yytoken(ToY.Lexer.ATTRIBUTE); }
 
 /* whitespace */
 {WhiteSpace}                   { /* ignore */ }
 /* comment */
-{Comment}                   { return new Yytoken(ToYLexer.COMMENT); }
+{Comment}                   { return new Yytoken(ToY.Lexer.COMMENT); }
 
 /*Integer
 <INT>{Digit} {
@@ -171,7 +176,7 @@ HashComment = "##" {InputCharacter}* {LineTerminator}
 <STRING>\" {
     yybegin(YYINITIAL);
     stringBuffer.append( yytext() );
-    return new Yytoken(ToYLexer.STRING, stringBuffer.toString());
+    return new Yytoken(ToY.Lexer.STRING, stringBuffer.toString());
 }
 <STRING><<EOF>> {
     throw new Error("ERROR: String Error EOF");
@@ -189,6 +194,8 @@ HashComment = "##" {InputCharacter}* {LineTerminator}
 <STRING>\0 {
     throw new Error("String Error Null Character");
 }
+
+<EOF>
 
 /* error fallback */
 [^]                              { throw new Error("Illegal character <"+
