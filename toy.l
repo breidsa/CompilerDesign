@@ -151,6 +151,7 @@ HashComment = "##" {InputCharacter}* {LineTerminator}
 /* comment */
 {Comment}                   { return new Yytoken(ToY.Lexer.COMMENT); }
 
+
 /*Integer
 <INT>{Digit} {
         intBuffer.append( yytext() );
@@ -165,6 +166,7 @@ HashComment = "##" {InputCharacter}* {LineTerminator}
     throw new Error("ERROR: Integer Not Formatted Correct");
     }
  */
+
 
 <STRING>{Letter} {
     stringBuffer.append( yytext() );
@@ -193,6 +195,8 @@ HashComment = "##" {InputCharacter}* {LineTerminator}
 <STRING>\0 {
     throw new Error("String Error Null Character");
 }
+
+<<EOF>> {return null;}
 
 /* error fallback */
 [^]                              { throw new Error("Illegal character <"+

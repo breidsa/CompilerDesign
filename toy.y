@@ -101,7 +101,7 @@ public static void main(String[] args) throws IOException {
 %token   <Yytoken>AND OR NOT 
 %token   <Yytoken>PLUS MINUS MULT DIVIDE MOD
 %token <Yytoken> NUMBER WORD
-%token END 0 "end o file"
+%token END O "end o file"
 
 
 %nonassoc LESSTHAN GREATERTHAN GREATERTHANOREQ LESSTHANOREQ DOUBLEEQ NOTEQ

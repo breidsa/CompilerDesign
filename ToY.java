@@ -134,8 +134,10 @@ public class ToY
     S_MOD(39),                     /* MOD  */
     S_NUMBER(40),                  /* NUMBER  */
     S_WORD(41),                    /* WORD  */
-    S_YYACCEPT(42),                /* $accept  */
-    S_declaration(43);             /* declaration  */
+    S_END(42),                     /* END  */
+    S_O(43),                       /* "end o file"  */
+    S_YYACCEPT(44),                /* $accept  */
+    S_declaration(45);             /* declaration  */
 
 
     private final int yycode_;
@@ -187,6 +189,8 @@ public class ToY
       SymbolKind.S_MOD,
       SymbolKind.S_NUMBER,
       SymbolKind.S_WORD,
+      SymbolKind.S_END,
+      SymbolKind.S_O,
       SymbolKind.S_YYACCEPT,
       SymbolKind.S_declaration
     };
@@ -244,7 +248,7 @@ public class ToY
   "ATTRIBUTE", "RBRACKET", "LBRACKET", "LEFTPAREN", "RIGHTPAREN",
   "LESSTHAN", "GREATERTHAN", "DOUBLEEQ", "LESSTHANOREQ", "GREATERTHANOREQ",
   "NOTEQ", "AND", "OR", "NOT", "PLUS", "MINUS", "MULT", "DIVIDE", "MOD",
-  "NUMBER", "WORD", "$accept", "declaration", null
+  "NUMBER", "WORD", "END", "\"end o file\"", "$accept", "declaration", null
     };
   }
 
@@ -346,6 +350,10 @@ public class ToY
     static final int NUMBER = 295;
     /** Token WORD, to be returned by the scanner.  */
     static final int WORD = 296;
+    /** Token END, to be returned by the scanner.  */
+    static final int END = 297;
+    /** Token "end o file", to be returned by the scanner.  */
+    static final int O = 298;
 
     /** Deprecated, use YYEOF instead.  */
     public static final int EOF = YYEOF;
@@ -544,7 +552,7 @@ public class ToY
     switch (yyn)
       {
         
-/* "ToY.java":548  */
+/* "ToY.java":556  */
 
         default: break;
       }
@@ -1030,7 +1038,7 @@ private static final byte[] yycheck_ = yycheck_init();
   {
     return new byte[]
     {
-       0,     5,    43,     7,     0
+       0,     5,    45,     7,     0
     };
   }
 
@@ -1040,7 +1048,7 @@ private static final byte[] yycheck_ = yycheck_init();
   {
     return new byte[]
     {
-       0,    42,    43
+       0,    44,    45
     };
   }
 
@@ -1062,7 +1070,7 @@ private static final byte[] yycheck_ = yycheck_init();
   private static final SymbolKind yytranslate_(int t)
   {
     // Last valid token kind.
-    int code_max = 296;
+    int code_max = 298;
     if (t <= 0)
       return SymbolKind.S_YYEOF;
     else if (t <= code_max)
@@ -1104,7 +1112,7 @@ private static final byte[] yycheck_ = yycheck_init();
        5,     6,     7,     8,     9,    10,    11,    12,    13,    14,
       15,    16,    17,    18,    19,    20,    21,    22,    23,    24,
       25,    26,    27,    28,    29,    30,    31,    32,    33,    34,
-      35,    36,    37,    38,    39,    40,    41
+      35,    36,    37,    38,    39,    40,    41,    42,    43
     };
   }
 
@@ -1112,7 +1120,7 @@ private static final byte[] yycheck_ = yycheck_init();
   private static final int YYLAST_ = 2;
   private static final int YYEMPTY_ = -2;
   private static final int YYFINAL_ = 4;
-  private static final int YYNTOKENS_ = 42;
+  private static final int YYNTOKENS_ = 44;
 
 /* Unqualified %code blocks.  */
 /* "ToY.y":49  */
@@ -1154,10 +1162,10 @@ public static void main(String[] args) throws IOException {
     // }
     // System.out.println("done w main");
 
-/* "ToY.java":1158  */
+/* "ToY.java":1166  */
 
 }
-/* "ToY.y":370  */
+/* "ToY.y":371  */
 
 /* ------------------------------------------------------- */
 /*                       Start of AST                      */
