@@ -170,7 +170,7 @@ public static void main(String[] args) throws IOException {
     | LBRACKET stmtSeq RBRACKET 
     | type IDENTIFIER SEMICOLON  
     | IDENTIFIER EQ exp SEMICOLON 
-    | Lexp EQ exp SEMICOLON 
+    | IDENTIFIER ATTRIBUTE Lexp EQ exp SEMICOLON 
     | IDENTIFIER LEFTPAREN paramList RIGHTPAREN SEMICOLON
     | IDENTIFIER EQ IDENTIFIER LEFTPAREN paramList RIGHTPAREN SEMICOLON
     ;
@@ -180,7 +180,7 @@ public static void main(String[] args) throws IOException {
     ;
 
     stmtSeq:
-    | stmt COMMA stmts 
+    | stmt COMMA stmtSeq 
     ;
 
     type: INT 
@@ -193,18 +193,11 @@ public static void main(String[] args) throws IOException {
     returnType: type 
     | VOID 
     ;
-    
-
-    Lexp : exp 
-    | exp ATTRIBUTE Lexp 
-    ;
-
-
-    
-
-    exp : type 
-    | TRUE 
+       
+    exp: TRUE 
     | FALSE 
+    | INT
+    | STRING
     | exp PLUS exp 
     | exp MINUS exp
     | exp MULT exp  
@@ -221,9 +214,12 @@ public static void main(String[] args) throws IOException {
     | IDENTIFIER EQ exp 
     | NOT exp 
     | MINUS exp 
-    | LEFTPAREN exp RIGHTPAREN  
+    | LEFTPAREN exp RIGHTPAREN 
     ;
     
+    Lexp : IDENTIFIER 
+    | IDENTIFIER ATTRIBUTE Lexp 
+    ;
     
 //START COMMENT OUT
 
