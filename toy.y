@@ -50,11 +50,11 @@ import java.util.ArrayList;
 
 /* ----------------- Global Hashmaps and Main Function ---------------- */
 
-HashMap<Object, ID> functions = new HashMap<Object, ID>();
-HashMap<Object, ID> statements = new HashMap<Object, ID>();
-// HashMap<Object, ID> var = new HashMap<Object, ID>();
-SymbolTable symbolTable = new SymbolTable();
-static Program ast = new Program(new StmtList());
+// HashMap<Object, ID> functions = new HashMap<Object, ID>();
+// HashMap<Object, ID> statements = new HashMap<Object, ID>();
+// // HashMap<Object, ID> var = new HashMap<Object, ID>();
+// SymbolTable symbolTable = new SymbolTable();
+// static Program ast = new Program(new StmtList());
 
 
 public static void main(String[] args) throws IOException {
