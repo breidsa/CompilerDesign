@@ -137,21 +137,7 @@ public class ToY
     S_END(42),                     /* END  */
     S_O(43),                       /* "end of file"  */
     S_YYACCEPT(44),                /* $accept  */
-    S_pgm(45),                     /* pgm  */
-    S_recursePgm(46),              /* recursePgm  */
-    S_function(47),                /* function  */
-    S_struct(48),                  /* struct  */
-    S_declarationListZero(49),     /* declarationListZero  */
-    S_declarationList(50),         /* declarationList  */
-    S_stmts(51),                   /* stmts  */
-    S_declaration(52),             /* declaration  */
-    S_stmt(53),                    /* stmt  */
-    S_paramList(54),               /* paramList  */
-    S_stmtSeq(55),                 /* stmtSeq  */
-    S_type(56),                    /* type  */
-    S_returnType(57),              /* returnType  */
-    S_exp(58),                     /* exp  */
-    S_Lexp(59);                    /* Lexp  */
+    S_declaration(45);             /* declaration  */
 
 
     private final int yycode_;
@@ -206,21 +192,7 @@ public class ToY
       SymbolKind.S_END,
       SymbolKind.S_O,
       SymbolKind.S_YYACCEPT,
-      SymbolKind.S_pgm,
-      SymbolKind.S_recursePgm,
-      SymbolKind.S_function,
-      SymbolKind.S_struct,
-      SymbolKind.S_declarationListZero,
-      SymbolKind.S_declarationList,
-      SymbolKind.S_stmts,
-      SymbolKind.S_declaration,
-      SymbolKind.S_stmt,
-      SymbolKind.S_paramList,
-      SymbolKind.S_stmtSeq,
-      SymbolKind.S_type,
-      SymbolKind.S_returnType,
-      SymbolKind.S_exp,
-      SymbolKind.S_Lexp
+      SymbolKind.S_declaration
     };
 
     static final SymbolKind get(int code) {
@@ -276,10 +248,7 @@ public class ToY
   "ATTRIBUTE", "RBRACKET", "LBRACKET", "LEFTPAREN", "RIGHTPAREN",
   "LESSTHAN", "GREATERTHAN", "DOUBLEEQ", "LESSTHANOREQ", "GREATERTHANOREQ",
   "NOTEQ", "AND", "OR", "NOT", "PLUS", "MINUS", "MULT", "DIVIDE", "MOD",
-  "NUMBER", "WORD", "END", "\"end of file\"", "$accept", "pgm",
-  "recursePgm", "function", "struct", "declarationListZero",
-  "declarationList", "stmts", "declaration", "stmt", "paramList",
-  "stmtSeq", "type", "returnType", "exp", "Lexp", null
+  "NUMBER", "WORD", "END", "\"end of file\"", "$accept", "declaration", null
     };
   }
 
@@ -583,7 +552,7 @@ public class ToY
     switch (yyn)
       {
         
-/* "ToY.java":587  */
+/* "ToY.java":556  */
 
         default: break;
       }
@@ -995,31 +964,17 @@ public class ToY
     return yyvalue == yytable_ninf_;
   }
 
-  private static final short yypact_ninf_ = -87;
-  private static final short yytable_ninf_ = -1;
+  private static final byte yypact_ninf_ = -7;
+  private static final byte yytable_ninf_ = -1;
 
 /* YYPACT[STATE-NUM] -- Index in YYTABLE of the portion describing
    STATE-NUM.  */
-  private static final short[] yypact_ = yypact_init();
-  private static final short[] yypact_init()
+  private static final byte[] yypact_ = yypact_init();
+  private static final byte[] yypact_init()
   {
-    return new short[]
+    return new byte[]
     {
-      12,   -87,   -87,   -87,   -87,    18,    33,    12,    12,   -87,
-      28,    16,   -87,   -87,    12,    12,   -87,    21,    63,   -87,
-     -87,    63,    29,    52,    68,    56,    64,   -87,    63,   -87,
-      61,    63,   -87,   202,   -87,    26,    62,    65,     0,    66,
-     202,    70,   202,    78,    69,    84,     0,     0,    93,   -87,
-     -87,    82,   -87,   -87,     0,     0,     0,    86,   104,    88,
-     105,   -87,   -87,    92,   -18,   102,   121,   106,   133,   165,
-     201,   123,     0,   216,   -11,    10,   -87,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-     149,   202,   -87,   -87,     0,   -87,    84,     0,   141,     0,
-     152,     0,   230,   -87,   244,   244,   244,   244,   244,   244,
-     -11,   -11,    10,    10,     5,     5,   -11,   172,   -87,   174,
-     -87,   118,   -87,   -87,   202,   134,   -87,   190,   -87,   188,
-       0,   -87,   198,   150,   189,   202,   202,   192,   193,   191,
-     -87,   202,   199,   -87
+      -5,    -6,     2,    -7,    -7
     };
   }
 
@@ -1031,32 +986,17 @@ public class ToY
   {
     return new byte[]
     {
-       0,    32,    33,    34,    36,     0,     0,     4,     0,    35,
-       0,     0,     1,     2,     4,     4,     3,     0,     0,     5,
-       6,     9,     0,    12,     0,     0,    10,     8,     0,    16,
-       0,     0,    13,    14,    11,     0,     0,     0,     0,     0,
-      30,     0,    14,     0,     0,     0,    28,     0,     0,    39,
-      40,     0,    37,    38,     0,     0,     0,     0,     0,     0,
-       0,     7,    15,     0,     0,     0,    58,     0,     0,     0,
-       0,     0,     0,     0,    55,    56,    21,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,    30,    22,    23,    28,    24,     0,     0,     0,    28,
-       0,     0,    54,    57,    50,    49,    48,    52,    51,    53,
-      46,    47,    41,    42,    43,    44,    45,     0,    31,     0,
-      59,     0,    26,    29,    14,     0,    20,     0,    25,     0,
-       0,    27,    18,     0,     0,     0,     0,     0,     0,     0,
-      19,    14,     0,    17
+       0,     0,     0,     2,     1
     };
   }
 
 /* YYPGOTO[NTERM-NUM].  */
-  private static final short[] yypgoto_ = yypgoto_init();
-  private static final short[] yypgoto_init()
+  private static final byte[] yypgoto_ = yypgoto_init();
+  private static final byte[] yypgoto_init()
   {
-    return new short[]
+    return new byte[]
     {
-     -87,   212,    55,     4,    11,   -87,    -2,   -42,   203,   -39,
-     -86,   131,    80,   -87,   -24,   127
+      -7,    -7
     };
   }
 
@@ -1066,85 +1006,28 @@ public class ToY
   {
     return new byte[]
     {
-       0,     6,    13,    14,    15,    25,    22,    41,    23,    42,
-      68,    60,    43,    10,    69,    67
+       0,     2
     };
   }
 
 /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
    positive, shift that token.  If negative, reduce the rule whose
    number is the opposite.  If YYTABLE_NINF, syntax error.  */
-  private static final short[] yytable_ = yytable_init();
-  private static final short[] yytable_init()
+  private static final byte[] yytable_ = yytable_init();
+  private static final byte[] yytable_init()
   {
-    return new short[]
+    return new byte[]
     {
-      62,    59,    72,    49,     7,    50,    94,    51,   119,    52,
-      53,     8,     7,   123,    57,     1,     2,     3,     4,     8,
-      65,    -1,    -1,    70,    54,    11,    32,     5,    -1,    34,
-      73,    74,    75,    12,    55,    17,    56,    83,    84,    18,
-      85,    86,    83,    84,    89,    21,    44,    45,   102,    89,
-      46,    27,    59,   104,   105,   106,   107,   108,   109,   110,
-     111,   112,   113,   114,   115,   116,     1,     2,     3,    19,
-      20,    28,    49,   121,    50,    29,    64,   125,    52,    53,
-       9,    30,   129,    31,    33,    63,    47,     9,     9,    48,
-      58,    66,    61,    54,     9,     9,   137,   138,    24,   142,
-      71,    24,    72,    55,    76,    56,   133,    91,    24,    90,
-      93,    24,    77,    78,    79,    80,    81,    82,    83,    84,
-      95,    85,    86,    87,    88,    89,    97,    92,    77,    78,
-      79,    80,    81,    82,    83,    84,   128,    85,    86,    87,
-      88,    89,    96,   101,    77,    78,    79,    80,    81,    82,
-      83,    84,   130,    85,    86,    87,    88,    89,    98,   122,
-      77,    78,    79,    80,    81,    82,    83,    84,   135,    85,
-      86,    87,    88,    89,   117,   124,    77,    78,    79,    80,
-      81,    82,    83,    84,    99,    85,    86,    87,    88,    89,
-     126,    77,    78,    79,    80,    81,    82,    83,    84,   127,
-      85,    86,    87,    88,    89,     1,     2,     3,   131,    35,
-     132,   134,   136,    36,   141,   140,    37,   139,    38,    39,
-      16,   143,   118,   120,    26,    40,   100,    77,    78,    79,
-      80,    81,    82,    83,    84,     0,    85,    86,    87,    88,
-      89,   103,    77,    78,    79,    80,    81,    82,    83,    84,
-       0,    85,    86,    87,    88,    89,    77,    78,    79,    80,
-      81,    82,    83,    84,     0,    85,    86,    87,    88,    89,
-      -1,    -1,    -1,    -1,    -1,    -1,    83,    84,     0,    85,
-      86,    87,    88,    89
+       1,     3,     4
     };
   }
 
-private static final short[] yycheck_ = yycheck_init();
-  private static final short[] yycheck_init()
+private static final byte[] yycheck_ = yycheck_init();
+  private static final byte[] yycheck_init()
   {
-    return new short[]
+    return new byte[]
     {
-      42,    40,    20,     3,     0,     5,    24,     7,    94,     9,
-      10,     0,     8,    99,    38,     3,     4,     5,     6,     8,
-      44,    32,    33,    47,    24,     7,    28,    15,    39,    31,
-      54,    55,    56,     0,    34,     7,    36,    32,    33,    23,
-      35,    36,    32,    33,    39,    24,    20,    21,    72,    39,
-      24,    22,    91,    77,    78,    79,    80,    81,    82,    83,
-      84,    85,    86,    87,    88,    89,     3,     4,     5,    14,
-      15,    19,     3,    97,     5,     7,     7,   101,     9,    10,
-       0,    25,   124,    19,    23,     7,    24,     7,     8,    24,
-      24,     7,    22,    24,    14,    15,   135,   136,    18,   141,
-       7,    21,    20,    34,    18,    36,   130,    19,    28,     5,
-      18,    31,    26,    27,    28,    29,    30,    31,    32,    33,
-      18,    35,    36,    37,    38,    39,    20,    22,    26,    27,
-      28,    29,    30,    31,    32,    33,    18,    35,    36,    37,
-      38,    39,    21,    20,    26,    27,    28,    29,    30,    31,
-      32,    33,    18,    35,    36,    37,    38,    39,    25,    18,
-      26,    27,    28,    29,    30,    31,    32,    33,    18,    35,
-      36,    37,    38,    39,    25,    23,    26,    27,    28,    29,
-      30,    31,    32,    33,    19,    35,    36,    37,    38,    39,
-      18,    26,    27,    28,    29,    30,    31,    32,    33,    25,
-      35,    36,    37,    38,    39,     3,     4,     5,    18,     7,
-      22,    13,    23,    11,    23,    22,    14,    25,    16,    17,
-       8,    22,    91,    96,    21,    23,    25,    26,    27,    28,
-      29,    30,    31,    32,    33,    -1,    35,    36,    37,    38,
-      39,    25,    26,    27,    28,    29,    30,    31,    32,    33,
-      -1,    35,    36,    37,    38,    39,    26,    27,    28,    29,
-      30,    31,    32,    33,    -1,    35,    36,    37,    38,    39,
-      26,    27,    28,    29,    30,    31,    32,    33,    -1,    35,
-      36,    37,    38,    39
+       5,     7,     0
     };
   }
 
@@ -1155,21 +1038,7 @@ private static final short[] yycheck_ = yycheck_init();
   {
     return new byte[]
     {
-       0,     3,     4,     5,     6,    15,    45,    47,    48,    56,
-      57,     7,     0,    46,    47,    48,    45,     7,    23,    46,
-      46,    24,    50,    52,    56,    49,    52,    22,    19,     7,
-      25,    19,    50,    23,    50,     7,    11,    14,    16,    17,
-      23,    51,    53,    56,    20,    21,    24,    24,    24,     3,
-       5,     7,     9,    10,    24,    34,    36,    58,    24,    53,
-      55,    22,    51,     7,     7,    58,     7,    59,    54,    58,
-      58,     7,    20,    58,    58,    58,    18,    26,    27,    28,
-      29,    30,    31,    32,    33,    35,    36,    37,    38,    39,
-       5,    19,    22,    18,    24,    18,    21,    20,    25,    19,
-      25,    20,    58,    25,    58,    58,    58,    58,    58,    58,
-      58,    58,    58,    58,    58,    58,    58,    25,    55,    54,
-      59,    58,    18,    54,    23,    58,    18,    25,    18,    51,
-      18,    18,    22,    58,    13,    18,    23,    53,    53,    25,
-      22,    23,    51,    22
+       0,     5,    45,     7,     0
     };
   }
 
@@ -1179,12 +1048,7 @@ private static final short[] yycheck_ = yycheck_init();
   {
     return new byte[]
     {
-       0,    44,    45,    45,    46,    46,    46,    47,    48,    49,
-      49,    49,    50,    50,    51,    51,    52,    53,    53,    53,
-      53,    53,    53,    53,    53,    53,    53,    53,    54,    54,
-      55,    55,    56,    56,    56,    57,    57,    58,    58,    58,
-      58,    58,    58,    58,    58,    58,    58,    58,    58,    58,
-      58,    58,    58,    58,    58,    58,    58,    58,    59,    59
+       0,    44,    45
     };
   }
 
@@ -1194,12 +1058,7 @@ private static final short[] yycheck_ = yycheck_init();
   {
     return new byte[]
     {
-       0,     2,     2,     2,     0,     2,     2,     8,     5,     0,
-       1,     3,     1,     3,     0,     2,     2,    13,     7,    11,
-       5,     3,     3,     3,     4,     6,     5,     7,     0,     3,
-       0,     3,     1,     1,     1,     1,     1,     1,     1,     1,
-       1,     3,     3,     3,     3,     3,     3,     3,     3,     3,
-       3,     3,     3,     3,     3,     2,     2,     3,     1,     3
+       0,     2,     2
     };
   }
 
@@ -1258,9 +1117,9 @@ private static final short[] yycheck_ = yycheck_init();
   }
 
 
-  private static final int YYLAST_ = 283;
+  private static final int YYLAST_ = 2;
   private static final int YYEMPTY_ = -2;
-  private static final int YYFINAL_ = 12;
+  private static final int YYFINAL_ = 4;
   private static final int YYNTOKENS_ = 44;
 
 /* Unqualified %code blocks.  */
@@ -1303,10 +1162,10 @@ public static void main(String[] args) throws IOException {
     // }
     // System.out.println("done w main");
 
-/* "ToY.java":1307  */
+/* "ToY.java":1166  */
 
 }
-/* "ToY.y":365  */
+/* "ToY.y":373  */
 
 /* ------------------------------------------------------- */
 /*                       Start of AST                      */
