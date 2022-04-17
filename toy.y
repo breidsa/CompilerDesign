@@ -51,11 +51,11 @@ import java.util.ArrayList;
 
 /* ----------------- Global Hashmaps and Main Function ---------------- */
 
-// HashMap<Object, ID> functions = new HashMap<Object, ID>();
-// HashMap<Object, ID> statements = new HashMap<Object, ID>();
+ HashMap<Object, ID> functions = new HashMap<Object, ID>();
+ HashMap<Object, ID> statements = new HashMap<Object, ID>();
 // // HashMap<Object, ID> var = new HashMap<Object, ID>();
-// SymbolTable symbolTable = new SymbolTable();
-// static Program ast = new Program(new StmtList());
+SymbolTable symbolTable = new SymbolTable();
+static Program ast = new Program(new StmtList());
 
 
 public static void main(String[] args) throws IOException {
@@ -63,16 +63,28 @@ public static void main(String[] args) throws IOException {
         InputStream targetStream = new FileInputStream(initialFile);
         BufferedReader br = new BufferedReader(new FileReader(initialFile));
         String line;
+
         while ((line = br.readLine()) != null) {
-        System.out.println(line);
+            System.out.println(line);
         }
+
         ToYLexer l = new ToYLexer(targetStream);
         ToY p = new ToY(l);
         if (!p.parse()){
             System.out.println("INVALID");
         } else{
-        System.out.println("VAlID SYNTAX");
+            System.out.println("VAlID SYNTAX FROM PARSER");
+            System.out.println();
         }
+
+        AbstractVisitor v = new AbstractVisitor();
+        if(v.visit(ast)){
+            System.out.println("VALID SYNTAX FROM SEMANTIC");
+        }else{
+            System.out.println();
+            System.out.println("INVALID SYNTAX FROM SEMANTIC");
+        }
+
 }
     // FileReader yyin = new FileReader(args[0]);
     // System.out.println(args[0]);
@@ -80,7 +92,7 @@ public static void main(String[] args) throws IOException {
     // ToY p = new ToY(l);
     // System.out.println(args[0]);
     // //runs bison and parser checks 
-    // //AbstractVisitor v = new AbstractVisitor();
+    // //
 
     // if (!p.parse()){
     //      System.out.println(args[0]);
@@ -99,20 +111,19 @@ public static void main(String[] args) throws IOException {
 
 /* Questions: does boolean and stuff have to come from the lexer?? */
 %token <Yytoken> INT BOOL STRING VOID
-%token  <Yytoken> IDENTIFIER 
-%token  <Yytoken> COMMENT
-%token  <Yytoken> TRUE FALSE 
-%token  <Yytoken> IF THEN ELSE FOR STRUCT
-%token   <Yytoken>RETURN PRINTF 
-%token   <Yytoken>SEMICOLON COMMA
-%token   <Yytoken>EQ ATTRIBUTE
-%token   <Yytoken>RBRACKET LBRACKET LEFTPAREN RIGHTPAREN
-%token   <Yytoken>LESSTHAN GREATERTHAN DOUBLEEQ LESSTHANOREQ GREATERTHANOREQ NOTEQ
-%token   <Yytoken>AND OR NOT 
-%token   <Yytoken>PLUS MINUS MULT DIVIDE MOD
+%token <Yytoken> IDENTIFIER 
+%token <Yytoken> COMMENT
+%token <Yytoken> TRUE FALSE 
+%token <Yytoken> IF THEN ELSE FOR STRUCT
+%token <Yytoken> RETURN PRINTF 
+%token <Yytoken> SEMICOLON COMMA
+%token <Yytoken> EQ ATTRIBUTE
+%token <Yytoken> RBRACKET LBRACKET LEFTPAREN RIGHTPAREN
+%token <Yytoken> LESSTHAN GREATERTHAN DOUBLEEQ LESSTHANOREQ GREATERTHANOREQ NOTEQ
+%token <Yytoken> AND OR NOT 
+%token <Yytoken> PLUS MINUS MULT DIVIDE MOD
 %token <Yytoken> NUMBER WORD
 %token END O "end o file"
-
 
 %nonassoc LESSTHAN GREATERTHAN GREATERTHANOREQ LESSTHANOREQ DOUBLEEQ NOTEQ
 %left MULT DIVIDE 
@@ -121,21 +132,21 @@ public static void main(String[] args) throws IOException {
 
 %left ATTRIBUTE
 
-
-%type declaration
-
-%type  type
-%type  returnType
-%type  struct
-%type  declaration
-%type  function
-%type  paramList
-%type  stmt
-%type  stmtSeq
-%type  Lexp
-%type  pgm
-%type  recursePgm
-%type  exp
+%type <StmtList> pgm
+%type <StmtList> recursePgm
+%type <Object> function
+%type <Object> struct
+%type <StmtList> declarationListZero
+%type <StmtList> declarationList
+%type <StmtList> stmts
+%type <Object> declaration
+%type <Object> stmt
+%type <StmtList> paramList
+%type <StmtList> stmtSeq
+%type <Object> type
+%type <Object> returnType
+%type <Object> exp
+%type <StmtList> Lexp
 
 
 
@@ -146,98 +157,101 @@ public static void main(String[] args) throws IOException {
 
 %%  
 
-    pgm : function recursePgm 
-    | struct pgm 
+    pgm : function recursePgm  { StmtList pgm = $2; ast.addElement($1); $$ = pgm; }
+    | struct pgm { StmtList pgm = $2; ast.addElement($1); $$ = pgm; } 
     ; 
     
-    recursePgm : 
-    | function recursePgm 
-    | struct recursePgm  
+    recursePgm : { $$ = new StmtList(); }
+    | function recursePgm { StmtList pgm = $2; ast.addElement($1); $$ = pgm;  }
+    | struct recursePgm { StmtList pgm =  $2; ast.addElement($1); $$ = pgm; }
     ; 
 
 
-    function : returnType IDENTIFIER LEFTPAREN declarationListZero RIGHTPAREN LBRACKET stmts RBRACKET 
-    ;
+    function : returnType IDENTIFIER LEFTPAREN declarationListZero RIGHTPAREN LBRACKET stmts RBRACKET  {$$ = new FunctionConstruct($1, $2, $4, $7);
+                                                                                                         Function ft = new Function($2, $1, (StmtList)$4); functions.put($2, ft);}
+    ; 
 
-    struct : STRUCT IDENTIFIER LBRACKET declarationList RBRACKET 
+
+    struct : STRUCT IDENTIFIER LBRACKET declarationList RBRACKET { $$ = new StructCreator($2, $4); Struct st = new Struct($2,(StmtList)$4); statements.put($2, st);}
     ;      
 
-    declarationListZero: 
-    | declaration
-    | declaration COMMA declarationList
+    declarationListZero: { $$ = new StmtList();}  
+    | declaration {$$ = new StmtList($1); }
+    | declaration COMMA declarationList {StmtList decls = $3; decls.addElement($1); $$ = decls;} 
     ;    
 
-    declarationList: declaration
-    | declaration COMMA declarationList  
+    declarationList: declaration { $$ = $1; }
+    | declaration COMMA declarationList { StmtList decls = $3; decls.addElement($1); $$ = decls;} 
     ;      
 
-    stmts :
-    | stmt stmts 
+    stmts : { $$ = new StmtList();}
+    | stmt stmts { StmtList sequence = $2; sequence.addElement($1); $$ = sequence; }
     ;
 
-    declaration: type IDENTIFIER 
+    declaration: type IDENTIFIER { $$ = new VarDef($1, $2); }
     ;
 
-    stmt : FOR LEFTPAREN IDENTIFIER EQ exp SEMICOLON exp SEMICOLON stmt RIGHTPAREN LBRACKET stmts RBRACKET 
-    | IF LEFTPAREN exp RIGHTPAREN LBRACKET stmts RBRACKET 
-    | IF LEFTPAREN exp RIGHTPAREN LBRACKET stmts RBRACKET ELSE LBRACKET stmt RBRACKET 
-    | PRINTF LEFTPAREN STRING RIGHTPAREN SEMICOLON
-    | PRINTF LEFTPAREN IDENTIFIER RIGHTPAREN SEMICOLON 
-    | RETURN exp SEMICOLON
-    | LBRACKET stmtSeq RBRACKET 
-    | type IDENTIFIER SEMICOLON  
-    | IDENTIFIER EQ exp SEMICOLON 
-    | IDENTIFIER EQ exp  
-    | IDENTIFIER ATTRIBUTE Lexp EQ exp SEMICOLON 
-    | IDENTIFIER LEFTPAREN paramList RIGHTPAREN SEMICOLON
-    | IDENTIFIER EQ IDENTIFIER LEFTPAREN paramList RIGHTPAREN SEMICOLON
-    | COMMENT
+    stmt : FOR LEFTPAREN IDENTIFIER EQ exp SEMICOLON exp SEMICOLON stmt RIGHTPAREN LBRACKET stmts RBRACKET { Asnmt iterator = new Asnmt($3, $5);
+										               $$ = new ForLoop(iterator, $7, $9, $12);} 
+    | IF LEFTPAREN exp RIGHTPAREN LBRACKET stmts RBRACKET { $$ = new IfStmt($3, $6, null); } 
+    | IF LEFTPAREN exp RIGHTPAREN LBRACKET stmts RBRACKET ELSE LBRACKET stmts RBRACKET { $$ = new IfStmt($3, $6, $10);}
+    | PRINTF LEFTPAREN STRING RIGHTPAREN SEMICOLON { $$ = new EndFunction($1, $3); } 
+    | PRINTF LEFTPAREN IDENTIFIER RIGHTPAREN SEMICOLON { $$ = new EndFunction($1, $3); } 
+    | RETURN exp SEMICOLON { $$ = new EndFunction($1, $2); }
+    | LBRACKET stmtSeq RBRACKET { $$ = $1; }
+    | type IDENTIFIER SEMICOLON { $$ = new VarDef($1, $2); } // "class Keyword cannot be cast to class Yytoken (Keyword and Yytoken are in unnamed module of loader 'app')"
+    | IDENTIFIER EQ exp SEMICOLON { $$ = new Asnmt($1, $3); }
+    | IDENTIFIER EQ exp { $$ = new Asnmt($1, $3); }
+    | IDENTIFIER ATTRIBUTE Lexp EQ exp SEMICOLON //{ $$ = new Asnmt($1, $3);} ASK ABT THIS
+    | IDENTIFIER LEFTPAREN paramList RIGHTPAREN SEMICOLON {$$ = new FunctionCall($1, $2);}
+    | IDENTIFIER EQ IDENTIFIER LEFTPAREN paramList RIGHTPAREN SEMICOLON {FunctionCall func = new FunctionCall($3, $5); $$ = new Asnmt($1, func);}
+    | COMMENT //honestly don't know what to do with this and if this is the thing that loses us points then so be it
     ;
 
-    paramList: 
-    | exp COMMA paramList 
+    paramList: { $$ = new StmtList();}
+    | exp COMMA paramList {StmtList params = $3; params.addElement($1); $$ = params;}
     ;
 
-    stmtSeq:
-    | stmt COMMA stmtSeq 
+    stmtSeq: { $$ = new StmtList();}
+    | stmt COMMA stmtSeq { StmtList sequence = $3; sequence.addElement($1); $$ = sequence; }
     ;
 
-    type: INT 
-    | BOOL 
-    | STRING 
+    type: INT { $$ = new Keyword($1); }
+    | BOOL { $$ = new Keyword($1); }
+    | STRING { $$ = new Keyword($1); }
     ;
 
 
     // create pgm class that has a list of ASTNodes 
-    returnType: type 
-    | VOID 
+    returnType: type { $$ = $1; }
+    | VOID { $$ = new Keyword($1); }
     ;
        
-    exp: NUMBER 
-    | WORD 
-    | TRUE
-    | FALSE
-    | IDENTIFIER
-    | exp PLUS exp 
-    | exp MINUS exp
-    | exp MULT exp  
-    | exp DIVIDE exp 
-    | exp MOD exp 
-    | exp AND exp  
-    | exp OR exp 
-    | exp DOUBLEEQ exp
-    | exp GREATERTHAN exp
-    | exp LESSTHAN exp 
-    | exp GREATERTHANOREQ exp 
-    | exp LESSTHANOREQ exp 
-    | exp NOTEQ exp 
-    | NOT exp 
-    | MINUS exp 
-    | LEFTPAREN exp RIGHTPAREN 
+    exp: NUMBER { $$ = new Literals($1); }
+    | WORD { $$ = new Literals($1); }
+    | TRUE { $$ = new Keyword($1); }
+    | FALSE { $$ = new Keyword($1); }
+    | IDENTIFIER { $$ = new Literals($1); }
+    | exp PLUS exp { $$ = new Arithmetic($1, $2, $3); }
+    | exp MINUS exp { $$ = new Arithmetic($1, $2, $3); }
+    | exp MULT exp { $$ = new Arithmetic($1, $2, $3); }
+    | exp DIVIDE exp { $$ = new Arithmetic($1, $2, $3); }
+    | exp MOD exp { $$ = new Arithmetic($1, $2, $3); }
+    | exp AND exp { $$ = new Logic($1, $2, $3); } 
+    | exp OR exp { $$ = new Logic($1, $2, $3); } 
+    | exp DOUBLEEQ exp { $$ = new Conditions($1, $2, $3); } 
+    | exp GREATERTHAN exp { $$ = new Conditions($1, $2, $3); } 
+    | exp LESSTHAN exp { $$ = new Conditions($1, $2, $3); } 
+    | exp GREATERTHANOREQ exp { $$ = new Conditions($1, $2, $3); } 
+    | exp LESSTHANOREQ exp { $$ = new Conditions($1, $2, $3); } 
+    | exp NOTEQ exp { $$ = new Conditions($1, $2, $3); } 
+    | NOT exp { $$ = new UnaryOperators($1, $2); }
+    | MINUS exp { $$ = new UnaryOperators($1, $2); }
+    | LEFTPAREN exp RIGHTPAREN {$$ = $2;}
     ;
     
-    Lexp : IDENTIFIER 
-    | IDENTIFIER ATTRIBUTE Lexp 
+    Lexp : IDENTIFIER { StmtList emptyList = new StmtList(); emptyList.addElement($1); $$ = emptyList;}
+    | IDENTIFIER ATTRIBUTE Lexp { StmtList attributeList = $3; attributeList.addElement($1); $$ = attributeList;}
     ;
 
     
@@ -251,6 +265,8 @@ public static void main(String[] args) throws IOException {
     // // | function recursePgm { StmtList pgm = (StmtList) $2; pgm.addElement($1); $$ = pgm;  }
     // // | struct recursePgm   { StmtList pgm = (StmtList) $2; pgm.addElement($1); $$ = pgm; }
     // // ;
+
+    // THESE ARE THE ONES I COMMENTED IN FIRST!! THE ONES ABOVE THIS!!!^^^^^^^^^^^^
 
     // pgm : function recursePgm { StmtList pgm = (StmtList)$2; ast.addElement($1); $$ = pgm; }
     // | struct pgm { StmtList pgm = (StmtList)$2; ast.addElement($1); $$ = pgm; }
@@ -286,7 +302,7 @@ public static void main(String[] args) throws IOException {
     // ;
 
     // stmt : FOR LEFTPAREN IDENTIFIER EQ exp SEMICOLON exp SEMICOLON stmt RIGHTPAREN LBRACKET stmts RBRACKET { Asnmt iterator = new Asnmt($3, $5);
-	// 										               $$ = new ForLoop(iterator, $7, $9, (StmtList)$11);} 
+	// 										               $$ = new ForLoop(iterator, $7, $9, $12);} 
     // | IF LEFTPAREN exp RIGHTPAREN LBRACKET stmts RBRACKET { $$ = new IfStmt($3, (StmtList)$6, null); } 
     // | IF LEFTPAREN exp RIGHTPAREN LBRACKET stmts RBRACKET ELSE LBRACKET stmt RBRACKET { $$ = new IfStmt($3, (StmtList)$6, (StmtList)$10);} 
     // | PRINTF LEFTPAREN STRING RIGHTPAREN SEMICOLON { $$ = new EndFunction($1, $3); } 
@@ -405,6 +421,11 @@ class StmtList extends ASTNode{
 
     public StmtList() {
         stmts = new ArrayList<Object>();
+    }
+
+    public StmtList(Object add) {
+        stmts = new ArrayList<Object>();
+        stmts.add(add);
     }
 
     public void addElement(Object n) {
@@ -737,6 +758,24 @@ class Keyword extends ASTNode {
     	}
 }
 
+ class Literals extends ASTNode {
+    Object literal;
+
+    public Literals(Object literal){
+        this.literal = literal;
+    }
+
+    public Object getInstance(){
+        return this.literal;
+    }
+
+    @Override
+	public Object accept(Visitor v) {
+        return v.visit(this);
+    }
+ }
+
+
 class VarDef extends ASTNode {
 	
 	Object type, name;
@@ -753,6 +792,7 @@ class VarDef extends ASTNode {
     public Object getName(){
         return this.name;
     }
+
     @Override
 	public Object accept(Visitor v) {
         	return v.visit(this);
@@ -960,6 +1000,7 @@ class AbstractVisitor implements Visitor {
 	
 
     public boolean visit(Arithmetic add) {
+        System.out.println("IN ARITHMETIC VISITOR");
         int op = ((Yytoken)(add.getOp())).getToken();
         int left = ((Yytoken)(add.getLeft())).getToken();
         int right = ((Yytoken)(add.getRight())).getToken();
@@ -978,6 +1019,7 @@ class AbstractVisitor implements Visitor {
     }
 
     public boolean visit(Logic add) {
+        System.out.println("IN LOGIC VISITOR");
         int left = ((Yytoken)(add.getLeft())).getToken();
         int right = ((Yytoken)(add.getRight())).getToken();
         if (left == ToYLexer.BOOL && right == ToYLexer.BOOL){
@@ -988,16 +1030,20 @@ class AbstractVisitor implements Visitor {
     }
 
     public boolean visit(Conditions add) {
+        System.out.println("IN CONDITIONS VISITOR");
+        System.out.print(((Yytoken)(((Literals)add.getLeft()).getInstance())).getToken());
         int op = ((Yytoken)(add.getOp())).getToken();
-        int left = ((Yytoken)(add.getLeft())).getToken();
-        int right = ((Yytoken)(add.getRight())).getToken();
+        int left = ((Yytoken)(((Literals)add.getLeft()).getInstance())).getToken();
+        int right = ((Yytoken)(((Literals)add.getRight()).getInstance())).getToken();
         if (op == ToYLexer.GREATERTHAN || op == ToYLexer.GREATERTHANOREQ || op == ToYLexer.LESSTHAN || op == ToYLexer.LESSTHANOREQ ){
-            if (left == ToYLexer.INT && right == ToYLexer.INT){
+            System.out.println("CHECK ME 1");
+            if ((left == ToYLexer.INT || left == ToYLexer.IDENTIFIER) && right == ToYLexer.NUMBER){
+                System.out.println("CHECK ME 2");
                 return true;
             }
         }
         if (op == ToYLexer.DOUBLEEQ || op == ToYLexer.NOTEQ ){
-            if ((left == ToYLexer.INT && right == ToYLexer.INT) || (left == ToYLexer.STRING && right == ToYLexer.STRING) ){
+            if (((left == ToYLexer.NUMBER || left == ToYLexer.IDENTIFIER) && (right == ToYLexer.NUMBER || left == ToYLexer.IDENTIFIER)) || ((left == ToYLexer.WORD || left == ToYLexer.IDENTIFIER) && (right == ToYLexer.WORD || left == ToYLexer.IDENTIFIER)) ){
                 return true;
             }
         }
@@ -1006,6 +1052,7 @@ class AbstractVisitor implements Visitor {
     }
 
     public boolean visit(UnaryOperators add) {
+        System.out.println("IN UNARYOPERATORS VISITOR");
         int op = ((Yytoken)(add.getOp())).getToken();
         int right = ((Yytoken)(add.getRight())).getToken();
         if (op == ToYLexer.NOT && right == ToYLexer.BOOL){
@@ -1019,49 +1066,20 @@ class AbstractVisitor implements Visitor {
 
     //TODO -- do we need to check expression here? 
     public boolean visit(Asnmt add) {
-        int name = ((Yytoken)(add.getVar())).getToken();
+        System.out.println("IN ASNMT VISITOR");
+        System.out.println(add.getExp());
+        int name = (((Yytoken)(add.getVar())).getToken());
+        System.out.println(((Yytoken)(add.getVar())).getToken());
         Object item = add.getExp();
-        if (name == ToYLexer.IDENTIFIER){
-            return true;
+        if (!(name == ToYLexer.IDENTIFIER)){
+            return false;
         }
-        try{
-            Keyword keyword = (Keyword)item;
-            if(visit(keyword)){
-                return true;
-            }
-            try{
-                Arithmetic arithmetic = (Arithmetic)item;
-                if(visit(arithmetic)){
-                    return true;
-                }
-                try{
-                    Logic logic = (Logic)item;
-                    if(visit(logic)){
-                        return true;
-                    }
-                    try{
-                        Conditions condition = (Conditions)item;
-                        if(visit(condition)){
-                            return true;
-                        }
-                        try{
-                            Asnmt assignment = (Asnmt)item;
-                            if(visit(assignment)){
-                                return true;
-                            }
-                            try{
-                                UnaryOperators unary = (UnaryOperators)item;
-                                if(visit(unary)){
-                                    return true;
-                                }
-                            }catch(Exception e){}
-                        }catch(Exception e){}
-                    }catch(Exception e){}
-                }catch(Exception e){}
-            }catch(Exception e){}
-        }catch(Exception e){
+        if(!tryHelper(item)){
+            System.out.println("IN TryHELPER");
+            return false;
+        }else{  
         }
-        return false;
+        return true;
     }
 
     //DONT USE THIS ANYMORE 
@@ -1071,6 +1089,7 @@ class AbstractVisitor implements Visitor {
 
     //TODO -- do we need to check expression 
     public boolean visit(EndFunction add) {
+        System.out.println("IN ENDFUNCTION VISITOR");
         int type = ((Yytoken)(add.getType())).getToken();
         // ADD have to add expresison here 
         if (type == ToYLexer.PRINTF){
@@ -1087,33 +1106,41 @@ class AbstractVisitor implements Visitor {
 
     //TODO -- do we need to check the statements in the body of the for loop?
     public boolean visit(ForLoop add) {
-        //get info from node 
+        System.out.println("IN FORLOOP VISITOR");
         Asnmt iterator = ((Asnmt)(add.getIterator()));
+        System.out.println("Assignment");
         Conditions condition = ((Conditions)(add.getConditional()));
-        Arithmetic increment = ((Arithmetic)(add.getIncrement()));
+        System.out.println("condition");
+        System.out.println(add.getIncrement());
+        Asnmt increment = ((Asnmt)(add.getIncrement()));
+        System.out.println("increment");
         StmtList body = ((StmtList)(add.getBody()));
+        System.out.println("body");
         
         //checks for iteration at pos 1 in for loop 
-        if (!((boolean)iterator.accept(this))){
-            return false; 
-        }
+        // if (!(visit(iterator))){
+        //     System.out.println("Check Assignment");
+        //     return false; 
+        // }
         //checks for conditional expression at pos 2 in for loop 
         if (!visit(condition)){
+             System.out.println("Check Condition");
             return false; 
         }
-        //checks for incrementation at pos 3 of for loop 
-        if (!visit(increment)){
-            return false; 
+        // //checks for incrementation at pos 3 of for loop 
+        // if (!visit(increment)){
+        //     System.out.println("Check increment");
+        //     return false; 
+        // }
+       
+        for(int i = 0; i < body.getSize(); i++) {
+            System.out.println("Check body");
+            System.out.println(body.elementAt(i));
+            if(!(tryHelper(body.elementAt(i)))){    
+                    System.out.println("Check element of body");         
+                    return false;               
+                }                                  
         }
-       //TODO ERROR
-        // if (body!= null){
-        //     for(int i = 0; i < body.getSize(); i++) {
-        //         Visitor bodyE = (Visitor) body.elementAt(i);
-        //         if(!(accept(bodyE))){             // a potential solution to the problem we we're having w. different types is to add
-        //             return false;               // a second parameter to all our visit functions: Object o.
-        //         }                                   // I'm not sure this will work but I think it's worth a shot?  I'ts what that guy has
-        //     }
-	    // }
 	    return true;
     }
 
@@ -1123,6 +1150,7 @@ class AbstractVisitor implements Visitor {
    
     //TODO -- check the if and else bodies 
     public boolean visit(IfStmt add) {
+        System.out.println("IN IFSTMT VISITOR");
         Conditions condition = ((Conditions)(add.getConditional()));
         StmtList ifBody = ((StmtList)(add.getIfBody()));
         StmtList elseBody = ((StmtList)(add.getElseBody()));
@@ -1135,6 +1163,7 @@ class AbstractVisitor implements Visitor {
     }
 
     public boolean visit(StructCreator add) {
+        System.out.println("IN STRUCTCREATOR VISITOR");
         int name = ((Yytoken)(add.getName())).getToken();
         StmtList fields = ((StmtList)(add.getFeilds()));
         if(!(name == ToYLexer.IDENTIFIER)){
@@ -1156,26 +1185,38 @@ class AbstractVisitor implements Visitor {
 
     //TODO -- body 
     public boolean visit(FunctionConstruct add) {
-        int returnType = ((Yytoken)(add.getReturnType())).getToken();
+        System.out.println("IN FUNCTIONCONSTRUCT VISITOR");
+        System.out.println(((Yytoken)((Keyword)(add.getReturnType())).getKeyword()).getToken());
+        int returnType = ((Yytoken)((Keyword)(add.getReturnType())).getKeyword()).getToken();
+        System.out.println(add.getName());
         int name = ((Yytoken)(add.getName())).getToken();
         StmtList params = ((StmtList)(add.getParameters()));
+        StmtList body = ((StmtList)(add.getBody()));
         if(!(returnType == ToYLexer.INT || returnType == ToYLexer.STRING || returnType == ToYLexer.BOOL || returnType == ToYLexer.VOID)){
             return false; 
         }
+        System.out.println("VALID RETURN TYPE");
         if(!(name == ToYLexer.IDENTIFIER)){
-            return false; 
+             return false; 
         }
+        System.out.println("VALID NAME");
         for (int i = 0; i < params.getSize(); i++){
             VarDef v = ((VarDef)(params.elementAt(i)));
             if(!visit(v)){
                 return false;
             }
          }
+        for (int i = 0; i < body.getSize(); i++){
+            if(!tryHelper(body.elementAt(i))){
+                return false;
+            }
+        }
         return true;
 
     }
 
     public boolean visit(FunctionCall add) {
+        System.out.println("IN FUNCTIONCALL VISITOR");
         int name = ((Yytoken)(add.getName())).getToken();
         StmtList params = ((StmtList)(add.getParameters()));
         if(!(name == ToYLexer.IDENTIFIER)){
@@ -1192,6 +1233,7 @@ class AbstractVisitor implements Visitor {
     }
     
     public boolean visit(ParamList add) {
+        System.out.println("IN PARAMLIST VISITOR");
         StmtList params = ((StmtList)(add.getParameters()));
         for (int i = 0; i < params.getSize(); i++){
             int v = ((Yytoken)(params.elementAt(i))).getToken();
@@ -1203,7 +1245,8 @@ class AbstractVisitor implements Visitor {
     }
     
     public boolean visit(VarDef add) {
-        int type = ((Yytoken)(add.getType())).getToken();
+        System.out.println("IN VARDEF VISITOR");
+        int type = ((Yytoken)((Keyword)(add.getType())).getKeyword()).getToken();
         int name = ((Yytoken)(add.getName())).getToken();
         if ((type == ToYLexer.BOOL || type == ToYLexer.INT || type == ToYLexer.STRING ) && name == ToYLexer.IDENTIFIER){
             return true;
@@ -1213,6 +1256,7 @@ class AbstractVisitor implements Visitor {
     
     //TODO how to different between type function and construct 
     public boolean visit(Program add) {
+        System.out.println("IN PROGRAM VISITOR");
         StmtList pgm = (StmtList) add.getProgram();
         for (int i = 0; i < pgm.getSize(); i++){
             try{
@@ -1238,6 +1282,7 @@ class AbstractVisitor implements Visitor {
     }
     
     public boolean visit(Keyword add) {
+        System.out.println("IN KEYWORD VISITOR");
         int keyword = ((Yytoken)(add.getKeyword())).getToken();
         if( keyword == ToYLexer.VOID || keyword == ToYLexer.TRUE || keyword == ToYLexer.FALSE ){
             return true;
@@ -1248,6 +1293,11 @@ class AbstractVisitor implements Visitor {
      public boolean visit(StmtList add) {
             return true;
      }
+
+    public boolean visit(Literals add){
+        System.out.println("IN LITERAL VISITOR");
+        return true;
+    }
 
 }
 
@@ -1289,6 +1339,10 @@ interface Visitor {
     public boolean visit(Keyword keyword);
 
     public boolean visit(StmtList keyword);
+
+    public boolean visit(Literals literal);
+
+
 
 }
 

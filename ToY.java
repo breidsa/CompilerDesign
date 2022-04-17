@@ -583,8 +583,423 @@ public class ToY
 
     switch (yyn)
       {
-        
-/* "ToY.java":588  */
+          case 2: /* pgm: function recursePgm  */
+  if (yyn == 2)
+    /* "ToY.y":160  */
+                               { StmtList pgm = ((StmtList)(yystack.valueAt (0))); ast.addElement(((Object)(yystack.valueAt (1)))); yyval = pgm; };
+  break;
+
+
+  case 3: /* pgm: struct pgm  */
+  if (yyn == 3)
+    /* "ToY.y":161  */
+                 { StmtList pgm = ((StmtList)(yystack.valueAt (0))); ast.addElement(((Object)(yystack.valueAt (1)))); yyval = pgm; };
+  break;
+
+
+  case 4: /* recursePgm: %empty  */
+  if (yyn == 4)
+    /* "ToY.y":164  */
+                 { yyval = new StmtList(); };
+  break;
+
+
+  case 5: /* recursePgm: function recursePgm  */
+  if (yyn == 5)
+    /* "ToY.y":165  */
+                          { StmtList pgm = ((StmtList)(yystack.valueAt (0))); ast.addElement(((Object)(yystack.valueAt (1)))); yyval = pgm;  };
+  break;
+
+
+  case 6: /* recursePgm: struct recursePgm  */
+  if (yyn == 6)
+    /* "ToY.y":166  */
+                        { StmtList pgm =  ((StmtList)(yystack.valueAt (0))); ast.addElement(((Object)(yystack.valueAt (1)))); yyval = pgm; };
+  break;
+
+
+  case 7: /* function: returnType IDENTIFIER LEFTPAREN declarationListZero RIGHTPAREN LBRACKET stmts RBRACKET  */
+  if (yyn == 7)
+    /* "ToY.y":170  */
+                                                                                                       {yyval = new FunctionConstruct(((Object)(yystack.valueAt (7))), ((Yytoken)(yystack.valueAt (6))), ((StmtList)(yystack.valueAt (4))), ((StmtList)(yystack.valueAt (1))));
+                                                                                                         Function ft = new Function(((Yytoken)(yystack.valueAt (6))), ((Object)(yystack.valueAt (7))), (StmtList)((StmtList)(yystack.valueAt (4)))); functions.put(((Yytoken)(yystack.valueAt (6))), ft);};
+  break;
+
+
+  case 8: /* struct: STRUCT IDENTIFIER LBRACKET declarationList RBRACKET  */
+  if (yyn == 8)
+    /* "ToY.y":175  */
+                                                                 { yyval = new StructCreator(((Yytoken)(yystack.valueAt (3))), ((StmtList)(yystack.valueAt (1)))); Struct st = new Struct(((Yytoken)(yystack.valueAt (3))),(StmtList)((StmtList)(yystack.valueAt (1)))); statements.put(((Yytoken)(yystack.valueAt (3))), st);};
+  break;
+
+
+  case 9: /* declarationListZero: %empty  */
+  if (yyn == 9)
+    /* "ToY.y":178  */
+                         { yyval = new StmtList();};
+  break;
+
+
+  case 10: /* declarationListZero: declaration  */
+  if (yyn == 10)
+    /* "ToY.y":179  */
+                  {yyval = new StmtList(((Object)(yystack.valueAt (0)))); };
+  break;
+
+
+  case 11: /* declarationListZero: declaration COMMA declarationList  */
+  if (yyn == 11)
+    /* "ToY.y":180  */
+                                        {StmtList decls = ((StmtList)(yystack.valueAt (0))); decls.addElement(((Object)(yystack.valueAt (2)))); yyval = decls;};
+  break;
+
+
+  case 12: /* declarationList: declaration  */
+  if (yyn == 12)
+    /* "ToY.y":183  */
+                                 { yyval = ((Object)(yystack.valueAt (0))); };
+  break;
+
+
+  case 13: /* declarationList: declaration COMMA declarationList  */
+  if (yyn == 13)
+    /* "ToY.y":184  */
+                                        { StmtList decls = ((StmtList)(yystack.valueAt (0))); decls.addElement(((Object)(yystack.valueAt (2)))); yyval = decls;};
+  break;
+
+
+  case 14: /* stmts: %empty  */
+  if (yyn == 14)
+    /* "ToY.y":187  */
+            { yyval = new StmtList();};
+  break;
+
+
+  case 15: /* stmts: stmt stmts  */
+  if (yyn == 15)
+    /* "ToY.y":188  */
+                 { StmtList sequence = ((StmtList)(yystack.valueAt (0))); sequence.addElement(((Object)(yystack.valueAt (1)))); yyval = sequence; };
+  break;
+
+
+  case 16: /* declaration: type IDENTIFIER  */
+  if (yyn == 16)
+    /* "ToY.y":191  */
+                                 { yyval = new VarDef(((Object)(yystack.valueAt (1))), ((Yytoken)(yystack.valueAt (0)))); };
+  break;
+
+
+  case 17: /* stmt: FOR LEFTPAREN IDENTIFIER EQ exp SEMICOLON exp SEMICOLON stmt RIGHTPAREN LBRACKET stmts RBRACKET  */
+  if (yyn == 17)
+    /* "ToY.y":194  */
+                                                                                                           { Asnmt iterator = new Asnmt(((Yytoken)(yystack.valueAt (10))), ((Object)(yystack.valueAt (8))));
+										               yyval = new ForLoop(iterator, ((Object)(yystack.valueAt (6))), ((Object)(yystack.valueAt (4))), ((StmtList)(yystack.valueAt (1))));};
+  break;
+
+
+  case 18: /* stmt: IF LEFTPAREN exp RIGHTPAREN LBRACKET stmts RBRACKET  */
+  if (yyn == 18)
+    /* "ToY.y":196  */
+                                                          { yyval = new IfStmt(((Object)(yystack.valueAt (4))), ((StmtList)(yystack.valueAt (1))), null); };
+  break;
+
+
+  case 19: /* stmt: IF LEFTPAREN exp RIGHTPAREN LBRACKET stmts RBRACKET ELSE LBRACKET stmts RBRACKET  */
+  if (yyn == 19)
+    /* "ToY.y":197  */
+                                                                                       { yyval = new IfStmt(((Object)(yystack.valueAt (8))), ((StmtList)(yystack.valueAt (5))), ((StmtList)(yystack.valueAt (1))));};
+  break;
+
+
+  case 20: /* stmt: PRINTF LEFTPAREN STRING RIGHTPAREN SEMICOLON  */
+  if (yyn == 20)
+    /* "ToY.y":198  */
+                                                   { yyval = new EndFunction(((Yytoken)(yystack.valueAt (4))), ((Yytoken)(yystack.valueAt (2)))); };
+  break;
+
+
+  case 21: /* stmt: PRINTF LEFTPAREN IDENTIFIER RIGHTPAREN SEMICOLON  */
+  if (yyn == 21)
+    /* "ToY.y":199  */
+                                                       { yyval = new EndFunction(((Yytoken)(yystack.valueAt (4))), ((Yytoken)(yystack.valueAt (2)))); };
+  break;
+
+
+  case 22: /* stmt: RETURN exp SEMICOLON  */
+  if (yyn == 22)
+    /* "ToY.y":200  */
+                           { yyval = new EndFunction(((Yytoken)(yystack.valueAt (2))), ((Object)(yystack.valueAt (1)))); };
+  break;
+
+
+  case 23: /* stmt: LBRACKET stmtSeq RBRACKET  */
+  if (yyn == 23)
+    /* "ToY.y":201  */
+                                { yyval = ((Yytoken)(yystack.valueAt (2))); };
+  break;
+
+
+  case 24: /* stmt: type IDENTIFIER SEMICOLON  */
+  if (yyn == 24)
+    /* "ToY.y":202  */
+                                { yyval = new VarDef(((Object)(yystack.valueAt (2))), ((Yytoken)(yystack.valueAt (1)))); };
+  break;
+
+
+  case 25: /* stmt: IDENTIFIER EQ exp SEMICOLON  */
+  if (yyn == 25)
+    /* "ToY.y":203  */
+                                  { yyval = new Asnmt(((Yytoken)(yystack.valueAt (3))), ((Object)(yystack.valueAt (1)))); };
+  break;
+
+
+  case 26: /* stmt: IDENTIFIER EQ exp  */
+  if (yyn == 26)
+    /* "ToY.y":204  */
+                        { yyval = new Asnmt(((Yytoken)(yystack.valueAt (2))), ((Object)(yystack.valueAt (0)))); };
+  break;
+
+
+  case 28: /* stmt: IDENTIFIER LEFTPAREN paramList RIGHTPAREN SEMICOLON  */
+  if (yyn == 28)
+    /* "ToY.y":206  */
+                                                          {yyval = new FunctionCall(((Yytoken)(yystack.valueAt (4))), ((Yytoken)(yystack.valueAt (3))));};
+  break;
+
+
+  case 29: /* stmt: IDENTIFIER EQ IDENTIFIER LEFTPAREN paramList RIGHTPAREN SEMICOLON  */
+  if (yyn == 29)
+    /* "ToY.y":207  */
+                                                                        {FunctionCall func = new FunctionCall(((Yytoken)(yystack.valueAt (4))), ((StmtList)(yystack.valueAt (2)))); yyval = new Asnmt(((Yytoken)(yystack.valueAt (6))), func);};
+  break;
+
+
+  case 31: /* paramList: %empty  */
+  if (yyn == 31)
+    /* "ToY.y":211  */
+               { yyval = new StmtList();};
+  break;
+
+
+  case 32: /* paramList: exp COMMA paramList  */
+  if (yyn == 32)
+    /* "ToY.y":212  */
+                          {StmtList params = ((StmtList)(yystack.valueAt (0))); params.addElement(((Object)(yystack.valueAt (2)))); yyval = params;};
+  break;
+
+
+  case 33: /* stmtSeq: %empty  */
+  if (yyn == 33)
+    /* "ToY.y":215  */
+             { yyval = new StmtList();};
+  break;
+
+
+  case 34: /* stmtSeq: stmt COMMA stmtSeq  */
+  if (yyn == 34)
+    /* "ToY.y":216  */
+                         { StmtList sequence = ((StmtList)(yystack.valueAt (0))); sequence.addElement(((Object)(yystack.valueAt (2)))); yyval = sequence; };
+  break;
+
+
+  case 35: /* type: INT  */
+  if (yyn == 35)
+    /* "ToY.y":219  */
+              { yyval = new Keyword(((Yytoken)(yystack.valueAt (0)))); };
+  break;
+
+
+  case 36: /* type: BOOL  */
+  if (yyn == 36)
+    /* "ToY.y":220  */
+           { yyval = new Keyword(((Yytoken)(yystack.valueAt (0)))); };
+  break;
+
+
+  case 37: /* type: STRING  */
+  if (yyn == 37)
+    /* "ToY.y":221  */
+             { yyval = new Keyword(((Yytoken)(yystack.valueAt (0)))); };
+  break;
+
+
+  case 38: /* returnType: type  */
+  if (yyn == 38)
+    /* "ToY.y":226  */
+                     { yyval = ((Object)(yystack.valueAt (0))); };
+  break;
+
+
+  case 39: /* returnType: VOID  */
+  if (yyn == 39)
+    /* "ToY.y":227  */
+           { yyval = new Keyword(((Yytoken)(yystack.valueAt (0)))); };
+  break;
+
+
+  case 40: /* exp: NUMBER  */
+  if (yyn == 40)
+    /* "ToY.y":230  */
+                { yyval = new Literals(((Yytoken)(yystack.valueAt (0)))); };
+  break;
+
+
+  case 41: /* exp: WORD  */
+  if (yyn == 41)
+    /* "ToY.y":231  */
+           { yyval = new Literals(((Yytoken)(yystack.valueAt (0)))); };
+  break;
+
+
+  case 42: /* exp: TRUE  */
+  if (yyn == 42)
+    /* "ToY.y":232  */
+           { yyval = new Keyword(((Yytoken)(yystack.valueAt (0)))); };
+  break;
+
+
+  case 43: /* exp: FALSE  */
+  if (yyn == 43)
+    /* "ToY.y":233  */
+            { yyval = new Keyword(((Yytoken)(yystack.valueAt (0)))); };
+  break;
+
+
+  case 44: /* exp: IDENTIFIER  */
+  if (yyn == 44)
+    /* "ToY.y":234  */
+                 { yyval = new Literals(((Yytoken)(yystack.valueAt (0)))); };
+  break;
+
+
+  case 45: /* exp: exp PLUS exp  */
+  if (yyn == 45)
+    /* "ToY.y":235  */
+                   { yyval = new Arithmetic(((Object)(yystack.valueAt (2))), ((Yytoken)(yystack.valueAt (1))), ((Object)(yystack.valueAt (0)))); };
+  break;
+
+
+  case 46: /* exp: exp MINUS exp  */
+  if (yyn == 46)
+    /* "ToY.y":236  */
+                    { yyval = new Arithmetic(((Object)(yystack.valueAt (2))), ((Yytoken)(yystack.valueAt (1))), ((Object)(yystack.valueAt (0)))); };
+  break;
+
+
+  case 47: /* exp: exp MULT exp  */
+  if (yyn == 47)
+    /* "ToY.y":237  */
+                   { yyval = new Arithmetic(((Object)(yystack.valueAt (2))), ((Yytoken)(yystack.valueAt (1))), ((Object)(yystack.valueAt (0)))); };
+  break;
+
+
+  case 48: /* exp: exp DIVIDE exp  */
+  if (yyn == 48)
+    /* "ToY.y":238  */
+                     { yyval = new Arithmetic(((Object)(yystack.valueAt (2))), ((Yytoken)(yystack.valueAt (1))), ((Object)(yystack.valueAt (0)))); };
+  break;
+
+
+  case 49: /* exp: exp MOD exp  */
+  if (yyn == 49)
+    /* "ToY.y":239  */
+                  { yyval = new Arithmetic(((Object)(yystack.valueAt (2))), ((Yytoken)(yystack.valueAt (1))), ((Object)(yystack.valueAt (0)))); };
+  break;
+
+
+  case 50: /* exp: exp AND exp  */
+  if (yyn == 50)
+    /* "ToY.y":240  */
+                  { yyval = new Logic(((Object)(yystack.valueAt (2))), ((Yytoken)(yystack.valueAt (1))), ((Object)(yystack.valueAt (0)))); };
+  break;
+
+
+  case 51: /* exp: exp OR exp  */
+  if (yyn == 51)
+    /* "ToY.y":241  */
+                 { yyval = new Logic(((Object)(yystack.valueAt (2))), ((Yytoken)(yystack.valueAt (1))), ((Object)(yystack.valueAt (0)))); };
+  break;
+
+
+  case 52: /* exp: exp DOUBLEEQ exp  */
+  if (yyn == 52)
+    /* "ToY.y":242  */
+                       { yyval = new Conditions(((Object)(yystack.valueAt (2))), ((Yytoken)(yystack.valueAt (1))), ((Object)(yystack.valueAt (0)))); };
+  break;
+
+
+  case 53: /* exp: exp GREATERTHAN exp  */
+  if (yyn == 53)
+    /* "ToY.y":243  */
+                          { yyval = new Conditions(((Object)(yystack.valueAt (2))), ((Yytoken)(yystack.valueAt (1))), ((Object)(yystack.valueAt (0)))); };
+  break;
+
+
+  case 54: /* exp: exp LESSTHAN exp  */
+  if (yyn == 54)
+    /* "ToY.y":244  */
+                       { yyval = new Conditions(((Object)(yystack.valueAt (2))), ((Yytoken)(yystack.valueAt (1))), ((Object)(yystack.valueAt (0)))); };
+  break;
+
+
+  case 55: /* exp: exp GREATERTHANOREQ exp  */
+  if (yyn == 55)
+    /* "ToY.y":245  */
+                              { yyval = new Conditions(((Object)(yystack.valueAt (2))), ((Yytoken)(yystack.valueAt (1))), ((Object)(yystack.valueAt (0)))); };
+  break;
+
+
+  case 56: /* exp: exp LESSTHANOREQ exp  */
+  if (yyn == 56)
+    /* "ToY.y":246  */
+                           { yyval = new Conditions(((Object)(yystack.valueAt (2))), ((Yytoken)(yystack.valueAt (1))), ((Object)(yystack.valueAt (0)))); };
+  break;
+
+
+  case 57: /* exp: exp NOTEQ exp  */
+  if (yyn == 57)
+    /* "ToY.y":247  */
+                    { yyval = new Conditions(((Object)(yystack.valueAt (2))), ((Yytoken)(yystack.valueAt (1))), ((Object)(yystack.valueAt (0)))); };
+  break;
+
+
+  case 58: /* exp: NOT exp  */
+  if (yyn == 58)
+    /* "ToY.y":248  */
+              { yyval = new UnaryOperators(((Yytoken)(yystack.valueAt (1))), ((Object)(yystack.valueAt (0)))); };
+  break;
+
+
+  case 59: /* exp: MINUS exp  */
+  if (yyn == 59)
+    /* "ToY.y":249  */
+                { yyval = new UnaryOperators(((Yytoken)(yystack.valueAt (1))), ((Object)(yystack.valueAt (0)))); };
+  break;
+
+
+  case 60: /* exp: LEFTPAREN exp RIGHTPAREN  */
+  if (yyn == 60)
+    /* "ToY.y":250  */
+                               {yyval = ((Object)(yystack.valueAt (1)));};
+  break;
+
+
+  case 61: /* Lexp: IDENTIFIER  */
+  if (yyn == 61)
+    /* "ToY.y":253  */
+                      { StmtList emptyList = new StmtList(); emptyList.addElement(((Yytoken)(yystack.valueAt (0)))); yyval = emptyList;};
+  break;
+
+
+  case 62: /* Lexp: IDENTIFIER ATTRIBUTE Lexp  */
+  if (yyn == 62)
+    /* "ToY.y":254  */
+                                { StmtList attributeList = ((StmtList)(yystack.valueAt (0))); attributeList.addElement(((Yytoken)(yystack.valueAt (2)))); yyval = attributeList;};
+  break;
+
+
+
+/* "ToY.java":1003  */
 
         default: break;
       }
@@ -1010,7 +1425,7 @@ public class ToY
       40,    28,   -92,   -92,     8,     8,   -92,    46,    23,   -92,
      -92,    23,    57,    65,    78,    61,    70,   -92,    23,   -92,
       67,    23,   -92,   200,   -92,    20,   -92,    68,    69,    -2,
-      71,   200,    74,   200,    92,     9,    96,    -2,    -2,    98,
+      72,   200,    76,   200,    92,     9,    96,    -2,    -2,    98,
      -92,   -92,   -92,    -2,    -2,    -2,   -92,   -92,    84,    41,
       87,    85,   -92,   -92,    91,   101,   100,   103,   120,   131,
      163,   199,   121,   214,     3,    44,   -92,    -2,    -2,    -2,
@@ -1045,7 +1460,7 @@ public class ToY
       31,     0,     0,    60,    54,    53,    52,    56,    55,    57,
       50,    51,    45,    46,    47,    48,    49,     0,     0,    34,
        0,    62,     0,    28,    32,    14,     0,    20,    21,     0,
-      27,     0,     0,    29,    18,     0,     0,     0,     0,     0,
+      27,     0,     0,    29,    18,     0,     0,     0,    14,     0,
        0,     0,    19,    14,     0,    17
     };
   }
@@ -1089,7 +1504,7 @@ public class ToY
      111,   112,   113,   114,   115,   116,    19,    20,    83,    84,
       21,    85,    86,     9,   122,    89,    83,    84,   126,    27,
        9,     9,   131,    89,    28,    29,    30,     9,     9,    31,
-      33,    24,    48,    49,    24,    59,    62,   139,   140,    64,
+      33,    24,    48,    49,    24,   140,    59,   139,    62,    64,
      144,    24,    76,    67,    24,    72,    92,    93,   135,    94,
       77,    78,    79,    80,    81,    82,    83,    84,    96,    85,
       86,    87,    88,    89,    97,    95,    77,    78,    79,    80,
@@ -1124,7 +1539,7 @@ private static final short[] yycheck_ = yycheck_init();
       84,    85,    86,    87,    88,    89,    14,    15,    32,    33,
       24,    35,    36,     0,    98,    39,    32,    33,   102,    22,
        7,     8,   125,    39,    19,     7,    25,    14,    15,    19,
-      23,    18,    24,    24,    21,    24,    22,   137,   138,     7,
+      23,    18,    24,    24,    21,   138,    24,   137,    22,     7,
      143,    28,    18,     7,    31,     7,    19,    22,   132,    18,
       26,    27,    28,    29,    30,    31,    32,    33,    18,    35,
       36,    37,    38,    39,    21,    24,    26,    27,    28,    29,
@@ -1166,7 +1581,7 @@ private static final short[] yycheck_ = yycheck_init();
       58,    58,    58,    58,    58,    58,    58,    25,    25,    55,
       54,    59,    58,    18,    54,    23,    58,    18,    18,    25,
       18,    51,    18,    18,    22,    58,    13,    18,    23,    53,
-      53,    25,    22,    23,    51,    22
+      51,    25,    22,    23,    51,    22
     };
   }
 
@@ -1268,11 +1683,11 @@ private static final short[] yycheck_ = yycheck_init();
 
 /* ----------------- Global Hashmaps and Main Function ---------------- */
 
-// HashMap<Object, ID> functions = new HashMap<Object, ID>();
-// HashMap<Object, ID> statements = new HashMap<Object, ID>();
+ HashMap<Object, ID> functions = new HashMap<Object, ID>();
+ HashMap<Object, ID> statements = new HashMap<Object, ID>();
 // // HashMap<Object, ID> var = new HashMap<Object, ID>();
-// SymbolTable symbolTable = new SymbolTable();
-// static Program ast = new Program(new StmtList());
+SymbolTable symbolTable = new SymbolTable();
+static Program ast = new Program(new StmtList());
 
 
 public static void main(String[] args) throws IOException {
@@ -1280,16 +1695,28 @@ public static void main(String[] args) throws IOException {
         InputStream targetStream = new FileInputStream(initialFile);
         BufferedReader br = new BufferedReader(new FileReader(initialFile));
         String line;
+
         while ((line = br.readLine()) != null) {
-        System.out.println(line);
+            System.out.println(line);
         }
+
         ToYLexer l = new ToYLexer(targetStream);
         ToY p = new ToY(l);
         if (!p.parse()){
             System.out.println("INVALID");
         } else{
-        System.out.println("VAlID SYNTAX");
+            System.out.println("VAlID SYNTAX FROM PARSER");
+            System.out.println();
         }
+
+        AbstractVisitor v = new AbstractVisitor();
+        if(v.visit(ast)){
+            System.out.println("VALID SYNTAX FROM SEMANTIC");
+        }else{
+            System.out.println();
+            System.out.println("INVALID SYNTAX FROM SEMANTIC");
+        }
+
 }
     // FileReader yyin = new FileReader(args[0]);
     // System.out.println(args[0]);
@@ -1297,7 +1724,7 @@ public static void main(String[] args) throws IOException {
     // ToY p = new ToY(l);
     // System.out.println(args[0]);
     // //runs bison and parser checks 
-    // //AbstractVisitor v = new AbstractVisitor();
+    // //
 
     // if (!p.parse()){
     //      System.out.println(args[0]);
@@ -1311,10 +1738,10 @@ public static void main(String[] args) throws IOException {
     // }
     // System.out.println("done w main");
 
-/* "ToY.java":1315  */
+/* "ToY.java":1742  */
 
 }
-/* "ToY.y":384  */
+/* "ToY.y":400  */
 
 /* ------------------------------------------------------- */
 /*                       Start of AST                      */
@@ -1339,6 +1766,11 @@ class StmtList extends ASTNode{
 
     public StmtList() {
         stmts = new ArrayList<Object>();
+    }
+
+    public StmtList(Object add) {
+        stmts = new ArrayList<Object>();
+        stmts.add(add);
     }
 
     public void addElement(Object n) {
@@ -1671,6 +2103,24 @@ class Keyword extends ASTNode {
     	}
 }
 
+ class Literals extends ASTNode {
+    Object literal;
+
+    public Literals(Object literal){
+        this.literal = literal;
+    }
+
+    public Object getInstance(){
+        return this.literal;
+    }
+
+    @Override
+	public Object accept(Visitor v) {
+        return v.visit(this);
+    }
+ }
+
+
 class VarDef extends ASTNode {
 	
 	Object type, name;
@@ -1687,6 +2137,7 @@ class VarDef extends ASTNode {
     public Object getName(){
         return this.name;
     }
+
     @Override
 	public Object accept(Visitor v) {
         	return v.visit(this);
@@ -1894,6 +2345,7 @@ class AbstractVisitor implements Visitor {
 	
 
     public boolean visit(Arithmetic add) {
+        System.out.println("IN ARITHMETIC VISITOR");
         int op = ((Yytoken)(add.getOp())).getToken();
         int left = ((Yytoken)(add.getLeft())).getToken();
         int right = ((Yytoken)(add.getRight())).getToken();
@@ -1912,6 +2364,7 @@ class AbstractVisitor implements Visitor {
     }
 
     public boolean visit(Logic add) {
+        System.out.println("IN LOGIC VISITOR");
         int left = ((Yytoken)(add.getLeft())).getToken();
         int right = ((Yytoken)(add.getRight())).getToken();
         if (left == ToYLexer.BOOL && right == ToYLexer.BOOL){
@@ -1922,16 +2375,20 @@ class AbstractVisitor implements Visitor {
     }
 
     public boolean visit(Conditions add) {
+        System.out.println("IN CONDITIONS VISITOR");
+        System.out.print(((Yytoken)(((Literals)add.getLeft()).getInstance())).getToken());
         int op = ((Yytoken)(add.getOp())).getToken();
-        int left = ((Yytoken)(add.getLeft())).getToken();
-        int right = ((Yytoken)(add.getRight())).getToken();
+        int left = ((Yytoken)(((Literals)add.getLeft()).getInstance())).getToken();
+        int right = ((Yytoken)(((Literals)add.getRight()).getInstance())).getToken();
         if (op == ToYLexer.GREATERTHAN || op == ToYLexer.GREATERTHANOREQ || op == ToYLexer.LESSTHAN || op == ToYLexer.LESSTHANOREQ ){
-            if (left == ToYLexer.INT && right == ToYLexer.INT){
+            System.out.println("CHECK ME 1");
+            if ((left == ToYLexer.INT || left == ToYLexer.IDENTIFIER) && right == ToYLexer.NUMBER){
+                System.out.println("CHECK ME 2");
                 return true;
             }
         }
         if (op == ToYLexer.DOUBLEEQ || op == ToYLexer.NOTEQ ){
-            if ((left == ToYLexer.INT && right == ToYLexer.INT) || (left == ToYLexer.STRING && right == ToYLexer.STRING) ){
+            if (((left == ToYLexer.NUMBER || left == ToYLexer.IDENTIFIER) && (right == ToYLexer.NUMBER || left == ToYLexer.IDENTIFIER)) || ((left == ToYLexer.WORD || left == ToYLexer.IDENTIFIER) && (right == ToYLexer.WORD || left == ToYLexer.IDENTIFIER)) ){
                 return true;
             }
         }
@@ -1940,6 +2397,7 @@ class AbstractVisitor implements Visitor {
     }
 
     public boolean visit(UnaryOperators add) {
+        System.out.println("IN UNARYOPERATORS VISITOR");
         int op = ((Yytoken)(add.getOp())).getToken();
         int right = ((Yytoken)(add.getRight())).getToken();
         if (op == ToYLexer.NOT && right == ToYLexer.BOOL){
@@ -1953,49 +2411,20 @@ class AbstractVisitor implements Visitor {
 
     //TODO -- do we need to check expression here? 
     public boolean visit(Asnmt add) {
-        int name = ((Yytoken)(add.getVar())).getToken();
+        System.out.println("IN ASNMT VISITOR");
+        System.out.println(add.getExp());
+        int name = (((Yytoken)(add.getVar())).getToken());
+        System.out.println(((Yytoken)(add.getVar())).getToken());
         Object item = add.getExp();
-        if (name == ToYLexer.IDENTIFIER){
-            return true;
+        if (!(name == ToYLexer.IDENTIFIER)){
+            return false;
         }
-        try{
-            Keyword keyword = (Keyword)item;
-            if(visit(keyword)){
-                return true;
-            }
-            try{
-                Arithmetic arithmetic = (Arithmetic)item;
-                if(visit(arithmetic)){
-                    return true;
-                }
-                try{
-                    Logic logic = (Logic)item;
-                    if(visit(logic)){
-                        return true;
-                    }
-                    try{
-                        Conditions condition = (Conditions)item;
-                        if(visit(condition)){
-                            return true;
-                        }
-                        try{
-                            Asnmt assignment = (Asnmt)item;
-                            if(visit(assignment)){
-                                return true;
-                            }
-                            try{
-                                UnaryOperators unary = (UnaryOperators)item;
-                                if(visit(unary)){
-                                    return true;
-                                }
-                            }catch(Exception e){}
-                        }catch(Exception e){}
-                    }catch(Exception e){}
-                }catch(Exception e){}
-            }catch(Exception e){}
-        }catch(Exception e){
+        if(!tryHelper(item)){
+            System.out.println("IN TryHELPER");
+            return false;
+        }else{  
         }
-        return false;
+        return true;
     }
 
     //DONT USE THIS ANYMORE 
@@ -2005,6 +2434,7 @@ class AbstractVisitor implements Visitor {
 
     //TODO -- do we need to check expression 
     public boolean visit(EndFunction add) {
+        System.out.println("IN ENDFUNCTION VISITOR");
         int type = ((Yytoken)(add.getType())).getToken();
         // ADD have to add expresison here 
         if (type == ToYLexer.PRINTF){
@@ -2021,33 +2451,41 @@ class AbstractVisitor implements Visitor {
 
     //TODO -- do we need to check the statements in the body of the for loop?
     public boolean visit(ForLoop add) {
-        //get info from node 
+        System.out.println("IN FORLOOP VISITOR");
         Asnmt iterator = ((Asnmt)(add.getIterator()));
+        System.out.println("Assignment");
         Conditions condition = ((Conditions)(add.getConditional()));
-        Arithmetic increment = ((Arithmetic)(add.getIncrement()));
+        System.out.println("condition");
+        System.out.println(add.getIncrement());
+        Asnmt increment = ((Asnmt)(add.getIncrement()));
+        System.out.println("increment");
         StmtList body = ((StmtList)(add.getBody()));
+        System.out.println("body");
         
         //checks for iteration at pos 1 in for loop 
-        if (!((boolean)iterator.accept(this))){
-            return false; 
-        }
+        // if (!(visit(iterator))){
+        //     System.out.println("Check Assignment");
+        //     return false; 
+        // }
         //checks for conditional expression at pos 2 in for loop 
         if (!visit(condition)){
+             System.out.println("Check Condition");
             return false; 
         }
-        //checks for incrementation at pos 3 of for loop 
-        if (!visit(increment)){
-            return false; 
+        // //checks for incrementation at pos 3 of for loop 
+        // if (!visit(increment)){
+        //     System.out.println("Check increment");
+        //     return false; 
+        // }
+       
+        for(int i = 0; i < body.getSize(); i++) {
+            System.out.println("Check body");
+            System.out.println(body.elementAt(i));
+            if(!(tryHelper(body.elementAt(i)))){    
+                    System.out.println("Check element of body");         
+                    return false;               
+                }                                  
         }
-       //TODO ERROR
-        // if (body!= null){
-        //     for(int i = 0; i < body.getSize(); i++) {
-        //         Visitor bodyE = (Visitor) body.elementAt(i);
-        //         if(!(accept(bodyE))){             // a potential solution to the problem we we're having w. different types is to add
-        //             return false;               // a second parameter to all our visit functions: Object o.
-        //         }                                   // I'm not sure this will work but I think it's worth a shot?  I'ts what that guy has
-        //     }
-	    // }
 	    return true;
     }
 
@@ -2057,6 +2495,7 @@ class AbstractVisitor implements Visitor {
    
     //TODO -- check the if and else bodies 
     public boolean visit(IfStmt add) {
+        System.out.println("IN IFSTMT VISITOR");
         Conditions condition = ((Conditions)(add.getConditional()));
         StmtList ifBody = ((StmtList)(add.getIfBody()));
         StmtList elseBody = ((StmtList)(add.getElseBody()));
@@ -2069,6 +2508,7 @@ class AbstractVisitor implements Visitor {
     }
 
     public boolean visit(StructCreator add) {
+        System.out.println("IN STRUCTCREATOR VISITOR");
         int name = ((Yytoken)(add.getName())).getToken();
         StmtList fields = ((StmtList)(add.getFeilds()));
         if(!(name == ToYLexer.IDENTIFIER)){
@@ -2090,26 +2530,38 @@ class AbstractVisitor implements Visitor {
 
     //TODO -- body 
     public boolean visit(FunctionConstruct add) {
-        int returnType = ((Yytoken)(add.getReturnType())).getToken();
+        System.out.println("IN FUNCTIONCONSTRUCT VISITOR");
+        System.out.println(((Yytoken)((Keyword)(add.getReturnType())).getKeyword()).getToken());
+        int returnType = ((Yytoken)((Keyword)(add.getReturnType())).getKeyword()).getToken();
+        System.out.println(add.getName());
         int name = ((Yytoken)(add.getName())).getToken();
         StmtList params = ((StmtList)(add.getParameters()));
+        StmtList body = ((StmtList)(add.getBody()));
         if(!(returnType == ToYLexer.INT || returnType == ToYLexer.STRING || returnType == ToYLexer.BOOL || returnType == ToYLexer.VOID)){
             return false; 
         }
+        System.out.println("VALID RETURN TYPE");
         if(!(name == ToYLexer.IDENTIFIER)){
-            return false; 
+             return false; 
         }
+        System.out.println("VALID NAME");
         for (int i = 0; i < params.getSize(); i++){
             VarDef v = ((VarDef)(params.elementAt(i)));
             if(!visit(v)){
                 return false;
             }
          }
+        for (int i = 0; i < body.getSize(); i++){
+            if(!tryHelper(body.elementAt(i))){
+                return false;
+            }
+        }
         return true;
 
     }
 
     public boolean visit(FunctionCall add) {
+        System.out.println("IN FUNCTIONCALL VISITOR");
         int name = ((Yytoken)(add.getName())).getToken();
         StmtList params = ((StmtList)(add.getParameters()));
         if(!(name == ToYLexer.IDENTIFIER)){
@@ -2126,6 +2578,7 @@ class AbstractVisitor implements Visitor {
     }
     
     public boolean visit(ParamList add) {
+        System.out.println("IN PARAMLIST VISITOR");
         StmtList params = ((StmtList)(add.getParameters()));
         for (int i = 0; i < params.getSize(); i++){
             int v = ((Yytoken)(params.elementAt(i))).getToken();
@@ -2137,7 +2590,8 @@ class AbstractVisitor implements Visitor {
     }
     
     public boolean visit(VarDef add) {
-        int type = ((Yytoken)(add.getType())).getToken();
+        System.out.println("IN VARDEF VISITOR");
+        int type = ((Yytoken)((Keyword)(add.getType())).getKeyword()).getToken();
         int name = ((Yytoken)(add.getName())).getToken();
         if ((type == ToYLexer.BOOL || type == ToYLexer.INT || type == ToYLexer.STRING ) && name == ToYLexer.IDENTIFIER){
             return true;
@@ -2147,6 +2601,7 @@ class AbstractVisitor implements Visitor {
     
     //TODO how to different between type function and construct 
     public boolean visit(Program add) {
+        System.out.println("IN PROGRAM VISITOR");
         StmtList pgm = (StmtList) add.getProgram();
         for (int i = 0; i < pgm.getSize(); i++){
             try{
@@ -2172,6 +2627,7 @@ class AbstractVisitor implements Visitor {
     }
     
     public boolean visit(Keyword add) {
+        System.out.println("IN KEYWORD VISITOR");
         int keyword = ((Yytoken)(add.getKeyword())).getToken();
         if( keyword == ToYLexer.VOID || keyword == ToYLexer.TRUE || keyword == ToYLexer.FALSE ){
             return true;
@@ -2182,6 +2638,11 @@ class AbstractVisitor implements Visitor {
      public boolean visit(StmtList add) {
             return true;
      }
+
+    public boolean visit(Literals add){
+        System.out.println("IN LITERAL VISITOR");
+        return true;
+    }
 
 }
 
@@ -2223,6 +2684,10 @@ interface Visitor {
     public boolean visit(Keyword keyword);
 
     public boolean visit(StmtList keyword);
+
+    public boolean visit(Literals literal);
+
+
 
 }
 
