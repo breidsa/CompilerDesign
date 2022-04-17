@@ -88,31 +88,29 @@ public static void main(String[] args) throws IOException {
 /* ----------------- Bison Declarations ---------------- */
 
 /* Questions: does boolean and stuff have to come from the lexer?? */
-// %token <Yytoken> INT BOOL STRING VOID
-// %token  <Yytoken> IDENTIFIER 
-// %token  <Yytoken> COMMENT
-// %token  <Yytoken> TRUE FALSE 
-// %token  <Yytoken> IF THEN ELSE FOR STRUCT
-// %token   <Yytoken>RETURN PRINTF 
-// %token   <Yytoken>SEMICOLON COMMA
-// %token   <Yytoken>EQ ATTRIBUTE
-// %token   <Yytoken>RBRACKET LBRACKET LEFTPAREN RIGHTPAREN
-// %token   <Yytoken>LESSTHAN GREATERTHAN DOUBLEEQ LESSTHANOREQ GREATERTHANOREQ NOTEQ
-// %token   <Yytoken>AND OR NOT 
-// %token   <Yytoken>PLUS MINUS MULT DIVIDE MOD
-// %token <Yytoken> NUMBER WORD
-// %token END O "end of file"
+%token <Yytoken> INT BOOL STRING VOID
+%token  <Yytoken> IDENTIFIER 
+%token  <Yytoken> COMMENT
+%token  <Yytoken> TRUE FALSE 
+%token  <Yytoken> IF THEN ELSE FOR STRUCT
+%token   <Yytoken>RETURN PRINTF 
+%token   <Yytoken>SEMICOLON COMMA
+%token   <Yytoken>EQ ATTRIBUTE
+%token   <Yytoken>RBRACKET LBRACKET LEFTPAREN RIGHTPAREN
+%token   <Yytoken>LESSTHAN GREATERTHAN DOUBLEEQ LESSTHANOREQ GREATERTHANOREQ NOTEQ
+%token   <Yytoken>AND OR NOT 
+%token   <Yytoken>PLUS MINUS MULT DIVIDE MOD
+%token <Yytoken> NUMBER WORD
+%token END O "end of file"
 
-/*
+
 %nonassoc LESSTHAN GREATERTHAN GREATERTHANOREQ LESSTHANOREQ DOUBLEEQ NOTEQ
 %left MULT DIVIDE 
 %left PLUS MINUS
 %nonassoc NOT AND OR MOD
 
 %left ATTRIBUTE
-*/
-%token STRING 
-%token IDENTIFIER
+
 
 %type declaration
 /*
