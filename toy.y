@@ -1438,7 +1438,7 @@ public static void main(String[] args) throws IOException {
      System.err.println(s);
      }
     
-     //mYytoken yylval;
+     Yytoken token;
      
      @Override
       public Object getLVal() {
@@ -1447,13 +1447,17 @@ public static void main(String[] args) throws IOException {
 
      
 
+    
       @Override
       public int yylex () throws IOException{
-         int token = (yylex.yylex()).getToken();
-         return token;
-        
-      }
+         token = (yylex.yylex());
+         if(token != null){
+            return token.getToken();
+         }else{
+            return 0;
+         }
     }
+}
     
 /*
 to get the string name Yytoken.getValue();
