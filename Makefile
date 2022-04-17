@@ -3,7 +3,7 @@ default:
 	jflex ToY.l 
 	bison ToY.y -L java '-Wcounterexamples'
 	javac *.java -Xdiags:verbose 
-	
+	java ToY Test.txt
 
 	
 clean:

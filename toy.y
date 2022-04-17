@@ -165,7 +165,7 @@ public static void main(String[] args) throws IOException {
     | stmt stmts 
     ;
 */
-    declaration: type IDENTIFIER 
+    declaration: STRING IDENTIFIER 
     ;
 /*
     stmt : FOR LEFTPAREN IDENTIFIER EQ exp SEMICOLON exp SEMICOLON stmt RIGHTPAREN LBRACKET stmts RBRACKET 
