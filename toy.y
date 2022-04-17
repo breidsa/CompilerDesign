@@ -123,7 +123,7 @@ public static void main(String[] args) throws IOException {
 
 
 %type declaration
-/*
+
 %type  type
 %type  returnType
 %type  struct
@@ -136,7 +136,7 @@ public static void main(String[] args) throws IOException {
 %type  pgm
 %type  recursePgm
 %type  exp
-*/
+
 
 
 /* ----------------- Bison Grammar ---------------- */
@@ -186,6 +186,7 @@ public static void main(String[] args) throws IOException {
     | LBRACKET stmtSeq RBRACKET 
     | type IDENTIFIER SEMICOLON  
     | IDENTIFIER EQ exp SEMICOLON 
+    | IDENTIFIER EQ exp  
     | IDENTIFIER ATTRIBUTE Lexp EQ exp SEMICOLON 
     | IDENTIFIER LEFTPAREN paramList RIGHTPAREN SEMICOLON
     | IDENTIFIER EQ IDENTIFIER LEFTPAREN paramList RIGHTPAREN SEMICOLON
@@ -214,6 +215,7 @@ public static void main(String[] args) throws IOException {
     | WORD 
     | TRUE
     | FALSE
+    | IDENTIFIER
     | exp PLUS exp 
     | exp MINUS exp
     | exp MULT exp  
@@ -227,7 +229,6 @@ public static void main(String[] args) throws IOException {
     | exp GREATERTHANOREQ exp 
     | exp LESSTHANOREQ exp 
     | exp NOTEQ exp 
-    | IDENTIFIER EQ exp 
     | NOT exp 
     | MINUS exp 
     | LEFTPAREN exp RIGHTPAREN 
@@ -1439,7 +1440,6 @@ public static void main(String[] args) throws IOException {
    
       yylex = new Yylex(it);
 
-      System.out.println("Does it reach here????");
      }
 
     

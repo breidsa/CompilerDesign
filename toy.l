@@ -35,7 +35,7 @@ class Yytoken {
 StringBuffer stringBuffer = new StringBuffer();
 StringBuffer intBuffer = new StringBuffer();
 
-
+/*
 public static void main(String[] args) throws FileNotFoundException, IOException{
             FileReader yyin = new FileReader(args[0]);
             Yylex yy = new Yylex(yyin);
@@ -44,6 +44,7 @@ public static void main(String[] args) throws FileNotFoundException, IOException
                 System.out.println(t.type);
             System.out.println("VALID");
 }
+*/
 
 %}
 
