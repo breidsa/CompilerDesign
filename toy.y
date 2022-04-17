@@ -40,6 +40,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StreamTokenizer;
+import java.io.*;
 import java.util.*;
 import java.util.HashMap;
 import java.util.ArrayList;
@@ -58,11 +59,20 @@ import java.util.ArrayList;
 
 
 public static void main(String[] args) throws IOException {
-        ToYLexer l = new ToYLexer(System.in);
+        File initialFile = new File(args[0]);
+        InputStream targetStream = new FileInputStream(initialFile);
+        BufferedReader br = new BufferedReader(new FileReader(initialFile));
+        String line;
+        while ((line = br.readLine()) != null) {
+        System.out.println(line);
+        }
+        ToYLexer l = new ToYLexer(targetStream);
         ToY p = new ToY(l);
         if (!p.parse()){
             System.out.println("INVALID");
-        } 
+        } else{
+        System.out.println("VAlID SYNTAX");
+        }
 }
     // FileReader yyin = new FileReader(args[0]);
     // System.out.println(args[0]);
@@ -131,11 +141,11 @@ public static void main(String[] args) throws IOException {
 
 /* ----------------- Bison Grammar ---------------- */
 
-// %start pgm
-%start declaration
+%start pgm
+
 
 %%  
-/*
+
     pgm : function recursePgm 
     | struct pgm 
     ; 
@@ -164,10 +174,10 @@ public static void main(String[] args) throws IOException {
     stmts :
     | stmt stmts 
     ;
-*/
-    declaration: STRING IDENTIFIER 
+
+    declaration: type IDENTIFIER 
     ;
-/*
+
     stmt : FOR LEFTPAREN IDENTIFIER EQ exp SEMICOLON exp SEMICOLON stmt RIGHTPAREN LBRACKET stmts RBRACKET 
     | IF LEFTPAREN exp RIGHTPAREN LBRACKET stmts RBRACKET 
     | IF LEFTPAREN exp RIGHTPAREN LBRACKET stmts RBRACKET ELSE LBRACKET stmt RBRACKET 
@@ -226,7 +236,7 @@ public static void main(String[] args) throws IOException {
     Lexp : IDENTIFIER 
     | IDENTIFIER ATTRIBUTE Lexp 
     ;
-    */
+
     
 //START COMMENT OUT
 
@@ -1426,6 +1436,7 @@ public static void main(String[] args) throws IOException {
 
     public ToYLexer(InputStream is){
       it = new InputStreamReader(is);
+   
       yylex = new Yylex(it);
 
       System.out.println("Does it reach here????");
@@ -1442,7 +1453,7 @@ public static void main(String[] args) throws IOException {
      
      @Override
       public Object getLVal() {
-         return null;
+         return token;
       }
 
      

@@ -1,4 +1,3 @@
 void main(){
     string x;
-    x = 3;
 }
