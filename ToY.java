@@ -996,7 +996,7 @@ public class ToY
     return yyvalue == yytable_ninf_;
   }
 
-  private static final short yypact_ninf_ = -54;
+  private static final short yypact_ninf_ = -92;
   private static final short yytable_ninf_ = -1;
 
 /* YYPACT[STATE-NUM] -- Index in YYTABLE of the portion describing
@@ -1006,21 +1006,21 @@ public class ToY
   {
     return new short[]
     {
-       7,   -54,   -54,   -54,   -54,    29,    39,     7,     7,   -54,
-      36,    45,   -54,   -54,     7,     7,   -54,    47,    62,   -54,
-     -54,    62,    51,    50,    67,    56,    60,   -54,    62,   -54,
-      52,    62,   -54,   197,   -54,    26,    58,    59,    -3,    68,
-     197,    74,   197,    93,     8,    95,    -3,    -3,    96,   -54,
-     -54,   -54,    -3,    -3,    -3,   -54,   -54,    81,   100,    87,
-      99,   -54,   -54,   104,   114,    97,   116,   133,   144,   160,
-     196,   134,   211,   -30,     2,   -54,    -3,    -3,    -3,    -3,
-      -3,    -3,    -3,    -3,    -3,    -3,    -3,    -3,    -3,   169,
-     197,   -54,   -54,    -3,   -54,    95,    -3,   152,    -3,   162,
-      -3,   -54,   225,   225,   225,   225,   225,   225,   -30,   -30,
-       2,     2,    54,    54,   -30,   185,   -54,   180,   -54,   113,
-     -54,   -54,   197,   129,   -54,   188,   -54,   187,    -3,   -54,
-     194,   145,   189,   197,   197,   190,   195,   193,   -54,   197,
-     208,   -54
+       8,   -92,   -92,   -92,   -92,    13,    37,     8,     8,   -92,
+      40,    28,   -92,   -92,     8,     8,   -92,    46,    23,   -92,
+     -92,    23,    57,    65,    78,    61,    70,   -92,    23,   -92,
+      67,    23,   -92,   200,   -92,    20,   -92,    68,    69,    -2,
+      71,   200,    74,   200,    92,     9,    96,    -2,    -2,    98,
+     -92,   -92,   -92,    -2,    -2,    -2,   -92,   -92,    84,    41,
+      87,    85,   -92,   -92,    91,   101,   100,   103,   120,   131,
+     163,   199,   121,   214,     3,    44,   -92,    -2,    -2,    -2,
+      -2,    -2,    -2,    -2,    -2,    -2,    -2,    -2,    -2,    -2,
+     147,   172,   200,   -92,   -92,    -2,   -92,    96,    -2,   139,
+      -2,   150,    -2,   -92,   228,   228,   228,   228,   228,   228,
+       3,     3,    44,    44,    36,    36,     3,   170,   188,   -92,
+     184,   -92,   116,   -92,   -92,   200,   132,   -92,   -92,   192,
+     -92,   190,    -2,   -92,   202,   148,   195,   200,   200,   194,
+     191,   197,   -92,   200,   211,   -92
     };
   }
 
@@ -1032,21 +1032,21 @@ public class ToY
   {
     return new byte[]
     {
-       0,    33,    34,    35,    37,     0,     0,     4,     0,    36,
+       0,    35,    36,    37,    39,     0,     0,     4,     0,    38,
        0,     0,     1,     2,     4,     4,     3,     0,     0,     5,
        6,     9,     0,    12,     0,     0,    10,     8,     0,    16,
-       0,     0,    13,    14,    11,     0,     0,     0,     0,     0,
-      31,     0,    14,     0,     0,     0,    29,     0,     0,    42,
-      40,    41,     0,     0,     0,    38,    39,     0,     0,     0,
-       0,     7,    15,     0,    42,    25,    59,     0,     0,     0,
-       0,     0,     0,    56,    57,    21,     0,     0,     0,     0,
+       0,     0,    13,    14,    11,     0,    30,     0,     0,     0,
+       0,    33,     0,    14,     0,     0,     0,    31,     0,     0,
+      44,    42,    43,     0,     0,     0,    40,    41,     0,     0,
+       0,     0,     7,    15,     0,    44,    26,    61,     0,     0,
+       0,     0,     0,     0,    58,    59,    22,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-      31,    22,    23,    29,    24,     0,     0,     0,    29,     0,
-       0,    58,    52,    51,    50,    54,    53,    55,    48,    49,
-      43,    44,    45,    46,    47,     0,    32,     0,    60,     0,
-      27,    30,    14,     0,    20,     0,    26,     0,     0,    28,
-      18,     0,     0,     0,     0,     0,     0,     0,    19,    14,
-       0,    17
+       0,     0,    33,    23,    24,    31,    25,     0,     0,     0,
+      31,     0,     0,    60,    54,    53,    52,    56,    55,    57,
+      50,    51,    45,    46,    47,    48,    49,     0,     0,    34,
+       0,    62,     0,    28,    32,    14,     0,    20,    21,     0,
+      27,     0,     0,    29,    18,     0,     0,     0,     0,     0,
+       0,     0,    19,    14,     0,    17
     };
   }
 
@@ -1056,8 +1056,8 @@ public class ToY
   {
     return new short[]
     {
-     -54,   202,    11,    16,    19,   -54,   -23,   -42,   198,   -39,
-     -53,   128,    70,   -54,   -24,   150
+     -92,   213,    52,     2,    17,   -92,   -25,   -43,   201,   -40,
+     -91,   156,    73,   -92,   -24,   165
     };
   }
 
@@ -1067,8 +1067,8 @@ public class ToY
   {
     return new byte[]
     {
-       0,     6,    13,    14,    15,    25,    22,    41,    23,    42,
-      68,    60,    43,    10,    69,    67
+       0,     6,    13,    14,    15,    25,    22,    42,    23,    43,
+      69,    61,    44,    10,    70,    68
     };
   }
 
@@ -1080,33 +1080,33 @@ public class ToY
   {
     return new short[]
     {
-      62,    59,    -1,    -1,    49,    32,    50,    51,    34,    -1,
-       1,     2,     3,     4,    57,    64,     7,    50,    51,     8,
-      65,    52,     5,    70,     7,    19,    20,     8,    72,    73,
-      74,    53,    52,    54,    82,    83,    11,    55,    56,    12,
-     117,    88,    53,    17,    54,   121,    44,    45,    55,    56,
-      46,    59,   102,   103,   104,   105,   106,   107,   108,   109,
-     110,   111,   112,   113,   114,     1,     2,     3,    18,    28,
-       9,    21,   119,    27,    29,    33,   123,     9,     9,    31,
-     127,    30,    47,    48,     9,     9,    82,    83,    24,    84,
-      85,    24,    58,    88,   135,   136,    61,   140,    24,    75,
-      63,    24,    66,    71,   131,    89,    90,    76,    77,    78,
-      79,    80,    81,    82,    83,    94,    84,    85,    86,    87,
-      88,    91,    92,    76,    77,    78,    79,    80,    81,    82,
-      83,   126,    84,    85,    86,    87,    88,    95,    93,    76,
-      77,    78,    79,    80,    81,    82,    83,   128,    84,    85,
-      86,    87,    88,    96,   100,    76,    77,    78,    79,    80,
-      81,    82,    83,   133,    84,    85,    86,    87,    88,    97,
-     120,    76,    77,    78,    79,    80,    81,    82,    83,    98,
-      84,    85,    86,    87,    88,   122,    76,    77,    78,    79,
-      80,    81,    82,    83,   115,    84,    85,    86,    87,    88,
-       1,     2,     3,   124,    35,   125,   129,   132,    36,   130,
-      16,    37,   134,    38,    39,   137,   139,   138,   116,    26,
-      40,    99,    76,    77,    78,    79,    80,    81,    82,    83,
-     141,    84,    85,    86,    87,    88,   101,    76,    77,    78,
-      79,    80,    81,    82,    83,   118,    84,    85,    86,    87,
-      88,    -1,    -1,    -1,    -1,    -1,    -1,    82,    83,     0,
-      84,    85,    86,    87,    88
+      63,    60,     7,    32,   120,    50,    34,    51,    52,   124,
+       7,     1,     2,     3,     4,    58,    65,     8,    51,    52,
+      11,    66,    53,     5,    71,     8,     1,     2,     3,    73,
+      74,    75,    54,    53,    55,    -1,    -1,    12,    56,    57,
+      45,    46,    -1,    54,    47,    55,    90,    17,    91,    56,
+      57,    18,    60,   104,   105,   106,   107,   108,   109,   110,
+     111,   112,   113,   114,   115,   116,    19,    20,    83,    84,
+      21,    85,    86,     9,   122,    89,    83,    84,   126,    27,
+       9,     9,   131,    89,    28,    29,    30,     9,     9,    31,
+      33,    24,    48,    49,    24,    59,    62,   139,   140,    64,
+     144,    24,    76,    67,    24,    72,    92,    93,   135,    94,
+      77,    78,    79,    80,    81,    82,    83,    84,    96,    85,
+      86,    87,    88,    89,    97,    95,    77,    78,    79,    80,
+      81,    82,    83,    84,   130,    85,    86,    87,    88,    89,
+      98,   102,    77,    78,    79,    80,    81,    82,    83,    84,
+     132,    85,    86,    87,    88,    89,    99,   123,    77,    78,
+      79,    80,    81,    82,    83,    84,   137,    85,    86,    87,
+      88,    89,   117,   125,    77,    78,    79,    80,    81,    82,
+      83,    84,   100,    85,    86,    87,    88,    89,   127,    77,
+      78,    79,    80,    81,    82,    83,    84,   118,    85,    86,
+      87,    88,    89,     1,     2,     3,   128,    35,    36,   129,
+     133,    37,   134,   142,    38,   136,    39,    40,   138,   141,
+     143,    16,    26,    41,   101,    77,    78,    79,    80,    81,
+      82,    83,    84,   145,    85,    86,    87,    88,    89,   103,
+      77,    78,    79,    80,    81,    82,    83,    84,   119,    85,
+      86,    87,    88,    89,    -1,    -1,    -1,    -1,    -1,    -1,
+      83,    84,   121,    85,    86,    87,    88,    89
     };
   }
 
@@ -1115,33 +1115,33 @@ private static final short[] yycheck_ = yycheck_init();
   {
     return new short[]
     {
-      42,    40,    32,    33,     7,    28,     9,    10,    31,    39,
-       3,     4,     5,     6,    38,     7,     0,     9,    10,     0,
-      44,    24,    15,    47,     8,    14,    15,     8,    52,    53,
-      54,    34,    24,    36,    32,    33,     7,    40,    41,     0,
-      93,    39,    34,     7,    36,    98,    20,    21,    40,    41,
-      24,    90,    76,    77,    78,    79,    80,    81,    82,    83,
-      84,    85,    86,    87,    88,     3,     4,     5,    23,    19,
-       0,    24,    96,    22,     7,    23,   100,     7,     8,    19,
-     122,    25,    24,    24,    14,    15,    32,    33,    18,    35,
-      36,    21,    24,    39,   133,   134,    22,   139,    28,    18,
-       7,    31,     7,     7,   128,     5,    19,    26,    27,    28,
-      29,    30,    31,    32,    33,    18,    35,    36,    37,    38,
-      39,    22,    18,    26,    27,    28,    29,    30,    31,    32,
-      33,    18,    35,    36,    37,    38,    39,    21,    24,    26,
-      27,    28,    29,    30,    31,    32,    33,    18,    35,    36,
-      37,    38,    39,    20,    20,    26,    27,    28,    29,    30,
-      31,    32,    33,    18,    35,    36,    37,    38,    39,    25,
-      18,    26,    27,    28,    29,    30,    31,    32,    33,    19,
-      35,    36,    37,    38,    39,    23,    26,    27,    28,    29,
-      30,    31,    32,    33,    25,    35,    36,    37,    38,    39,
-       3,     4,     5,    18,     7,    25,    18,    13,    11,    22,
-       8,    14,    23,    16,    17,    25,    23,    22,    90,    21,
-      23,    25,    26,    27,    28,    29,    30,    31,    32,    33,
-      22,    35,    36,    37,    38,    39,    25,    26,    27,    28,
-      29,    30,    31,    32,    33,    95,    35,    36,    37,    38,
-      39,    26,    27,    28,    29,    30,    31,    32,    33,    -1,
-      35,    36,    37,    38,    39
+      43,    41,     0,    28,    95,     7,    31,     9,    10,   100,
+       8,     3,     4,     5,     6,    39,     7,     0,     9,    10,
+       7,    45,    24,    15,    48,     8,     3,     4,     5,    53,
+      54,    55,    34,    24,    36,    32,    33,     0,    40,    41,
+      20,    21,    39,    34,    24,    36,     5,     7,     7,    40,
+      41,    23,    92,    77,    78,    79,    80,    81,    82,    83,
+      84,    85,    86,    87,    88,    89,    14,    15,    32,    33,
+      24,    35,    36,     0,    98,    39,    32,    33,   102,    22,
+       7,     8,   125,    39,    19,     7,    25,    14,    15,    19,
+      23,    18,    24,    24,    21,    24,    22,   137,   138,     7,
+     143,    28,    18,     7,    31,     7,    19,    22,   132,    18,
+      26,    27,    28,    29,    30,    31,    32,    33,    18,    35,
+      36,    37,    38,    39,    21,    24,    26,    27,    28,    29,
+      30,    31,    32,    33,    18,    35,    36,    37,    38,    39,
+      20,    20,    26,    27,    28,    29,    30,    31,    32,    33,
+      18,    35,    36,    37,    38,    39,    25,    18,    26,    27,
+      28,    29,    30,    31,    32,    33,    18,    35,    36,    37,
+      38,    39,    25,    23,    26,    27,    28,    29,    30,    31,
+      32,    33,    19,    35,    36,    37,    38,    39,    18,    26,
+      27,    28,    29,    30,    31,    32,    33,    25,    35,    36,
+      37,    38,    39,     3,     4,     5,    18,     7,     8,    25,
+      18,    11,    22,    22,    14,    13,    16,    17,    23,    25,
+      23,     8,    21,    23,    25,    26,    27,    28,    29,    30,
+      31,    32,    33,    22,    35,    36,    37,    38,    39,    25,
+      26,    27,    28,    29,    30,    31,    32,    33,    92,    35,
+      36,    37,    38,    39,    26,    27,    28,    29,    30,    31,
+      32,    33,    97,    35,    36,    37,    38,    39
     };
   }
 
@@ -1155,18 +1155,18 @@ private static final short[] yycheck_ = yycheck_init();
        0,     3,     4,     5,     6,    15,    45,    47,    48,    56,
       57,     7,     0,    46,    47,    48,    45,     7,    23,    46,
       46,    24,    50,    52,    56,    49,    52,    22,    19,     7,
-      25,    19,    50,    23,    50,     7,    11,    14,    16,    17,
-      23,    51,    53,    56,    20,    21,    24,    24,    24,     7,
-       9,    10,    24,    34,    36,    40,    41,    58,    24,    53,
-      55,    22,    51,     7,     7,    58,     7,    59,    54,    58,
-      58,     7,    58,    58,    58,    18,    26,    27,    28,    29,
-      30,    31,    32,    33,    35,    36,    37,    38,    39,     5,
-      19,    22,    18,    24,    18,    21,    20,    25,    19,    25,
-      20,    25,    58,    58,    58,    58,    58,    58,    58,    58,
-      58,    58,    58,    58,    58,    25,    55,    54,    59,    58,
-      18,    54,    23,    58,    18,    25,    18,    51,    18,    18,
-      22,    58,    13,    18,    23,    53,    53,    25,    22,    23,
-      51,    22
+      25,    19,    50,    23,    50,     7,     8,    11,    14,    16,
+      17,    23,    51,    53,    56,    20,    21,    24,    24,    24,
+       7,     9,    10,    24,    34,    36,    40,    41,    58,    24,
+      53,    55,    22,    51,     7,     7,    58,     7,    59,    54,
+      58,    58,     7,    58,    58,    58,    18,    26,    27,    28,
+      29,    30,    31,    32,    33,    35,    36,    37,    38,    39,
+       5,     7,    19,    22,    18,    24,    18,    21,    20,    25,
+      19,    25,    20,    25,    58,    58,    58,    58,    58,    58,
+      58,    58,    58,    58,    58,    58,    58,    25,    25,    55,
+      54,    59,    58,    18,    54,    23,    58,    18,    18,    25,
+      18,    51,    18,    18,    22,    58,    13,    18,    23,    53,
+      53,    25,    22,    23,    51,    22
     };
   }
 
@@ -1178,11 +1178,11 @@ private static final short[] yycheck_ = yycheck_init();
     {
        0,    44,    45,    45,    46,    46,    46,    47,    48,    49,
       49,    49,    50,    50,    51,    51,    52,    53,    53,    53,
-      53,    53,    53,    53,    53,    53,    53,    53,    53,    54,
-      54,    55,    55,    56,    56,    56,    57,    57,    58,    58,
+      53,    53,    53,    53,    53,    53,    53,    53,    53,    53,
+      53,    54,    54,    55,    55,    56,    56,    56,    57,    57,
       58,    58,    58,    58,    58,    58,    58,    58,    58,    58,
-      58,    58,    58,    58,    58,    58,    58,    58,    58,    59,
-      59
+      58,    58,    58,    58,    58,    58,    58,    58,    58,    58,
+      58,    59,    59
     };
   }
 
@@ -1194,11 +1194,11 @@ private static final short[] yycheck_ = yycheck_init();
     {
        0,     2,     2,     2,     0,     2,     2,     8,     5,     0,
        1,     3,     1,     3,     0,     2,     2,    13,     7,    11,
-       5,     3,     3,     3,     4,     3,     6,     5,     7,     0,
-       3,     0,     3,     1,     1,     1,     1,     1,     1,     1,
-       1,     1,     1,     3,     3,     3,     3,     3,     3,     3,
-       3,     3,     3,     3,     3,     3,     2,     2,     3,     1,
-       3
+       5,     5,     3,     3,     3,     4,     3,     6,     5,     7,
+       1,     0,     3,     0,     3,     1,     1,     1,     1,     1,
+       1,     1,     1,     1,     1,     3,     3,     3,     3,     3,
+       3,     3,     3,     3,     3,     3,     3,     3,     2,     2,
+       3,     1,     3
     };
   }
 
@@ -1257,7 +1257,7 @@ private static final short[] yycheck_ = yycheck_init();
   }
 
 
-  private static final int YYLAST_ = 264;
+  private static final int YYLAST_ = 267;
   private static final int YYEMPTY_ = -2;
   private static final int YYFINAL_ = 12;
   private static final int YYNTOKENS_ = 44;
@@ -1314,1051 +1314,1041 @@ public static void main(String[] args) throws IOException {
 /* "ToY.java":1315  */
 
 }
-/* "ToY.y":382  */
+/* "ToY.y":384  */
 
 /* ------------------------------------------------------- */
 /*                       Start of AST                      */
 /* ------------------------------------------------------- */
 
-//TODO COMMENTED OUT AST
+
 // public ASTNode ast;
 
 // public ASTNode getAST(){
 // 	return ast;
 // }
 
-// Asbstract syntax tree base class.  
-// methods: accept
-//          accept method will call the Visitor class, will accept a node if deemed "correct" by semantic analysis 
-//          this method will be applied in all subclasses that create nodes
 
-// we honestly might not need accept?  If we're just returning true and false for all the visit classes...I want to go back and read the textbook for this.
-// WAIT. I JUST GOOGLED IT.  ACCEPT IS WHAT DOES THE TYPE CONVERSION (CASTING) FOR US.  SO THIS WILL FIX THAT FORLOOP AND IF STATEMENT PROBLEM (i think)
-// This is the link I used: https://stackoverflow.com/questions/9132178/what-is-the-point-of-accept-method-in-visitor-pattern#:~:text=So%2C%20accept()%20performs%20the,is%20without%20the%20accept%20method.
+abstract class ASTNode {
+    public abstract Object accept(Visitor v);  /* This may have to be type ID...not sure */
+    // might need children nodes
+}
 
+class StmtList extends ASTNode{
+	// stmtLists are ArrayList<Object>s, but are used in classes that create ASTNodes, so an Array<List> in this case is an ASTNode.
+    ArrayList<Object> stmts;
 
+    public StmtList() {
+        stmts = new ArrayList<Object>();
+    }
 
-// abstract class ASTNode {
-//     public abstract Object accept(Visitor v);  /* This may have to be type ID...not sure */
-//     // might need children nodes
-// }
+    public void addElement(Object n) {
+        stmts.add(n);
+    }
 
-// class StmtList extends ASTNode{
-// 	// stmtLists are ArrayList<Object>s, but are used in classes that create ASTNodes, so an Array<List> in this case is an ASTNode.
-//     ArrayList<Object> stmts;
+    public int getSize(){
+        return stmts.size();
+    }
 
-//     public StmtList() {
-//         stmts = new ArrayList<Object>();
-//     }
+    public Object elementAt(int i) {
+        return stmts.get(i);
+    }
+    // public int size() {
+    // return stmts.size();
+    // }
+    @Override
+    public Object accept(Visitor v) {
+        return v.visit(this);
+    }
+}
 
-//     public void addElement(Object n) {
-//         stmts.add(n);
-//     }
+/* ----------------- AST Expression Subclasses ---------------- */
+/* ------------------------------------------------------------ */
 
-//     public int getSize(){
-//         return stmts.size();
-//     }
+// Arithmetic Class that extends the ASTNode class
+// creates two Nodes, the left and right sides of an arithmetic statement
+// constructor allows semantic actions to initialize nodes
+class Arithmetic extends ASTNode {
+    public Object left, right, op;
 
-//     public Object elementAt(int i) {
-//         return stmts.get(i);
-//     }
-//     // public int size() {
-//     // return stmts.size();
-//     // }
-//     @Override
-//     public Object accept(Visitor v) {
-//         return v.visit(this);
-//     }
-// }
+    public Arithmetic(Object left, Object op, Object right) {
+        this.left = left;
+        this.right = right;
+        this.op = op;
+    }
 
-// /* ----------------- AST Expression Subclasses ---------------- */
-// /* ------------------------------------------------------------ */
+    public Object getLeft(){
+        return this.left;
+    }
 
-// // Arithmetic Class that extends the ASTNode class
-// // creates two Nodes, the left and right sides of an arithmetic statement
-// // constructor allows semantic actions to initialize nodes
-// class Arithmetic extends ASTNode {
-//     public Object left, right, op;
+    public Object getRight(){
+        return this.right;
+    }
 
-//     public Arithmetic(Object left, Object op, Object right) {
-//         this.left = left;
-//         this.right = right;
-//         this.op = op;
-//     }
+    public Object getOp(){
+        return this.op;
+    }
 
-//     public Object getLeft(){
-//         return this.left;
-//     }
+    @Override
+    public Object accept(Visitor v) {
+        return v.visit(this);
+    }
+}
 
-//     public Object getRight(){
-//         return this.right;
-//     }
+class Logic extends ASTNode {
+    public Object left, right, op;
 
-//     public Object getOp(){
-//         return this.op;
-//     }
+    public Logic(Object left, Object op, Object right) {
+        this.left = left;
+        this.right = right;
+        this.op = op;
+    }
 
-//     @Override
-//     public Object accept(Visitor v) {
-//         return v.visit(this);
-//     }
-// }
+    public Object getLeft(){
+        return this.left;
+    }
 
-// class Logic extends ASTNode {
-//     public Object left, right, op;
+    public Object getRight(){
+        return this.right;
+    }
 
-//     public Logic(Object left, Object op, Object right) {
-//         this.left = left;
-//         this.right = right;
-//         this.op = op;
-//     }
+    public Object getOp(){
+        return this.op;
+    }
 
-//     public Object getLeft(){
-//         return this.left;
-//     }
+    @Override
+    public Object accept(Visitor v) {
+        return v.visit(this);
+    }
+}
 
-//     public Object getRight(){
-//         return this.right;
-//     }
+// Conditions class that extends the ASTNode class
+// creates two Nodes, the left and right sides of a conditional statement
+// constructor allows semantic actions to initialize nodes
+class Conditions extends ASTNode {
+    public Object left, op, right;
 
-//     public Object getOp(){
-//         return this.op;
-//     }
+    public Conditions(Object left, Object op, Object right) {
+        this.left = left;
+        this.op = op;
+        this.right = right;
+    }
 
-//     @Override
-//     public Object accept(Visitor v) {
-//         return v.visit(this);
-//     }
-// }
+    public Object getLeft(){
+        return this.left;
+    } 
 
-// // Conditions class that extends the ASTNode class
-// // creates two Nodes, the left and right sides of a conditional statement
-// // constructor allows semantic actions to initialize nodes
-// class Conditions extends ASTNode {
-//     public Object left, op, right;
+    public Object getRight(){
+        return this.right;
+    }
 
-//     public Conditions(Object left, Object op, Object right) {
-//         this.left = left;
-//         this.op = op;
-//         this.right = right;
-//     }
+    public Object getOp(){
+        return this.op;
+    }
 
-//     public Object getLeft(){
-//         return this.left;
-//     } 
+    @Override
+    public Object accept(Visitor v) {
+        return v.visit(this);
+    }
+}
 
-//     public Object getRight(){
-//         return this.right;
-//     }
+// UnaryOperators class that extends the ASTNode class
+// creates one Node, the right statement of a unary expression
+// constructor allows semantic actions to initialize nodes
+class UnaryOperators extends ASTNode {
+    public Object op, right;
 
-//     public Object getOp(){
-//         return this.op;
-//     }
+    public UnaryOperators(Object op, Object right) {
+        this.op = op;
+        this.right = right;
+    }
 
-//     @Override
-//     public Object accept(Visitor v) {
-//         return v.visit(this);
-//     }
-// }
+    public Object getRight(){
+        return this.right;
+    }
 
-// // UnaryOperators class that extends the ASTNode class
-// // creates one Node, the right statement of a unary expression
-// // constructor allows semantic actions to initialize nodes
-// class UnaryOperators extends ASTNode {
-//     public Object op, right;
+    public Object getOp(){
+        return this.op;
+    }
+    @Override
+    public Object accept(Visitor v) {
+        return v.visit(this);
+    }
+}
 
-//     public UnaryOperators(Object op, Object right) {
-//         this.op = op;
-//         this.right = right;
-//     }
+// EndFunctions class that extends the ASTNode class
+// Used for return and print functions
+// creates one node, the expression to be printed or returned
+// constructor allows semantic actions to initialize nodes
+class EndFunction extends ASTNode {
+    Object type;
+    Object exp;
 
-//     public Object getRight(){
-//         return this.right;
-//     }
+    public EndFunction(Object type, Object exp) {
+        this.type = type;   
+        this.exp = exp;
+    }
 
-//     public Object getOp(){
-//         return this.op;
-//     }
-//     @Override
-//     public Object accept(Visitor v) {
-//         return v.visit(this);
-//     }
-// }
+    public Object getType(){
+        return this.type;
+    }
 
-// // EndFunctions class that extends the ASTNode class
-// // Used for return and print functions
-// // creates one node, the expression to be printed or returned
-// // constructor allows semantic actions to initialize nodes
-// class EndFunction extends ASTNode {
-//     Object type;
-//     Object exp;
+    public Object getExp(){
+        return this.exp;
+    }
+    @Override
+    public Object accept(Visitor v) {
+        return v.visit(this);
+    }
 
-//     public EndFunction(Object type, Object exp) {
-//         this.type = type;   
-//         this.exp = exp;
-//     }
+}
 
-//     public Object getType(){
-//         return this.type;
-//     }
+/* ----------------- AST Statement/Method subclasses ---------------- */
+/* ------------------------------------------------------------------ */
 
-//     public Object getExp(){
-//         return this.exp;
-//     }
-//     @Override
-//     public Object accept(Visitor v) {
-//         return v.visit(this);
-//     }
+// ForLoop class that extends the ASTNode class
+// creates four nodes, the for loop iterator, it's conditional, its
+// incrementation statement, and the loop body
+// constructor allows semantic actions to initialize nodes
+class ForLoop extends ASTNode {
 
-// }
+    Object iterator;
+    Object conditional;
+    Object increment;
+    StmtList body;
 
-// /* ----------------- AST Statement/Method subclasses ---------------- */
-// /* ------------------------------------------------------------------ */
+    public ForLoop(Object iterator, Object conditional, Object increment, StmtList body) {
+        this.iterator = iterator;
+        this.conditional = conditional;
+        this.increment = increment;
+        this.body = body;
+    }
 
-// // ForLoop class that extends the ASTNode class
-// // creates four nodes, the for loop iterator, it's conditional, its
-// // incrementation statement, and the loop body
-// // constructor allows semantic actions to initialize nodes
-// class ForLoop extends ASTNode {
+    public Object getIterator(){
+        return this.iterator;
+    }
 
-//     Object iterator;
-//     Object conditional;
-//     Object increment;
-//     StmtList body;
+    public Object getConditional(){
+        return this.conditional;
+    }
 
-//     public ForLoop(Object iterator, Object conditional, Object increment, StmtList body) {
-//         this.iterator = iterator;
-//         this.conditional = conditional;
-//         this.increment = increment;
-//         this.body = body;
-//     }
+    public Object getIncrement(){
+        return this.increment;
+    }
 
-//     public Object getIterator(){
-//         return this.iterator;
-//     }
+    public Object getBody(){
+        return this.body;
+    }
 
-//     public Object getConditional(){
-//         return this.conditional;
-//     }
+    @Override
+    public Object accept(Visitor v) {
+        return v.visit(this);
+    }
 
-//     public Object getIncrement(){
-//         return this.increment;
-//     }
+}
 
-//     public Object getBody(){
-//         return this.body;
-//     }
+// IfStmt class that extends the ASTNode class
+// creates three nodes, the if statment conditional, the if statment body, and
+// the else statement
+// else statement can bc a null pointer, in which case only 2 nodes are created
+// constructor allows semantic actions to initialize nodes
+class IfStmt extends ASTNode {
 
-//     @Override
-//     public Object accept(Visitor v) {
-//         return v.visit(this);
-//     }
+    Object conditional;
+    StmtList ifBody;
+    StmtList elseBody;
 
-// }
+    public IfStmt(Object conditional, StmtList ifBody, StmtList elseBody) {
+        this.conditional = conditional;
+        this.ifBody = ifBody;
+        this.elseBody = elseBody;
+    }
 
-// // IfStmt class that extends the ASTNode class
-// // creates three nodes, the if statment conditional, the if statment body, and
-// // the else statement
-// // else statement can bc a null pointer, in which case only 2 nodes are created
-// // constructor allows semantic actions to initialize nodes
-// class IfStmt extends ASTNode {
+    public Object getConditional(){
+        return this.conditional;
+    }
 
-//     Object conditional;
-//     StmtList ifBody;
-//     StmtList elseBody;
+    public Object getIfBody(){
+        return this.ifBody;
+    }
 
-//     public IfStmt(Object conditional, StmtList ifBody, StmtList elseBody) {
-//         this.conditional = conditional;
-//         this.ifBody = ifBody;
-//         this.elseBody = elseBody;
-//     }
+    public Object getElseBody(){
+        return this.elseBody;
+    }
 
-//     public Object getConditional(){
-//         return this.conditional;
-//     }
+    @Override
+    public Object accept(Visitor v) {
+        return v.visit(this);
+    }
 
-//     public Object getIfBody(){
-//         return this.ifBody;
-//     }
+}
 
-//     public Object getElseBody(){
-//         return this.elseBody;
-//     }
+/* ----------------- AST Variable Subclasses ---------------- */
+/* ---------------------------------------------------------- */
 
-//     @Override
-//     public Object accept(Visitor v) {
-//         return v.visit(this);
-//     }
+// Asnmt class that extends the ASTNode class
+// The class is used when assigning objects to variables
+// Creates two nodes, the variable and the expression
+// constructor allows semantic actions to initialize nodes
+class Asnmt extends ASTNode {
+    Object var;
+    Object exp;
 
-// }
+    public Asnmt(Object var, Object exp) {
+        this.var = var;
+        this.exp = exp;
+    }
 
-// /* ----------------- AST Variable Subclasses ---------------- */
-// /* ---------------------------------------------------------- */
+    public Object getVar(){
+        return this.var;
+    }
 
-// // Asnmt class that extends the ASTNode class
-// // The class is used when assigning objects to variables
-// // Creates two nodes, the variable and the expression
-// // constructor allows semantic actions to initialize nodes
-// class Asnmt extends ASTNode {
-//     Object var;
-//     Object exp;
+    public Object getExp(){
+        return this.exp;
+    }
+    @Override
+    public Object accept(Visitor v) {
+        return v.visit(this);
+    }
 
-//     public Asnmt(Object var, Object exp) {
-//         this.var = var;
-//         this.exp = exp;
-//     }
+}
 
-//     public Object getVar(){
-//         return this.var;
-//     }
-
-//     public Object getExp(){
-//         return this.exp;
-//     }
-//     @Override
-//     public Object accept(Visitor v) {
-//         return v.visit(this);
-//     }
-
-// }
-
-// // Decl class that extends the ASTNode class
-// // used for variable declarations, which can potentially be multiple in a row
-// // creates 1 node: a list of all the variable names
-// // constructor allows semantic actions to initialize nodes
-// class Decl extends ASTNode {
-//     // QUESTION: would we need type
-//     // String varType;
-//     // String name;
+// Decl class that extends the ASTNode class
+// used for variable declarations, which can potentially be multiple in a row
+// creates 1 node: a list of all the variable names
+// constructor allows semantic actions to initialize nodes
+class Decl extends ASTNode {
+    // QUESTION: would we need type
+    // String varType;
+    // String name;
     
-//     // MAYBE DECL NEEDS A HASMAP
-//     ArrayList<Object> names;
+    // MAYBE DECL NEEDS A HASMAP
+    ArrayList<Object> names;
 
-//     public Decl(ArrayList<Object> names) {
-//         // this.varType = varType;
-//         this.names = names;
-//     }
+    public Decl(ArrayList<Object> names) {
+        // this.varType = varType;
+        this.names = names;
+    }
 
-//     public Object getNames(){
-//         return this.names;
-//     }
-//     @Override
-//     public Object accept(Visitor v) {
-//         return v.visit(this);
-//     }
-// }
+    public Object getNames(){
+        return this.names;
+    }
+    @Override
+    public Object accept(Visitor v) {
+        return v.visit(this);
+    }
+}
 
 
-// class ParamList extends ASTNode {
-// 	StmtList params;
+class ParamList extends ASTNode {
+	StmtList params;
 	
-// 	public ParamList(StmtList params){
-// 		this.params = params;
-// 	}
+	public ParamList(StmtList params){
+		this.params = params;
+	}
 
-//     public Object getParameters(){
-//         return this.params;
-//     }
-// 	@Override
-// 	public Object accept(Visitor v) {
-//         	return v.visit(this);
-//     	}
-// }
+    public Object getParameters(){
+        return this.params;
+    }
+	@Override
+	public Object accept(Visitor v) {
+        	return v.visit(this);
+    	}
+}
 
-// class Keyword extends ASTNode {
-// 	Object keyword;
+class Keyword extends ASTNode {
+	Object keyword;
 	
-// 	public Keyword(Object keyword){
-// 		this.keyword = keyword;
-// 	}
+	public Keyword(Object keyword){
+		this.keyword = keyword;
+	}
 
-//     public Object getKeyword(){
-//         return this.keyword;
-//     }
-// 	@Override
-// 	public Object accept(Visitor v) {
-//         	return v.visit(this);
-//     	}
-// }
+    public Object getKeyword(){
+        return this.keyword;
+    }
+	@Override
+	public Object accept(Visitor v) {
+        	return v.visit(this);
+    	}
+}
 
-// class VarDef extends ASTNode {
+class VarDef extends ASTNode {
 	
-// 	Object type, name;
+	Object type, name;
 	
-// 	public VarDef(Object type, Object name){
-// 		this.type = type;
-// 		this.name = name;
-//     }	
+	public VarDef(Object type, Object name){
+		this.type = type;
+		this.name = name;
+    }	
 
-//     public Object getType(){
-//         return this.type;
-//     }
+    public Object getType(){
+        return this.type;
+    }
 
-//     public Object getName(){
-//         return this.name;
-//     }
-//     @Override
-// 	public Object accept(Visitor v) {
-//         	return v.visit(this);
-//     }
-// }
+    public Object getName(){
+        return this.name;
+    }
+    @Override
+	public Object accept(Visitor v) {
+        	return v.visit(this);
+    }
+}
 
-// // --- TYPE CLASS QUESTION
-// class Type extends ASTNode {
+// --- TYPE CLASS QUESTION
+class Type extends ASTNode {
 
-//     public Type() {
-//     }
-//     @Override
-//     public Object accept(Visitor v) {
-//         return v.visit(this);
-//     }
+    public Type() {
+    }
+    @Override
+    public Object accept(Visitor v) {
+        return v.visit(this);
+    }
 
-// }
+}
 
-// /* ------------------- Program classes & subclasses------------------ */
-// /* ------------------------------------------------------------------ */
+/* ------------------- Program classes & subclasses------------------ */
+/* ------------------------------------------------------------------ */
 
-// // Struct class that extends the ASTNode class
-// // creates 2 nodes: the name of the struct and an ArrayList of all the struct
-// // fieldTypes
-// // constructor allows semantic actions to initialize nodes
-// class StructCreator extends ASTNode {
+// Struct class that extends the ASTNode class
+// creates 2 nodes: the name of the struct and an ArrayList of all the struct
+// fieldTypes
+// constructor allows semantic actions to initialize nodes
+class StructCreator extends ASTNode {
     
-//     Object name;
-//     StmtList fieldTypes;
+    Object name;
+    StmtList fieldTypes;
 
-//     public StructCreator(Object name, StmtList fieldTypes) {
-//         this.name = name;
-//         this.fieldTypes = fieldTypes;
-//     }
+    public StructCreator(Object name, StmtList fieldTypes) {
+        this.name = name;
+        this.fieldTypes = fieldTypes;
+    }
 
-//     public Object getName(){
-//         return this.name;
-//     }
+    public Object getName(){
+        return this.name;
+    }
 
-//     public StmtList getFeilds(){
-//         return this.fieldTypes;
-//     }
-//     @Override
-//     public Object accept(Visitor v) {
-//         return v.visit(this);
-//     }
-// }
+    public StmtList getFeilds(){
+        return this.fieldTypes;
+    }
+    @Override
+    public Object accept(Visitor v) {
+        return v.visit(this);
+    }
+}
 
-// // ****** QUESTION: does the body need to be another node? *******
+// ****** QUESTION: does the body need to be another node? *******
 
-// // Function class that extends the ASTNode class
-// // creates 2 nodes, the function name and it's parameters
-// // constructor allows semantic actions to initialize nodes
-// class FunctionConstruct extends ASTNode {
-//     Object returnType;
-//     Object name;
-//     Object parameters;
-//     StmtList body;
+// Function class that extends the ASTNode class
+// creates 2 nodes, the function name and it's parameters
+// constructor allows semantic actions to initialize nodes
+class FunctionConstruct extends ASTNode {
+    Object returnType;
+    Object name;
+    Object parameters;
+    StmtList body;
 
-//     public FunctionConstruct(Object returnType, Object name, Object parameters, StmtList body) {
-//         this.returnType = returnType;
-//         this.name = name;
-//         this.parameters = parameters;
-//         this.body = body;
-//     }
+    public FunctionConstruct(Object returnType, Object name, Object parameters, StmtList body) {
+        this.returnType = returnType;
+        this.name = name;
+        this.parameters = parameters;
+        this.body = body;
+    }
 
-//     public Object getReturnType(){
-//         return this.returnType;
-//     }
+    public Object getReturnType(){
+        return this.returnType;
+    }
 
-//     public Object getName(){
-//         return this.name;
-//     }
+    public Object getName(){
+        return this.name;
+    }
 
-//     public Object getParameters(){
-//         return this.parameters;
-//     }
+    public Object getParameters(){
+        return this.parameters;
+    }
 
-//     public StmtList getBody(){
-//         return this.body;
-//     }
-//     @Override
-//     public Object accept(Visitor v) {
-//         return v.visit(this);
-//     }
+    public StmtList getBody(){
+        return this.body;
+    }
+    @Override
+    public Object accept(Visitor v) {
+        return v.visit(this);
+    }
 
-// }
+}
 
-// // FunctionCall class that extends the ASTNode class
-// // specifically for when you don't want to have full declarations in the
-// // parenthesis, just already declared param names
-// // creates 2 nodes, the name (a string) and the parameters, which are an array
-// // of strings (variable names)
-// // constructor allows semantic actions to initialize nodes
-// class FunctionCall extends ASTNode {
-//     Object name;
-//     Object parameters;
-//     // ASK ABOUT BODY
+// FunctionCall class that extends the ASTNode class
+// specifically for when you don't want to have full declarations in the
+// parenthesis, just already declared param names
+// creates 2 nodes, the name (a string) and the parameters, which are an array
+// of strings (variable names)
+// constructor allows semantic actions to initialize nodes
+class FunctionCall extends ASTNode {
+    Object name;
+    Object parameters;
+    // ASK ABOUT BODY
 
-//     public FunctionCall(Object name, Object parameters) {
-//         this.name = name;
-//         this.parameters = parameters;
-//     }
+    public FunctionCall(Object name, Object parameters) {
+        this.name = name;
+        this.parameters = parameters;
+    }
 
-//     public Object getName(){
-//         return this.name;
-//     }
+    public Object getName(){
+        return this.name;
+    }
 
-//     public Object getParameters(){
-//         return this.parameters;
-//     }
-//     @Override
-//     public Object accept(Visitor v) {
-//         return v.visit(this);
-//     }
+    public Object getParameters(){
+        return this.parameters;
+    }
+    @Override
+    public Object accept(Visitor v) {
+        return v.visit(this);
+    }
 
-// }
+}
 
-// // Program class, almost acts are our main parent node :)
-// class Program extends ASTNode {
-// 	StmtList program;
+// Program class, almost acts are our main parent node :)
+class Program extends ASTNode {
+	StmtList program;
 	
-// 	public Program(StmtList program){
-// 		this.program = program;
-// 	}
+	public Program(StmtList program){
+		this.program = program;
+	}
 
-//     public StmtList getProgram(){
-//         return this.program;
-//     }
+    public StmtList getProgram(){
+        return this.program;
+    }
 
-//     public void addElement(Object add) {
-//         program.addElement(add);
-//     }
-
-
-// 	@Override
-// 	public Object accept(Visitor v) {
-//         	return v.visit(this);
-//     }
-// }
-	
+    public void addElement(Object add) {
+        program.addElement(add);
+    }
 
 
-// /* ---------------------------- Start of Semantic Analysis ---------------------------- */
-// /* ------------------------------------------------------------------------------------ */
-
-
-
-
-// /* ----------------- AbstractVisitor implementations and Visitor definitions ----------------- */
-// /* ------------------------------------------------------------------------------------------- */
-// // An implementation of all the visitor methods
-// // These act as semantic analysis, so each of these methods will visit the nodes
-// // in the AST tree and make
-// // sure that they are semantically doing the correct thing
-// class AbstractVisitor implements Visitor {
-//     // arithmetic expressions
-
-//     public boolean tryHelper(Object item) {
-// 	try {
-// 		ForLoop forloop = (ForLoop)item;
-// 		if(visit(forloop)){
-//                 return true;
-//         }
-// 		try {
-// 			IfStmt ifStmt = (IfStmt)item;
-// 			if(visit(ifStmt)){
-//                 	return true;
-// 			}
-// 			try {
-// 				EndFunction endFunction = (EndFunction)item;
-// 				if(visit(endFunction)){
-//                 		return true;
-// 				}
-// 				try {
-// 					VarDef varDef = (VarDef)item;
-// 					if(visit(varDef)){
-// 						return true;
-// 					}
-// 					try {
-// 						Asnmt asnmt = (Asnmt)item;
-// 						if(visit(asnmt)){
-// 							return true;
-// 						} 
-// 						try {
-// 							ParamList paramlist = (ParamList)item;
-// 							if(visit(paramlist)){
-// 								return true;
-// 							}
-// 							try {
-// 								FunctionCall funcCall = (FunctionCall)item;
-// 								if(visit(funcCall)){
-// 									return true;
-// 								}
-// 							} catch(Exception e) {} // funcCall
-// 						} catch(Exception e) {} // paramList
-// 					} catch(Exception e) {} // Asnmt
-// 				} catch(Exception e) {} // VarDef
-// 			} catch(Exception e) {} // EndFunction
-// 		} catch(Exception e) {} // IfStmt 	
-// 	} catch(Exception e) {} // ForLoop
-	
-// 	return false;
-// }
+	@Override
+	public Object accept(Visitor v) {
+        	return v.visit(this);
+    }
+}
 	
 
-//     public boolean visit(Arithmetic add) {
-//         int op = ((Yytoken)(add.getOp())).getToken();
-//         int left = ((Yytoken)(add.getLeft())).getToken();
-//         int right = ((Yytoken)(add.getRight())).getToken();
-//         if (op == ToYLexer.PLUS || op == ToYLexer.MINUS ){
-//             if ((left == ToYLexer.INT && right == ToYLexer.INT) ||(left == ToYLexer.STRING && right == ToYLexer.STRING) ){
-//                 return true;
-//             }
-//         }
-//         if (op == ToYLexer.MULT || op == ToYLexer.DIVIDE ){
-//             if (left == ToYLexer.INT && right == ToYLexer.INT){
-//                 return true;
-//             }
-//         }
+
+/* ---------------------------- Start of Semantic Analysis ---------------------------- */
+/* ------------------------------------------------------------------------------------ */
+
+
+
+
+/* ----------------- AbstractVisitor implementations and Visitor definitions ----------------- */
+/* ------------------------------------------------------------------------------------------- */
+// An implementation of all the visitor methods
+// These act as semantic analysis, so each of these methods will visit the nodes
+// in the AST tree and make
+// sure that they are semantically doing the correct thing
+class AbstractVisitor implements Visitor {
+    // arithmetic expressions
+
+    public boolean tryHelper(Object item) {
+	try {
+		ForLoop forloop = (ForLoop)item;
+		if(visit(forloop)){
+                return true;
+        }
+		try {
+			IfStmt ifStmt = (IfStmt)item;
+			if(visit(ifStmt)){
+                	return true;
+			}
+			try {
+				EndFunction endFunction = (EndFunction)item;
+				if(visit(endFunction)){
+                		return true;
+				}
+				try {
+					VarDef varDef = (VarDef)item;
+					if(visit(varDef)){
+						return true;
+					}
+					try {
+						Asnmt asnmt = (Asnmt)item;
+						if(visit(asnmt)){
+							return true;
+						} 
+						try {
+							ParamList paramlist = (ParamList)item;
+							if(visit(paramlist)){
+								return true;
+							}
+							try {
+								FunctionCall funcCall = (FunctionCall)item;
+								if(visit(funcCall)){
+									return true;
+								}
+							} catch(Exception e) {} // funcCall
+						} catch(Exception e) {} // paramList
+					} catch(Exception e) {} // Asnmt
+				} catch(Exception e) {} // VarDef
+			} catch(Exception e) {} // EndFunction
+		} catch(Exception e) {} // IfStmt 	
+	} catch(Exception e) {} // ForLoop
+	
+	return false;
+}
+	
+
+    public boolean visit(Arithmetic add) {
+        int op = ((Yytoken)(add.getOp())).getToken();
+        int left = ((Yytoken)(add.getLeft())).getToken();
+        int right = ((Yytoken)(add.getRight())).getToken();
+        if (op == ToYLexer.PLUS || op == ToYLexer.MINUS ){
+            if ((left == ToYLexer.INT && right == ToYLexer.INT) ||(left == ToYLexer.STRING && right == ToYLexer.STRING) ){
+                return true;
+            }
+        }
+        if (op == ToYLexer.MULT || op == ToYLexer.DIVIDE ){
+            if (left == ToYLexer.INT && right == ToYLexer.INT){
+                return true;
+            }
+        }
         
-//         return false;
-//     }
+        return false;
+    }
 
-//     public boolean visit(Logic add) {
-//         int left = ((Yytoken)(add.getLeft())).getToken();
-//         int right = ((Yytoken)(add.getRight())).getToken();
-//         if (left == ToYLexer.BOOL && right == ToYLexer.BOOL){
-//             return true;
-//         }
+    public boolean visit(Logic add) {
+        int left = ((Yytoken)(add.getLeft())).getToken();
+        int right = ((Yytoken)(add.getRight())).getToken();
+        if (left == ToYLexer.BOOL && right == ToYLexer.BOOL){
+            return true;
+        }
         
-//         return false;
-//     }
+        return false;
+    }
 
-//     public boolean visit(Conditions add) {
-//         int op = ((Yytoken)(add.getOp())).getToken();
-//         int left = ((Yytoken)(add.getLeft())).getToken();
-//         int right = ((Yytoken)(add.getRight())).getToken();
-//         if (op == ToYLexer.GREATERTHAN || op == ToYLexer.GREATERTHANOREQ || op == ToYLexer.LESSTHAN || op == ToYLexer.LESSTHANOREQ ){
-//             if (left == ToYLexer.INT && right == ToYLexer.INT){
-//                 return true;
-//             }
-//         }
-//         if (op == ToYLexer.DOUBLEEQ || op == ToYLexer.NOTEQ ){
-//             if ((left == ToYLexer.INT && right == ToYLexer.INT) || (left == ToYLexer.STRING && right == ToYLexer.STRING) ){
-//                 return true;
-//             }
-//         }
+    public boolean visit(Conditions add) {
+        int op = ((Yytoken)(add.getOp())).getToken();
+        int left = ((Yytoken)(add.getLeft())).getToken();
+        int right = ((Yytoken)(add.getRight())).getToken();
+        if (op == ToYLexer.GREATERTHAN || op == ToYLexer.GREATERTHANOREQ || op == ToYLexer.LESSTHAN || op == ToYLexer.LESSTHANOREQ ){
+            if (left == ToYLexer.INT && right == ToYLexer.INT){
+                return true;
+            }
+        }
+        if (op == ToYLexer.DOUBLEEQ || op == ToYLexer.NOTEQ ){
+            if ((left == ToYLexer.INT && right == ToYLexer.INT) || (left == ToYLexer.STRING && right == ToYLexer.STRING) ){
+                return true;
+            }
+        }
         
-//         return false;
-//     }
+        return false;
+    }
 
-//     public boolean visit(UnaryOperators add) {
-//         int op = ((Yytoken)(add.getOp())).getToken();
-//         int right = ((Yytoken)(add.getRight())).getToken();
-//         if (op == ToYLexer.NOT && right == ToYLexer.BOOL){
-//             return true;
-//         }
-//         if (op == ToYLexer.MINUS && right == ToYLexer.INT){
-//             return true;
-//         }
-//         return false;
-//     }
+    public boolean visit(UnaryOperators add) {
+        int op = ((Yytoken)(add.getOp())).getToken();
+        int right = ((Yytoken)(add.getRight())).getToken();
+        if (op == ToYLexer.NOT && right == ToYLexer.BOOL){
+            return true;
+        }
+        if (op == ToYLexer.MINUS && right == ToYLexer.INT){
+            return true;
+        }
+        return false;
+    }
 
-//     //TODO -- do we need to check expression here? 
-//     public boolean visit(Asnmt add) {
-//         int name = ((Yytoken)(add.getVar())).getToken();
-//         Object item = add.getExp();
-//         if (name == ToYLexer.IDENTIFIER){
-//             return true;
-//         }
-//         try{
-//             Keyword keyword = (Keyword)item;
-//             if(visit(keyword)){
-//                 return true;
-//             }
-//             try{
-//                 Arithmetic arithmetic = (Arithmetic)item;
-//                 if(visit(arithmetic)){
-//                     return true;
-//                 }
-//                 try{
-//                     Logic logic = (Logic)item;
-//                     if(visit(logic)){
-//                         return true;
-//                     }
-//                     try{
-//                         Conditions condition = (Conditions)item;
-//                         if(visit(condition)){
-//                             return true;
-//                         }
-//                         try{
-//                             Asnmt assignment = (Asnmt)item;
-//                             if(visit(assignment)){
-//                                 return true;
-//                             }
-//                             try{
-//                                 UnaryOperators unary = (UnaryOperators)item;
-//                                 if(visit(unary)){
-//                                     return true;
-//                                 }
-//                             }catch(Exception e){}
-//                         }catch(Exception e){}
-//                     }catch(Exception e){}
-//                 }catch(Exception e){}
-//             }catch(Exception e){}
-//         }catch(Exception e){
-//         }
-//         return false;
-//     }
+    //TODO -- do we need to check expression here? 
+    public boolean visit(Asnmt add) {
+        int name = ((Yytoken)(add.getVar())).getToken();
+        Object item = add.getExp();
+        if (name == ToYLexer.IDENTIFIER){
+            return true;
+        }
+        try{
+            Keyword keyword = (Keyword)item;
+            if(visit(keyword)){
+                return true;
+            }
+            try{
+                Arithmetic arithmetic = (Arithmetic)item;
+                if(visit(arithmetic)){
+                    return true;
+                }
+                try{
+                    Logic logic = (Logic)item;
+                    if(visit(logic)){
+                        return true;
+                    }
+                    try{
+                        Conditions condition = (Conditions)item;
+                        if(visit(condition)){
+                            return true;
+                        }
+                        try{
+                            Asnmt assignment = (Asnmt)item;
+                            if(visit(assignment)){
+                                return true;
+                            }
+                            try{
+                                UnaryOperators unary = (UnaryOperators)item;
+                                if(visit(unary)){
+                                    return true;
+                                }
+                            }catch(Exception e){}
+                        }catch(Exception e){}
+                    }catch(Exception e){}
+                }catch(Exception e){}
+            }catch(Exception e){}
+        }catch(Exception e){
+        }
+        return false;
+    }
 
-//     //DONT USE THIS ANYMORE 
-//     public boolean visit(Decl add) {
-//         return false;
-//     }
+    //DONT USE THIS ANYMORE 
+    public boolean visit(Decl add) {
+        return false;
+    }
 
-//     //TODO -- do we need to check expression 
-//     public boolean visit(EndFunction add) {
-//         int type = ((Yytoken)(add.getType())).getToken();
-//         // ADD have to add expresison here 
-//         if (type == ToYLexer.PRINTF){
-//             int printME = ((Yytoken)(add.getExp())).getToken(); 
-//             if(printME != ToYLexer.STRING){
-//                 return false;
-//             }
-//         }
-//         if(type == ToYLexer.RETURN){
-//             //if exp here 
-//         }
-//         return true;
-//     }
+    //TODO -- do we need to check expression 
+    public boolean visit(EndFunction add) {
+        int type = ((Yytoken)(add.getType())).getToken();
+        // ADD have to add expresison here 
+        if (type == ToYLexer.PRINTF){
+            int printME = ((Yytoken)(add.getExp())).getToken(); 
+            if(printME != ToYLexer.STRING){
+                return false;
+            }
+        }
+        if(type == ToYLexer.RETURN){
+            //if exp here 
+        }
+        return true;
+    }
 
-//     //TODO -- do we need to check the statements in the body of the for loop?
-//     public boolean visit(ForLoop add) {
-//         //get info from node 
-//         Asnmt iterator = ((Asnmt)(add.getIterator()));
-//         Conditions condition = ((Conditions)(add.getConditional()));
-//         Arithmetic increment = ((Arithmetic)(add.getIncrement()));
-//         StmtList body = ((StmtList)(add.getBody()));
+    //TODO -- do we need to check the statements in the body of the for loop?
+    public boolean visit(ForLoop add) {
+        //get info from node 
+        Asnmt iterator = ((Asnmt)(add.getIterator()));
+        Conditions condition = ((Conditions)(add.getConditional()));
+        Arithmetic increment = ((Arithmetic)(add.getIncrement()));
+        StmtList body = ((StmtList)(add.getBody()));
         
-//         //checks for iteration at pos 1 in for loop 
-//         if (!((boolean)iterator.accept(this))){
-//             return false; 
-//         }
-//         //checks for conditional expression at pos 2 in for loop 
-//         if (!visit(condition)){
-//             return false; 
-//         }
-//         //checks for incrementation at pos 3 of for loop 
-//         if (!visit(increment)){
-//             return false; 
-//         }
-//        //TODO ERROR
-//         // if (body!= null){
-//         //     for(int i = 0; i < body.getSize(); i++) {
-//         //         Visitor bodyE = (Visitor) body.elementAt(i);
-//         //         if(!(accept(bodyE))){             // a potential solution to the problem we we're having w. different types is to add
-//         //             return false;               // a second parameter to all our visit functions: Object o.
-//         //         }                                   // I'm not sure this will work but I think it's worth a shot?  I'ts what that guy has
-//         //     }
-// 	    // }
-// 	    return true;
-//     }
+        //checks for iteration at pos 1 in for loop 
+        if (!((boolean)iterator.accept(this))){
+            return false; 
+        }
+        //checks for conditional expression at pos 2 in for loop 
+        if (!visit(condition)){
+            return false; 
+        }
+        //checks for incrementation at pos 3 of for loop 
+        if (!visit(increment)){
+            return false; 
+        }
+       //TODO ERROR
+        // if (body!= null){
+        //     for(int i = 0; i < body.getSize(); i++) {
+        //         Visitor bodyE = (Visitor) body.elementAt(i);
+        //         if(!(accept(bodyE))){             // a potential solution to the problem we we're having w. different types is to add
+        //             return false;               // a second parameter to all our visit functions: Object o.
+        //         }                                   // I'm not sure this will work but I think it's worth a shot?  I'ts what that guy has
+        //     }
+	    // }
+	    return true;
+    }
 
-// 	// What I'm right now thinking is that maybe we don't need to recursively call visit, since
-// 	// the for loop should go over everything.  Instead maybe we can add something like:
+	// What I'm right now thinking is that maybe we don't need to recursively call visit, since
+	// the for loop should go over everything.  Instead maybe we can add something like:
 			
    
-//     //TODO -- check the if and else bodies 
-//     public boolean visit(IfStmt add) {
-//         Conditions condition = ((Conditions)(add.getConditional()));
-//         StmtList ifBody = ((StmtList)(add.getIfBody()));
-//         StmtList elseBody = ((StmtList)(add.getElseBody()));
-//         //checks for conditional expression at pos 2 in for loop 
-//         if (!visit(condition)){
-//             return false; 
-//         }
+    //TODO -- check the if and else bodies 
+    public boolean visit(IfStmt add) {
+        Conditions condition = ((Conditions)(add.getConditional()));
+        StmtList ifBody = ((StmtList)(add.getIfBody()));
+        StmtList elseBody = ((StmtList)(add.getElseBody()));
+        //checks for conditional expression at pos 2 in for loop 
+        if (!visit(condition)){
+            return false; 
+        }
 
-//         return true;
-//     }
+        return true;
+    }
 
-//     public boolean visit(StructCreator add) {
-//         int name = ((Yytoken)(add.getName())).getToken();
-//         StmtList fields = ((StmtList)(add.getFeilds()));
-//         if(!(name == ToYLexer.IDENTIFIER)){
-//             return false; 
-//         }
-//         for (int i = 0; i < fields.getSize(); i++){
-//             VarDef v = (VarDef) fields.elementAt(i);
-//             if(!visit(v)){
-//                 return false;
-//             }
-//          }
-//         return true;
-//     }
+    public boolean visit(StructCreator add) {
+        int name = ((Yytoken)(add.getName())).getToken();
+        StmtList fields = ((StmtList)(add.getFeilds()));
+        if(!(name == ToYLexer.IDENTIFIER)){
+            return false; 
+        }
+        for (int i = 0; i < fields.getSize(); i++){
+            VarDef v = (VarDef) fields.elementAt(i);
+            if(!visit(v)){
+                return false;
+            }
+         }
+        return true;
+    }
 
 
-//     public boolean visit(Type add) {
-//         return true;
-//     }
+    public boolean visit(Type add) {
+        return true;
+    }
 
-//     //TODO -- body 
-//     public boolean visit(FunctionConstruct add) {
-//         int returnType = ((Yytoken)(add.getReturnType())).getToken();
-//         int name = ((Yytoken)(add.getName())).getToken();
-//         StmtList params = ((StmtList)(add.getParameters()));
-//         if(!(returnType == ToYLexer.INT || returnType == ToYLexer.STRING || returnType == ToYLexer.BOOL || returnType == ToYLexer.VOID)){
-//             return false; 
-//         }
-//         if(!(name == ToYLexer.IDENTIFIER)){
-//             return false; 
-//         }
-//         for (int i = 0; i < params.getSize(); i++){
-//             VarDef v = ((VarDef)(params.elementAt(i)));
-//             if(!visit(v)){
-//                 return false;
-//             }
-//          }
-//         return true;
+    //TODO -- body 
+    public boolean visit(FunctionConstruct add) {
+        int returnType = ((Yytoken)(add.getReturnType())).getToken();
+        int name = ((Yytoken)(add.getName())).getToken();
+        StmtList params = ((StmtList)(add.getParameters()));
+        if(!(returnType == ToYLexer.INT || returnType == ToYLexer.STRING || returnType == ToYLexer.BOOL || returnType == ToYLexer.VOID)){
+            return false; 
+        }
+        if(!(name == ToYLexer.IDENTIFIER)){
+            return false; 
+        }
+        for (int i = 0; i < params.getSize(); i++){
+            VarDef v = ((VarDef)(params.elementAt(i)));
+            if(!visit(v)){
+                return false;
+            }
+         }
+        return true;
 
-//     }
+    }
 
-//     public boolean visit(FunctionCall add) {
-//         int name = ((Yytoken)(add.getName())).getToken();
-//         StmtList params = ((StmtList)(add.getParameters()));
-//         if(!(name == ToYLexer.IDENTIFIER)){
-//             return false; 
-//         }
-//         for (int i = 0; i < params.getSize(); i++){
-//             int v = ((Yytoken)(params.elementAt(i))).getToken();
-//             if(!(v == ToYLexer.IDENTIFIER)){
-//                 return false;
-//             }
-//          }
-//         return true;
+    public boolean visit(FunctionCall add) {
+        int name = ((Yytoken)(add.getName())).getToken();
+        StmtList params = ((StmtList)(add.getParameters()));
+        if(!(name == ToYLexer.IDENTIFIER)){
+            return false; 
+        }
+        for (int i = 0; i < params.getSize(); i++){
+            int v = ((Yytoken)(params.elementAt(i))).getToken();
+            if(!(v == ToYLexer.IDENTIFIER)){
+                return false;
+            }
+         }
+        return true;
         
-//     }
+    }
     
-//     public boolean visit(ParamList add) {
-//         StmtList params = ((StmtList)(add.getParameters()));
-//         for (int i = 0; i < params.getSize(); i++){
-//             int v = ((Yytoken)(params.elementAt(i))).getToken();
-//             if(!(v == ToYLexer.IDENTIFIER)){
-//                 return false;
-//             }
-//          }
-//         return true;
-//     }
+    public boolean visit(ParamList add) {
+        StmtList params = ((StmtList)(add.getParameters()));
+        for (int i = 0; i < params.getSize(); i++){
+            int v = ((Yytoken)(params.elementAt(i))).getToken();
+            if(!(v == ToYLexer.IDENTIFIER)){
+                return false;
+            }
+         }
+        return true;
+    }
     
-//     public boolean visit(VarDef add) {
-//         int type = ((Yytoken)(add.getType())).getToken();
-//         int name = ((Yytoken)(add.getName())).getToken();
-//         if ((type == ToYLexer.BOOL || type == ToYLexer.INT || type == ToYLexer.STRING ) && name == ToYLexer.IDENTIFIER){
-//             return true;
-//         }
-//         return false;
-//     }
+    public boolean visit(VarDef add) {
+        int type = ((Yytoken)(add.getType())).getToken();
+        int name = ((Yytoken)(add.getName())).getToken();
+        if ((type == ToYLexer.BOOL || type == ToYLexer.INT || type == ToYLexer.STRING ) && name == ToYLexer.IDENTIFIER){
+            return true;
+        }
+        return false;
+    }
     
-//     //TODO how to different between type function and construct 
-//     public boolean visit(Program add) {
-//         StmtList pgm = (StmtList) add.getProgram();
-//         for (int i = 0; i < pgm.getSize(); i++){
-//             try{
-//                 FunctionConstruct function = (FunctionConstruct)(pgm.elementAt(i));
-//                 if(visit(function)){
-//                     return true;
-//                 }
-//                 try{
-//                     StructCreator struct = (StructCreator)(pgm.elementAt(i));
-//                     if(visit(struct)){
-//                         return true;
-//                     }
-//                 }catch(Exception e){
+    //TODO how to different between type function and construct 
+    public boolean visit(Program add) {
+        StmtList pgm = (StmtList) add.getProgram();
+        for (int i = 0; i < pgm.getSize(); i++){
+            try{
+                FunctionConstruct function = (FunctionConstruct)(pgm.elementAt(i));
+                if(visit(function)){
+                    return true;
+                }
+                try{
+                    StructCreator struct = (StructCreator)(pgm.elementAt(i));
+                    if(visit(struct)){
+                        return true;
+                    }
+                }catch(Exception e){
                     
-//                 }
+                }
 
-//             }catch(Exception e){
+            }catch(Exception e){
 
-//             }
-//         }
+            }
+        }
 
-//     	return false;
-//     }
+    	return false;
+    }
     
-//     public boolean visit(Keyword add) {
-//         int keyword = ((Yytoken)(add.getKeyword())).getToken();
-//         if( keyword == ToYLexer.VOID || keyword == ToYLexer.TRUE || keyword == ToYLexer.FALSE ){
-//             return true;
-//         }
-//     	return false;
-//     }
+    public boolean visit(Keyword add) {
+        int keyword = ((Yytoken)(add.getKeyword())).getToken();
+        if( keyword == ToYLexer.VOID || keyword == ToYLexer.TRUE || keyword == ToYLexer.FALSE ){
+            return true;
+        }
+    	return false;
+    }
 
-//      public boolean visit(StmtList add) {
-//             return true;
-//      }
+     public boolean visit(StmtList add) {
+            return true;
+     }
 
-// }
+}
 
-// // A declaration of all the visitor methods for each AST subclass
-// interface Visitor {
+// A declaration of all the visitor methods for each AST subclass
+interface Visitor {
 
-//     public boolean visit(Arithmetic symbol);
+    public boolean visit(Arithmetic symbol);
 
-//     public boolean visit(Logic symbol);
+    public boolean visit(Logic symbol);
 
-//     public boolean visit(Conditions symbol);
+    public boolean visit(Conditions symbol);
 
-//     public boolean visit(UnaryOperators symbol);
+    public boolean visit(UnaryOperators symbol);
 
-//     public boolean visit(Asnmt symbol);
+    public boolean visit(Asnmt symbol);
 
-//     public boolean visit(Decl symbol);
+    public boolean visit(Decl symbol);
 
-//     public boolean visit(EndFunction symbol);
+    public boolean visit(EndFunction symbol);
 
-//     public boolean visit(ForLoop symbol);
+    public boolean visit(ForLoop symbol);
 
-//     public boolean visit(IfStmt symbol);
+    public boolean visit(IfStmt symbol);
 
-//     public boolean visit(StructCreator symbol);
+    public boolean visit(StructCreator symbol);
     
-//     public boolean visit(VarDef vardef);
+    public boolean visit(VarDef vardef);
 
-//     public boolean visit(Type symbol);
+    public boolean visit(Type symbol);
 
-//     public boolean visit(FunctionConstruct symbol);
+    public boolean visit(FunctionConstruct symbol);
 
-//     public boolean visit(FunctionCall symbol);
+    public boolean visit(FunctionCall symbol);
     
-//     public boolean visit(ParamList paramList);
+    public boolean visit(ParamList paramList);
     
-//     public boolean visit(Program program);
+    public boolean visit(Program program);
     
-//     public boolean visit(Keyword keyword);
+    public boolean visit(Keyword keyword);
 
-//     public boolean visit(StmtList keyword);
+    public boolean visit(StmtList keyword);
 
-// }
+}
 
 
-// /* ------------------------- Symbol Table Helper Functions ------------------------- */
-// /* --------------------------------------------------------------------------------- */
-// class ID {
-//     Object name;
-//     Object scope;
-//     // String type;
-//     // String returnType;
-//     // ArrayList<String> parameterTypes;
-//     // ArrayList<String> fieldTypes;
-//     // int size;
+/* ------------------------- Symbol Table Helper Functions ------------------------- */
+/* --------------------------------------------------------------------------------- */
+class ID {
+    Object name;
+    Object scope;
+    // String type;
+    // String returnType;
+    // ArrayList<String> parameterTypes;
+    // ArrayList<String> fieldTypes;
+    // int size;
 
-//     public ID(Object name) {
-//         this.name = name;
-//         // this.type = type;
-//         // this.returnType = returnType;
-//         // this.parameterTypes = parameterTypes;
-//         // this.fieldTypes = fieldTypes;
-//         // this.size = size;
-//     }
-//     public Object getName(){
-//        return this.name;
-//     }
-//     public Object getScope(Object Scope){
-//        return this.scope;
-//     }
-//     public void setScope(Object Scope){
-//        this.scope = scope;
-//     }
-// }
+    public ID(Object name) {
+        this.name = name;
+        // this.type = type;
+        // this.returnType = returnType;
+        // this.parameterTypes = parameterTypes;
+        // this.fieldTypes = fieldTypes;
+        // this.size = size;
+    }
+    public Object getName(){
+       return this.name;
+    }
+    public Object getScope(Object Scope){
+       return this.scope;
+    }
+    public void setScope(Object Scope){
+       this.scope = scope;
+    }
+}
 
-// class Var extends ID {
-//     Object type;
+class Var extends ID {
+    Object type;
 
-//     public Var(Object name, Object type) {
-//         super(name);
-//         this.type = type;
+    public Var(Object name, Object type) {
+        super(name);
+        this.type = type;
 
-//     }
-// }
+    }
+}
 
-// class Function extends ID {
-//     Object returnType;
-//     StmtList parameterTypes;
+class Function extends ID {
+    Object returnType;
+    StmtList parameterTypes;
 
-//     public Function(Object name, Object returnType, StmtList parameterTypes) {
-//         super(name);
-//         this.returnType = returnType;
-//         this.parameterTypes = parameterTypes;
-//     }
+    public Function(Object name, Object returnType, StmtList parameterTypes) {
+        super(name);
+        this.returnType = returnType;
+        this.parameterTypes = parameterTypes;
+    }
 
-// }
+}
 
-// class Struct extends ID {
-//     StmtList fieldTypes;
-//     //Object size; TOOK OUT SIZE
+class Struct extends ID {
+    StmtList fieldTypes;
+    //Object size; TOOK OUT SIZE
 
-//     public Struct(Object name, StmtList fieldTypes){ //Object size
-//         super(name);
-//         this.fieldTypes = fieldTypes;
-//         //this.size = size;
-//     }
+    public Struct(Object name, StmtList fieldTypes){ //Object size
+        super(name);
+        this.fieldTypes = fieldTypes;
+        //this.size = size;
+    }
 
-// }
+}
    
-// /* ---------------------------- Symbol Table Class ------------------------ */
-// /* ------------------------------------------------------------------------ */
+/* ---------------------------- Symbol Table Class ------------------------ */
+/* ------------------------------------------------------------------------ */
 
-//   class SymbolTable{
+  class SymbolTable{
    
-//    int scope = 0; 
-//    HashMap<Object, ID> currentScope; 
-//    ArrayList<HashMap<Object, ID>> table;
+   int scope = 0; 
+   HashMap<Object, ID> currentScope; 
+   ArrayList<HashMap<Object, ID>> table;
 
-//    public SymbolTable() {
-// 		table = new ArrayList<HashMap<Object, ID>>();
-// 		table.add(new HashMap<Object, ID>());
-// 	}
+   public SymbolTable() {
+		table = new ArrayList<HashMap<Object, ID>>();
+		table.add(new HashMap<Object, ID>());
+	}
 
-//    public void addScope(){
-//       table.add(new HashMap<Object, ID>());
-//       scope++;
-//    }
+   public void addScope(){
+      table.add(new HashMap<Object, ID>());
+      scope++;
+   }
 
-//    public void enterScope(){
-//       this.scope++;
-//    }
+   public void enterScope(){
+      this.scope++;
+   }
 
-//    public void exitScope(){
-//       this.scope--;
-//    }
+   public void exitScope(){
+      this.scope--;
+   }
    
-//    //see if the symbol is already included in the table returns the symbol if found
-//    public ID find_symbol(ID id){
-//       for (int i = this.scope; i >= 0; i--) {
-// 			if (this.table.get(i).containsKey(id.getName())) {
-// 				return this.table.get(i).get(id.getName());
-// 			}
-// 		}
-// 		return null;
+   //see if the symbol is already included in the table returns the symbol if found
+   public ID find_symbol(ID id){
+      for (int i = this.scope; i >= 0; i--) {
+			if (this.table.get(i).containsKey(id.getName())) {
+				return this.table.get(i).get(id.getName());
+			}
+		}
+		return null;
 
-//    }
+   }
 
-//    //adds all the information we need to know about x in current scope
-//    public boolean add_symbol(ID id){
-//       if (id != null && find_symbol(id) == null) {
-// 			this.table.get(this.scope).put(id.getName(), id);
-// 			id.setScope(this.scope);
-// 			return true;
-// 		}
-// 		return false;
-//    }
+   //adds all the information we need to know about x in current scope
+   public boolean add_symbol(ID id){
+      if (id != null && find_symbol(id) == null) {
+			this.table.get(this.scope).put(id.getName(), id);
+			id.setScope(this.scope);
+			return true;
+		}
+		return false;
+   }
 
-//    //check if x is in current scope and if it is returns the symbol 
-//    public ID check_scope(ID id){
-//       if(this.currentScope.containsKey(id.getName())){
-//          return this.table.get(this.scope).get(id.getName());
-//       }
-//       return null;
+   //check if x is in current scope and if it is returns the symbol 
+   public ID check_scope(ID id){
+      if(this.currentScope.containsKey(id.getName())){
+         return this.table.get(this.scope).get(id.getName());
+      }
+      return null;
       
-//    } 
+   } 
 
-//   }
+  }
 
 
 

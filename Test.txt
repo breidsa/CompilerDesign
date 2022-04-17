@@ -1,6 +1,6 @@
 void main(){
-    int i;
-    for(i = 1; i < 1; i = i + 1){
-    string x;
-    }
+	int x;
+	if (x == 3){
+		printf(x);
+	}
 }
