@@ -194,8 +194,6 @@ HashComment = "##" {InputCharacter}* {LineTerminator}
     throw new Error("String Error Null Character");
 }
 
-<EOF>
-
 /* error fallback */
 [^]                              { throw new Error("Illegal character <"+
                                                 yytext()+">"); }
