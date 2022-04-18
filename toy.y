@@ -201,8 +201,8 @@ public static void main(String[] args) throws IOException {
     | LBRACKET stmtSeq RBRACKET { $$ = $1; }
     | type IDENTIFIER SEMICOLON { $$ = new VarDef($1, $2); } // "class Keyword cannot be cast to class Yytoken (Keyword and Yytoken are in unnamed module of loader 'app')"
     | IDENTIFIER EQ exp SEMICOLON { $$ = new Asnmt($1, $3); }
-    | IDENTIFIER EQ exp { $$ = new Asnmt($1, $3); }
-    | IDENTIFIER ATTRIBUTE Lexp EQ exp SEMICOLON //{ $$ = new Asnmt($1, $3);} ASK ABT THIS
+    | IDENTIFIER EQ exp { System.out.println("Into correct assignment"); $$ = new Asnmt($1, $3); }
+    | IDENTIFIER ATTRIBUTE Lexp EQ exp SEMICOLON {System.out.println("Into wrong assignment"); $$ = new Asnmt($1, $3);} 
     | IDENTIFIER LEFTPAREN paramList RIGHTPAREN SEMICOLON {$$ = new FunctionCall($1, $2);}
     | IDENTIFIER EQ IDENTIFIER LEFTPAREN paramList RIGHTPAREN SEMICOLON {FunctionCall func = new FunctionCall($3, $5); $$ = new Asnmt($1, func);}
     | COMMENT //honestly don't know what to do with this and if this is the thing that loses us points then so be it
@@ -237,7 +237,7 @@ public static void main(String[] args) throws IOException {
     | exp MULT exp { $$ = new Arithmetic($1, $2, $3); }
     | exp DIVIDE exp { $$ = new Arithmetic($1, $2, $3); }
     | exp MOD exp { $$ = new Arithmetic($1, $2, $3); }
-    | exp AND exp { $$ = new Logic($1, $2, $3); } 
+    | exp AND exp { System.out.println("Goes to AND expression");$$ = new Logic($1, $2, $3); } 
     | exp OR exp { $$ = new Logic($1, $2, $3); } 
     | exp DOUBLEEQ exp { $$ = new Conditions($1, $2, $3); } 
     | exp GREATERTHAN exp { $$ = new Conditions($1, $2, $3); } 
@@ -951,49 +951,71 @@ class Program extends ASTNode {
 class AbstractVisitor implements Visitor {
     // arithmetic expressions
 
-    public boolean tryHelper(Object item) {
-	try {
-		ForLoop forloop = (ForLoop)item;
-		if(visit(forloop)){
+    public boolean tryHelper(Object item){
+        System.out.println(item);
+        try {
+            System.out.println("TryHelp FOR");
+            ForLoop forloop = (ForLoop)item;
+            if(visit(forloop)){
+                    return true;
+        }}catch(Exception e) {} 
+        try {
+                System.out.println("TryHelp IF");
+                IfStmt ifStmt = (IfStmt)item;
+                if(visit(ifStmt)){
+                        return true;
+                }
+        }catch(Exception e) {} 
+        try {
+                    System.out.println("TryHelp END FUNCT");
+                    EndFunction endFunction = (EndFunction)item;
+                    if(visit(endFunction)){
+                            return true;
+                    }
+        }catch (Exception e){} 
+        try {
+            System.out.println("TryHelp Var Def");
+            VarDef varDef = (VarDef)item;
+            if(visit(varDef)){
                 return true;
-        }
-		try {
-			IfStmt ifStmt = (IfStmt)item;
-			if(visit(ifStmt)){
-                	return true;
-			}
-			try {
-				EndFunction endFunction = (EndFunction)item;
-				if(visit(endFunction)){
-                		return true;
-				}
-				try {
-					VarDef varDef = (VarDef)item;
-					if(visit(varDef)){
-						return true;
-					}
-					try {
-						Asnmt asnmt = (Asnmt)item;
-						if(visit(asnmt)){
-							return true;
-						} 
-						try {
-							ParamList paramlist = (ParamList)item;
-							if(visit(paramlist)){
-								return true;
-							}
-							try {
-								FunctionCall funcCall = (FunctionCall)item;
-								if(visit(funcCall)){
-									return true;
-								}
-							} catch(Exception e) {} // funcCall
-						} catch(Exception e) {} // paramList
-					} catch(Exception e) {} // Asnmt
-				} catch(Exception e) {} // VarDef
-			} catch(Exception e) {} // EndFunction
-		} catch(Exception e) {} // IfStmt 	
-	} catch(Exception e) {} // ForLoop
+            }
+        }catch (Exception e){}
+        try {
+            System.out.println("Asgnmt");
+            Asnmt asnmt = (Asnmt)item;
+            if(visit(asnmt)){
+                return true;
+            } 
+        }catch (Exception e){}
+        try {
+            System.out.println("TryHELP ParamList");
+            ParamList paramlist = (ParamList)item;
+            if(visit(paramlist)){
+                return true;
+            }
+        }catch (Exception e){}
+        try {
+            System.out.println("TryHelp FucntCall");
+            FunctionCall funcCall = (FunctionCall)item;
+            if(visit(funcCall)){
+                return true;
+            }
+        }catch (Exception e){}
+        try{
+            System.out.println("TryHelp Arithmetic");
+            Arithmetic art = (Arithmetic)item;
+            if(visit(art)){
+                return true;
+            }
+        }catch (Exception e){}
+        try{
+            System.out.println("TryHelp Condition");
+            Conditions condition = (Conditions)item;
+            if(visit(condition)){
+                return true;
+            }
+        }catch (Exception e){}
+        
 	
 	return false;
 }
@@ -1002,15 +1024,19 @@ class AbstractVisitor implements Visitor {
     public boolean visit(Arithmetic add) {
         System.out.println("IN ARITHMETIC VISITOR");
         int op = ((Yytoken)(add.getOp())).getToken();
-        int left = ((Yytoken)(add.getLeft())).getToken();
-        int right = ((Yytoken)(add.getRight())).getToken();
+        System.out.println(op);
+        int left = ((Yytoken)(((Literals)add.getLeft()).getInstance())).getToken();
+        System.out.println(add.getLeft());
+        int right = ((Yytoken)(((Literals)add.getRight()).getInstance())).getToken();
+        System.out.println(right);
+        System.out.println("Values " + left + right + op);
         if (op == ToYLexer.PLUS || op == ToYLexer.MINUS ){
-            if ((left == ToYLexer.INT && right == ToYLexer.INT) ||(left == ToYLexer.STRING && right == ToYLexer.STRING) ){
+            if (((left == ToYLexer.NUMBER || left == ToYLexer.IDENTIFIER) && (right == ToYLexer.NUMBER || right == ToYLexer.IDENTIFIER)) || ((left == ToYLexer.STRING || left == ToYLexer.IDENTIFIER) && (right == ToYLexer.STRING || right == ToYLexer.IDENTIFIER))){
                 return true;
             }
         }
-        if (op == ToYLexer.MULT || op == ToYLexer.DIVIDE ){
-            if (left == ToYLexer.INT && right == ToYLexer.INT){
+        if (op == ToYLexer.MULT || op == ToYLexer.DIVIDE || op == ToYLexer.MOD ){
+            if ((left == ToYLexer.NUMBER || left == ToYLexer.IDENTIFIER) && (right == ToYLexer.NUMBER || right == ToYLexer.IDENTIFIER) ){
                 return true;
             }
         }
@@ -1037,7 +1063,7 @@ class AbstractVisitor implements Visitor {
         int right = ((Yytoken)(((Literals)add.getRight()).getInstance())).getToken();
         if (op == ToYLexer.GREATERTHAN || op == ToYLexer.GREATERTHANOREQ || op == ToYLexer.LESSTHAN || op == ToYLexer.LESSTHANOREQ ){
             System.out.println("CHECK ME 1");
-            if ((left == ToYLexer.INT || left == ToYLexer.IDENTIFIER) && right == ToYLexer.NUMBER){
+            if ((left == ToYLexer.NUMBER || left == ToYLexer.IDENTIFIER) && (right == ToYLexer.NUMBER || right == ToYLexer.IDENTIFIER)){
                 System.out.println("CHECK ME 2");
                 return true;
             }
@@ -1069,8 +1095,8 @@ class AbstractVisitor implements Visitor {
         System.out.println("IN ASNMT VISITOR");
         System.out.println(add.getExp());
         int name = (((Yytoken)(add.getVar())).getToken());
-        System.out.println(((Yytoken)(add.getVar())).getToken());
         Object item = add.getExp();
+        System.out.println(add.getExp());
         if (!(name == ToYLexer.IDENTIFIER)){
             return false;
         }
@@ -1116,24 +1142,36 @@ class AbstractVisitor implements Visitor {
         System.out.println("increment");
         StmtList body = ((StmtList)(add.getBody()));
         System.out.println("body");
-        
-        //checks for iteration at pos 1 in for loop 
-        // if (!(visit(iterator))){
-        //     System.out.println("Check Assignment");
-        //     return false; 
-        // }
-        //checks for conditional expression at pos 2 in for loop 
+      
+        int name = (((Yytoken)(iterator.getVar())).getToken());
+        int item = ((Yytoken)((Literals)iterator.getExp()).getInstance()).getToken();
+
+        //CHECK ITERATION
+        if(!(name == ToYLexer.IDENTIFIER)){
+             return false;
+        }
+        if(!(item == ToYLexer.IDENTIFIER || item == ToYLexer.NUMBER )){
+             return false;
+        }
+       
+        //CHECK CONDITIONAL
         if (!visit(condition)){
              System.out.println("Check Condition");
             return false; 
         }
-        // //checks for incrementation at pos 3 of for loop 
-        // if (!visit(increment)){
-        //     System.out.println("Check increment");
-        //     return false; 
-        // }
+        //checks for incrementation at pos 3 of for loop 
+        //TODO FINISH FORLOOP  
+        int name2 = (((Yytoken)(increment.getVar())).getToken());
+        Asnmt exp = (Asnmt)(increment.getExp());
+        if (!visit(increment)){
+            System.out.println("Check increment");
+            return false; 
+        }
+        System.out.println("VALID increment");
+        
        
         for(int i = 0; i < body.getSize(); i++) {
+            System.out.println(body.getSize());
             System.out.println("Check body");
             System.out.println(body.elementAt(i));
             if(!(tryHelper(body.elementAt(i)))){    
@@ -1207,6 +1245,8 @@ class AbstractVisitor implements Visitor {
             }
          }
         for (int i = 0; i < body.getSize(); i++){
+            System.out.println(body.getSize());
+            System.out.println(body.elementAt(i));
             if(!tryHelper(body.elementAt(i))){
                 return false;
             }

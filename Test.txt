@@ -1,5 +1,3 @@
-void main(int x){
-    for(x = 0; x < 7; x = x + 1){
-        printf(x);
-    }
+void main(){
+    x = z and y;
 }

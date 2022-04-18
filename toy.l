@@ -146,6 +146,7 @@ HashComment = "##" {InputCharacter}* {LineTerminator}
 "/"                            { return new Yytoken(ToY.Lexer.DIVIDE); }
 "="                            { return new Yytoken(ToY.Lexer.EQ); }
 "."                            { return new Yytoken(ToY.Lexer.ATTRIBUTE); }
+"%"                            { return new Yytoken(ToY.Lexer.MOD); }
 
 /* whitespace */
 {WhiteSpace}                   { /* ignore */ }
