@@ -56,6 +56,7 @@ import java.util.ArrayList;
 
  static SymbolTable symbolTable = new SymbolTable();
  static Program ast = new Program(new StmtList());
+ 
 
  public static void main(String[] args) throws IOException {
  
@@ -65,6 +66,7 @@ import java.util.ArrayList;
         File initialFile = new File(file);
         InputStream targetStream = new FileInputStream(initialFile);
         BufferedReader br = new BufferedReader(new FileReader(initialFile));
+        
         String line;
 
         while ((line = br.readLine()) != null) {
@@ -73,26 +75,111 @@ import java.util.ArrayList;
 
         ToYLexer l = new ToYLexer(targetStream);
         ToY p = new ToY(l);
+
+        
+
         if (!p.parse()){
             System.out.println("ERROR SYNTAX FROM PARSER");
+            System.exit(0);
         } else{
-            System.out.println("VAlID SYNTAX FROM PARSER");
+            if(symbolTable.areErrors()){
+                ArrayList<String> arrErrors = symbolTable.getErrors();
+                for(String error: arrErrors){
+                    System.out.println(error);
+                    System.out.println("ERROR");
+                    System.exit(0);
+                }
+                
+            } else{
+            System.out.println("VAlID -- PARSER");
             System.out.println();
+            }
         }
 
         AbstractVisitor v = new AbstractVisitor();
         if(v.visit(ast)){
-            System.out.println("VALID SYNTAX FROM SEMANTIC");
+            System.out.println("VALID -- SEMANTIC");
         }else{
             System.out.println();
             System.out.println("ERROR SYNTAX FROM SEMANTIC");
         }
-	
+
+        System.out.println("PRINTING KEYS");
         symbolTable.printKeys();
-        System.out.println(symbolTable.size());
         for(int i = 0; i < symbolTable.size(); i++){
             
         }
+ }
+
+// CHECKS TO MAKE SURE THINGS HAVE BEEN PREVIOUSLY DEFINED WITHIN CURRENT SCOPE
+ static void varExistsID(Yytoken name){
+     Object val = name.getValue();
+     System.out.println("CHECKING SCOPE" + symbolTable.getScope());
+     if(symbolTable.check_scope(val) == null){
+       System.out.println("ERROR SYMBOL DOES NOT EXIST IN THIS SCOPE"); 
+       System.exit(0);
+     }
+     
+ }
+
+ static void dupExistsID(Yytoken name){
+     Object val = name.getValue();
+     System.out.println("CHECKING SCOPE" + symbolTable.getScope());
+     if(symbolTable.check_scope(val) != null){
+       System.out.println("ERROR Already Exists"); 
+       System.exit(0);
+     }
+     
+ }
+
+ // CHECKS TO MAKE SURE FUNCTION NAME HAS NOT BEEN DEFINED 
+ static void dupExistsFUN(Yytoken name){
+     Object val = name.getValue();
+     if(symbolTable.find_symbol(val) != null){
+       System.out.println("ERROR Already Exists"); 
+       System.exit(0);
+     }
+     
+ }
+//CHECKS THAT FUNCTION HAS BEEN DEFINED
+ static void funcExistsID(Yytoken name){
+     Object val = name.getValue();
+     if(symbolTable.find_symbol(val) == null){
+       System.out.println("ERROR SYMBOL DOES NOT EXIST"); 
+       System.exit(0);
+     }
+     
+ }
+
+ // CHECKS TO MAKE SURE STRUCT NAME HAS NOT BEEN DEFINED 
+ static void strucExistsID(Yytoken name){
+     Object val = name.getValue();
+     if(symbolTable.find_symbol(val) != null){
+       System.out.println("ERROR SYMBOL DOES NOT EXIST"); 
+       System.exit(0);
+     }
+     
+ }
+    static void typeCheck(Yytoken name, Object value){
+    Object val = (symbolTable.find_symbol(name.getValue()));
+    int type = ((Yytoken)((Keyword)(((Var)val).getType())).getKeyword()).getToken();
+    int typeVal = ((Yytoken)(((Literals)value).getInstance())).getToken();
+    System.out.println(type == ToYLexer.INT && !(typeVal == ToYLexer.NUMBER || typeVal == ToYLexer.INT));
+    if(typeVal == ToYLexer.IDENTIFIER){
+        Object val2 = (symbolTable.find_symbol(name.getValue()));
+        int type2 = ((Yytoken)((Keyword)(((Var)val2).getType())).getKeyword()).getToken();
+        typeVal = type2;
+    }
+    if(type == ToYLexer.INT && !(typeVal == ToYLexer.NUMBER || typeVal == ToYLexer.INT)){
+        System.out.println(type);
+        System.out.println(typeVal);
+        System.out.println("ERROR -- Incompadable Types");
+        System.exit(0);
+    }
+    if(type == ToYLexer.STRING && typeVal != ToYLexer.WORD){
+        System.out.println("ERROR -- Incompadable Types");
+        System.exit(0);
+    } 
  }
 }
 
@@ -151,11 +238,11 @@ import java.util.ArrayList;
     | struct recursePgm { StmtList pgm =  $2; ast.addElement($1); $$ = pgm; }
     ; 
 
-    function : returnType IDENTIFIER LEFTPAREN declarationListZero RIGHTPAREN LBRACKET stmts RBRACKET  {$$ = new FunctionConstruct($1, $2, $4, $7);
-                                                                                                         Function ft = new Function(($2).getValue(), $1, (StmtList)$4); symbolTable.addScope(); symbolTable.add_symbol(ft);}
+    function : returnType IDENTIFIER LEFTPAREN declarationListZero RIGHTPAREN LBRACKET stmts RBRACKET  { dupExistsFUN($2); $$ = new FunctionConstruct($1, $2, $4, $7);
+                                                                                                         Function ft = new Function(($2).getValue(), $1, (StmtList)$4); symbolTable.add_symbol(ft); symbolTable.addScope();}
     ; 
 
-    struct : STRUCT IDENTIFIER LBRACKET declarationList RBRACKET { $$ = new StructCreator($2, $4); Struct st = new Struct($2,(StmtList)$4); statements.put($2, st);}
+    struct : STRUCT IDENTIFIER LBRACKET declarationList RBRACKET {dupExistsFUN($2); $$ = new StructCreator($2, $4); Struct st = new Struct($2.getValue(), (StmtList)$4); symbolTable.add_symbol(st);symbolTable.addScope(); }
     ;      
 
     declarationListZero: { $$ = new StmtList();}  
@@ -163,7 +250,7 @@ import java.util.ArrayList;
     | declaration COMMA declarationList {StmtList decls = $3; decls.addElement($1); $$ = decls;} 
     ;    
 
-    declarationList: declaration { $$ = $1; }
+    declarationList: declaration { $$ = new StmtList($1); }
     | declaration COMMA declarationList { StmtList decls = $3; decls.addElement($1); $$ = decls;} 
     ;      
 
@@ -171,7 +258,7 @@ import java.util.ArrayList;
     | stmt stmts { StmtList sequence = $2; sequence.addElement($1); $$ = sequence; }
     ;
 
-    declaration: type IDENTIFIER {$$ = new VarDef($1, $2); }
+    declaration: type IDENTIFIER {dupExistsID($2); $$ = new VarDef($1, $2); System.out.println("MY VALUE IS    " + ($2).getValue()); Var addMe = new Var(($2).getValue(), $1); symbolTable.add_symbol(addMe); }
     ;
 
     stmt : FOR LEFTPAREN IDENTIFIER EQ exp SEMICOLON exp SEMICOLON stmt RIGHTPAREN LBRACKET stmts RBRACKET { Asnmt iterator = new Asnmt($3, $5);
@@ -179,16 +266,16 @@ import java.util.ArrayList;
     | IF LEFTPAREN exp RIGHTPAREN LBRACKET stmts RBRACKET { $$ = new IfStmt($3, $6, null); } 
     | IF LEFTPAREN exp RIGHTPAREN LBRACKET stmts RBRACKET ELSE LBRACKET stmts RBRACKET { $$ = new IfStmt($3, $6, $10);}
     | PRINTF LEFTPAREN STRING RIGHTPAREN SEMICOLON { $$ = new EndFunction($1, $3); } 
-    | PRINTF LEFTPAREN IDENTIFIER RIGHTPAREN SEMICOLON { $$ = new EndFunction($1, $3); } 
+    | PRINTF LEFTPAREN IDENTIFIER RIGHTPAREN SEMICOLON { $$ = new EndFunction($1, $3); varExistsID($3); } 
     | RETURN exp SEMICOLON { $$ = new EndFunction($1, $2); }
     | LBRACKET stmtSeq RBRACKET { $$ = $1; }
-    | type IDENTIFIER SEMICOLON { $$ = new VarDef($1, $2); System.out.println("MY VALUE IS    " + ($2).getValue()); Var addMe = new Var(($2).getValue(), $1); symbolTable.add_symbol(addMe);} 
-    | IDENTIFIER EQ exp SEMICOLON { $$ = new Asnmt($1, $3); }
-    | IDENTIFIER EQ exp { $$ = new Asnmt($1, $3); }
+    | type IDENTIFIER SEMICOLON { dupExistsID($2); $$ = new VarDef($1, $2); System.out.println("MY VALUE IS    " + ($2).getValue()); Var addMe = new Var(($2).getValue(), $1); symbolTable.add_symbol(addMe);} 
+    | IDENTIFIER EQ exp SEMICOLON { $$ = new Asnmt($1, $3); varExistsID($1); typeCheck($1, $3); }
+    | IDENTIFIER EQ exp { $$ = new Asnmt($1, $3); varExistsID($1); typeCheck($1, $3);}
     | IDENTIFIER ATTRIBUTE Lexp EQ exp SEMICOLON { $$ = new Asnmt($1, $3);} 
-    | IDENTIFIER LEFTPAREN paramList RIGHTPAREN SEMICOLON {$$ = new FunctionCall($1, $2);}
-    | IDENTIFIER EQ IDENTIFIER LEFTPAREN paramList RIGHTPAREN SEMICOLON {FunctionCall func = new FunctionCall($3, $5); $$ = new Asnmt($1, func);}
-    | COMMENT 
+    | IDENTIFIER LEFTPAREN paramList RIGHTPAREN SEMICOLON {$$ = new FunctionCall($1, $2); dupExistsFUN($1);}
+    | IDENTIFIER EQ IDENTIFIER LEFTPAREN paramList RIGHTPAREN SEMICOLON {FunctionCall func = new FunctionCall($3, $5); $$ = new Asnmt($1, func); funcExistsID($1);}
+    | COMMENT {$$ = $1;}
     ;
 
     paramList: { $$ = new StmtList();}
@@ -202,6 +289,7 @@ import java.util.ArrayList;
     type: INT { $$ = new Keyword($1); }
     | BOOL { $$ = new Keyword($1); }
     | STRING { $$ = new Keyword($1); }
+    | IDENTIFIER { $$ = new Literals($1); varExistsID($1); }
     ;
  
     returnType: type { $$ = $1; }
@@ -212,7 +300,7 @@ import java.util.ArrayList;
     | WORD { $$ = new Literals($1); }
     | TRUE { $$ = new Keyword($1); }
     | FALSE { $$ = new Keyword($1); }
-    | IDENTIFIER { $$ = new Literals($1); }
+    | IDENTIFIER { $$ = new Literals($1); varExistsID($1); }
     | exp PLUS exp { $$ = new Arithmetic($1, $2, $3); }
     | exp MINUS exp { $$ = new Arithmetic($1, $2, $3); }
     | exp MULT exp { $$ = new Arithmetic($1, $2, $3); }
@@ -521,6 +609,7 @@ class Asnmt extends ASTNode {
     public Object getExp(){
         return this.exp;
     }
+
     @Override
     public Object accept(Visitor v) {
         return v.visit(this);
@@ -840,6 +929,14 @@ class AbstractVisitor implements Visitor {
                 return true;
             }
         }catch (Exception e){}
+        try{ // LITERAL
+            System.out.println("TryHelp Literal");
+            Literals lit = (Literals)item;
+            if(visit(lit)){
+                return true;
+            }
+        }catch (Exception e){}
+        
         
 	return false;
     }	
@@ -1025,6 +1122,8 @@ class AbstractVisitor implements Visitor {
         System.out.println(add.getExp());
 	
         int name = (((Yytoken)(add.getVar())).getToken());
+        
+
         Object item = add.getExp();
         System.out.println(add.getExp());
 	
@@ -1035,7 +1134,7 @@ class AbstractVisitor implements Visitor {
         if(!tryHelper(item)){
             System.out.println("IN TryHELPER");
             return false;
-        } // took out an empty if statement here
+        } 
         return true;
     }
 
@@ -1069,7 +1168,12 @@ class AbstractVisitor implements Visitor {
     public boolean visit(Literals add){
     
         System.out.println("IN LITERAL VISITOR");
-        return true;
+
+        int lit = ((Yytoken)(add.getInstance())).getToken();
+        if (lit == ToYLexer.NUMBER || lit == ToYLexer.WORD || lit == ToYLexer.IDENTIFIER){
+            return true;
+        }
+        return false;
     }
     
     
@@ -1286,6 +1390,10 @@ class Var extends ID {
         this.type = type;
 
     }
+    public Object getType(){
+       return type;
+    }
+
 }
 
 class Function extends ID {
@@ -1318,7 +1426,8 @@ class Struct extends ID {
   class SymbolTable{
    
    int scope = 0; 
-   HashMap<Object, ID> currentScope; 
+   HashMap<Object, ID> currentScope;
+   ArrayList<String> errors = new ArrayList<String>(); 
    ArrayList<HashMap<Object, ID>> table;
 
    public SymbolTable() {
@@ -1330,9 +1439,23 @@ class Struct extends ID {
         return table.size();
     }
 
+    public ArrayList<String> getErrors(){
+        return this.errors;
+    }
+
+    public boolean areErrors(){
+        if(this.errors.size() == 0){
+            return false;
+        }
+        return true;
+    }
+
    public void addScope(){
       table.add(new HashMap<Object, ID>());
       scope++;
+   }
+   public int getScope(){
+      return this.scope;
    }
 
    public void enterScope(){
@@ -1369,6 +1492,7 @@ class Struct extends ID {
 
    public void printKeys(){
        for (int i = this.scope; i >= 0; i--) {
+            System.out.println("SCOPE ========" + i);
 			HashMap<Object, ID> table = this.table.get(i); 
             Set<Object> keys = table.keySet();
             for (Object key : keys) {
@@ -1381,12 +1505,13 @@ class Struct extends ID {
 
    //adds all the information we need to know about x in current scope
    public boolean add_symbol(ID id){
-     if(this.find_symbol(id.getName()) != null){
-            System.out.println("THERE IS A DUPLICATE VALUE");
-    }
-      if (id != null && find_symbol(id) == null) {
+     if(this.check_scope(id.getName()) != null){
+            System.out.println("ERROR: DUPLICATE DEFINITIONS");
+            errors.add("ERROR: DUPLICATE DEFINITIONS");
+            System.out.println(errors.size());
+    } 
+      if (id != null && check_scope(id) == null) {
 			this.table.get(this.scope).put(id.getName(), id);
-			id.setScope(this.scope);
 			return true;
 		}
 		return false;
@@ -1394,9 +1519,15 @@ class Struct extends ID {
 
    //check if x is in current scope and if it is returns the symbol 
    public ID check_scope(ID id){
-      if(this.currentScope.containsKey(id.getName())){
+      if(this.table.get(scope).containsKey(id.getName())){
          return this.table.get(this.scope).get(id.getName());
       }
+      return null;
+   }
+    public Object check_scope(Object name){
+      if (this.table.get(scope).containsKey(name)) {
+				return this.table.get(scope).get(name);
+			}
       return null;
       
    } 
