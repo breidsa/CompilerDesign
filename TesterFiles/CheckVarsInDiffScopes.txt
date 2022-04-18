@@ -9,3 +9,4 @@ int hey(){
 
     int x;
     x = 2;
+}
