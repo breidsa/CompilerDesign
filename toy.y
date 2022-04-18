@@ -187,7 +187,7 @@ public static void main(String[] args) throws IOException {
     | IDENTIFIER ATTRIBUTE Lexp EQ exp SEMICOLON //{ $$ = new Asnmt($1, $3);} ASK ABT THIS
     | IDENTIFIER LEFTPAREN paramList RIGHTPAREN SEMICOLON {$$ = new FunctionCall($1, $2);}
     | IDENTIFIER EQ IDENTIFIER LEFTPAREN paramList RIGHTPAREN SEMICOLON {FunctionCall func = new FunctionCall($3, $5); $$ = new Asnmt($1, func);}
-    | COMMENT //honestly don't know what to do with this and if this is the thing that loses us points then so be it
+    | COMMENT 
     ;
 
     paramList: { $$ = new StmtList();}
