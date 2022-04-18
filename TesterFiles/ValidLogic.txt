@@ -1,0 +1,5 @@
+void main(bool z){
+   bool x;
+   bool y;
+   z = x and y;
+}

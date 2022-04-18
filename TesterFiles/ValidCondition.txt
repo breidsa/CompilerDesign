@@ -1,0 +1,8 @@
+void main(){
+    int x;
+    int y;
+    x = 3;
+    y = 2;
+    bool z;
+    z = y < x;
+}
