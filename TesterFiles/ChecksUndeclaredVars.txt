@@ -1,5 +1,5 @@
 void main(){
-  // THIS FUNCTION SHOULD FAIL BECAUSE Y IS NOT DECLARED
+
   int x;
   x = y + 3;
  }
