@@ -1,11 +1,5 @@
-void main(){
-    int x; 
-    int y;
-    x = 3;
-    y = 3; 
-    x = y;
+void main(bool z){
+   bool x;
+   bool y;
+   z = x and y;
 }
-
-
-
-
