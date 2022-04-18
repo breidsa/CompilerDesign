@@ -2304,6 +2304,20 @@ class AbstractVisitor implements Visitor {
                 return true;
             }
         }catch (Exception e){}
+        try{
+            System.out.println("TryHelp Logic");
+            Logic log = (Logic)item;
+            if(visit(log)){
+                return true;
+            }
+        }catch (Exception e){}
+        try{
+            System.out.println("TryHelp Unary");
+            UnaryOperators un = (UnaryOperators)item;
+            if(visit(un)){
+                return true;
+            }
+        }catch (Exception e){}
         
 	
 	return false;
@@ -2340,12 +2354,13 @@ class AbstractVisitor implements Visitor {
     
         System.out.println("IN LOGIC VISITOR");
 	
-        int left = ((Yytoken)(add.getLeft())).getToken();
-        int right = ((Yytoken)(add.getRight())).getToken();
+        int left = ((Yytoken)(((Literals)add.getLeft()).getInstance())).getToken();
+        int right = ((Yytoken)(((Literals)add.getRight()).getInstance())).getToken();
+        
 	
-        if (left == ToYLexer.BOOL && right == ToYLexer.BOOL){
-            return true;
-        }
+         if ((left == ToYLexer.BOOL || left == ToYLexer.IDENTIFIER) && (right == ToYLexer.BOOL || right == ToYLexer.IDENTIFIER) ){
+                return true;
+            }
         return false;
     }
 
@@ -2381,9 +2396,9 @@ class AbstractVisitor implements Visitor {
         System.out.println("IN UNARYOPERATORS VISITOR");
         
 	int op = ((Yytoken)(add.getOp())).getToken();
-        int right = ((Yytoken)(add.getRight())).getToken();
-        
-	if (op == ToYLexer.NOT && right == ToYLexer.BOOL){
+    int right = ((Yytoken)(((Literals)add.getRight()).getInstance())).getToken();
+	        
+	if (op == ToYLexer.NOT && (right == ToYLexer.BOOL || right == ToYLexer.IDENTIFIER )){
             return true;
         }
         if (op == ToYLexer.MINUS && right == ToYLexer.INT){
@@ -2424,7 +2439,7 @@ class AbstractVisitor implements Visitor {
         // ADD have to add expresison here 
         if (type == ToYLexer.PRINTF){
             int printME = ((Yytoken)(add.getExp())).getToken(); 
-            if(printME != ToYLexer.STRING){
+            if(!(printME == ToYLexer.WORD || printME == ToYLexer.IDENTIFIER)){
                 return false;
             }
         }
@@ -2472,8 +2487,10 @@ class AbstractVisitor implements Visitor {
         //checks for incrementation at pos 3 of for loop 
         //TODO FINISH FORLOOP  
         int name2 = (((Yytoken)(increment.getVar())).getToken());
-        Asnmt exp = (Asnmt)(increment.getExp());
-        if (!visit(increment)){
+        System.out.println(increment.getExp());
+        Arithmetic exp = (Arithmetic)(increment.getExp());
+        
+        if (!visit(exp)){
             System.out.println("Check increment");
             return false; 
         }
