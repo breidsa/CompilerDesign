@@ -1,5 +1,0 @@
-struct StructType{int x}
-
-void main(){
-  StructType y;
- }
