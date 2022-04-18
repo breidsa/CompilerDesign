@@ -90,11 +90,8 @@ import java.util.ArrayList;
 	
         symbolTable.printKeys();
         System.out.println(symbolTable.size());
-        System.out.print(symbolTable.find_symbol("main"));
         for(int i = 0; i < symbolTable.size(); i++){
-            // for (Object name : symbolTable.keySet()) {
-            //      System.out.println(name);
-            // }
+            
         }
  }
 }
@@ -155,7 +152,7 @@ import java.util.ArrayList;
     ; 
 
     function : returnType IDENTIFIER LEFTPAREN declarationListZero RIGHTPAREN LBRACKET stmts RBRACKET  {$$ = new FunctionConstruct($1, $2, $4, $7);
-                                                                                                         Function ft = new Function($2, $1, (StmtList)$4); symbolTable.addScope(); symbolTable.add_symbol(ft);}
+                                                                                                         Function ft = new Function(($2).getValue(), $1, (StmtList)$4); symbolTable.addScope(); symbolTable.add_symbol(ft);}
     ; 
 
     struct : STRUCT IDENTIFIER LBRACKET declarationList RBRACKET { $$ = new StructCreator($2, $4); Struct st = new Struct($2,(StmtList)$4); statements.put($2, st);}
@@ -174,7 +171,7 @@ import java.util.ArrayList;
     | stmt stmts { StmtList sequence = $2; sequence.addElement($1); $$ = sequence; }
     ;
 
-    declaration: type IDENTIFIER { $$ = new VarDef($1, $2); }
+    declaration: type IDENTIFIER {$$ = new VarDef($1, $2); }
     ;
 
     stmt : FOR LEFTPAREN IDENTIFIER EQ exp SEMICOLON exp SEMICOLON stmt RIGHTPAREN LBRACKET stmts RBRACKET { Asnmt iterator = new Asnmt($3, $5);
@@ -185,7 +182,7 @@ import java.util.ArrayList;
     | PRINTF LEFTPAREN IDENTIFIER RIGHTPAREN SEMICOLON { $$ = new EndFunction($1, $3); } 
     | RETURN exp SEMICOLON { $$ = new EndFunction($1, $2); }
     | LBRACKET stmtSeq RBRACKET { $$ = $1; }
-    | type IDENTIFIER SEMICOLON { $$ = new VarDef($1, $2); } 
+    | type IDENTIFIER SEMICOLON { $$ = new VarDef($1, $2); System.out.println("MY VALUE IS    " + ($2).getValue()); Var addMe = new Var(($2).getValue(), $1); symbolTable.add_symbol(addMe);} 
     | IDENTIFIER EQ exp SEMICOLON { $$ = new Asnmt($1, $3); }
     | IDENTIFIER EQ exp { $$ = new Asnmt($1, $3); }
     | IDENTIFIER ATTRIBUTE Lexp EQ exp SEMICOLON { $$ = new Asnmt($1, $3);} 
@@ -1082,6 +1079,9 @@ class AbstractVisitor implements Visitor {
 	
         int type = ((Yytoken)((Keyword)(add.getType())).getKeyword()).getToken();
         int name = ((Yytoken)(add.getName())).getToken();
+
+
+    
 	
         if ((type == ToYLexer.BOOL || type == ToYLexer.INT || type == ToYLexer.STRING ) && name == ToYLexer.IDENTIFIER){
             return true;
@@ -1355,7 +1355,7 @@ class Struct extends ID {
    }
 
    public Object find_symbol(Object name){
-       System.out.println("Finding name");
+      System.out.println("Finding name");
       for (int i = this.scope; i >= 0; i--) {
           System.out.println("for name");
 			if (this.table.get(i).containsKey(name)) {
@@ -1381,6 +1381,9 @@ class Struct extends ID {
 
    //adds all the information we need to know about x in current scope
    public boolean add_symbol(ID id){
+     if(this.find_symbol(id.getName()) != null){
+            System.out.println("THERE IS A DUPLICATE VALUE");
+    }
       if (id != null && find_symbol(id) == null) {
 			this.table.get(this.scope).put(id.getName(), id);
 			id.setScope(this.scope);
