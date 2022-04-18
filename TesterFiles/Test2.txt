@@ -1,5 +1,6 @@
 void main(int x){
-  x = func()
+  // THIS PROGRAM SHOULD WORK, IT IMPLEMENTS FORWARD REFERENCING
+  x = func();
 }
 
 int func(){
