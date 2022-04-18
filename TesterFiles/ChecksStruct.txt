@@ -1,5 +1,4 @@
 void main(){
-// THIS MAIN IS HERE SINCE ALL PROGRAMS NEED AT LEAST 1 FUNCTION
 }
 
 struct hey {int x, int y}
