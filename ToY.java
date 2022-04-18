@@ -585,42 +585,42 @@ public class ToY
       {
           case 2: /* pgm: function recursePgm  */
   if (yyn == 2)
-    /* "ToY.y":160  */
+    /* "ToY.y":142  */
                                { StmtList pgm = ((StmtList)(yystack.valueAt (0))); ast.addElement(((Object)(yystack.valueAt (1)))); yyval = pgm; };
   break;
 
 
   case 3: /* pgm: struct pgm  */
   if (yyn == 3)
-    /* "ToY.y":161  */
+    /* "ToY.y":143  */
                  { StmtList pgm = ((StmtList)(yystack.valueAt (0))); ast.addElement(((Object)(yystack.valueAt (1)))); yyval = pgm; };
   break;
 
 
   case 4: /* recursePgm: %empty  */
   if (yyn == 4)
-    /* "ToY.y":164  */
+    /* "ToY.y":146  */
                  { yyval = new StmtList(); };
   break;
 
 
   case 5: /* recursePgm: function recursePgm  */
   if (yyn == 5)
-    /* "ToY.y":165  */
+    /* "ToY.y":147  */
                           { StmtList pgm = ((StmtList)(yystack.valueAt (0))); ast.addElement(((Object)(yystack.valueAt (1)))); yyval = pgm;  };
   break;
 
 
   case 6: /* recursePgm: struct recursePgm  */
   if (yyn == 6)
-    /* "ToY.y":166  */
+    /* "ToY.y":148  */
                         { StmtList pgm =  ((StmtList)(yystack.valueAt (0))); ast.addElement(((Object)(yystack.valueAt (1)))); yyval = pgm; };
   break;
 
 
   case 7: /* function: returnType IDENTIFIER LEFTPAREN declarationListZero RIGHTPAREN LBRACKET stmts RBRACKET  */
   if (yyn == 7)
-    /* "ToY.y":170  */
+    /* "ToY.y":152  */
                                                                                                        {yyval = new FunctionConstruct(((Object)(yystack.valueAt (7))), ((Yytoken)(yystack.valueAt (6))), ((StmtList)(yystack.valueAt (4))), ((StmtList)(yystack.valueAt (1))));
                                                                                                          Function ft = new Function(((Yytoken)(yystack.valueAt (6))), ((Object)(yystack.valueAt (7))), (StmtList)((StmtList)(yystack.valueAt (4)))); functions.put(((Yytoken)(yystack.valueAt (6))), ft);};
   break;
@@ -628,70 +628,70 @@ public class ToY
 
   case 8: /* struct: STRUCT IDENTIFIER LBRACKET declarationList RBRACKET  */
   if (yyn == 8)
-    /* "ToY.y":175  */
+    /* "ToY.y":157  */
                                                                  { yyval = new StructCreator(((Yytoken)(yystack.valueAt (3))), ((StmtList)(yystack.valueAt (1)))); Struct st = new Struct(((Yytoken)(yystack.valueAt (3))),(StmtList)((StmtList)(yystack.valueAt (1)))); statements.put(((Yytoken)(yystack.valueAt (3))), st);};
   break;
 
 
   case 9: /* declarationListZero: %empty  */
   if (yyn == 9)
-    /* "ToY.y":178  */
+    /* "ToY.y":160  */
                          { yyval = new StmtList();};
   break;
 
 
   case 10: /* declarationListZero: declaration  */
   if (yyn == 10)
-    /* "ToY.y":179  */
+    /* "ToY.y":161  */
                   {yyval = new StmtList(((Object)(yystack.valueAt (0)))); };
   break;
 
 
   case 11: /* declarationListZero: declaration COMMA declarationList  */
   if (yyn == 11)
-    /* "ToY.y":180  */
+    /* "ToY.y":162  */
                                         {StmtList decls = ((StmtList)(yystack.valueAt (0))); decls.addElement(((Object)(yystack.valueAt (2)))); yyval = decls;};
   break;
 
 
   case 12: /* declarationList: declaration  */
   if (yyn == 12)
-    /* "ToY.y":183  */
+    /* "ToY.y":165  */
                                  { yyval = ((Object)(yystack.valueAt (0))); };
   break;
 
 
   case 13: /* declarationList: declaration COMMA declarationList  */
   if (yyn == 13)
-    /* "ToY.y":184  */
+    /* "ToY.y":166  */
                                         { StmtList decls = ((StmtList)(yystack.valueAt (0))); decls.addElement(((Object)(yystack.valueAt (2)))); yyval = decls;};
   break;
 
 
   case 14: /* stmts: %empty  */
   if (yyn == 14)
-    /* "ToY.y":187  */
+    /* "ToY.y":169  */
             { yyval = new StmtList();};
   break;
 
 
   case 15: /* stmts: stmt stmts  */
   if (yyn == 15)
-    /* "ToY.y":188  */
+    /* "ToY.y":170  */
                  { StmtList sequence = ((StmtList)(yystack.valueAt (0))); sequence.addElement(((Object)(yystack.valueAt (1)))); yyval = sequence; };
   break;
 
 
   case 16: /* declaration: type IDENTIFIER  */
   if (yyn == 16)
-    /* "ToY.y":191  */
+    /* "ToY.y":173  */
                                  { yyval = new VarDef(((Object)(yystack.valueAt (1))), ((Yytoken)(yystack.valueAt (0)))); };
   break;
 
 
   case 17: /* stmt: FOR LEFTPAREN IDENTIFIER EQ exp SEMICOLON exp SEMICOLON stmt RIGHTPAREN LBRACKET stmts RBRACKET  */
   if (yyn == 17)
-    /* "ToY.y":194  */
+    /* "ToY.y":176  */
                                                                                                            { Asnmt iterator = new Asnmt(((Yytoken)(yystack.valueAt (10))), ((Object)(yystack.valueAt (8))));
 										               yyval = new ForLoop(iterator, ((Object)(yystack.valueAt (6))), ((Object)(yystack.valueAt (4))), ((StmtList)(yystack.valueAt (1))));};
   break;
@@ -699,308 +699,308 @@ public class ToY
 
   case 18: /* stmt: IF LEFTPAREN exp RIGHTPAREN LBRACKET stmts RBRACKET  */
   if (yyn == 18)
-    /* "ToY.y":196  */
+    /* "ToY.y":178  */
                                                           { yyval = new IfStmt(((Object)(yystack.valueAt (4))), ((StmtList)(yystack.valueAt (1))), null); };
   break;
 
 
   case 19: /* stmt: IF LEFTPAREN exp RIGHTPAREN LBRACKET stmts RBRACKET ELSE LBRACKET stmts RBRACKET  */
   if (yyn == 19)
-    /* "ToY.y":197  */
+    /* "ToY.y":179  */
                                                                                        { yyval = new IfStmt(((Object)(yystack.valueAt (8))), ((StmtList)(yystack.valueAt (5))), ((StmtList)(yystack.valueAt (1))));};
   break;
 
 
   case 20: /* stmt: PRINTF LEFTPAREN STRING RIGHTPAREN SEMICOLON  */
   if (yyn == 20)
-    /* "ToY.y":198  */
+    /* "ToY.y":180  */
                                                    { yyval = new EndFunction(((Yytoken)(yystack.valueAt (4))), ((Yytoken)(yystack.valueAt (2)))); };
   break;
 
 
   case 21: /* stmt: PRINTF LEFTPAREN IDENTIFIER RIGHTPAREN SEMICOLON  */
   if (yyn == 21)
-    /* "ToY.y":199  */
+    /* "ToY.y":181  */
                                                        { yyval = new EndFunction(((Yytoken)(yystack.valueAt (4))), ((Yytoken)(yystack.valueAt (2)))); };
   break;
 
 
   case 22: /* stmt: RETURN exp SEMICOLON  */
   if (yyn == 22)
-    /* "ToY.y":200  */
+    /* "ToY.y":182  */
                            { yyval = new EndFunction(((Yytoken)(yystack.valueAt (2))), ((Object)(yystack.valueAt (1)))); };
   break;
 
 
   case 23: /* stmt: LBRACKET stmtSeq RBRACKET  */
   if (yyn == 23)
-    /* "ToY.y":201  */
+    /* "ToY.y":183  */
                                 { yyval = ((Yytoken)(yystack.valueAt (2))); };
   break;
 
 
   case 24: /* stmt: type IDENTIFIER SEMICOLON  */
   if (yyn == 24)
-    /* "ToY.y":202  */
+    /* "ToY.y":184  */
                                 { yyval = new VarDef(((Object)(yystack.valueAt (2))), ((Yytoken)(yystack.valueAt (1)))); };
   break;
 
 
   case 25: /* stmt: IDENTIFIER EQ exp SEMICOLON  */
   if (yyn == 25)
-    /* "ToY.y":203  */
+    /* "ToY.y":185  */
                                   { yyval = new Asnmt(((Yytoken)(yystack.valueAt (3))), ((Object)(yystack.valueAt (1)))); };
   break;
 
 
   case 26: /* stmt: IDENTIFIER EQ exp  */
   if (yyn == 26)
-    /* "ToY.y":204  */
+    /* "ToY.y":186  */
                         { System.out.println("Into correct assignment"); yyval = new Asnmt(((Yytoken)(yystack.valueAt (2))), ((Object)(yystack.valueAt (0)))); };
   break;
 
 
   case 27: /* stmt: IDENTIFIER ATTRIBUTE Lexp EQ exp SEMICOLON  */
   if (yyn == 27)
-    /* "ToY.y":205  */
+    /* "ToY.y":187  */
                                                  {System.out.println("Into wrong assignment"); yyval = new Asnmt(((Yytoken)(yystack.valueAt (5))), ((StmtList)(yystack.valueAt (3))));};
   break;
 
 
   case 28: /* stmt: IDENTIFIER LEFTPAREN paramList RIGHTPAREN SEMICOLON  */
   if (yyn == 28)
-    /* "ToY.y":206  */
+    /* "ToY.y":188  */
                                                           {yyval = new FunctionCall(((Yytoken)(yystack.valueAt (4))), ((Yytoken)(yystack.valueAt (3))));};
   break;
 
 
   case 29: /* stmt: IDENTIFIER EQ IDENTIFIER LEFTPAREN paramList RIGHTPAREN SEMICOLON  */
   if (yyn == 29)
-    /* "ToY.y":207  */
+    /* "ToY.y":189  */
                                                                         {FunctionCall func = new FunctionCall(((Yytoken)(yystack.valueAt (4))), ((StmtList)(yystack.valueAt (2)))); yyval = new Asnmt(((Yytoken)(yystack.valueAt (6))), func);};
   break;
 
 
   case 31: /* paramList: %empty  */
   if (yyn == 31)
-    /* "ToY.y":211  */
+    /* "ToY.y":193  */
                { yyval = new StmtList();};
   break;
 
 
   case 32: /* paramList: exp COMMA paramList  */
   if (yyn == 32)
-    /* "ToY.y":212  */
+    /* "ToY.y":194  */
                           {StmtList params = ((StmtList)(yystack.valueAt (0))); params.addElement(((Object)(yystack.valueAt (2)))); yyval = params;};
   break;
 
 
   case 33: /* stmtSeq: %empty  */
   if (yyn == 33)
-    /* "ToY.y":215  */
+    /* "ToY.y":197  */
              { yyval = new StmtList();};
   break;
 
 
   case 34: /* stmtSeq: stmt COMMA stmtSeq  */
   if (yyn == 34)
-    /* "ToY.y":216  */
+    /* "ToY.y":198  */
                          { StmtList sequence = ((StmtList)(yystack.valueAt (0))); sequence.addElement(((Object)(yystack.valueAt (2)))); yyval = sequence; };
   break;
 
 
   case 35: /* type: INT  */
   if (yyn == 35)
-    /* "ToY.y":219  */
+    /* "ToY.y":201  */
               { yyval = new Keyword(((Yytoken)(yystack.valueAt (0)))); };
   break;
 
 
   case 36: /* type: BOOL  */
   if (yyn == 36)
-    /* "ToY.y":220  */
+    /* "ToY.y":202  */
            { yyval = new Keyword(((Yytoken)(yystack.valueAt (0)))); };
   break;
 
 
   case 37: /* type: STRING  */
   if (yyn == 37)
-    /* "ToY.y":221  */
+    /* "ToY.y":203  */
              { yyval = new Keyword(((Yytoken)(yystack.valueAt (0)))); };
   break;
 
 
   case 38: /* returnType: type  */
   if (yyn == 38)
-    /* "ToY.y":226  */
+    /* "ToY.y":206  */
                      { yyval = ((Object)(yystack.valueAt (0))); };
   break;
 
 
   case 39: /* returnType: VOID  */
   if (yyn == 39)
-    /* "ToY.y":227  */
+    /* "ToY.y":207  */
            { yyval = new Keyword(((Yytoken)(yystack.valueAt (0)))); };
   break;
 
 
   case 40: /* exp: NUMBER  */
   if (yyn == 40)
-    /* "ToY.y":230  */
+    /* "ToY.y":210  */
                 { yyval = new Literals(((Yytoken)(yystack.valueAt (0)))); };
   break;
 
 
   case 41: /* exp: WORD  */
   if (yyn == 41)
-    /* "ToY.y":231  */
+    /* "ToY.y":211  */
            { yyval = new Literals(((Yytoken)(yystack.valueAt (0)))); };
   break;
 
 
   case 42: /* exp: TRUE  */
   if (yyn == 42)
-    /* "ToY.y":232  */
+    /* "ToY.y":212  */
            { yyval = new Keyword(((Yytoken)(yystack.valueAt (0)))); };
   break;
 
 
   case 43: /* exp: FALSE  */
   if (yyn == 43)
-    /* "ToY.y":233  */
+    /* "ToY.y":213  */
             { yyval = new Keyword(((Yytoken)(yystack.valueAt (0)))); };
   break;
 
 
   case 44: /* exp: IDENTIFIER  */
   if (yyn == 44)
-    /* "ToY.y":234  */
+    /* "ToY.y":214  */
                  { yyval = new Literals(((Yytoken)(yystack.valueAt (0)))); };
   break;
 
 
   case 45: /* exp: exp PLUS exp  */
   if (yyn == 45)
-    /* "ToY.y":235  */
+    /* "ToY.y":215  */
                    { yyval = new Arithmetic(((Object)(yystack.valueAt (2))), ((Yytoken)(yystack.valueAt (1))), ((Object)(yystack.valueAt (0)))); };
   break;
 
 
   case 46: /* exp: exp MINUS exp  */
   if (yyn == 46)
-    /* "ToY.y":236  */
+    /* "ToY.y":216  */
                     { yyval = new Arithmetic(((Object)(yystack.valueAt (2))), ((Yytoken)(yystack.valueAt (1))), ((Object)(yystack.valueAt (0)))); };
   break;
 
 
   case 47: /* exp: exp MULT exp  */
   if (yyn == 47)
-    /* "ToY.y":237  */
+    /* "ToY.y":217  */
                    { yyval = new Arithmetic(((Object)(yystack.valueAt (2))), ((Yytoken)(yystack.valueAt (1))), ((Object)(yystack.valueAt (0)))); };
   break;
 
 
   case 48: /* exp: exp DIVIDE exp  */
   if (yyn == 48)
-    /* "ToY.y":238  */
+    /* "ToY.y":218  */
                      { yyval = new Arithmetic(((Object)(yystack.valueAt (2))), ((Yytoken)(yystack.valueAt (1))), ((Object)(yystack.valueAt (0)))); };
   break;
 
 
   case 49: /* exp: exp MOD exp  */
   if (yyn == 49)
-    /* "ToY.y":239  */
+    /* "ToY.y":219  */
                   { yyval = new Arithmetic(((Object)(yystack.valueAt (2))), ((Yytoken)(yystack.valueAt (1))), ((Object)(yystack.valueAt (0)))); };
   break;
 
 
   case 50: /* exp: exp AND exp  */
   if (yyn == 50)
-    /* "ToY.y":240  */
+    /* "ToY.y":220  */
                   { System.out.println("Goes to AND expression");yyval = new Logic(((Object)(yystack.valueAt (2))), ((Yytoken)(yystack.valueAt (1))), ((Object)(yystack.valueAt (0)))); };
   break;
 
 
   case 51: /* exp: exp OR exp  */
   if (yyn == 51)
-    /* "ToY.y":241  */
+    /* "ToY.y":221  */
                  { yyval = new Logic(((Object)(yystack.valueAt (2))), ((Yytoken)(yystack.valueAt (1))), ((Object)(yystack.valueAt (0)))); };
   break;
 
 
   case 52: /* exp: exp DOUBLEEQ exp  */
   if (yyn == 52)
-    /* "ToY.y":242  */
+    /* "ToY.y":222  */
                        { yyval = new Conditions(((Object)(yystack.valueAt (2))), ((Yytoken)(yystack.valueAt (1))), ((Object)(yystack.valueAt (0)))); };
   break;
 
 
   case 53: /* exp: exp GREATERTHAN exp  */
   if (yyn == 53)
-    /* "ToY.y":243  */
+    /* "ToY.y":223  */
                           { yyval = new Conditions(((Object)(yystack.valueAt (2))), ((Yytoken)(yystack.valueAt (1))), ((Object)(yystack.valueAt (0)))); };
   break;
 
 
   case 54: /* exp: exp LESSTHAN exp  */
   if (yyn == 54)
-    /* "ToY.y":244  */
+    /* "ToY.y":224  */
                        { yyval = new Conditions(((Object)(yystack.valueAt (2))), ((Yytoken)(yystack.valueAt (1))), ((Object)(yystack.valueAt (0)))); };
   break;
 
 
   case 55: /* exp: exp GREATERTHANOREQ exp  */
   if (yyn == 55)
-    /* "ToY.y":245  */
+    /* "ToY.y":225  */
                               { yyval = new Conditions(((Object)(yystack.valueAt (2))), ((Yytoken)(yystack.valueAt (1))), ((Object)(yystack.valueAt (0)))); };
   break;
 
 
   case 56: /* exp: exp LESSTHANOREQ exp  */
   if (yyn == 56)
-    /* "ToY.y":246  */
+    /* "ToY.y":226  */
                            { yyval = new Conditions(((Object)(yystack.valueAt (2))), ((Yytoken)(yystack.valueAt (1))), ((Object)(yystack.valueAt (0)))); };
   break;
 
 
   case 57: /* exp: exp NOTEQ exp  */
   if (yyn == 57)
-    /* "ToY.y":247  */
+    /* "ToY.y":227  */
                     { yyval = new Conditions(((Object)(yystack.valueAt (2))), ((Yytoken)(yystack.valueAt (1))), ((Object)(yystack.valueAt (0)))); };
   break;
 
 
   case 58: /* exp: NOT exp  */
   if (yyn == 58)
-    /* "ToY.y":248  */
+    /* "ToY.y":228  */
               { yyval = new UnaryOperators(((Yytoken)(yystack.valueAt (1))), ((Object)(yystack.valueAt (0)))); };
   break;
 
 
   case 59: /* exp: MINUS exp  */
   if (yyn == 59)
-    /* "ToY.y":249  */
+    /* "ToY.y":229  */
                 { yyval = new UnaryOperators(((Yytoken)(yystack.valueAt (1))), ((Object)(yystack.valueAt (0)))); };
   break;
 
 
   case 60: /* exp: LEFTPAREN exp RIGHTPAREN  */
   if (yyn == 60)
-    /* "ToY.y":250  */
+    /* "ToY.y":230  */
                                {yyval = ((Object)(yystack.valueAt (1)));};
   break;
 
 
   case 61: /* Lexp: IDENTIFIER  */
   if (yyn == 61)
-    /* "ToY.y":253  */
+    /* "ToY.y":233  */
                       { StmtList emptyList = new StmtList(); emptyList.addElement(((Yytoken)(yystack.valueAt (0)))); yyval = emptyList;};
   break;
 
 
   case 62: /* Lexp: IDENTIFIER ATTRIBUTE Lexp  */
   if (yyn == 62)
-    /* "ToY.y":254  */
+    /* "ToY.y":234  */
                                 { StmtList attributeList = ((StmtList)(yystack.valueAt (0))); attributeList.addElement(((Yytoken)(yystack.valueAt (2)))); yyval = attributeList;};
   break;
 
@@ -1693,6 +1693,7 @@ private static final short[] yycheck_ = yycheck_init();
  HashMap<Object, ID> functions = new HashMap<Object, ID>();
  HashMap<Object, ID> statements = new HashMap<Object, ID>();
 // // HashMap<Object, ID> var = new HashMap<Object, ID>();
+
 SymbolTable symbolTable = new SymbolTable();
 static Program ast = new Program(new StmtList());
 
@@ -1725,41 +1726,15 @@ public static void main(String[] args) throws IOException {
         }
 
 }
-    // FileReader yyin = new FileReader(args[0]);
-    // System.out.println(args[0]);
-    // ToYLexer l = new ToYLexer(yyin);
-    // ToY p = new ToY(l);
-    // System.out.println(args[0]);
-    // //runs bison and parser checks 
-    // //
 
-    // if (!p.parse()){
-    //      System.out.println(args[0]);
-    //     System.out.println("INVALID");
-    // }else{
-    //    // ast = (Program) ast;
-    //     //v.visit((Program)ast);
-    // //TODO how to run the visitor class over all nodes and then return true or false 
-    // System.out.println("VALID"); 
-    
-    // }
-    // System.out.println("done w main");
-
-/* "ToY.java":1749  */
+/* "ToY.java":1731  */
 
 }
-/* "ToY.y":400  */
+/* "ToY.y":238  */
 
 /* ------------------------------------------------------- */
 /*                       Start of AST                      */
 /* ------------------------------------------------------- */
-
-
-// public ASTNode ast;
-
-// public ASTNode getAST(){
-// 	return ast;
-// }
 
 
 abstract class ASTNode {
@@ -1768,7 +1743,7 @@ abstract class ASTNode {
 }
 
 class StmtList extends ASTNode{
-	// stmtLists are ArrayList<Object>s, but are used in classes that create ASTNodes, so an Array<List> in this case is an ASTNode.
+
     ArrayList<Object> stmts;
 
     public StmtList() {
@@ -1791,9 +1766,7 @@ class StmtList extends ASTNode{
     public Object elementAt(int i) {
         return stmts.get(i);
     }
-    // public int size() {
-    // return stmts.size();
-    // }
+
     @Override
     public Object accept(Visitor v) {
         return v.visit(this);
@@ -1805,7 +1778,6 @@ class StmtList extends ASTNode{
 
 // Arithmetic Class that extends the ASTNode class
 // creates two Nodes, the left and right sides of an arithmetic statement
-// constructor allows semantic actions to initialize nodes
 class Arithmetic extends ASTNode {
     public Object left, right, op;
 
@@ -1833,6 +1805,9 @@ class Arithmetic extends ASTNode {
     }
 }
 
+
+// Logic class that extends the ASTNode class
+// creates two Nodes, the left and right sides of a conditional statement
 class Logic extends ASTNode {
     public Object left, right, op;
 
@@ -1860,9 +1835,9 @@ class Logic extends ASTNode {
     }
 }
 
+
 // Conditions class that extends the ASTNode class
 // creates two Nodes, the left and right sides of a conditional statement
-// constructor allows semantic actions to initialize nodes
 class Conditions extends ASTNode {
     public Object left, op, right;
 
@@ -1890,9 +1865,9 @@ class Conditions extends ASTNode {
     }
 }
 
+
 // UnaryOperators class that extends the ASTNode class
 // creates one Node, the right statement of a unary expression
-// constructor allows semantic actions to initialize nodes
 class UnaryOperators extends ASTNode {
     public Object op, right;
 
@@ -1914,10 +1889,10 @@ class UnaryOperators extends ASTNode {
     }
 }
 
+
 // EndFunctions class that extends the ASTNode class
 // Used for return and print functions
 // creates one node, the expression to be printed or returned
-// constructor allows semantic actions to initialize nodes
 class EndFunction extends ASTNode {
     Object type;
     Object exp;
@@ -1938,8 +1913,8 @@ class EndFunction extends ASTNode {
     public Object accept(Visitor v) {
         return v.visit(this);
     }
-
 }
+
 
 /* ----------------- AST Statement/Method subclasses ---------------- */
 /* ------------------------------------------------------------------ */
@@ -1947,7 +1922,6 @@ class EndFunction extends ASTNode {
 // ForLoop class that extends the ASTNode class
 // creates four nodes, the for loop iterator, it's conditional, its
 // incrementation statement, and the loop body
-// constructor allows semantic actions to initialize nodes
 class ForLoop extends ASTNode {
 
     Object iterator;
@@ -1982,14 +1956,12 @@ class ForLoop extends ASTNode {
     public Object accept(Visitor v) {
         return v.visit(this);
     }
-
 }
 
 // IfStmt class that extends the ASTNode class
 // creates three nodes, the if statment conditional, the if statment body, and
 // the else statement
 // else statement can bc a null pointer, in which case only 2 nodes are created
-// constructor allows semantic actions to initialize nodes
 class IfStmt extends ASTNode {
 
     Object conditional;
@@ -2021,13 +1993,13 @@ class IfStmt extends ASTNode {
 
 }
 
+
 /* ----------------- AST Variable Subclasses ---------------- */
 /* ---------------------------------------------------------- */
 
 // Asnmt class that extends the ASTNode class
 // The class is used when assigning objects to variables
 // Creates two nodes, the variable and the expression
-// constructor allows semantic actions to initialize nodes
 class Asnmt extends ASTNode {
     Object var;
     Object exp;
@@ -2051,43 +2023,19 @@ class Asnmt extends ASTNode {
 
 }
 
-// Decl class that extends the ASTNode class
-// used for variable declarations, which can potentially be multiple in a row
-// creates 1 node: a list of all the variable names
-// constructor allows semantic actions to initialize nodes
-class Decl extends ASTNode {
-    // QUESTION: would we need type
-    // String varType;
-    // String name;
-    
-    // MAYBE DECL NEEDS A HASMAP
-    ArrayList<Object> names;
-
-    public Decl(ArrayList<Object> names) {
-        // this.varType = varType;
-        this.names = names;
-    }
-
-    public Object getNames(){
-        return this.names;
-    }
-    @Override
-    public Object accept(Visitor v) {
-        return v.visit(this);
-    }
-}
-
 
 class ParamList extends ASTNode {
+
 	StmtList params;
 	
 	public ParamList(StmtList params){
 		this.params = params;
 	}
 
-    public Object getParameters(){
-        return this.params;
-    }
+    	public Object getParameters(){
+        	return this.params;
+    	}
+	
 	@Override
 	public Object accept(Visitor v) {
         	return v.visit(this);
@@ -2095,15 +2043,17 @@ class ParamList extends ASTNode {
 }
 
 class Keyword extends ASTNode {
+
 	Object keyword;
 	
 	public Keyword(Object keyword){
 		this.keyword = keyword;
 	}
 
-    public Object getKeyword(){
-        return this.keyword;
-    }
+    	public Object getKeyword(){
+        	return this.keyword;
+    	}
+	
 	@Override
 	public Object accept(Visitor v) {
         	return v.visit(this);
@@ -2111,6 +2061,7 @@ class Keyword extends ASTNode {
 }
 
  class Literals extends ASTNode {
+ 
     Object literal;
 
     public Literals(Object literal){
@@ -2135,41 +2086,30 @@ class VarDef extends ASTNode {
 	public VarDef(Object type, Object name){
 		this.type = type;
 		this.name = name;
-    }	
+    	}	
 
-    public Object getType(){
-        return this.type;
-    }
+    	public Object getType(){
+        	return this.type;
+   	 }
 
-    public Object getName(){
-        return this.name;
-    }
+    	public Object getName(){
+       		return this.name;
+    	}
 
-    @Override
+    	@Override
 	public Object accept(Visitor v) {
         	return v.visit(this);
-    }
+    	}
 }
 
-// --- TYPE CLASS QUESTION
-class Type extends ASTNode {
-
-    public Type() {
-    }
-    @Override
-    public Object accept(Visitor v) {
-        return v.visit(this);
-    }
-
-}
 
 /* ------------------- Program classes & subclasses------------------ */
 /* ------------------------------------------------------------------ */
 
+
 // Struct class that extends the ASTNode class
 // creates 2 nodes: the name of the struct and an ArrayList of all the struct
 // fieldTypes
-// constructor allows semantic actions to initialize nodes
 class StructCreator extends ASTNode {
     
     Object name;
@@ -2193,12 +2133,11 @@ class StructCreator extends ASTNode {
     }
 }
 
-// ****** QUESTION: does the body need to be another node? *******
 
 // Function class that extends the ASTNode class
 // creates 2 nodes, the function name and it's parameters
-// constructor allows semantic actions to initialize nodes
 class FunctionConstruct extends ASTNode {
+
     Object returnType;
     Object name;
     Object parameters;
@@ -2226,6 +2165,7 @@ class FunctionConstruct extends ASTNode {
     public StmtList getBody(){
         return this.body;
     }
+    
     @Override
     public Object accept(Visitor v) {
         return v.visit(this);
@@ -2238,11 +2178,10 @@ class FunctionConstruct extends ASTNode {
 // parenthesis, just already declared param names
 // creates 2 nodes, the name (a string) and the parameters, which are an array
 // of strings (variable names)
-// constructor allows semantic actions to initialize nodes
 class FunctionCall extends ASTNode {
+
     Object name;
     Object parameters;
-    // ASK ABOUT BODY
 
     public FunctionCall(Object name, Object parameters) {
         this.name = name;
@@ -2256,6 +2195,7 @@ class FunctionCall extends ASTNode {
     public Object getParameters(){
         return this.parameters;
     }
+    
     @Override
     public Object accept(Visitor v) {
         return v.visit(this);
@@ -2263,22 +2203,22 @@ class FunctionCall extends ASTNode {
 
 }
 
-// Program class, almost acts are our main parent node :)
+// Program class
 class Program extends ASTNode {
+
 	StmtList program;
 	
 	public Program(StmtList program){
 		this.program = program;
 	}
 
-    public StmtList getProgram(){
-        return this.program;
-    }
+    	public StmtList getProgram(){
+    	    	return this.program;
+    	}
 
-    public void addElement(Object add) {
-        program.addElement(add);
-    }
-
+    	public void addElement(Object add) {
+        	program.addElement(add);
+    	}
 
 	@Override
 	public Object accept(Visitor v) {
@@ -2287,21 +2227,18 @@ class Program extends ASTNode {
 }
 	
 
-
 /* ---------------------------- Start of Semantic Analysis ---------------------------- */
 /* ------------------------------------------------------------------------------------ */
 
 
 
-
 /* ----------------- AbstractVisitor implementations and Visitor definitions ----------------- */
 /* ------------------------------------------------------------------------------------------- */
+
 // An implementation of all the visitor methods
 // These act as semantic analysis, so each of these methods will visit the nodes
-// in the AST tree and make
-// sure that they are semantically doing the correct thing
+// in the AST tree and make sure that they are semantically doing the correct thing
 class AbstractVisitor implements Visitor {
-    // arithmetic expressions
 
     public boolean tryHelper(Object item){
         System.out.println(item);
@@ -2370,11 +2307,13 @@ class AbstractVisitor implements Visitor {
         
 	
 	return false;
-}
+	}	
 	
 
     public boolean visit(Arithmetic add) {
+    
         System.out.println("IN ARITHMETIC VISITOR");
+	
         int op = ((Yytoken)(add.getOp())).getToken();
         System.out.println(op);
         int left = ((Yytoken)(((Literals)add.getLeft()).getInstance())).getToken();
@@ -2396,23 +2335,30 @@ class AbstractVisitor implements Visitor {
         return false;
     }
 
+
     public boolean visit(Logic add) {
+    
         System.out.println("IN LOGIC VISITOR");
+	
         int left = ((Yytoken)(add.getLeft())).getToken();
         int right = ((Yytoken)(add.getRight())).getToken();
+	
         if (left == ToYLexer.BOOL && right == ToYLexer.BOOL){
             return true;
         }
-        
         return false;
     }
 
+
     public boolean visit(Conditions add) {
+    
         System.out.println("IN CONDITIONS VISITOR");
         System.out.print(((Yytoken)(((Literals)add.getLeft()).getInstance())).getToken());
+	
         int op = ((Yytoken)(add.getOp())).getToken();
         int left = ((Yytoken)(((Literals)add.getLeft()).getInstance())).getToken();
         int right = ((Yytoken)(((Literals)add.getRight()).getInstance())).getToken();
+	
         if (op == ToYLexer.GREATERTHAN || op == ToYLexer.GREATERTHANOREQ || op == ToYLexer.LESSTHAN || op == ToYLexer.LESSTHANOREQ ){
             System.out.println("CHECK ME 1");
             if ((left == ToYLexer.NUMBER || left == ToYLexer.IDENTIFIER) && (right == ToYLexer.NUMBER || right == ToYLexer.IDENTIFIER)){
@@ -2420,6 +2366,7 @@ class AbstractVisitor implements Visitor {
                 return true;
             }
         }
+	
         if (op == ToYLexer.DOUBLEEQ || op == ToYLexer.NOTEQ ){
             if (((left == ToYLexer.NUMBER || left == ToYLexer.IDENTIFIER) && (right == ToYLexer.NUMBER || left == ToYLexer.IDENTIFIER)) || ((left == ToYLexer.WORD || left == ToYLexer.IDENTIFIER) && (right == ToYLexer.WORD || left == ToYLexer.IDENTIFIER)) ){
                 return true;
@@ -2428,12 +2375,15 @@ class AbstractVisitor implements Visitor {
         
         return false;
     }
+    
 
     public boolean visit(UnaryOperators add) {
         System.out.println("IN UNARYOPERATORS VISITOR");
-        int op = ((Yytoken)(add.getOp())).getToken();
+        
+	int op = ((Yytoken)(add.getOp())).getToken();
         int right = ((Yytoken)(add.getRight())).getToken();
-        if (op == ToYLexer.NOT && right == ToYLexer.BOOL){
+        
+	if (op == ToYLexer.NOT && right == ToYLexer.BOOL){
             return true;
         }
         if (op == ToYLexer.MINUS && right == ToYLexer.INT){
@@ -2441,17 +2391,21 @@ class AbstractVisitor implements Visitor {
         }
         return false;
     }
+    
 
     //TODO -- do we need to check expression here? 
     public boolean visit(Asnmt add) {
+    
         System.out.println("IN ASNMT VISITOR");
         System.out.println(add.getExp());
+	
         int name = (((Yytoken)(add.getVar())).getToken());
         Object item = add.getExp();
         System.out.println(add.getExp());
         if (!(name == ToYLexer.IDENTIFIER)){
             return false;
         }
+	
         if(!tryHelper(item)){
             System.out.println("IN TryHELPER");
             return false;
@@ -2459,16 +2413,14 @@ class AbstractVisitor implements Visitor {
         }
         return true;
     }
-
-    //DONT USE THIS ANYMORE 
-    public boolean visit(Decl add) {
-        return false;
-    }
+    
 
     //TODO -- do we need to check expression 
     public boolean visit(EndFunction add) {
+    
         System.out.println("IN ENDFUNCTION VISITOR");
         int type = ((Yytoken)(add.getType())).getToken();
+	
         // ADD have to add expresison here 
         if (type == ToYLexer.PRINTF){
             int printME = ((Yytoken)(add.getExp())).getToken(); 
@@ -2481,17 +2433,23 @@ class AbstractVisitor implements Visitor {
         }
         return true;
     }
+    
 
     //TODO -- do we need to check the statements in the body of the for loop?
     public boolean visit(ForLoop add) {
+    
         System.out.println("IN FORLOOP VISITOR");
+	
         Asnmt iterator = ((Asnmt)(add.getIterator()));
         System.out.println("Assignment");
+	
         Conditions condition = ((Conditions)(add.getConditional()));
         System.out.println("condition");
+	
         System.out.println(add.getIncrement());
         Asnmt increment = ((Asnmt)(add.getIncrement()));
         System.out.println("increment");
+	
         StmtList body = ((StmtList)(add.getBody()));
         System.out.println("body");
       
@@ -2533,17 +2491,17 @@ class AbstractVisitor implements Visitor {
         }
 	    return true;
     }
-
-	// What I'm right now thinking is that maybe we don't need to recursively call visit, since
-	// the for loop should go over everything.  Instead maybe we can add something like:
 			
    
     //TODO -- check the if and else bodies 
     public boolean visit(IfStmt add) {
+    
         System.out.println("IN IFSTMT VISITOR");
+	
         Conditions condition = ((Conditions)(add.getConditional()));
         StmtList ifBody = ((StmtList)(add.getIfBody()));
         StmtList elseBody = ((StmtList)(add.getElseBody()));
+	
         //checks for conditional expression at pos 2 in for loop 
         if (!visit(condition)){
             return false; 
@@ -2552,13 +2510,18 @@ class AbstractVisitor implements Visitor {
         return true;
     }
 
+
     public boolean visit(StructCreator add) {
+    
         System.out.println("IN STRUCTCREATOR VISITOR");
+	
         int name = ((Yytoken)(add.getName())).getToken();
         StmtList fields = ((StmtList)(add.getFeilds()));
+	
         if(!(name == ToYLexer.IDENTIFIER)){
             return false; 
         }
+	
         for (int i = 0; i < fields.getSize(); i++){
             VarDef v = (VarDef) fields.elementAt(i);
             if(!visit(v)){
@@ -2569,26 +2532,29 @@ class AbstractVisitor implements Visitor {
     }
 
 
-    public boolean visit(Type add) {
-        return true;
-    }
-
     //TODO -- body 
     public boolean visit(FunctionConstruct add) {
+    
         System.out.println("IN FUNCTIONCONSTRUCT VISITOR");
+	
         System.out.println(((Yytoken)((Keyword)(add.getReturnType())).getKeyword()).getToken());
         int returnType = ((Yytoken)((Keyword)(add.getReturnType())).getKeyword()).getToken();
+	
         System.out.println(add.getName());
         int name = ((Yytoken)(add.getName())).getToken();
+	
         StmtList params = ((StmtList)(add.getParameters()));
         StmtList body = ((StmtList)(add.getBody()));
+	
         if(!(returnType == ToYLexer.INT || returnType == ToYLexer.STRING || returnType == ToYLexer.BOOL || returnType == ToYLexer.VOID)){
             return false; 
         }
+	
         System.out.println("VALID RETURN TYPE");
         if(!(name == ToYLexer.IDENTIFIER)){
              return false; 
         }
+	
         System.out.println("VALID NAME");
         for (int i = 0; i < params.getSize(); i++){
             VarDef v = ((VarDef)(params.elementAt(i)));
@@ -2596,6 +2562,7 @@ class AbstractVisitor implements Visitor {
                 return false;
             }
          }
+	 
         for (int i = 0; i < body.getSize(); i++){
             System.out.println(body.getSize());
             System.out.println(body.elementAt(i));
@@ -2607,13 +2574,18 @@ class AbstractVisitor implements Visitor {
 
     }
 
+
     public boolean visit(FunctionCall add) {
+    
         System.out.println("IN FUNCTIONCALL VISITOR");
+	
         int name = ((Yytoken)(add.getName())).getToken();
         StmtList params = ((StmtList)(add.getParameters()));
+	
         if(!(name == ToYLexer.IDENTIFIER)){
             return false; 
         }
+	
         for (int i = 0; i < params.getSize(); i++){
             int v = ((Yytoken)(params.elementAt(i))).getToken();
             if(!(v == ToYLexer.IDENTIFIER)){
@@ -2624,9 +2596,12 @@ class AbstractVisitor implements Visitor {
         
     }
     
+    
     public boolean visit(ParamList add) {
+    
         System.out.println("IN PARAMLIST VISITOR");
         StmtList params = ((StmtList)(add.getParameters()));
+	
         for (int i = 0; i < params.getSize(); i++){
             int v = ((Yytoken)(params.elementAt(i))).getToken();
             if(!(v == ToYLexer.IDENTIFIER)){
@@ -2636,20 +2611,27 @@ class AbstractVisitor implements Visitor {
         return true;
     }
     
+    
     public boolean visit(VarDef add) {
+    
         System.out.println("IN VARDEF VISITOR");
+	
         int type = ((Yytoken)((Keyword)(add.getType())).getKeyword()).getToken();
         int name = ((Yytoken)(add.getName())).getToken();
+	
         if ((type == ToYLexer.BOOL || type == ToYLexer.INT || type == ToYLexer.STRING ) && name == ToYLexer.IDENTIFIER){
             return true;
         }
         return false;
     }
     
+    
     //TODO how to different between type function and construct 
     public boolean visit(Program add) {
+    
         System.out.println("IN PROGRAM VISITOR");
         StmtList pgm = (StmtList) add.getProgram();
+	
         for (int i = 0; i < pgm.getSize(); i++){
             try{
                 FunctionConstruct function = (FunctionConstruct)(pgm.elementAt(i));
@@ -2673,8 +2655,11 @@ class AbstractVisitor implements Visitor {
     	return false;
     }
     
+    
     public boolean visit(Keyword add) {
+    
         System.out.println("IN KEYWORD VISITOR");
+	
         int keyword = ((Yytoken)(add.getKeyword())).getToken();
         if( keyword == ToYLexer.VOID || keyword == ToYLexer.TRUE || keyword == ToYLexer.FALSE ){
             return true;
@@ -2682,11 +2667,14 @@ class AbstractVisitor implements Visitor {
     	return false;
     }
 
+
      public boolean visit(StmtList add) {
             return true;
      }
+     
 
     public boolean visit(Literals add){
+    
         System.out.println("IN LITERAL VISITOR");
         return true;
     }
@@ -2706,8 +2694,6 @@ interface Visitor {
 
     public boolean visit(Asnmt symbol);
 
-    public boolean visit(Decl symbol);
-
     public boolean visit(EndFunction symbol);
 
     public boolean visit(ForLoop symbol);
@@ -2717,8 +2703,6 @@ interface Visitor {
     public boolean visit(StructCreator symbol);
     
     public boolean visit(VarDef vardef);
-
-    public boolean visit(Type symbol);
 
     public boolean visit(FunctionConstruct symbol);
 
@@ -2733,8 +2717,6 @@ interface Visitor {
     public boolean visit(StmtList keyword);
 
     public boolean visit(Literals literal);
-
-
 
 }
 
@@ -2867,45 +2849,37 @@ class Struct extends ID {
 /* --------------------- Parser - Lexer Link --------------------- */
 /* ------------------------------------------------------------- */
     class ToYLexer implements ToY.Lexer {
-    InputStreamReader it; 
-    Yylex yylex;
+    	InputStreamReader it; 
+    	Yylex yylex;
 
-    
-
-
-    public ToYLexer(InputStream is){
-      it = new InputStreamReader(is);
+  
+    	public ToYLexer(InputStream is){
+      		it = new InputStreamReader(is);
    
-      yylex = new Yylex(it);
-
-     }
-
-    
+      		yylex = new Yylex(it);
+     	}
      
-     @Override
-     public void yyerror (String s){
-     System.err.println(s);
-     }
+     	@Override
+     	public void yyerror (String s){
+     		System.err.println(s);
+     	}
     
-     Yytoken token;
+     	Yytoken token;
      
-     @Override
-      public Object getLVal() {
-         return token;
-      }
+     	@Override
+      	public Object getLVal() {
+        	return token;
+      	}
 
-     
-
-    
-      @Override
-      public int yylex () throws IOException{
-         token = (yylex.yylex());
-         if(token != null){
-            return token.getToken();
-         }else{
-            return 0;
-         }
-    }
+      	@Override
+      	public int yylex () throws IOException{
+         	token = (yylex.yylex());
+         	if(token != null){
+            		return token.getToken();
+         	}else{
+            		return 0;
+         	}
+    	}
 }
     
 /*
