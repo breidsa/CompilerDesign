@@ -1,0 +1,4 @@
+void main(){}
+
+struct hey{int x, int y}
+struct hey{int a, int b}

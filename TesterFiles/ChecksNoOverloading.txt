@@ -1,0 +1,8 @@
+void main(){
+  //  THIS FUNCTION SHOULD FAIL
+  int x;
+}
+
+void main(){
+  // THIS FUNCTION SHOULD SAY THERE'S A DUPLICATE FUNCTION ALREADY DEFINED 
+}

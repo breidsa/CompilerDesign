@@ -1,0 +1,4 @@
+void main(){}
+
+struct func1 {int x}
+struct func2 {int x}

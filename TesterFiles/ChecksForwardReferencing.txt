@@ -1,0 +1,10 @@
+void main(int x){
+  // THIS PROGRAM SHOULD WORK, IT IMPLEMENTS FORWARD REFERENCING
+  x = func();
+}
+
+int func(){
+  int y;
+  y = 3;
+  return(y);
+ }
