@@ -16,10 +16,10 @@
       568       |  AST program subclasses (StructCreater, FunctionConstruct, FunctionCall, Program)
  ------------------------------------------------------------------------------------------------------------		
       687       |  Start of Semantic Analysis 
-      691	    |  AbstractVisitor implementations and Visitor definitions
-      948	    |  Symbol Table Helper Functions
+      691	|  AbstractVisitor implementations and Visitor definitions
+      948	|  Symbol Table Helper Functions
       1012      |  Symbol Table Class
-      1073 	    |  Parser - Lexer Link 
+      1073 	|  Parser - Lexer Link 
 		
 */
 	       
@@ -58,6 +58,7 @@ import java.util.ArrayList;
  static Program ast = new Program(new StmtList());
 
  public static void main(String[] args) throws IOException {
+ 
         Scanner input = new Scanner(System.in);
         System.out.print("Enter file: ");
         String file = input.nextLine();
@@ -86,6 +87,7 @@ import java.util.ArrayList;
             System.out.println();
             System.out.println("ERROR SYNTAX FROM SEMANTIC");
         }
+	
         symbolTable.printKeys();
         System.out.println(symbolTable.size());
         System.out.print(symbolTable.find_symbol("main"));
@@ -423,6 +425,7 @@ class EndFunction extends ASTNode {
 /* ----------------- AST Statement/Method subclasses ---------------- */
 /* ------------------------------------------------------------------ */
 
+
 // ForLoop class that extends the ASTNode class
 // creates four nodes, the for loop iterator, it's conditional, its
 // incrementation statement, and the loop body
@@ -495,7 +498,6 @@ class IfStmt extends ASTNode {
     public Object accept(Visitor v) {
         return v.visit(this);
     }
-
 }
 
 
@@ -696,8 +698,8 @@ class FunctionConstruct extends ASTNode {
 // FunctionCall class that extends the ASTNode class
 // specifically for when you don't want to have full declarations in the
 // parenthesis, just already declared param names
-// creates 2 nodes, the name (a string) and the parameters, which are an array
-// of strings (variable names)
+// creates 2 nodes, the name and the parameters, which are an array
+// of objects (variable names)
 class FunctionCall extends ASTNode {
 
     Object name;
@@ -720,10 +722,11 @@ class FunctionCall extends ASTNode {
     public Object accept(Visitor v) {
         return v.visit(this);
     }
-
 }
 
-// Program class
+// Program class that extends ASTNode
+// The root node, this class has no parents, only children
+// Contains only 1 Node, the program itself
 class Program extends ASTNode {
 
 	StmtList program;
@@ -760,78 +763,80 @@ class Program extends ASTNode {
 // in the AST tree and make sure that they are semantically doing the correct thing
 class AbstractVisitor implements Visitor {
 
+    // public tryHelper method, lets us have try catch blocks for every Class constructor for semantic 
+    // analysis purposes
     public boolean tryHelper(Object item){
         System.out.println(item);
-        try {
+        try { // FORLOOP 
             System.out.println("TryHelp FOR");
             ForLoop forloop = (ForLoop)item;
             if(visit(forloop)){
                     return true;
         }}catch(Exception e) {} 
-        try {
-                System.out.println("TryHelp IF");
-                IfStmt ifStmt = (IfStmt)item;
-                if(visit(ifStmt)){
-                        return true;
-                }
+        try { // IFSTMT
+            System.out.println("TryHelp IF");
+            IfStmt ifStmt = (IfStmt)item;
+            if(visit(ifStmt)){
+                    return true;
+            }
         }catch(Exception e) {} 
-        try {
-                    System.out.println("TryHelp END FUNCT");
-                    EndFunction endFunction = (EndFunction)item;
-                    if(visit(endFunction)){
-                            return true;
-                    }
+        try { // ENDFUNCTION
+       	    System.out.println("TryHelp END FUNCT");
+            EndFunction endFunction = (EndFunction)item;
+            if(visit(endFunction)){
+        	    return true;
+            }
         }catch (Exception e){} 
-        try {
+        try { // VARDEF
             System.out.println("TryHelp Var Def");
             VarDef varDef = (VarDef)item;
             if(visit(varDef)){
                 return true;
             }
         }catch (Exception e){}
-        try {
+        try { // ASNMT
             System.out.println("Asgnmt");
             Asnmt asnmt = (Asnmt)item;
             if(visit(asnmt)){
                 return true;
             } 
         }catch (Exception e){}
-        try {
+        try { // PARAMLIST
             System.out.println("TryHELP ParamList");
             ParamList paramlist = (ParamList)item;
             if(visit(paramlist)){
                 return true;
             }
         }catch (Exception e){}
-        try {
+        try { // FUNCTIONCALL
             System.out.println("TryHelp FucntCall");
             FunctionCall funcCall = (FunctionCall)item;
             if(visit(funcCall)){
                 return true;
             }
         }catch (Exception e){}
-        try{
+        try{ // ARITHMETIC
             System.out.println("TryHelp Arithmetic");
             Arithmetic art = (Arithmetic)item;
             if(visit(art)){
                 return true;
             }
         }catch (Exception e){}
-        try{
+        try{ // CONDITIONS
             System.out.println("TryHelp Condition");
             Conditions condition = (Conditions)item;
             if(visit(condition)){
                 return true;
             }
         }catch (Exception e){}
-        try{
+        try{ // LOGIC
             System.out.println("TryHelp Logic");
             Logic log = (Logic)item;
             if(visit(log)){
                 return true;
             }
         }catch (Exception e){}
-        try{
+        try{ // UNARYOPERATORS
             System.out.println("TryHelp Unary");
             UnaryOperators un = (UnaryOperators)item;
             if(visit(un)){
@@ -839,9 +844,8 @@ class AbstractVisitor implements Visitor {
             }
         }catch (Exception e){}
         
-	
 	return false;
-	}	
+    }	
 	
 
     public boolean visit(Arithmetic add) {
@@ -855,6 +859,7 @@ class AbstractVisitor implements Visitor {
         int right = ((Yytoken)(((Literals)add.getRight()).getInstance())).getToken();
         System.out.println(right);
         System.out.println("Values " + left + right + op);
+	
         if (op == ToYLexer.PLUS || op == ToYLexer.MINUS ){
             if (((left == ToYLexer.NUMBER || left == ToYLexer.IDENTIFIER) && (right == ToYLexer.NUMBER || right == ToYLexer.IDENTIFIER)) || ((left == ToYLexer.STRING || left == ToYLexer.IDENTIFIER) && (right == ToYLexer.STRING || right == ToYLexer.IDENTIFIER))){
                 return true;
@@ -865,27 +870,10 @@ class AbstractVisitor implements Visitor {
                 return true;
             }
         }
-        
         return false;
     }
-
-
-    public boolean visit(Logic add) {
     
-        System.out.println("IN LOGIC VISITOR");
-	
-        int left = ((Yytoken)(((Literals)add.getLeft()).getInstance())).getToken();
-        int right = ((Yytoken)(((Literals)add.getRight()).getInstance())).getToken();
-        
-	
-         if ((left == ToYLexer.BOOL || left == ToYLexer.IDENTIFIER) && (right == ToYLexer.BOOL || right == ToYLexer.IDENTIFIER) ){
-                return true;
-            }
-        return false;
-    }
-
-
-    public boolean visit(Conditions add) {
+        public boolean visit(Conditions add) {
     
         System.out.println("IN CONDITIONS VISITOR");
         System.out.print(((Yytoken)(((Literals)add.getLeft()).getInstance())).getToken());
@@ -910,13 +898,28 @@ class AbstractVisitor implements Visitor {
         
         return false;
     }
-    
 
+
+    public boolean visit(Logic add) {
+    
+        System.out.println("IN LOGIC VISITOR");
+	
+        int left = ((Yytoken)(((Literals)add.getLeft()).getInstance())).getToken();
+        int right = ((Yytoken)(((Literals)add.getRight()).getInstance())).getToken();
+        
+        if ((left == ToYLexer.BOOL || left == ToYLexer.IDENTIFIER) && (right == ToYLexer.BOOL || right == ToYLexer.IDENTIFIER) ){
+                return true;
+            }
+        return false;
+    }
+    
+    
     public boolean visit(UnaryOperators add) {
+    
         System.out.println("IN UNARYOPERATORS VISITOR");
         
 	int op = ((Yytoken)(add.getOp())).getToken();
-    int right = ((Yytoken)(((Literals)add.getRight()).getInstance())).getToken();
+    	int right = ((Yytoken)(((Literals)add.getRight()).getInstance())).getToken();
 	        
 	if (op == ToYLexer.NOT && (right == ToYLexer.BOOL || right == ToYLexer.IDENTIFIER )){
             return true;
@@ -927,50 +930,22 @@ class AbstractVisitor implements Visitor {
         return false;
     }
     
-
-    //TODO -- do we need to check expression here? 
-    public boolean visit(Asnmt add) {
     
-        System.out.println("IN ASNMT VISITOR");
-        System.out.println(add.getExp());
-	
-        int name = (((Yytoken)(add.getVar())).getToken());
-        Object item = add.getExp();
-        System.out.println(add.getExp());
-        if (!(name == ToYLexer.IDENTIFIER)){
-            return false;
-        }
-	
-        if(!tryHelper(item)){
-            System.out.println("IN TryHELPER");
-            return false;
-        }else{  
-        }
-        return true;
-    }
-    
-
-    //TODO -- do we need to check expression 
     public boolean visit(EndFunction add) {
     
         System.out.println("IN ENDFUNCTION VISITOR");
         int type = ((Yytoken)(add.getType())).getToken();
-	
-        // ADD have to add expresison here 
+ 
         if (type == ToYLexer.PRINTF){
             int printME = ((Yytoken)(add.getExp())).getToken(); 
             if(!(printME == ToYLexer.WORD || printME == ToYLexer.IDENTIFIER)){
                 return false;
             }
-        }
-        if(type == ToYLexer.RETURN){
-            //if exp here 
-        }
+        } // took out empty if statement here
         return true;
     }
     
-
-    //TODO -- do we need to check the statements in the body of the for loop?
+    
     public boolean visit(ForLoop add) {
     
         System.out.println("IN FORLOOP VISITOR");
@@ -991,7 +966,7 @@ class AbstractVisitor implements Visitor {
         int name = (((Yytoken)(iterator.getVar())).getToken());
         int item = ((Yytoken)((Literals)iterator.getExp()).getInstance()).getToken();
 
-        //CHECK ITERATION
+        // CHECK ITERATION
         if(!(name == ToYLexer.IDENTIFIER)){
              return false;
         }
@@ -999,13 +974,13 @@ class AbstractVisitor implements Visitor {
              return false;
         }
        
-        //CHECK CONDITIONAL
+        // CHECK CONDITIONAL
         if (!visit(condition)){
              System.out.println("Check Condition");
             return false; 
         }
-        //checks for incrementation at pos 3 of for loop 
-        //TODO FINISH FORLOOP  
+        
+        // CHECK INCREMENTATION
         int name2 = (((Yytoken)(increment.getVar())).getToken());
         System.out.println(increment.getExp());
         Arithmetic exp = (Arithmetic)(increment.getExp());
@@ -1016,7 +991,7 @@ class AbstractVisitor implements Visitor {
         }
         System.out.println("VALID increment");
         
-       
+	// CHECK BODY
         for(int i = 0; i < body.getSize(); i++) {
             System.out.println(body.getSize());
             System.out.println("Check body");
@@ -1026,11 +1001,10 @@ class AbstractVisitor implements Visitor {
                     return false;               
                 }                                  
         }
-	    return true;
+	return true;
     }
-			
-   
-    //TODO -- check the if and else bodies 
+    
+    
     public boolean visit(IfStmt add) {
     
         System.out.println("IN IFSTMT VISITOR");
@@ -1046,7 +1020,75 @@ class AbstractVisitor implements Visitor {
 
         return true;
     }
+    
+    
+    public boolean visit(Asnmt add) {
+    
+        System.out.println("IN ASNMT VISITOR");
+        System.out.println(add.getExp());
+	
+        int name = (((Yytoken)(add.getVar())).getToken());
+        Object item = add.getExp();
+        System.out.println(add.getExp());
+	
+        if (!(name == ToYLexer.IDENTIFIER)){
+            return false;
+        }
+	
+        if(!tryHelper(item)){
+            System.out.println("IN TryHELPER");
+            return false;
+        } // took out an empty if statement here
+        return true;
+    }
 
+
+    public boolean visit(ParamList add) {
+    
+        System.out.println("IN PARAMLIST VISITOR");
+        StmtList params = ((StmtList)(add.getParameters()));
+	
+        for (int i = 0; i < params.getSize(); i++){
+            int v = ((Yytoken)(params.elementAt(i))).getToken();
+            if(!(v == ToYLexer.IDENTIFIER)){
+                return false;
+            }
+         }
+        return true;
+    }
+    
+    public boolean visit(Keyword add) {
+    
+        System.out.println("IN KEYWORD VISITOR");
+	
+        int keyword = ((Yytoken)(add.getKeyword())).getToken();
+        if( keyword == ToYLexer.VOID || keyword == ToYLexer.TRUE || keyword == ToYLexer.FALSE ){
+            return true;
+        }
+    	return false;
+    }
+    
+    
+    public boolean visit(Literals add){
+    
+        System.out.println("IN LITERAL VISITOR");
+        return true;
+    }
+    
+    
+    public boolean visit(VarDef add) {
+    
+        System.out.println("IN VARDEF VISITOR");
+	
+        int type = ((Yytoken)((Keyword)(add.getType())).getKeyword()).getToken();
+        int name = ((Yytoken)(add.getName())).getToken();
+	
+        if ((type == ToYLexer.BOOL || type == ToYLexer.INT || type == ToYLexer.STRING ) && name == ToYLexer.IDENTIFIER){
+            return true;
+        }
+        return false;
+    }
+    
 
     public boolean visit(StructCreator add) {
     
@@ -1069,7 +1111,6 @@ class AbstractVisitor implements Visitor {
     }
 
 
-    //TODO -- body 
     public boolean visit(FunctionConstruct add) {
     
         System.out.println("IN FUNCTIONCONSTRUCT VISITOR");
@@ -1087,11 +1128,13 @@ class AbstractVisitor implements Visitor {
             return false; 
         }
 	
+	// CHECK RETURN TRYPE
         System.out.println("VALID RETURN TYPE");
         if(!(name == ToYLexer.IDENTIFIER)){
              return false; 
         }
 	
+	// CHECK NAME
         System.out.println("VALID NAME");
         for (int i = 0; i < params.getSize(); i++){
             VarDef v = ((VarDef)(params.elementAt(i)));
@@ -1100,6 +1143,7 @@ class AbstractVisitor implements Visitor {
             }
          }
 	 
+	// CHECK BODY 
         for (int i = 0; i < body.getSize(); i++){
             System.out.println(body.getSize());
             System.out.println(body.elementAt(i));
@@ -1108,7 +1152,6 @@ class AbstractVisitor implements Visitor {
             }
         }
         return true;
-
     }
 
 
@@ -1133,37 +1176,7 @@ class AbstractVisitor implements Visitor {
         
     }
     
-    
-    public boolean visit(ParamList add) {
-    
-        System.out.println("IN PARAMLIST VISITOR");
-        StmtList params = ((StmtList)(add.getParameters()));
-	
-        for (int i = 0; i < params.getSize(); i++){
-            int v = ((Yytoken)(params.elementAt(i))).getToken();
-            if(!(v == ToYLexer.IDENTIFIER)){
-                return false;
-            }
-         }
-        return true;
-    }
-    
-    
-    public boolean visit(VarDef add) {
-    
-        System.out.println("IN VARDEF VISITOR");
-	
-        int type = ((Yytoken)((Keyword)(add.getType())).getKeyword()).getToken();
-        int name = ((Yytoken)(add.getName())).getToken();
-	
-        if ((type == ToYLexer.BOOL || type == ToYLexer.INT || type == ToYLexer.STRING ) && name == ToYLexer.IDENTIFIER){
-            return true;
-        }
-        return false;
-    }
-    
-    
-    //TODO how to different between type function and construct 
+    // WE MIGHT HAVE TO UNNEST THESE!!!!!!!!!
     public boolean visit(Program add) {
     
         System.out.println("IN PROGRAM VISITOR");
@@ -1180,80 +1193,57 @@ class AbstractVisitor implements Visitor {
                     if(visit(struct)){
                         return true;
                     }
-                }catch(Exception e){
-                    
+                }catch(Exception e){ 
                 }
-
             }catch(Exception e){
-
             }
         }
-
     	return false;
-    }
-    
-    
-    public boolean visit(Keyword add) {
-    
-        System.out.println("IN KEYWORD VISITOR");
-	
-        int keyword = ((Yytoken)(add.getKeyword())).getToken();
-        if( keyword == ToYLexer.VOID || keyword == ToYLexer.TRUE || keyword == ToYLexer.FALSE ){
-            return true;
-        }
-    	return false;
-    }
+     }
 
 
      public boolean visit(StmtList add) {
             return true;
      }
-     
-
-    public boolean visit(Literals add){
-    
-        System.out.println("IN LITERAL VISITOR");
-        return true;
-    }
-
 }
+
 
 // A declaration of all the visitor methods for each AST subclass
 interface Visitor {
 
     public boolean visit(Arithmetic symbol);
+    
+    public boolean visit(Conditions symbol);
 
     public boolean visit(Logic symbol);
 
-    public boolean visit(Conditions symbol);
-
     public boolean visit(UnaryOperators symbol);
-
-    public boolean visit(Asnmt symbol);
-
+    
     public boolean visit(EndFunction symbol);
 
     public boolean visit(ForLoop symbol);
 
     public boolean visit(IfStmt symbol);
-
-    public boolean visit(StructCreator symbol);
+    
+    public boolean visit(Asnmt symbol);
+    
+    public boolean visit(ParamList paramList);
+    
+    public boolean visit(Keyword keyword);
+    
+    public boolean visit(Literals literal);
     
     public boolean visit(VarDef vardef);
+
+    public boolean visit(StructCreator symbol);
 
     public boolean visit(FunctionConstruct symbol);
 
     public boolean visit(FunctionCall symbol);
-    
-    public boolean visit(ParamList paramList);
-    
+   
     public boolean visit(Program program);
-    
-    public boolean visit(Keyword keyword);
-
+   
     public boolean visit(StmtList keyword);
-
-    public boolean visit(Literals literal);
 
 }
 
