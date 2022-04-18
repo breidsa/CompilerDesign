@@ -1,0 +1,7 @@
+void main(int i){
+//valid if statemnt
+  if(i == 1){
+      printf(i);
+  }
+}
+
