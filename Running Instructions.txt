@@ -1,0 +1,4 @@
+HOW TO RUN THIS COMPILER
+
+Make sure you have flex and bison installed. 
+Once the .y, .l, and makefile are in the same directory, type "make," click enter and type in the name of a text file in the same directory. 
