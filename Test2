@@ -1,0 +1,9 @@
+void main(int x){
+  x = func()
+}
+
+int func(){
+  int y;
+  y = 3;
+  return(y);
+ }
