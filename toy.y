@@ -54,7 +54,7 @@ import java.util.ArrayList;
  HashMap<Object, ID> functions = new HashMap<Object, ID>();
  HashMap<Object, ID> statements = new HashMap<Object, ID>();
 
- SymbolTable symbolTable = new SymbolTable();
+ static SymbolTable symbolTable = new SymbolTable();
  static Program ast = new Program(new StmtList());
 
  public static void main(String[] args) throws IOException {
@@ -85,6 +85,14 @@ import java.util.ArrayList;
         }else{
             System.out.println();
             System.out.println("ERROR SYNTAX FROM SEMANTIC");
+        }
+        symbolTable.printKeys();
+        System.out.println(symbolTable.size());
+        System.out.print(symbolTable.find_symbol("main"));
+        for(int i = 0; i < symbolTable.size(); i++){
+            // for (Object name : symbolTable.keySet()) {
+            //      System.out.println(name);
+            // }
         }
  }
 }
@@ -145,7 +153,7 @@ import java.util.ArrayList;
     ; 
 
     function : returnType IDENTIFIER LEFTPAREN declarationListZero RIGHTPAREN LBRACKET stmts RBRACKET  {$$ = new FunctionConstruct($1, $2, $4, $7);
-                                                                                                         Function ft = new Function($2, $1, (StmtList)$4); functions.put($2, ft);}
+                                                                                                         Function ft = new Function($2, $1, (StmtList)$4); symbolTable.addScope(); symbolTable.add_symbol(ft);}
     ; 
 
     struct : STRUCT IDENTIFIER LBRACKET declarationList RBRACKET { $$ = new StructCreator($2, $4); Struct st = new Struct($2,(StmtList)$4); statements.put($2, st);}
@@ -646,8 +654,8 @@ class StructCreator extends ASTNode {
 }
 
 
-// Function class that extends the ASTNode class
-// creates 2 nodes, the function name and it's parameters
+// FunctionCreator class that extends the ASTNode class
+// creates 4 nodes, the function return type, name and it's parameters, and it's body (as a list)
 class FunctionConstruct extends ASTNode {
 
     Object returnType;
@@ -682,8 +690,8 @@ class FunctionConstruct extends ASTNode {
     public Object accept(Visitor v) {
         return v.visit(this);
     }
-
 }
+
 
 // FunctionCall class that extends the ASTNode class
 // specifically for when you don't want to have full declarations in the
@@ -1326,7 +1334,11 @@ class Struct extends ID {
    public SymbolTable() {
 		table = new ArrayList<HashMap<Object, ID>>();
 		table.add(new HashMap<Object, ID>());
-	}
+    }
+
+    public int size(){
+        return table.size();
+    }
 
    public void addScope(){
       table.add(new HashMap<Object, ID>());
@@ -1351,6 +1363,31 @@ class Struct extends ID {
 		return null;
 
    }
+
+   public Object find_symbol(Object name){
+       System.out.println("Finding name");
+      for (int i = this.scope; i >= 0; i--) {
+          System.out.println("for name");
+			if (this.table.get(i).containsKey(name)) {
+                System.out.println("if name");
+				return this.table.get(i).get(name);
+			}
+		}
+		return null;
+
+   }
+
+   public void printKeys(){
+       for (int i = this.scope; i >= 0; i--) {
+			HashMap<Object, ID> table = this.table.get(i); 
+            Set<Object> keys = table.keySet();
+            for (Object key : keys) {
+                System.out.println(key);
+            }
+		}
+	}
+
+   
 
    //adds all the information we need to know about x in current scope
    public boolean add_symbol(ID id){
