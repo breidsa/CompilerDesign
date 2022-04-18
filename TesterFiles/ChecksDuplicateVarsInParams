@@ -1,0 +1,4 @@
+
+// checking to see that x and y don't throw errors
+void main(int x, int y){}
+void func(int x, int y){}
