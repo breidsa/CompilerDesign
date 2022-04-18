@@ -1,5 +1,4 @@
 void func(){
-  // THIS SHOULD FAIL SINCE X IS DEFINED TWICE REGARDLESS OF ITS TYPE
   int x;
   string x;
 }
