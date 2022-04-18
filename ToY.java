@@ -585,42 +585,42 @@ public class ToY
       {
           case 2: /* pgm: function recursePgm  */
   if (yyn == 2)
-    /* "ToY.y":142  */
+    /* "ToY.y":138  */
                                { StmtList pgm = ((StmtList)(yystack.valueAt (0))); ast.addElement(((Object)(yystack.valueAt (1)))); yyval = pgm; };
   break;
 
 
   case 3: /* pgm: struct pgm  */
   if (yyn == 3)
-    /* "ToY.y":143  */
+    /* "ToY.y":139  */
                  { StmtList pgm = ((StmtList)(yystack.valueAt (0))); ast.addElement(((Object)(yystack.valueAt (1)))); yyval = pgm; };
   break;
 
 
   case 4: /* recursePgm: %empty  */
   if (yyn == 4)
-    /* "ToY.y":146  */
+    /* "ToY.y":142  */
                  { yyval = new StmtList(); };
   break;
 
 
   case 5: /* recursePgm: function recursePgm  */
   if (yyn == 5)
-    /* "ToY.y":147  */
+    /* "ToY.y":143  */
                           { StmtList pgm = ((StmtList)(yystack.valueAt (0))); ast.addElement(((Object)(yystack.valueAt (1)))); yyval = pgm;  };
   break;
 
 
   case 6: /* recursePgm: struct recursePgm  */
   if (yyn == 6)
-    /* "ToY.y":148  */
+    /* "ToY.y":144  */
                         { StmtList pgm =  ((StmtList)(yystack.valueAt (0))); ast.addElement(((Object)(yystack.valueAt (1)))); yyval = pgm; };
   break;
 
 
   case 7: /* function: returnType IDENTIFIER LEFTPAREN declarationListZero RIGHTPAREN LBRACKET stmts RBRACKET  */
   if (yyn == 7)
-    /* "ToY.y":152  */
+    /* "ToY.y":147  */
                                                                                                        {yyval = new FunctionConstruct(((Object)(yystack.valueAt (7))), ((Yytoken)(yystack.valueAt (6))), ((StmtList)(yystack.valueAt (4))), ((StmtList)(yystack.valueAt (1))));
                                                                                                          Function ft = new Function(((Yytoken)(yystack.valueAt (6))), ((Object)(yystack.valueAt (7))), (StmtList)((StmtList)(yystack.valueAt (4)))); functions.put(((Yytoken)(yystack.valueAt (6))), ft);};
   break;
@@ -628,70 +628,70 @@ public class ToY
 
   case 8: /* struct: STRUCT IDENTIFIER LBRACKET declarationList RBRACKET  */
   if (yyn == 8)
-    /* "ToY.y":157  */
+    /* "ToY.y":151  */
                                                                  { yyval = new StructCreator(((Yytoken)(yystack.valueAt (3))), ((StmtList)(yystack.valueAt (1)))); Struct st = new Struct(((Yytoken)(yystack.valueAt (3))),(StmtList)((StmtList)(yystack.valueAt (1)))); statements.put(((Yytoken)(yystack.valueAt (3))), st);};
   break;
 
 
   case 9: /* declarationListZero: %empty  */
   if (yyn == 9)
-    /* "ToY.y":160  */
+    /* "ToY.y":154  */
                          { yyval = new StmtList();};
   break;
 
 
   case 10: /* declarationListZero: declaration  */
   if (yyn == 10)
-    /* "ToY.y":161  */
+    /* "ToY.y":155  */
                   {yyval = new StmtList(((Object)(yystack.valueAt (0)))); };
   break;
 
 
   case 11: /* declarationListZero: declaration COMMA declarationList  */
   if (yyn == 11)
-    /* "ToY.y":162  */
+    /* "ToY.y":156  */
                                         {StmtList decls = ((StmtList)(yystack.valueAt (0))); decls.addElement(((Object)(yystack.valueAt (2)))); yyval = decls;};
   break;
 
 
   case 12: /* declarationList: declaration  */
   if (yyn == 12)
-    /* "ToY.y":165  */
+    /* "ToY.y":159  */
                                  { yyval = ((Object)(yystack.valueAt (0))); };
   break;
 
 
   case 13: /* declarationList: declaration COMMA declarationList  */
   if (yyn == 13)
-    /* "ToY.y":166  */
+    /* "ToY.y":160  */
                                         { StmtList decls = ((StmtList)(yystack.valueAt (0))); decls.addElement(((Object)(yystack.valueAt (2)))); yyval = decls;};
   break;
 
 
   case 14: /* stmts: %empty  */
   if (yyn == 14)
-    /* "ToY.y":169  */
+    /* "ToY.y":163  */
             { yyval = new StmtList();};
   break;
 
 
   case 15: /* stmts: stmt stmts  */
   if (yyn == 15)
-    /* "ToY.y":170  */
+    /* "ToY.y":164  */
                  { StmtList sequence = ((StmtList)(yystack.valueAt (0))); sequence.addElement(((Object)(yystack.valueAt (1)))); yyval = sequence; };
   break;
 
 
   case 16: /* declaration: type IDENTIFIER  */
   if (yyn == 16)
-    /* "ToY.y":173  */
+    /* "ToY.y":167  */
                                  { yyval = new VarDef(((Object)(yystack.valueAt (1))), ((Yytoken)(yystack.valueAt (0)))); };
   break;
 
 
   case 17: /* stmt: FOR LEFTPAREN IDENTIFIER EQ exp SEMICOLON exp SEMICOLON stmt RIGHTPAREN LBRACKET stmts RBRACKET  */
   if (yyn == 17)
-    /* "ToY.y":176  */
+    /* "ToY.y":170  */
                                                                                                            { Asnmt iterator = new Asnmt(((Yytoken)(yystack.valueAt (10))), ((Object)(yystack.valueAt (8))));
 										               yyval = new ForLoop(iterator, ((Object)(yystack.valueAt (6))), ((Object)(yystack.valueAt (4))), ((StmtList)(yystack.valueAt (1))));};
   break;
@@ -699,308 +699,308 @@ public class ToY
 
   case 18: /* stmt: IF LEFTPAREN exp RIGHTPAREN LBRACKET stmts RBRACKET  */
   if (yyn == 18)
-    /* "ToY.y":178  */
+    /* "ToY.y":172  */
                                                           { yyval = new IfStmt(((Object)(yystack.valueAt (4))), ((StmtList)(yystack.valueAt (1))), null); };
   break;
 
 
   case 19: /* stmt: IF LEFTPAREN exp RIGHTPAREN LBRACKET stmts RBRACKET ELSE LBRACKET stmts RBRACKET  */
   if (yyn == 19)
-    /* "ToY.y":179  */
+    /* "ToY.y":173  */
                                                                                        { yyval = new IfStmt(((Object)(yystack.valueAt (8))), ((StmtList)(yystack.valueAt (5))), ((StmtList)(yystack.valueAt (1))));};
   break;
 
 
   case 20: /* stmt: PRINTF LEFTPAREN STRING RIGHTPAREN SEMICOLON  */
   if (yyn == 20)
-    /* "ToY.y":180  */
+    /* "ToY.y":174  */
                                                    { yyval = new EndFunction(((Yytoken)(yystack.valueAt (4))), ((Yytoken)(yystack.valueAt (2)))); };
   break;
 
 
   case 21: /* stmt: PRINTF LEFTPAREN IDENTIFIER RIGHTPAREN SEMICOLON  */
   if (yyn == 21)
-    /* "ToY.y":181  */
+    /* "ToY.y":175  */
                                                        { yyval = new EndFunction(((Yytoken)(yystack.valueAt (4))), ((Yytoken)(yystack.valueAt (2)))); };
   break;
 
 
   case 22: /* stmt: RETURN exp SEMICOLON  */
   if (yyn == 22)
-    /* "ToY.y":182  */
+    /* "ToY.y":176  */
                            { yyval = new EndFunction(((Yytoken)(yystack.valueAt (2))), ((Object)(yystack.valueAt (1)))); };
   break;
 
 
   case 23: /* stmt: LBRACKET stmtSeq RBRACKET  */
   if (yyn == 23)
-    /* "ToY.y":183  */
+    /* "ToY.y":177  */
                                 { yyval = ((Yytoken)(yystack.valueAt (2))); };
   break;
 
 
   case 24: /* stmt: type IDENTIFIER SEMICOLON  */
   if (yyn == 24)
-    /* "ToY.y":184  */
+    /* "ToY.y":178  */
                                 { yyval = new VarDef(((Object)(yystack.valueAt (2))), ((Yytoken)(yystack.valueAt (1)))); };
   break;
 
 
   case 25: /* stmt: IDENTIFIER EQ exp SEMICOLON  */
   if (yyn == 25)
-    /* "ToY.y":185  */
+    /* "ToY.y":179  */
                                   { yyval = new Asnmt(((Yytoken)(yystack.valueAt (3))), ((Object)(yystack.valueAt (1)))); };
   break;
 
 
   case 26: /* stmt: IDENTIFIER EQ exp  */
   if (yyn == 26)
-    /* "ToY.y":186  */
-                        { System.out.println("Into correct assignment"); yyval = new Asnmt(((Yytoken)(yystack.valueAt (2))), ((Object)(yystack.valueAt (0)))); };
+    /* "ToY.y":180  */
+                        { yyval = new Asnmt(((Yytoken)(yystack.valueAt (2))), ((Object)(yystack.valueAt (0)))); };
   break;
 
 
   case 27: /* stmt: IDENTIFIER ATTRIBUTE Lexp EQ exp SEMICOLON  */
   if (yyn == 27)
-    /* "ToY.y":187  */
-                                                 {System.out.println("Into wrong assignment"); yyval = new Asnmt(((Yytoken)(yystack.valueAt (5))), ((StmtList)(yystack.valueAt (3))));};
+    /* "ToY.y":181  */
+                                                 { yyval = new Asnmt(((Yytoken)(yystack.valueAt (5))), ((StmtList)(yystack.valueAt (3))));};
   break;
 
 
   case 28: /* stmt: IDENTIFIER LEFTPAREN paramList RIGHTPAREN SEMICOLON  */
   if (yyn == 28)
-    /* "ToY.y":188  */
+    /* "ToY.y":182  */
                                                           {yyval = new FunctionCall(((Yytoken)(yystack.valueAt (4))), ((Yytoken)(yystack.valueAt (3))));};
   break;
 
 
   case 29: /* stmt: IDENTIFIER EQ IDENTIFIER LEFTPAREN paramList RIGHTPAREN SEMICOLON  */
   if (yyn == 29)
-    /* "ToY.y":189  */
+    /* "ToY.y":183  */
                                                                         {FunctionCall func = new FunctionCall(((Yytoken)(yystack.valueAt (4))), ((StmtList)(yystack.valueAt (2)))); yyval = new Asnmt(((Yytoken)(yystack.valueAt (6))), func);};
   break;
 
 
   case 31: /* paramList: %empty  */
   if (yyn == 31)
-    /* "ToY.y":193  */
+    /* "ToY.y":187  */
                { yyval = new StmtList();};
   break;
 
 
   case 32: /* paramList: exp COMMA paramList  */
   if (yyn == 32)
-    /* "ToY.y":194  */
+    /* "ToY.y":188  */
                           {StmtList params = ((StmtList)(yystack.valueAt (0))); params.addElement(((Object)(yystack.valueAt (2)))); yyval = params;};
   break;
 
 
   case 33: /* stmtSeq: %empty  */
   if (yyn == 33)
-    /* "ToY.y":197  */
+    /* "ToY.y":191  */
              { yyval = new StmtList();};
   break;
 
 
   case 34: /* stmtSeq: stmt COMMA stmtSeq  */
   if (yyn == 34)
-    /* "ToY.y":198  */
+    /* "ToY.y":192  */
                          { StmtList sequence = ((StmtList)(yystack.valueAt (0))); sequence.addElement(((Object)(yystack.valueAt (2)))); yyval = sequence; };
   break;
 
 
   case 35: /* type: INT  */
   if (yyn == 35)
-    /* "ToY.y":201  */
+    /* "ToY.y":195  */
               { yyval = new Keyword(((Yytoken)(yystack.valueAt (0)))); };
   break;
 
 
   case 36: /* type: BOOL  */
   if (yyn == 36)
-    /* "ToY.y":202  */
+    /* "ToY.y":196  */
            { yyval = new Keyword(((Yytoken)(yystack.valueAt (0)))); };
   break;
 
 
   case 37: /* type: STRING  */
   if (yyn == 37)
-    /* "ToY.y":203  */
+    /* "ToY.y":197  */
              { yyval = new Keyword(((Yytoken)(yystack.valueAt (0)))); };
   break;
 
 
   case 38: /* returnType: type  */
   if (yyn == 38)
-    /* "ToY.y":206  */
+    /* "ToY.y":200  */
                      { yyval = ((Object)(yystack.valueAt (0))); };
   break;
 
 
   case 39: /* returnType: VOID  */
   if (yyn == 39)
-    /* "ToY.y":207  */
+    /* "ToY.y":201  */
            { yyval = new Keyword(((Yytoken)(yystack.valueAt (0)))); };
   break;
 
 
   case 40: /* exp: NUMBER  */
   if (yyn == 40)
-    /* "ToY.y":210  */
+    /* "ToY.y":204  */
                 { yyval = new Literals(((Yytoken)(yystack.valueAt (0)))); };
   break;
 
 
   case 41: /* exp: WORD  */
   if (yyn == 41)
-    /* "ToY.y":211  */
+    /* "ToY.y":205  */
            { yyval = new Literals(((Yytoken)(yystack.valueAt (0)))); };
   break;
 
 
   case 42: /* exp: TRUE  */
   if (yyn == 42)
-    /* "ToY.y":212  */
+    /* "ToY.y":206  */
            { yyval = new Keyword(((Yytoken)(yystack.valueAt (0)))); };
   break;
 
 
   case 43: /* exp: FALSE  */
   if (yyn == 43)
-    /* "ToY.y":213  */
+    /* "ToY.y":207  */
             { yyval = new Keyword(((Yytoken)(yystack.valueAt (0)))); };
   break;
 
 
   case 44: /* exp: IDENTIFIER  */
   if (yyn == 44)
-    /* "ToY.y":214  */
+    /* "ToY.y":208  */
                  { yyval = new Literals(((Yytoken)(yystack.valueAt (0)))); };
   break;
 
 
   case 45: /* exp: exp PLUS exp  */
   if (yyn == 45)
-    /* "ToY.y":215  */
+    /* "ToY.y":209  */
                    { yyval = new Arithmetic(((Object)(yystack.valueAt (2))), ((Yytoken)(yystack.valueAt (1))), ((Object)(yystack.valueAt (0)))); };
   break;
 
 
   case 46: /* exp: exp MINUS exp  */
   if (yyn == 46)
-    /* "ToY.y":216  */
+    /* "ToY.y":210  */
                     { yyval = new Arithmetic(((Object)(yystack.valueAt (2))), ((Yytoken)(yystack.valueAt (1))), ((Object)(yystack.valueAt (0)))); };
   break;
 
 
   case 47: /* exp: exp MULT exp  */
   if (yyn == 47)
-    /* "ToY.y":217  */
+    /* "ToY.y":211  */
                    { yyval = new Arithmetic(((Object)(yystack.valueAt (2))), ((Yytoken)(yystack.valueAt (1))), ((Object)(yystack.valueAt (0)))); };
   break;
 
 
   case 48: /* exp: exp DIVIDE exp  */
   if (yyn == 48)
-    /* "ToY.y":218  */
+    /* "ToY.y":212  */
                      { yyval = new Arithmetic(((Object)(yystack.valueAt (2))), ((Yytoken)(yystack.valueAt (1))), ((Object)(yystack.valueAt (0)))); };
   break;
 
 
   case 49: /* exp: exp MOD exp  */
   if (yyn == 49)
-    /* "ToY.y":219  */
+    /* "ToY.y":213  */
                   { yyval = new Arithmetic(((Object)(yystack.valueAt (2))), ((Yytoken)(yystack.valueAt (1))), ((Object)(yystack.valueAt (0)))); };
   break;
 
 
   case 50: /* exp: exp AND exp  */
   if (yyn == 50)
-    /* "ToY.y":220  */
-                  { System.out.println("Goes to AND expression");yyval = new Logic(((Object)(yystack.valueAt (2))), ((Yytoken)(yystack.valueAt (1))), ((Object)(yystack.valueAt (0)))); };
+    /* "ToY.y":214  */
+                  { yyval = new Logic(((Object)(yystack.valueAt (2))), ((Yytoken)(yystack.valueAt (1))), ((Object)(yystack.valueAt (0)))); };
   break;
 
 
   case 51: /* exp: exp OR exp  */
   if (yyn == 51)
-    /* "ToY.y":221  */
+    /* "ToY.y":215  */
                  { yyval = new Logic(((Object)(yystack.valueAt (2))), ((Yytoken)(yystack.valueAt (1))), ((Object)(yystack.valueAt (0)))); };
   break;
 
 
   case 52: /* exp: exp DOUBLEEQ exp  */
   if (yyn == 52)
-    /* "ToY.y":222  */
+    /* "ToY.y":216  */
                        { yyval = new Conditions(((Object)(yystack.valueAt (2))), ((Yytoken)(yystack.valueAt (1))), ((Object)(yystack.valueAt (0)))); };
   break;
 
 
   case 53: /* exp: exp GREATERTHAN exp  */
   if (yyn == 53)
-    /* "ToY.y":223  */
+    /* "ToY.y":217  */
                           { yyval = new Conditions(((Object)(yystack.valueAt (2))), ((Yytoken)(yystack.valueAt (1))), ((Object)(yystack.valueAt (0)))); };
   break;
 
 
   case 54: /* exp: exp LESSTHAN exp  */
   if (yyn == 54)
-    /* "ToY.y":224  */
+    /* "ToY.y":218  */
                        { yyval = new Conditions(((Object)(yystack.valueAt (2))), ((Yytoken)(yystack.valueAt (1))), ((Object)(yystack.valueAt (0)))); };
   break;
 
 
   case 55: /* exp: exp GREATERTHANOREQ exp  */
   if (yyn == 55)
-    /* "ToY.y":225  */
+    /* "ToY.y":219  */
                               { yyval = new Conditions(((Object)(yystack.valueAt (2))), ((Yytoken)(yystack.valueAt (1))), ((Object)(yystack.valueAt (0)))); };
   break;
 
 
   case 56: /* exp: exp LESSTHANOREQ exp  */
   if (yyn == 56)
-    /* "ToY.y":226  */
+    /* "ToY.y":220  */
                            { yyval = new Conditions(((Object)(yystack.valueAt (2))), ((Yytoken)(yystack.valueAt (1))), ((Object)(yystack.valueAt (0)))); };
   break;
 
 
   case 57: /* exp: exp NOTEQ exp  */
   if (yyn == 57)
-    /* "ToY.y":227  */
+    /* "ToY.y":221  */
                     { yyval = new Conditions(((Object)(yystack.valueAt (2))), ((Yytoken)(yystack.valueAt (1))), ((Object)(yystack.valueAt (0)))); };
   break;
 
 
   case 58: /* exp: NOT exp  */
   if (yyn == 58)
-    /* "ToY.y":228  */
+    /* "ToY.y":222  */
               { yyval = new UnaryOperators(((Yytoken)(yystack.valueAt (1))), ((Object)(yystack.valueAt (0)))); };
   break;
 
 
   case 59: /* exp: MINUS exp  */
   if (yyn == 59)
-    /* "ToY.y":229  */
+    /* "ToY.y":223  */
                 { yyval = new UnaryOperators(((Yytoken)(yystack.valueAt (1))), ((Object)(yystack.valueAt (0)))); };
   break;
 
 
   case 60: /* exp: LEFTPAREN exp RIGHTPAREN  */
   if (yyn == 60)
-    /* "ToY.y":230  */
+    /* "ToY.y":224  */
                                {yyval = ((Object)(yystack.valueAt (1)));};
   break;
 
 
   case 61: /* Lexp: IDENTIFIER  */
   if (yyn == 61)
-    /* "ToY.y":233  */
+    /* "ToY.y":227  */
                       { StmtList emptyList = new StmtList(); emptyList.addElement(((Yytoken)(yystack.valueAt (0)))); yyval = emptyList;};
   break;
 
 
   case 62: /* Lexp: IDENTIFIER ATTRIBUTE Lexp  */
   if (yyn == 62)
-    /* "ToY.y":234  */
+    /* "ToY.y":228  */
                                 { StmtList attributeList = ((StmtList)(yystack.valueAt (0))); attributeList.addElement(((Yytoken)(yystack.valueAt (2)))); yyval = attributeList;};
   break;
 
@@ -1692,14 +1692,15 @@ private static final short[] yycheck_ = yycheck_init();
 
  HashMap<Object, ID> functions = new HashMap<Object, ID>();
  HashMap<Object, ID> statements = new HashMap<Object, ID>();
-// // HashMap<Object, ID> var = new HashMap<Object, ID>();
 
-SymbolTable symbolTable = new SymbolTable();
-static Program ast = new Program(new StmtList());
+ SymbolTable symbolTable = new SymbolTable();
+ static Program ast = new Program(new StmtList());
 
-
-public static void main(String[] args) throws IOException {
-        File initialFile = new File(args[0]);
+ public static void main(String[] args) throws IOException {
+        Scanner input = new Scanner(System.in);
+        System.out.print("Enter file: ");
+        String file = input.nextLine();
+        File initialFile = new File(file);
         InputStream targetStream = new FileInputStream(initialFile);
         BufferedReader br = new BufferedReader(new FileReader(initialFile));
         String line;
@@ -1711,7 +1712,7 @@ public static void main(String[] args) throws IOException {
         ToYLexer l = new ToYLexer(targetStream);
         ToY p = new ToY(l);
         if (!p.parse()){
-            System.out.println("INVALID");
+            System.out.println("ERROR SYNTAX FROM PARSER");
         } else{
             System.out.println("VAlID SYNTAX FROM PARSER");
             System.out.println();
@@ -1722,24 +1723,21 @@ public static void main(String[] args) throws IOException {
             System.out.println("VALID SYNTAX FROM SEMANTIC");
         }else{
             System.out.println();
-            System.out.println("INVALID SYNTAX FROM SEMANTIC");
+            System.out.println("ERROR SYNTAX FROM SEMANTIC");
         }
-
-}
+ }
 
 /* "ToY.java":1731  */
 
 }
-/* "ToY.y":238  */
+/* "ToY.y":231  */
 
 /* ------------------------------------------------------- */
 /*                       Start of AST                      */
 /* ------------------------------------------------------- */
 
-
 abstract class ASTNode {
-    public abstract Object accept(Visitor v);  /* This may have to be type ID...not sure */
-    // might need children nodes
+    public abstract Object accept(Visitor v); 
 }
 
 class StmtList extends ASTNode{
@@ -1773,8 +1771,10 @@ class StmtList extends ASTNode{
     }
 }
 
+
 /* ----------------- AST Expression Subclasses ---------------- */
 /* ------------------------------------------------------------ */
+
 
 // Arithmetic Class that extends the ASTNode class
 // creates two Nodes, the left and right sides of an arithmetic statement
@@ -1805,21 +1805,20 @@ class Arithmetic extends ASTNode {
     }
 }
 
-
-// Logic class that extends the ASTNode class
+// Conditions class that extends the ASTNode class
 // creates two Nodes, the left and right sides of a conditional statement
-class Logic extends ASTNode {
-    public Object left, right, op;
+class Conditions extends ASTNode {
+    public Object left, op, right;
 
-    public Logic(Object left, Object op, Object right) {
+    public Conditions(Object left, Object op, Object right) {
         this.left = left;
-        this.right = right;
         this.op = op;
+        this.right = right;
     }
 
     public Object getLeft(){
         return this.left;
-    }
+    } 
 
     public Object getRight(){
         return this.right;
@@ -1836,20 +1835,20 @@ class Logic extends ASTNode {
 }
 
 
-// Conditions class that extends the ASTNode class
+// Logic class that extends the ASTNode class
 // creates two Nodes, the left and right sides of a conditional statement
-class Conditions extends ASTNode {
-    public Object left, op, right;
+class Logic extends ASTNode {
+    public Object left, right, op;
 
-    public Conditions(Object left, Object op, Object right) {
+    public Logic(Object left, Object op, Object right) {
         this.left = left;
-        this.op = op;
         this.right = right;
+        this.op = op;
     }
 
     public Object getLeft(){
         return this.left;
-    } 
+    }
 
     public Object getRight(){
         return this.right;
@@ -1958,6 +1957,7 @@ class ForLoop extends ASTNode {
     }
 }
 
+
 // IfStmt class that extends the ASTNode class
 // creates three nodes, the if statment conditional, the if statment body, and
 // the else statement
@@ -1997,6 +1997,7 @@ class IfStmt extends ASTNode {
 /* ----------------- AST Variable Subclasses ---------------- */
 /* ---------------------------------------------------------- */
 
+
 // Asnmt class that extends the ASTNode class
 // The class is used when assigning objects to variables
 // Creates two nodes, the variable and the expression
@@ -2024,6 +2025,9 @@ class Asnmt extends ASTNode {
 }
 
 
+// ParamList class that extends the ASTNode class
+// The class is used when listing paramaters in a function call
+// Creates 1 node, a list of paramaters
 class ParamList extends ASTNode {
 
 	StmtList params;
@@ -2042,6 +2046,10 @@ class ParamList extends ASTNode {
     	}
 }
 
+
+// Keyword class that extends the ASTNode class
+// The class is used when keywords are used
+// Creates 1 node, the keyword
 class Keyword extends ASTNode {
 
 	Object keyword;
@@ -2060,7 +2068,11 @@ class Keyword extends ASTNode {
     	}
 }
 
- class Literals extends ASTNode {
+
+// Literals class that extends the ASTNode class
+// The class is used when literal strings, numbers, or identifiers are used
+// Creates 1 node, the keyword
+class Literals extends ASTNode {
  
     Object literal;
 
@@ -2076,9 +2088,12 @@ class Keyword extends ASTNode {
 	public Object accept(Visitor v) {
         return v.visit(this);
     }
- }
+}
 
 
+// VarDef class that extends the ASTNode class
+// The class is used for variable definitions
+// Creates 2 nodes, the type and name of the Identifier
 class VarDef extends ASTNode {
 	
 	Object type, name;

@@ -16,10 +16,10 @@
       568       |  AST program subclasses (StructCreater, FunctionConstruct, FunctionCall, Program)
  ------------------------------------------------------------------------------------------------------------		
       687       |  Start of Semantic Analysis 
-      691	|  AbstractVisitor implementations and Visitor definitions
-      948	|  Symbol Table Helper Functions
+      691	    |  AbstractVisitor implementations and Visitor definitions
+      948	    |  Symbol Table Helper Functions
       1012      |  Symbol Table Class
-      1073 	|  Parser - Lexer Link 
+      1073 	    |  Parser - Lexer Link 
 		
 */
 	       
@@ -53,14 +53,15 @@ import java.util.ArrayList;
 
  HashMap<Object, ID> functions = new HashMap<Object, ID>();
  HashMap<Object, ID> statements = new HashMap<Object, ID>();
-// // HashMap<Object, ID> var = new HashMap<Object, ID>();
 
-SymbolTable symbolTable = new SymbolTable();
-static Program ast = new Program(new StmtList());
+ SymbolTable symbolTable = new SymbolTable();
+ static Program ast = new Program(new StmtList());
 
-
-public static void main(String[] args) throws IOException {
-        File initialFile = new File(args[0]);
+ public static void main(String[] args) throws IOException {
+        Scanner input = new Scanner(System.in);
+        System.out.print("Enter file: ");
+        String file = input.nextLine();
+        File initialFile = new File(file);
         InputStream targetStream = new FileInputStream(initialFile);
         BufferedReader br = new BufferedReader(new FileReader(initialFile));
         String line;
@@ -72,7 +73,7 @@ public static void main(String[] args) throws IOException {
         ToYLexer l = new ToYLexer(targetStream);
         ToY p = new ToY(l);
         if (!p.parse()){
-            System.out.println("INVALID");
+            System.out.println("ERROR SYNTAX FROM PARSER");
         } else{
             System.out.println("VAlID SYNTAX FROM PARSER");
             System.out.println();
@@ -83,15 +84,13 @@ public static void main(String[] args) throws IOException {
             System.out.println("VALID SYNTAX FROM SEMANTIC");
         }else{
             System.out.println();
-            System.out.println("INVALID SYNTAX FROM SEMANTIC");
+            System.out.println("ERROR SYNTAX FROM SEMANTIC");
         }
-
-}
+ }
 }
 
 /* ----------------- Bison Declarations ---------------- */
 
-/* Questions: does boolean and stuff have to come from the lexer?? */
 %token <Yytoken> INT BOOL STRING VOID
 %token <Yytoken> IDENTIFIER 
 %token <Yytoken> COMMENT
@@ -131,14 +130,11 @@ public static void main(String[] args) throws IOException {
 %type <StmtList> Lexp
 
 
-
 /* ----------------- Bison Grammar ---------------- */
 
 %start pgm
 
-
 %%  
-
     pgm : function recursePgm  { StmtList pgm = $2; ast.addElement($1); $$ = pgm; }
     | struct pgm { StmtList pgm = $2; ast.addElement($1); $$ = pgm; } 
     ; 
@@ -148,11 +144,9 @@ public static void main(String[] args) throws IOException {
     | struct recursePgm { StmtList pgm =  $2; ast.addElement($1); $$ = pgm; }
     ; 
 
-
     function : returnType IDENTIFIER LEFTPAREN declarationListZero RIGHTPAREN LBRACKET stmts RBRACKET  {$$ = new FunctionConstruct($1, $2, $4, $7);
                                                                                                          Function ft = new Function($2, $1, (StmtList)$4); functions.put($2, ft);}
     ; 
-
 
     struct : STRUCT IDENTIFIER LBRACKET declarationList RBRACKET { $$ = new StructCreator($2, $4); Struct st = new Struct($2,(StmtList)$4); statements.put($2, st);}
     ;      
@@ -181,10 +175,10 @@ public static void main(String[] args) throws IOException {
     | PRINTF LEFTPAREN IDENTIFIER RIGHTPAREN SEMICOLON { $$ = new EndFunction($1, $3); } 
     | RETURN exp SEMICOLON { $$ = new EndFunction($1, $2); }
     | LBRACKET stmtSeq RBRACKET { $$ = $1; }
-    | type IDENTIFIER SEMICOLON { $$ = new VarDef($1, $2); } // "class Keyword cannot be cast to class Yytoken (Keyword and Yytoken are in unnamed module of loader 'app')"
+    | type IDENTIFIER SEMICOLON { $$ = new VarDef($1, $2); } 
     | IDENTIFIER EQ exp SEMICOLON { $$ = new Asnmt($1, $3); }
-    | IDENTIFIER EQ exp { System.out.println("Into correct assignment"); $$ = new Asnmt($1, $3); }
-    | IDENTIFIER ATTRIBUTE Lexp EQ exp SEMICOLON {System.out.println("Into wrong assignment"); $$ = new Asnmt($1, $3);} 
+    | IDENTIFIER EQ exp { $$ = new Asnmt($1, $3); }
+    | IDENTIFIER ATTRIBUTE Lexp EQ exp SEMICOLON { $$ = new Asnmt($1, $3);} 
     | IDENTIFIER LEFTPAREN paramList RIGHTPAREN SEMICOLON {$$ = new FunctionCall($1, $2);}
     | IDENTIFIER EQ IDENTIFIER LEFTPAREN paramList RIGHTPAREN SEMICOLON {FunctionCall func = new FunctionCall($3, $5); $$ = new Asnmt($1, func);}
     | COMMENT 
@@ -217,7 +211,7 @@ public static void main(String[] args) throws IOException {
     | exp MULT exp { $$ = new Arithmetic($1, $2, $3); }
     | exp DIVIDE exp { $$ = new Arithmetic($1, $2, $3); }
     | exp MOD exp { $$ = new Arithmetic($1, $2, $3); }
-    | exp AND exp { System.out.println("Goes to AND expression");$$ = new Logic($1, $2, $3); } 
+    | exp AND exp { $$ = new Logic($1, $2, $3); } 
     | exp OR exp { $$ = new Logic($1, $2, $3); } 
     | exp DOUBLEEQ exp { $$ = new Conditions($1, $2, $3); } 
     | exp GREATERTHAN exp { $$ = new Conditions($1, $2, $3); } 
@@ -234,16 +228,13 @@ public static void main(String[] args) throws IOException {
     | IDENTIFIER ATTRIBUTE Lexp { StmtList attributeList = $3; attributeList.addElement($1); $$ = attributeList;}
     ;
 
- 
 %%
 /* ------------------------------------------------------- */
 /*                       Start of AST                      */
 /* ------------------------------------------------------- */
 
-
 abstract class ASTNode {
-    public abstract Object accept(Visitor v);  /* This may have to be type ID...not sure */
-    // might need children nodes
+    public abstract Object accept(Visitor v); 
 }
 
 class StmtList extends ASTNode{
@@ -277,8 +268,10 @@ class StmtList extends ASTNode{
     }
 }
 
+
 /* ----------------- AST Expression Subclasses ---------------- */
 /* ------------------------------------------------------------ */
+
 
 // Arithmetic Class that extends the ASTNode class
 // creates two Nodes, the left and right sides of an arithmetic statement
@@ -309,21 +302,20 @@ class Arithmetic extends ASTNode {
     }
 }
 
-
-// Logic class that extends the ASTNode class
+// Conditions class that extends the ASTNode class
 // creates two Nodes, the left and right sides of a conditional statement
-class Logic extends ASTNode {
-    public Object left, right, op;
+class Conditions extends ASTNode {
+    public Object left, op, right;
 
-    public Logic(Object left, Object op, Object right) {
+    public Conditions(Object left, Object op, Object right) {
         this.left = left;
-        this.right = right;
         this.op = op;
+        this.right = right;
     }
 
     public Object getLeft(){
         return this.left;
-    }
+    } 
 
     public Object getRight(){
         return this.right;
@@ -340,20 +332,20 @@ class Logic extends ASTNode {
 }
 
 
-// Conditions class that extends the ASTNode class
+// Logic class that extends the ASTNode class
 // creates two Nodes, the left and right sides of a conditional statement
-class Conditions extends ASTNode {
-    public Object left, op, right;
+class Logic extends ASTNode {
+    public Object left, right, op;
 
-    public Conditions(Object left, Object op, Object right) {
+    public Logic(Object left, Object op, Object right) {
         this.left = left;
-        this.op = op;
         this.right = right;
+        this.op = op;
     }
 
     public Object getLeft(){
         return this.left;
-    } 
+    }
 
     public Object getRight(){
         return this.right;
@@ -462,6 +454,7 @@ class ForLoop extends ASTNode {
     }
 }
 
+
 // IfStmt class that extends the ASTNode class
 // creates three nodes, the if statment conditional, the if statment body, and
 // the else statement
@@ -501,6 +494,7 @@ class IfStmt extends ASTNode {
 /* ----------------- AST Variable Subclasses ---------------- */
 /* ---------------------------------------------------------- */
 
+
 // Asnmt class that extends the ASTNode class
 // The class is used when assigning objects to variables
 // Creates two nodes, the variable and the expression
@@ -528,6 +522,9 @@ class Asnmt extends ASTNode {
 }
 
 
+// ParamList class that extends the ASTNode class
+// The class is used when listing paramaters in a function call
+// Creates 1 node, a list of paramaters
 class ParamList extends ASTNode {
 
 	StmtList params;
@@ -546,6 +543,10 @@ class ParamList extends ASTNode {
     	}
 }
 
+
+// Keyword class that extends the ASTNode class
+// The class is used when keywords are used
+// Creates 1 node, the keyword
 class Keyword extends ASTNode {
 
 	Object keyword;
@@ -564,7 +565,11 @@ class Keyword extends ASTNode {
     	}
 }
 
- class Literals extends ASTNode {
+
+// Literals class that extends the ASTNode class
+// The class is used when literal strings, numbers, or identifiers are used
+// Creates 1 node, the keyword
+class Literals extends ASTNode {
  
     Object literal;
 
@@ -580,9 +585,12 @@ class Keyword extends ASTNode {
 	public Object accept(Visitor v) {
         return v.visit(this);
     }
- }
+}
 
 
+// VarDef class that extends the ASTNode class
+// The class is used for variable definitions
+// Creates 2 nodes, the type and name of the Identifier
 class VarDef extends ASTNode {
 	
 	Object type, name;
