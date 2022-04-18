@@ -54,6 +54,7 @@ import java.util.ArrayList;
  HashMap<Object, ID> functions = new HashMap<Object, ID>();
  HashMap<Object, ID> statements = new HashMap<Object, ID>();
 // // HashMap<Object, ID> var = new HashMap<Object, ID>();
+
 SymbolTable symbolTable = new SymbolTable();
 static Program ast = new Program(new StmtList());
 
@@ -86,25 +87,6 @@ public static void main(String[] args) throws IOException {
         }
 
 }
-    // FileReader yyin = new FileReader(args[0]);
-    // System.out.println(args[0]);
-    // ToYLexer l = new ToYLexer(yyin);
-    // ToY p = new ToY(l);
-    // System.out.println(args[0]);
-    // //runs bison and parser checks 
-    // //
-
-    // if (!p.parse()){
-    //      System.out.println(args[0]);
-    //     System.out.println("INVALID");
-    // }else{
-    //    // ast = (Program) ast;
-    //     //v.visit((Program)ast);
-    // //TODO how to run the visitor class over all nodes and then return true or false 
-    // System.out.println("VALID"); 
-    
-    // }
-    // System.out.println("done w main");
 }
 
 /* ----------------- Bison Declarations ---------------- */
@@ -220,9 +202,7 @@ public static void main(String[] args) throws IOException {
     | BOOL { $$ = new Keyword($1); }
     | STRING { $$ = new Keyword($1); }
     ;
-
-
-    // create pgm class that has a list of ASTNodes 
+ 
     returnType: type { $$ = $1; }
     | VOID { $$ = new Keyword($1); }
     ;
@@ -254,148 +234,6 @@ public static void main(String[] args) throws IOException {
     | IDENTIFIER ATTRIBUTE Lexp { StmtList attributeList = $3; attributeList.addElement($1); $$ = attributeList;}
     ;
 
-    
-//START COMMENT OUT
-
-    // // pgm : function recursePgm { StmtList pgm = (StmtList)$2; pgm.addElement($1); $$ = pgm; }
-    // // | struct pgm { StmtList pgm = (StmtList)$2; pgm.addElement($1); $$ = pgm; } 
-    // // ;
-
-    // // recursePgm : /* empty sequence */ { $$ = new StmtList(); }
-    // // | function recursePgm { StmtList pgm = (StmtList) $2; pgm.addElement($1); $$ = pgm;  }
-    // // | struct recursePgm   { StmtList pgm = (StmtList) $2; pgm.addElement($1); $$ = pgm; }
-    // // ;
-
-    // THESE ARE THE ONES I COMMENTED IN FIRST!! THE ONES ABOVE THIS!!!^^^^^^^^^^^^
-
-    // pgm : function recursePgm { StmtList pgm = (StmtList)$2; ast.addElement($1); $$ = pgm; }
-    // | struct pgm { StmtList pgm = (StmtList)$2; ast.addElement($1); $$ = pgm; }
-    // ; 
-    
-    // recursePgm : /* empty sequence */ //{ $$ = new Program($1); }
-    // | function recursePgm { StmtList pgm = (StmtList)$2; ast.addElement($1); $$ = pgm;  }
-    // | struct recursePgm  { StmtList pgm = (StmtList)$2; ast.addElement($1); $$ = pgm; }
-    // ; 
-
-
-    // function : returnType IDENTIFIER LEFTPAREN declarationListZero RIGHTPAREN LBRACKET stmts RBRACKET {System.out.print("to function");$$ = new FunctionConstruct($1, $2, $4, (StmtList)$7);
-    //                                                                                                          Function ft = new Function($2, $1, (StmtList)$4); functions.put($2, ft);}
-    // ;
-
-    // struct : STRUCT IDENTIFIER LBRACKET declarationList RBRACKET { $$ = new StructCreator($2, (StmtList)$4); Struct st = new Struct($2,(StmtList)$4); statements.put($2, st);}  /* {StmtList fieldTypes = new StmtList(); fieldTypes.addElement($4); $$ = new StructCreator($2, fieldTypes);} */
-    // ;      
-
-    // declarationListZero: /* empty */ {$$ = new StmtList();}  
-    // | declaration { $$ = $1; }
-    // | declaration COMMA declarationList {StmtList decls = (StmtList) $3; decls.addElement($1); $$ = decls;} 
-    // ;    
-
-    // declarationList: declaration { $$ = $1; }
-    // | declaration COMMA declarationList {StmtList decls = (StmtList) $3; decls.addElement($1); $$ = decls;} 
-    // ;      
-
-    // stmts : /* empty sequence */ { $$ = new StmtList();}
-    // | stmt stmts { StmtList sequence = (StmtList) $2; sequence.addElement($1); $$ = sequence; }
-    // ;
-
-    // declaration: type IDENTIFIER {$$ = new VarDef($1, $2); }
-    // ;
-
-    // stmt : FOR LEFTPAREN IDENTIFIER EQ exp SEMICOLON exp SEMICOLON stmt RIGHTPAREN LBRACKET stmts RBRACKET { Asnmt iterator = new Asnmt($3, $5);
-	// 										               $$ = new ForLoop(iterator, $7, $9, $12);} 
-    // | IF LEFTPAREN exp RIGHTPAREN LBRACKET stmts RBRACKET { $$ = new IfStmt($3, (StmtList)$6, null); } 
-    // | IF LEFTPAREN exp RIGHTPAREN LBRACKET stmts RBRACKET ELSE LBRACKET stmt RBRACKET { $$ = new IfStmt($3, (StmtList)$6, (StmtList)$10);} 
-    // | PRINTF LEFTPAREN STRING RIGHTPAREN SEMICOLON { $$ = new EndFunction($1, $3); } 
-    // | RETURN exp SEMICOLON { $$ = new EndFunction($1, $2); } 
-    // | LBRACKET stmtSeq RBRACKET { $$ = $1; } 
-    // | type IDENTIFIER SEMICOLON {System.out.println("in 'stmt' in decl section"); $$ = new VarDef($1, $2); } 
-    // | IDENTIFIER EQ exp SEMICOLON { $$ = new Asnmt($1, $3); }
-    // | Lexp EQ exp SEMICOLON { $$ = new Asnmt($1, $3);} 
-    // | IDENTIFIER LEFTPAREN paramList RIGHTPAREN SEMICOLON{$$ = new FunctionCall($1, $2);}
-    // | IDENTIFIER EQ IDENTIFIER LEFTPAREN paramList RIGHTPAREN SEMICOLON{FunctionCall func = new FunctionCall($3, (StmtList) $4); $$ = new Asnmt($1, func);}
-    // // | IDENTIFIER paramList SEMICOLON { $$ = new FunctionCall($1, $2); }
-    // // | IDENTIFIER EQ IDENTIFIER paramList SEMICOLON { FunctionCall func = new FunctionCall($3, (StmtList) $4); $$ = new Asnmt($1, func); }  
-    // ;
-
-    // paramList:  {$$ = new StmtList();}
-    // | exp COMMA paramList {StmtList params = (StmtList) $1; params.addElement($3); $$ = params;} 
-    // ;
-
-    // stmtSeq: /* empty sequence */ { $$ = new StmtList();}
-    // | stmt COMMA stmts { StmtList sequence = (StmtList) $2; sequence.addElement($1); $$ = sequence; }
-    // ;
-
-    // type: INT { System.out.println("Does it go here pls go here"); $$ = new Keyword($1); }
-    // | BOOL { $$ = new Keyword($1);}
-    // | STRING { System.out.println("Does it start here?"); $$ = new Keyword($1); }
-    // ;
-
-    
-    // // type: INT { $$ = new VarDef($1, null); }
-    // // | BOOL { $$ = new VarDef($1, null); }
-    // // | STRING { $$ = new VarDef($1, null); }
-    // // ; 
-
-
-    // // create pgm class that has a list of ASTNodes 
-    // returnType: type { System.out.println("Start in returnType"); $$ = $1; }
-    // | VOID { $$ = new Keyword($1); }
-    // ;
-    
-    
-    // // declaration: type IDENTIFIER {System.out.print("IN DELC");$$ = new VarDef($1, $2); }
-    // // | type IDENTIFIER COMMA {$$ = new VarDef($1, $3);}
-    // // ;
-
-    // // declarationList: /* empty */ {$$ = new StmtList();}  
-    // // | declaration { $$ = $1; }
-    // // | declarationList COMMA declaration {StmtList decls = (StmtList) $1; decls.addElement($3); $$ = decls;} 
-    // // ;   
-
-
-    // Lexp : exp { StmtList emptyList = new StmtList(); emptyList.addElement($1); $$ = emptyList; }
-    // | exp ATTRIBUTE Lexp { StmtList attributeList = (StmtList)$3; attributeList.addElement($1); $$ = attributeList; }
-    // ;
-
-
-    
-
-    // exp : type { $$ = $1; }
-    // | TRUE { $$ = new Keyword($1); } 
-    // | FALSE { $$ = new Keyword($1); }
-    // | exp PLUS exp { $$ = new Arithmetic($1, $2, $3); }
-    // | exp MINUS exp { $$ = new Arithmetic($1,$2,$3); }
-    // | exp MULT exp  { $$ = new Arithmetic($1, $2,$3); } 
-    // | exp DIVIDE exp { $$ = new Arithmetic($1,$2, $3); }
-    // | exp MOD exp { $$ = new Arithmetic($1,$2, $3); }
-    // | exp AND exp { $$ = new Logic($1, $2, $3); } 
-    // | exp OR exp { $$ = new Logic($1, $2, $3); } 
-    // | exp DOUBLEEQ exp { $$ = new Conditions($1, $2, $3); } 
-    // | exp GREATERTHAN exp { $$ = new Conditions($1, $2, $3); } 
-    // | exp LESSTHAN exp { $$ = new Conditions($1, $2, $3); } 
-    // | exp GREATERTHANOREQ exp { $$ = new Conditions($1, $2, $3); } 
-    // | exp LESSTHANOREQ exp { $$ = new Conditions($1, $2, $3); } 
-    // | exp NOTEQ exp { $$ = new Conditions($1, $2, $3); } 
-    // | IDENTIFIER EQ exp { $$ = new Asnmt($1, $3); } 
-    // | NOT exp { $$ = new UnaryOperators($1, $2); } 
-    // | MINUS exp { $$ = new UnaryOperators($1, $2); } 
-    // | LEFTPAREN exp RIGHTPAREN  { $$ = $2; } 
-    // ;
-    
-    
-    
-
-    
-
-    
-    // // This will initially go to recurseProgram, and create an empty function that will either act as main, or just have the 1 required function
-    // // if there is only one in the test code
-    
-    
-    
-//END COMMENT OUT 
-
- 
  
 %%
 /* ------------------------------------------------------- */
@@ -416,7 +254,7 @@ abstract class ASTNode {
 }
 
 class StmtList extends ASTNode{
-	// stmtLists are ArrayList<Object>s, but are used in classes that create ASTNodes, so an Array<List> in this case is an ASTNode.
+
     ArrayList<Object> stmts;
 
     public StmtList() {
@@ -439,9 +277,7 @@ class StmtList extends ASTNode{
     public Object elementAt(int i) {
         return stmts.get(i);
     }
-    // public int size() {
-    // return stmts.size();
-    // }
+
     @Override
     public Object accept(Visitor v) {
         return v.visit(this);
@@ -453,7 +289,6 @@ class StmtList extends ASTNode{
 
 // Arithmetic Class that extends the ASTNode class
 // creates two Nodes, the left and right sides of an arithmetic statement
-// constructor allows semantic actions to initialize nodes
 class Arithmetic extends ASTNode {
     public Object left, right, op;
 
@@ -481,6 +316,9 @@ class Arithmetic extends ASTNode {
     }
 }
 
+
+// Logic class that extends the ASTNode class
+// creates two Nodes, the left and right sides of a conditional statement
 class Logic extends ASTNode {
     public Object left, right, op;
 
@@ -508,9 +346,9 @@ class Logic extends ASTNode {
     }
 }
 
+
 // Conditions class that extends the ASTNode class
 // creates two Nodes, the left and right sides of a conditional statement
-// constructor allows semantic actions to initialize nodes
 class Conditions extends ASTNode {
     public Object left, op, right;
 
@@ -538,9 +376,9 @@ class Conditions extends ASTNode {
     }
 }
 
+
 // UnaryOperators class that extends the ASTNode class
 // creates one Node, the right statement of a unary expression
-// constructor allows semantic actions to initialize nodes
 class UnaryOperators extends ASTNode {
     public Object op, right;
 
@@ -562,10 +400,10 @@ class UnaryOperators extends ASTNode {
     }
 }
 
+
 // EndFunctions class that extends the ASTNode class
 // Used for return and print functions
 // creates one node, the expression to be printed or returned
-// constructor allows semantic actions to initialize nodes
 class EndFunction extends ASTNode {
     Object type;
     Object exp;
@@ -586,8 +424,8 @@ class EndFunction extends ASTNode {
     public Object accept(Visitor v) {
         return v.visit(this);
     }
-
 }
+
 
 /* ----------------- AST Statement/Method subclasses ---------------- */
 /* ------------------------------------------------------------------ */
@@ -595,7 +433,6 @@ class EndFunction extends ASTNode {
 // ForLoop class that extends the ASTNode class
 // creates four nodes, the for loop iterator, it's conditional, its
 // incrementation statement, and the loop body
-// constructor allows semantic actions to initialize nodes
 class ForLoop extends ASTNode {
 
     Object iterator;
@@ -630,14 +467,12 @@ class ForLoop extends ASTNode {
     public Object accept(Visitor v) {
         return v.visit(this);
     }
-
 }
 
 // IfStmt class that extends the ASTNode class
 // creates three nodes, the if statment conditional, the if statment body, and
 // the else statement
 // else statement can bc a null pointer, in which case only 2 nodes are created
-// constructor allows semantic actions to initialize nodes
 class IfStmt extends ASTNode {
 
     Object conditional;
@@ -669,13 +504,13 @@ class IfStmt extends ASTNode {
 
 }
 
+
 /* ----------------- AST Variable Subclasses ---------------- */
 /* ---------------------------------------------------------- */
 
 // Asnmt class that extends the ASTNode class
 // The class is used when assigning objects to variables
 // Creates two nodes, the variable and the expression
-// constructor allows semantic actions to initialize nodes
 class Asnmt extends ASTNode {
     Object var;
     Object exp;
